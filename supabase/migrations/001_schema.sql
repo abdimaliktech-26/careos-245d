@@ -155,12 +155,14 @@ CREATE TABLE public.documents (
   document_type      TEXT NOT NULL CHECK (document_type IN ('form', 'upload')),
   storage_path       TEXT NOT NULL,
   file_name          TEXT NOT NULL,
-  file_size          INTEGER,
+  file_size          BIGINT,
   mime_type          TEXT,
   is_deleted         BOOLEAN NOT NULL DEFAULT FALSE,
   deleted_at         TIMESTAMPTZ,
   created_by         UUID NOT NULL REFERENCES public.users(id),
-  created_at         TIMESTAMPTZ NOT NULL DEFAULT NOW()
+  created_at         TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  CONSTRAINT form_document_requires_submission
+    CHECK (document_type != 'form' OR form_submission_id IS NOT NULL)
 );
 
 -- ─────────────────────────────────────────────
