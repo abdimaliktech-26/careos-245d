@@ -31,12 +31,25 @@ CREATE POLICY "users_super_admin_all" ON public.users
   FOR ALL TO authenticated
   USING (public.current_user_role() = 'super_admin');
 
--- Admin can read/create/update/deactivate staff in their tenant
-CREATE POLICY "users_admin_manage_staff" ON public.users
-  FOR ALL TO authenticated
+-- Admin can read/create staff in their tenant
+CREATE POLICY "users_admin_read_create_staff" ON public.users
+  FOR SELECT, INSERT TO authenticated
   USING (
     public.current_user_role() = 'admin'
     AND tenant_id = public.current_tenant_id()
+    AND role = 'staff'
+  );
+
+-- Admin can update staff in their tenant (WITH CHECK prevents role escalation)
+CREATE POLICY "users_admin_update_staff" ON public.users
+  FOR UPDATE TO authenticated
+  USING (
+    public.current_user_role() = 'admin'
+    AND tenant_id = public.current_tenant_id()
+    AND role = 'staff'
+  )
+  WITH CHECK (
+    tenant_id = public.current_tenant_id()
     AND role = 'staff'
   );
 
@@ -92,7 +105,7 @@ CREATE POLICY "clients_self_read" ON public.clients
   FOR SELECT TO authenticated
   USING (
     public.current_user_role() = 'client'
-    AND id = (SELECT id FROM public.users WHERE id = auth.uid() LIMIT 1)
+    AND id = auth.uid()
   );
 
 -- ─────────────────────────────────────────────
@@ -132,7 +145,8 @@ CREATE POLICY "form_submissions_client_read_own" ON public.form_submissions
   FOR SELECT TO authenticated
   USING (
     public.current_user_role() = 'client'
-    AND client_id = (SELECT id FROM public.users WHERE id = auth.uid() LIMIT 1)
+    AND tenant_id = public.current_tenant_id()
+    AND client_id = auth.uid()
   );
 
 -- ─────────────────────────────────────────────
@@ -143,6 +157,11 @@ CREATE POLICY "signatures_staff" ON public.signatures
   USING (
     public.current_user_role() = 'staff'
     AND tenant_id = public.current_tenant_id()
+    AND EXISTS (
+      SELECT 1 FROM public.form_submissions fs
+      WHERE fs.id = form_submission_id
+        AND public.staff_owns_client(fs.client_id)
+    )
   );
 
 CREATE POLICY "signatures_client_insert_own" ON public.signatures
@@ -167,7 +186,8 @@ CREATE POLICY "documents_client_read_own" ON public.documents
   FOR SELECT TO authenticated
   USING (
     public.current_user_role() = 'client'
-    AND client_id = (SELECT id FROM public.users WHERE id = auth.uid() LIMIT 1)
+    AND tenant_id = public.current_tenant_id()
+    AND client_id = auth.uid()
     AND is_deleted = FALSE
   );
 
@@ -177,6 +197,10 @@ CREATE POLICY "documents_client_read_own" ON public.documents
 CREATE POLICY "audit_logs_super_admin_read" ON public.audit_logs
   FOR SELECT TO authenticated
   USING (public.current_user_role() = 'super_admin');
+
+CREATE POLICY "audit_logs_no_authenticated_insert" ON public.audit_logs
+  FOR INSERT TO authenticated
+  WITH CHECK (FALSE);
 
 -- ─────────────────────────────────────────────
 -- SUBSCRIPTIONS (super_admin all; admin read own)
