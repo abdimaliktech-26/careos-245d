@@ -15,6 +15,9 @@ describe('ROLES constant', () => {
     expect(ROLES.STAFF).toBe('staff')
     expect(ROLES.CLIENT).toBe('client')
   })
+  it('has exactly four roles', () => {
+    expect(Object.keys(ROLES)).toHaveLength(4)
+  })
 })
 
 describe('isStaff', () => {
