@@ -38,6 +38,24 @@ const ROLE_REQUIRED_PREFIXES: Array<{ prefix: string; roles: Role[] }> = [
   { prefix: '/admin',       roles: ['org_admin', 'super_admin'] },
 ]
 
+function isApiPath(pathname: string): boolean {
+  return pathname.startsWith('/api/') || pathname.includes('/api/')
+}
+
+function unauthorized(pathname: string, loginUrl: URL): NextResponse {
+  if (isApiPath(pathname)) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+  return NextResponse.redirect(loginUrl)
+}
+
+function forbidden(pathname: string, redirectUrl: URL): NextResponse {
+  if (isApiPath(pathname)) {
+    return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
+  }
+  return NextResponse.redirect(redirectUrl)
+}
+
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
 
@@ -81,9 +99,11 @@ export async function proxy(request: NextRequest) {
     return response
   }
 
-  // Not authenticated — send to login
+  const loginUrl = new URL('/auth/login', request.url)
+
+  // Not authenticated
   if (!user) {
-    return NextResponse.redirect(new URL('/auth/login', request.url))
+    return unauthorized(pathname, loginUrl)
   }
 
   // Fetch role once and enforce route access
@@ -94,7 +114,7 @@ export async function proxy(request: NextRequest) {
     .maybeSingle()
 
   if (!profile?.role) {
-    return NextResponse.redirect(new URL('/auth/login', request.url))
+    return unauthorized(pathname, loginUrl)
   }
 
   const userRole = profile.role as Role
@@ -102,7 +122,8 @@ export async function proxy(request: NextRequest) {
   for (const { prefix, roles } of ROLE_REQUIRED_PREFIXES) {
     if (pathname === prefix || pathname.startsWith(prefix + '/')) {
       if (!roles.includes(userRole)) {
-        return NextResponse.redirect(
+        return forbidden(
+          pathname,
           new URL(getRoleRedirectPath(userRole), request.url)
         )
       }
