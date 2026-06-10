@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import type { UserProfile, OrgBranding } from '@/types/app'
 import { LocaleSwitcher } from '@/components/ui/locale-switcher'
@@ -263,8 +264,7 @@ export default function Sidebar({ user, branding }: SidebarProps) {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             {branding?.logo_url ? (
-              /* eslint-disable-next-line @next/next/no-img-element -- user-uploaded remote logo */
-              <img src={branding.logo_url} alt="" className="h-8 w-8 rounded-[10px] object-contain border border-gray-100" />
+              <Image src={branding.logo_url} alt="" width={32} height={32} unoptimized className="h-8 w-8 rounded-[10px] object-contain border border-gray-100" />
             ) : (
               <div
                 className="flex h-8 w-8 items-center justify-center rounded-[10px]"

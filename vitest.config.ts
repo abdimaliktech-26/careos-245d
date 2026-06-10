@@ -9,6 +9,17 @@ export default defineConfig({
     globals: true,
     setupFiles: ['./src/tests/setup.ts'],
     exclude: ['e2e/**', 'node_modules/**'],
+    coverage: {
+      provider: 'v8',
+      reporter: ['text', 'text-summary', 'json-summary'],
+      include: ['src/lib/**/*.ts', 'src/components/**/*.{ts,tsx}', 'src/hooks/**/*.ts'],
+      exclude: [
+        'src/**/*.test.{ts,tsx}',
+        'src/tests/**',
+        'src/types/**',
+        'src/**/*.d.ts',
+      ],
+    },
   },
   resolve: {
     alias: {

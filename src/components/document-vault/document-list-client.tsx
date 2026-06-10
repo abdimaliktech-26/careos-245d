@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useCallback } from 'react'
+import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { deleteDocument } from '@/lib/document-vault/actions'
 
@@ -124,10 +125,12 @@ export function DocumentListClient({ documents }: { documents: Array<Document> }
             </div>
             <div className="flex-1 overflow-auto p-6 bg-gray-50/50 flex items-center justify-center min-h-[300px]">
               {(previewDoc.mime_type as string)?.startsWith('image/') ? (
-                /* eslint-disable-next-line @next/next/no-img-element -- user-uploaded document preview */
-                <img
+                <Image
                   src={downloadUrl(previewDoc.id as string)}
                   alt={previewDoc.display_name as string}
+                  width={1200}
+                  height={800}
+                  unoptimized
                   className="max-w-full max-h-[65vh] rounded-xl shadow-sm object-contain"
                 />
               ) : (previewDoc.mime_type as string) === 'application/pdf' ? (

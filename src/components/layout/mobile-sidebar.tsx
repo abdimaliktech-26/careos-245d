@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import type { OrgBranding } from '@/types/app'
 
@@ -19,8 +20,7 @@ export default function MobileSidebar({ children, branding }: { children: React.
       <div className="flex items-center justify-between border-b border-gray-100 bg-white px-4 py-3 lg:hidden shrink-0">
         <div className="flex items-center gap-2">
           {branding?.logo_url ? (
-            // eslint-disable-next-line @next/next/no-img-element -- user-uploaded remote logo
-            <img src={branding.logo_url} alt="" className="h-7 w-7 rounded-[8px] object-contain border border-gray-100" />
+            <Image src={branding.logo_url} alt="" width={28} height={28} unoptimized className="h-7 w-7 rounded-[8px] object-contain border border-gray-100" />
           ) : (
             <div
               className="flex h-7 w-7 items-center justify-center rounded-[8px]"

@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { redirect } from 'next/navigation'
 import { getSession } from '@/lib/auth/get-session'
 import { getOrganizationDetail } from '@/lib/super-admin/actions'
@@ -165,8 +166,7 @@ export default async function OrganizationDetailPage({
             {org.logoUrl && (
               <div className="pt-2 border-t border-gray-100">
                 <span className="text-[11px] font-semibold text-[#64748B] block mb-1.5">Logo</span>
-                {/* eslint-disable-next-line @next/next/no-img-element -- user-uploaded remote logo */}
-                <img src={org.logoUrl} alt="" className="h-10 w-10 rounded-lg object-contain border border-gray-200" />
+                <Image src={org.logoUrl} alt="" width={40} height={40} unoptimized className="h-10 w-10 rounded-lg object-contain border border-gray-200" />
               </div>
             )}
           </div>
