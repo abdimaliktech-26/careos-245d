@@ -5,20 +5,38 @@ import { useRouter } from 'next/navigation'
 
 export default function ResetPasswordPage() {
   const [password, setPassword] = useState('')
+  const [confirm, setConfirm] = useState('')
   const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
   const router = useRouter()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError('')
+
+    if (password !== confirm) {
+      setError('Passwords do not match.')
+      return
+    }
+    if (password.length < 8) {
+      setError('Password must be at least 8 characters.')
+      return
+    }
+
+    setLoading(true)
     const res = await fetch('/api/auth/reset-password', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ password }),
     })
     const data = await res.json()
-    if (data.error) setError(data.error)
-    else router.push('/dashboard')
+    setLoading(false)
+    if (data.error) {
+      setError(data.error)
+      return
+    }
+    router.push('/dashboard')
+    router.refresh()
   }
 
   return (
@@ -35,10 +53,27 @@ export default function ResetPasswordPage() {
           onChange={(e) => setPassword(e.target.value)}
           placeholder="New password"
           minLength={8}
+          autoComplete="new-password"
           required
           className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm"
         />
-        <button type="submit" className="w-full rounded-xl bg-[#E8799E] py-3 text-sm font-bold text-white hover:opacity-90">Update Password</button>
+        <input
+          type="password"
+          value={confirm}
+          onChange={(e) => setConfirm(e.target.value)}
+          placeholder="Confirm new password"
+          minLength={8}
+          autoComplete="new-password"
+          required
+          className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm"
+        />
+        <button
+          type="submit"
+          disabled={loading}
+          className="w-full rounded-xl bg-[#E8799E] py-3 text-sm font-bold text-white hover:opacity-90 disabled:opacity-60"
+        >
+          {loading ? 'Updating…' : 'Update Password'}
+        </button>
       </form>
     </div>
   )

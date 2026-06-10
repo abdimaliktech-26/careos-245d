@@ -177,6 +177,14 @@ function LogoutIcon() {
   )
 }
 
+function KeyIcon() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="7.5" cy="15.5" r="3.5"/><path d="m21 2-9.6 9.6"/><path d="m15.5 7.5 3 3L22 7l-3-3"/>
+    </svg>
+  )
+}
+
 function HelpCircleIcon() {
   return (
     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -330,6 +338,13 @@ export default function Sidebar({ user, branding }: SidebarProps) {
               <p className="text-[12px] font-semibold text-[#3A2A4A] truncate leading-tight">{user.fullName}</p>
               <p className="text-[10px] text-[#94A3B8] capitalize leading-tight mt-0.5">{roleLabel}</p>
             </div>
+            <Link
+              href="/auth/reset-password"
+              title="Change password"
+              className="flex h-6 w-6 items-center justify-center rounded-md text-[#CBD5E1] transition-colors hover:bg-gray-200 hover:text-[#64748B]"
+            >
+              <KeyIcon />
+            </Link>
             <form action="/auth/logout" method="POST">
               <button
                 type="submit"

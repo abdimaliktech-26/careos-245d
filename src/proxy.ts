@@ -82,8 +82,13 @@ export async function proxy(request: NextRequest) {
   const { data: { user } } = await supabase.auth.getUser()
 
   // Allow public paths without auth; redirect authenticated users to their home
+  // Exception: /auth/reset-password must stay accessible to signed-in users so
+  // they can change a temporary password.
   if (PUBLIC_PATHS.some((p) => pathname === p || pathname.startsWith(p + '/'))) {
-    if (user) {
+    const isResetPassword =
+      pathname === '/auth/reset-password' || pathname.startsWith('/auth/reset-password/')
+
+    if (user && !isResetPassword) {
       const { data: profile } = await supabase
         .from('organization_members')
         .select('role')
