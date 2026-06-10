@@ -5,20 +5,21 @@ export { ROLES }
 export const isStaff = (role: string): role is 'staff' =>
   role === ROLES.STAFF
 
-export const isAdmin = (role: string): role is 'admin' =>
-  role === ROLES.ADMIN
+export const isAdmin = (role: string): role is 'org_admin' =>
+  role === ROLES.ORG_ADMIN
 
 export const isSuperAdmin = (role: string): role is 'super_admin' =>
   role === ROLES.SUPER_ADMIN
 
-export const isClient = (role: string): role is 'client' =>
-  role === ROLES.CLIENT
+export const isExternalSigner = (role: string): role is 'external_signer' =>
+  role === ROLES.EXTERNAL_SIGNER
 
 const ROLE_PATHS: Record<Role, string> = {
   super_admin: '/super-admin',
-  admin: '/admin',
-  staff: '/staff',
-  client: '/client',
+  org_admin: '/dashboard',
+  program_manager: '/dashboard',
+  staff: '/dashboard',
+  external_signer: '/client',
 }
 
 export const getRoleRedirectPath = (role: Role): string =>

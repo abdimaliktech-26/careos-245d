@@ -8,7 +8,7 @@ export default async function StaffLayout({
 }) {
   const { user, error } = await getSession()
 
-  if (error || !user || user.role !== 'staff') {
+  if (error || !user || !['staff', 'program_manager', 'org_admin'].includes(user.role)) {
     redirect('/auth/login')
   }
 
@@ -17,7 +17,7 @@ export default async function StaffLayout({
       <nav className="bg-teal-700 text-white px-6 py-3 flex items-center justify-between">
         <span className="font-bold text-lg">CareIntake</span>
         <span className="text-sm text-teal-200">
-          {user.firstName} {user.lastName}
+          {user.fullName}
         </span>
         <form action="/auth/logout" method="POST">
           <button type="submit" className="text-sm text-teal-200 hover:text-white">

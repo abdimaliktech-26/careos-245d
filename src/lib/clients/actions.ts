@@ -4,6 +4,9 @@ import { createClient as createServerClient } from '@/lib/supabase/server'
 import { getSession } from '@/lib/auth/get-session'
 import { revalidatePath } from 'next/cache'
 import { addDays, addMonths } from 'date-fns'
+import { getPacketCompliance } from '@/lib/packets/compliance'
+import { refreshOverduePackets } from '@/lib/packets/actions'
+import { logAuditEvent } from '@/lib/audit/log'
 import {
   createClientSchema,
   updateClientSchema,
@@ -16,6 +19,18 @@ type ActionResult<T> =
   | { data: T; error: null }
   | { data: null; error: string }
 
+const PACKET_META: Record<string, { label: string; dueDate: (intakeDate: Date) => Date }> = {
+  intake: { label: 'Intake', dueDate: (date) => date },
+  '45_day_review': { label: '45-Day Review', dueDate: (date) => addDays(date, 45) },
+  semi_annual_review: { label: 'Semi-Annual', dueDate: (date) => addMonths(date, 6) },
+  annual_review: { label: 'Annual', dueDate: (date) => addMonths(date, 12) },
+}
+
+const isoDate = (date: Date) => date.toISOString().split('T')[0]
+
+const canManageClients = (role: string) =>
+  ['staff', 'program_manager', 'org_admin', 'super_admin'].includes(role)
+
 export async function createClientRecord(
   input: CreateClientInput
 ): Promise<ActionResult<{ id: string }>> {
@@ -25,26 +40,26 @@ export async function createClientRecord(
   }
 
   const { user, error: sessionError } = await getSession()
-  if (sessionError || !user || user.role !== 'staff') {
+  if (sessionError || !user || !canManageClients(user.role)) {
     return { data: null, error: 'Unauthorized' }
   }
-  if (!user.tenantId) {
-    return { data: null, error: 'No tenant assigned' }
+  if (!user.organizationId) {
+    return { data: null, error: 'No organization assigned' }
   }
 
   const supabase = await createServerClient()
+  const legalName = `${parsed.data.firstName.trim()} ${parsed.data.lastName.trim()}`.trim()
 
   const { data: client, error } = await supabase
     .from('clients')
     .insert({
-      tenant_id: user.tenantId,
+      organization_id: user.organizationId,
       assigned_staff_id: user.id,
-      first_name: parsed.data.firstName,
-      last_name: parsed.data.lastName,
-      date_of_birth: parsed.data.dateOfBirth || null,
+      legal_name: legalName,
+      date_of_birth: parsed.data.dateOfBirth,
       phone: parsed.data.phone || null,
       email: parsed.data.email || null,
-      address: parsed.data.address || null,
+      home_address: parsed.data.address || null,
       city: parsed.data.city || null,
       state: parsed.data.state,
       zip: parsed.data.zip || null,
@@ -52,7 +67,7 @@ export async function createClientRecord(
       guardian_phone: parsed.data.guardianPhone || null,
       guardian_email: parsed.data.guardianEmail || null,
       guardian_relationship: parsed.data.guardianRelationship || null,
-      program_id: parsed.data.programId || null,
+      program: parsed.data.program,
       intake_date: parsed.data.intakeDate,
     })
     .select('id')
@@ -62,62 +77,89 @@ export async function createClientRecord(
     return { data: null, error: error?.message ?? 'Failed to create client' }
   }
 
-  await scheduleFormAssignments(supabase, client.id, user.tenantId, new Date(parsed.data.intakeDate))
+  await schedulePackets(supabase, client.id, user.organizationId, user.id, new Date(parsed.data.intakeDate))
+  await logAuditEvent({
+    user,
+    action: 'client_created',
+    entityType: 'client',
+    entityId: client.id,
+    entityLabel: legalName,
+    details: { program: parsed.data.program, intakeDate: parsed.data.intakeDate },
+  }).catch(() => null)
 
+  revalidatePath('/clients')
   revalidatePath('/staff/clients')
   return { data: { id: client.id }, error: null }
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-async function scheduleFormAssignments(supabase: any, clientId: string, tenantId: string, intakeDate: Date) {
-  const { data: forms } = await supabase
-    .from('form_definitions')
-    .select('id, form_set')
+async function schedulePackets(supabase: any, clientId: string, organizationId: string, userId: string, intakeDate: Date) {
+  const { data: templates } = await supabase
+    .from('form_templates')
+    .select('id, packet_types, sort_order')
     .eq('is_active', true)
 
-  if (!forms?.length) return
+  if (!templates?.length) return
 
-  const dueDateBySet: Record<string, string> = {
-    intake: intakeDate.toISOString().split('T')[0],
-    '45day': addDays(intakeDate, 45).toISOString().split('T')[0],
-    semiannual: addMonths(intakeDate, 6).toISOString().split('T')[0],
-    annual: addMonths(intakeDate, 12).toISOString().split('T')[0],
+  for (const packetType of Object.keys(PACKET_META)) {
+    const { data: packet } = await supabase
+      .from('packets')
+      .insert({
+        organization_id: organizationId,
+        client_id: clientId,
+        packet_type: packetType,
+        status: 'not_started',
+        due_date: isoDate(PACKET_META[packetType].dueDate(intakeDate)),
+        assigned_to: userId,
+        review_period_start: packetType === 'intake' ? null : isoDate(intakeDate),
+      })
+      .select('id')
+      .single()
+
+    if (!packet) continue
+
+    const packetForms = templates
+      .filter((template: { id: string; packet_types: string[] | null }) =>
+        template.packet_types?.includes(packetType)
+      )
+      .map((template: { id: string; sort_order: number }) => ({
+        packet_id: packet.id,
+        template_id: template.id,
+        status: 'not_started',
+        sort_order: template.sort_order,
+      }))
+
+    if (packetForms.length > 0) {
+      await supabase.from('packet_forms').insert(packetForms)
+    }
   }
-
-  const assignments = forms.map((form: { id: string; form_set: string }) => ({
-    tenant_id: tenantId,
-    client_id: clientId,
-    form_definition_id: form.id,
-    form_set: form.form_set,
-    due_date: dueDateBySet[form.form_set],
-    status: 'pending',
-  }))
-
-  await supabase.from('form_assignments').insert(assignments)
 }
 
 export async function getClients(): Promise<ActionResult<ClientSummary[]>> {
   const { user, error: sessionError } = await getSession()
-  if (sessionError || !user || user.role !== 'staff') {
+  if (sessionError || !user || !canManageClients(user.role)) {
     return { data: null, error: 'Unauthorized' }
   }
 
   const supabase = await createServerClient()
-  const { data, error } = await supabase
+  const query = supabase
     .from('clients')
-    .select('id, first_name, last_name, intake_date, status, program_id, programs(name, code)')
+    .select('id, legal_name, preferred_name, intake_date, status, program')
     .eq('status', 'active')
-    .order('last_name')
+    .order('legal_name')
 
+  if (user.organizationId) query.eq('organization_id', user.organizationId)
+
+  const { data, error } = await query
   if (error) return { data: null, error: error.message }
-  return { data: data as unknown as ClientSummary[], error: null }
+  return { data: data as ClientSummary[], error: null }
 }
 
 export async function getClientById(id: string): Promise<ActionResult<ClientDetail>> {
   const supabase = await createServerClient()
   const { data, error } = await supabase
     .from('clients')
-    .select('*, programs(id, name, code)')
+    .select('*')
     .eq('id', id)
     .single()
 
@@ -137,19 +179,24 @@ export async function updateClientRecord(
   }
 
   const { user, error: sessionError } = await getSession()
-  if (sessionError || !user || user.role !== 'staff') {
+  if (sessionError || !user || !canManageClients(user.role)) {
     return { data: null, error: 'Unauthorized' }
   }
 
   const supabase = await createServerClient()
   const updates: Record<string, unknown> = {}
+  const firstName = parsed.data.firstName?.trim()
+  const lastName = parsed.data.lastName?.trim()
 
-  if (parsed.data.firstName !== undefined) updates.first_name = parsed.data.firstName
-  if (parsed.data.lastName !== undefined) updates.last_name = parsed.data.lastName
+  if (firstName !== undefined || lastName !== undefined) {
+    const { data: existing } = await supabase.from('clients').select('legal_name').eq('id', id).single()
+    const [existingFirst = '', ...existingRest] = String(existing?.legal_name ?? '').split(' ')
+    updates.legal_name = `${firstName ?? existingFirst} ${lastName ?? existingRest.join(' ')}`.trim()
+  }
   if (parsed.data.dateOfBirth !== undefined) updates.date_of_birth = parsed.data.dateOfBirth || null
   if (parsed.data.phone !== undefined) updates.phone = parsed.data.phone || null
   if (parsed.data.email !== undefined) updates.email = parsed.data.email || null
-  if (parsed.data.address !== undefined) updates.address = parsed.data.address || null
+  if (parsed.data.address !== undefined) updates.home_address = parsed.data.address || null
   if (parsed.data.city !== undefined) updates.city = parsed.data.city || null
   if (parsed.data.state !== undefined) updates.state = parsed.data.state
   if (parsed.data.zip !== undefined) updates.zip = parsed.data.zip || null
@@ -157,54 +204,60 @@ export async function updateClientRecord(
   if (parsed.data.guardianPhone !== undefined) updates.guardian_phone = parsed.data.guardianPhone || null
   if (parsed.data.guardianEmail !== undefined) updates.guardian_email = parsed.data.guardianEmail || null
   if (parsed.data.guardianRelationship !== undefined) updates.guardian_relationship = parsed.data.guardianRelationship || null
-  if (parsed.data.programId !== undefined) updates.program_id = parsed.data.programId || null
+  if (parsed.data.program !== undefined) updates.program = parsed.data.program
 
   const { error } = await supabase.from('clients').update(updates).eq('id', id)
   if (error) return { data: null, error: error.message }
+  await logAuditEvent({
+    user,
+    action: 'client_updated',
+    entityType: 'client',
+    entityId: id,
+    details: { changedFields: Object.keys(updates) },
+  }).catch(() => null)
 
+  revalidatePath(`/clients/${id}`)
+  revalidatePath('/clients')
   revalidatePath(`/staff/clients/${id}`)
   revalidatePath('/staff/clients')
   return { data: undefined, error: null }
 }
 
 export async function getClientFormStatus(clientId: string): Promise<ActionResult<FormSetStatus[]>> {
+  await refreshOverduePackets()
   const supabase = await createServerClient()
-  const { data, error } = await supabase
-    .from('form_assignments')
-    .select('form_set, status, due_date')
-    .eq('client_id', clientId)
+  const [{ data, error }, { data: activeTemplates, error: activeTemplatesError }] = await Promise.all([
+    supabase
+      .from('packets')
+      .select('id, packet_type, status, due_date, packet_forms(id, template_id, status, sort_order)')
+      .eq('client_id', clientId)
+      .order('due_date', { ascending: true }),
+    supabase
+      .from('form_templates')
+      .select('id')
+      .eq('is_active', true),
+  ])
 
   if (error) return { data: null, error: error.message }
+  if (activeTemplatesError) return { data: null, error: activeTemplatesError.message }
 
-  const FORM_SET_META: Record<string, { label: string; total: number }> = {
-    intake: { label: 'Intake', total: 14 },
-    '45day': { label: '45-Day Review', total: 4 },
-    semiannual: { label: 'Semi-Annual', total: 6 },
-    annual: { label: 'Annual', total: 14 },
-  }
+  const activeTemplateIds = new Set((activeTemplates ?? []).map((template) => template.id))
 
-  const grouped = new Map<string, { completed: number; overdue: number; dueDate: string | null }>()
-  for (const key of Object.keys(FORM_SET_META)) {
-    grouped.set(key, { completed: 0, overdue: 0, dueDate: null })
-  }
+  const result: FormSetStatus[] = Object.entries(PACKET_META).map(([packetType, meta]) => {
+    const packet = (data ?? []).find((row) => row.packet_type === packetType)
+    const forms = ((packet?.packet_forms ?? []) as Array<{ id: string; template_id: string; status: string; sort_order: number }>)
+      .filter((form) => activeTemplateIds.has(form.template_id))
+      .toSorted((a, b) => a.sort_order - b.sort_order)
+    const firstOpenForm = forms.find((form) => form.status !== 'completed')
 
-  for (const row of data ?? []) {
-    const entry = grouped.get(row.form_set)
-    if (!entry) continue
-    if (row.status === 'completed') entry.completed++
-    if (row.status === 'overdue') entry.overdue++
-    if (!entry.dueDate) entry.dueDate = row.due_date
-  }
-
-  const result: FormSetStatus[] = Object.entries(FORM_SET_META).map(([key, meta]) => {
-    const entry = grouped.get(key)!
     return {
-      formSet: key as FormSetStatus['formSet'],
+      formSet: packetType as FormSetStatus['formSet'],
       label: meta.label,
-      total: meta.total,
-      completed: entry.completed,
-      overdue: entry.overdue,
-      dueDate: entry.dueDate,
+      total: forms.length,
+      completed: forms.filter((form) => form.status === 'completed').length,
+      overdue: getPacketCompliance(packet?.due_date, packet?.status).level === 'overdue' ? 1 : 0,
+      dueDate: packet?.due_date ?? null,
+      firstPendingAssignmentId: firstOpenForm?.id ?? null,
     }
   })
 

@@ -1,5 +1,6 @@
 import { redirect } from 'next/navigation'
 import { getSession } from '@/lib/auth/get-session'
+import { SuperAdminSidebar } from '@/components/super-admin/sidebar'
 
 export default async function SuperAdminLayout({
   children,
@@ -7,22 +8,18 @@ export default async function SuperAdminLayout({
   children: React.ReactNode
 }) {
   const { user, error } = await getSession()
-
   if (error || !user || user.role !== 'super_admin') {
     redirect('/auth/login')
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <nav className="bg-gray-900 text-white px-6 py-3 flex justify-between items-center">
-        <span className="font-bold text-lg">CareIntake — Super Admin</span>
-        <form action="/auth/logout" method="POST">
-          <button type="submit" className="text-sm text-gray-300 hover:text-white">
-            Sign out
-          </button>
-        </form>
-      </nav>
-      <main className="p-6">{children}</main>
+    <div className="flex h-screen overflow-hidden">
+      <SuperAdminSidebar user={user} />
+      <main className="flex-1 overflow-y-auto bg-gray-50">
+        <div className="p-6 sm:p-8 lg:p-10 max-w-7xl mx-auto">
+          {children}
+        </div>
+      </main>
     </div>
   )
 }

@@ -5,6 +5,7 @@ const STATUS_BADGE: Record<string, string> = {
   active: 'bg-green-100 text-green-700',
   inactive: 'bg-yellow-100 text-yellow-700',
   discharged: 'bg-gray-100 text-gray-600',
+  on_hold: 'bg-orange-100 text-orange-700',
 }
 
 export function ClientCard({ client }: { client: ClientSummary }) {
@@ -16,10 +17,10 @@ export function ClientCard({ client }: { client: ClientSummary }) {
       <div className="flex items-start justify-between">
         <div>
           <p className="font-semibold text-gray-900">
-            {client.last_name}, {client.first_name}
+            {client.legal_name}
           </p>
           <p className="text-sm text-gray-500 mt-0.5">
-            {client.programs?.name ?? 'No program assigned'}
+            {client.program}
           </p>
         </div>
         <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${STATUS_BADGE[client.status]}`}>

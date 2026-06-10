@@ -5,6 +5,7 @@ export const createStaffSchema = z.object({
   lastName: z.string().min(1, 'Last name required').max(100),
   email: z.string().email('Invalid email'),
   phone: z.string().optional(),
+  organizationId: z.string().uuid('Choose an organization').optional(),
 })
 
 export type CreateStaffInput = z.infer<typeof createStaffSchema>

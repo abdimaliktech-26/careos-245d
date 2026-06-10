@@ -3,9 +3,15 @@ import type { ButtonHTMLAttributes } from 'react'
 type ButtonVariant = 'primary' | 'secondary' | 'danger'
 
 const VARIANT_CLASSES: Record<ButtonVariant, string> = {
-  primary: 'bg-blue-600 hover:bg-blue-700 text-white disabled:opacity-50',
-  secondary: 'bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 disabled:opacity-50',
-  danger: 'bg-red-600 hover:bg-red-700 text-white disabled:opacity-50',
+  primary:   'text-white disabled:opacity-50 shadow-sm',
+  secondary: 'bg-white border border-[#C8A8E8] hover:bg-[#EDE0F8] text-[#3A2A4A] disabled:opacity-50',
+  danger:    'bg-[#E8799E] hover:bg-[#D06085] text-white disabled:opacity-50',
+}
+
+const VARIANT_STYLES: Record<ButtonVariant, React.CSSProperties> = {
+  primary:   { background: 'linear-gradient(135deg, #E8799E, #C8A8E8)' },
+  secondary: {},
+  danger:    {},
 }
 
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
@@ -19,12 +25,14 @@ export function Button({
   children,
   disabled,
   className = '',
+  style,
   ...props
 }: ButtonProps) {
   return (
     <button
       disabled={disabled || loading}
-      className={`inline-flex items-center justify-center px-4 py-2 rounded-md text-sm font-medium transition-colors cursor-pointer disabled:cursor-not-allowed ${VARIANT_CLASSES[variant]} ${className}`}
+      className={`inline-flex items-center justify-center px-4 py-2.5 rounded-full text-sm font-bold transition-opacity hover:opacity-90 cursor-pointer disabled:cursor-not-allowed ${VARIANT_CLASSES[variant]} ${className}`}
+      style={{ ...VARIANT_STYLES[variant], ...style }}
       {...props}
     >
       {loading ? 'Loading…' : children}

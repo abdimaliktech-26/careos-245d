@@ -1,8 +1,10 @@
 'use client'
 
+import Link from 'next/link'
+import Image from 'next/image'
 import { useState } from 'react'
-import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
+import { createClient } from '@/lib/supabase/client'
 
 export default function LoginPage() {
   const [email, setEmail] = useState('')
@@ -16,69 +18,122 @@ export default function LoginPage() {
     setLoading(true)
     setError(null)
 
-    const supabase = createClient()
-    const { error } = await supabase.auth.signInWithPassword({ email, password })
+    try {
+      const supabase = createClient()
+      const { error } = await supabase.auth.signInWithPassword({ email, password })
 
-    if (error) {
-      setError('Invalid email or password.')
+      if (error) {
+        setError(error.message)
+        setLoading(false)
+        return
+      }
+
+      router.push('/dashboard')
+      router.refresh()
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'An unexpected error occurred.')
       setLoading(false)
-      return
     }
-
-    router.refresh()
   }
 
   return (
-    <main className="min-h-screen flex items-center justify-center bg-gray-50">
-      <div className="w-full max-w-md bg-white rounded-lg shadow p-8">
-        <h1 className="text-2xl font-bold text-gray-900 mb-2">CareIntake</h1>
-        <p className="text-gray-500 mb-6 text-sm">Sign in to your account</p>
+    <main className="grid min-h-screen grid-cols-1 bg-[#F0F4FF] lg:grid-cols-[0.95fr_1.05fr]">
+      {/* Left panel — image */}
+      <section className="relative hidden overflow-hidden lg:block rounded-r-3xl">
+        <Image
+          src="/homecare-tablet.jpg"
+          alt="Caregiver helping an older adult with digital care documentation"
+          fill
+          priority
+          className="object-cover"
+        />
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(67,97,238,0.85) 0%, rgba(67,97,238,0.2) 50%, transparent 100%)' }} />
+        <div className="absolute bottom-10 left-10 right-10 rounded-3xl bg-white/95 p-6 shadow-2xl backdrop-blur">
+          <p className="text-xs font-bold uppercase tracking-widest text-[#E8799E]">CareIntake 245D</p>
+          <h1 className="mt-2 text-2xl font-black text-[#111827]">Audit-ready client packets without paper chasing.</h1>
+          <p className="mt-3 text-sm leading-6 text-[#6B7280]">
+            Track review deadlines, required signatures, branded documents, and staff activity from one secure workspace.
+          </p>
+        </div>
+      </section>
 
-        <form onSubmit={handleLogin} className="space-y-4">
-          <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-              Email
-            </label>
-            <input
-              id="email"
-              type="email"
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="you@example.com"
-            />
+      {/* Right panel — form */}
+      <section className="flex items-center justify-center px-5 py-10">
+        <div className="w-full max-w-md">
+          <Link href="/" className="mb-10 flex items-center gap-3">
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl text-white" style={{ background: 'linear-gradient(135deg, #E8799E 0%, #C8A8E8 100%)' }}>
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fillRule="evenodd" d="M10 1.944A11.954 11.954 0 012.166 5C2.056 5.649 2 6.319 2 7c0 5.225 3.34 9.67 8 11.317C14.66 16.67 18 12.225 18 7c0-.682-.057-1.35-.166-2.001A11.954 11.954 0 0110 1.944z" clipRule="evenodd" />
+              </svg>
+            </div>
+            <div>
+              <p className="text-lg font-black leading-none text-[#111827]">CareIntake</p>
+              <p className="mt-1 text-[11px] font-bold uppercase tracking-widest text-[#E8799E]">245D Suite</p>
+            </div>
+          </Link>
+
+          <div className="rounded-3xl bg-white p-8 shadow-sm border border-gray-100">
+            <div className="mb-7">
+              <p className="text-xs font-bold uppercase tracking-widest text-[#E8799E]">Secure sign in</p>
+              <h2 className="mt-2 text-3xl font-black text-[#111827]">Welcome back</h2>
+              <p className="mt-2 text-sm text-[#6B7280]">Use your organization account to access clients, packets, signatures, and audits.</p>
+            </div>
+
+            <form onSubmit={handleLogin} className="space-y-4">
+              <div>
+                <label htmlFor="email" className="mb-1.5 block text-sm font-semibold text-[#374151]">
+                  Email
+                </label>
+                <input
+                  id="email"
+                  type="email"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm text-[#111827] outline-none focus:border-[#E8799E] focus:ring-2 focus:ring-[#E8799E]/10 transition"
+                  placeholder="you@organization.com"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="password" className="mb-1.5 block text-sm font-semibold text-[#374151]">
+                  Password
+                </label>
+                <input
+                  id="password"
+                  type="password"
+                  required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm text-[#111827] outline-none focus:border-[#E8799E] focus:ring-2 focus:ring-[#E8799E]/10 transition"
+                />
+              </div>
+
+              {error && (
+                <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-700">
+                  {error}
+                </div>
+              )}
+
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-full rounded-xl px-5 py-3 text-sm font-bold text-white shadow-lg transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
+                style={{ background: 'linear-gradient(135deg, #E8799E 0%, #C8A8E8 100%)', boxShadow: '0 4px 24px rgba(67,97,238,0.3)' }}
+              >
+                {loading ? 'Signing in...' : 'Sign in'}
+              </button>
+              <div className="text-center">
+                <Link href="/auth/forgot-password" className="text-xs text-[#E8799E] hover:underline">Forgot password?</Link>
+              </div>
+            </form>
           </div>
 
-          <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
-              Password
-            </label>
-            <input
-              id="password"
-              type="password"
-              required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
-
-          {error && (
-            <p className="text-sm text-red-600 bg-red-50 border border-red-200 rounded px-3 py-2">
-              {error}
-            </p>
-          )}
-
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md text-sm disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-          >
-            {loading ? 'Signing in…' : 'Sign in'}
-          </button>
-        </form>
-      </div>
+          <p className="mt-6 text-center text-xs text-[#9CA3AF]">
+            <Link href="/" className="font-semibold hover:text-[#E8799E] transition-colors">Back to home</Link>
+          </p>
+        </div>
+      </section>
     </main>
   )
 }

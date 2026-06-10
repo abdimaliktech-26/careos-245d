@@ -3,20 +3,26 @@ import {
   isStaff,
   isAdmin,
   isSuperAdmin,
-  isClient,
+  isExternalSigner,
   getRoleRedirectPath,
   ROLES,
 } from '@/lib/auth/role-guards'
+import type { Role } from '@/types/app'
 
 describe('ROLES constant', () => {
-  it('has all four roles', () => {
+  it('has all five roles', () => {
     expect(ROLES.SUPER_ADMIN).toBe('super_admin')
-    expect(ROLES.ADMIN).toBe('admin')
+    expect(ROLES.ORG_ADMIN).toBe('org_admin')
+    expect(ROLES.PROGRAM_MANAGER).toBe('program_manager')
     expect(ROLES.STAFF).toBe('staff')
-    expect(ROLES.CLIENT).toBe('client')
+    expect(ROLES.EXTERNAL_SIGNER).toBe('external_signer')
   })
-  it('has exactly four roles', () => {
-    expect(Object.keys(ROLES)).toHaveLength(4)
+  it('has exactly five roles', () => {
+    expect(Object.keys(ROLES)).toHaveLength(5)
+  })
+  it('values match the Role union type', () => {
+    const roles: Role[] = ['super_admin', 'org_admin', 'program_manager', 'staff', 'external_signer']
+    expect(Object.values(ROLES)).toEqual(roles)
   })
 })
 
@@ -25,20 +31,42 @@ describe('isStaff', () => {
     expect(isStaff('staff')).toBe(true)
   })
   it('returns false for non-staff roles', () => {
-    expect(isStaff('admin')).toBe(false)
+    expect(isStaff('org_admin')).toBe(false)
     expect(isStaff('super_admin')).toBe(false)
-    expect(isStaff('client')).toBe(false)
+    expect(isStaff('program_manager')).toBe(false)
+    expect(isStaff('external_signer')).toBe(false)
+  })
+  it('returns false for unknown role', () => {
+    expect(isStaff('unknown')).toBe(false)
+  })
+  it('narrows type correctly when true', () => {
+    const role: string = 'staff'
+    if (isStaff(role)) {
+      const narrowed: 'staff' = role
+      expect(narrowed).toBe('staff')
+    }
   })
 })
 
 describe('isAdmin', () => {
-  it('returns true for admin role', () => {
-    expect(isAdmin('admin')).toBe(true)
+  it('returns true for org_admin role', () => {
+    expect(isAdmin('org_admin')).toBe(true)
   })
   it('returns false for non-admin roles', () => {
     expect(isAdmin('staff')).toBe(false)
     expect(isAdmin('super_admin')).toBe(false)
-    expect(isAdmin('client')).toBe(false)
+    expect(isAdmin('program_manager')).toBe(false)
+    expect(isAdmin('external_signer')).toBe(false)
+  })
+  it('returns false for unknown role', () => {
+    expect(isAdmin('unknown')).toBe(false)
+  })
+  it('narrows type correctly when true', () => {
+    const role: string = 'org_admin'
+    if (isAdmin(role)) {
+      const narrowed: 'org_admin' = role
+      expect(narrowed).toBe('org_admin')
+    }
   })
 })
 
@@ -47,20 +75,42 @@ describe('isSuperAdmin', () => {
     expect(isSuperAdmin('super_admin')).toBe(true)
   })
   it('returns false for other roles', () => {
-    expect(isSuperAdmin('admin')).toBe(false)
+    expect(isSuperAdmin('org_admin')).toBe(false)
+    expect(isSuperAdmin('program_manager')).toBe(false)
     expect(isSuperAdmin('staff')).toBe(false)
-    expect(isSuperAdmin('client')).toBe(false)
+    expect(isSuperAdmin('external_signer')).toBe(false)
+  })
+  it('returns false for unknown role', () => {
+    expect(isSuperAdmin('unknown')).toBe(false)
+  })
+  it('narrows type correctly when true', () => {
+    const role: string = 'super_admin'
+    if (isSuperAdmin(role)) {
+      const narrowed: 'super_admin' = role
+      expect(narrowed).toBe('super_admin')
+    }
   })
 })
 
-describe('isClient', () => {
-  it('returns true for client role', () => {
-    expect(isClient('client')).toBe(true)
+describe('isExternalSigner', () => {
+  it('returns true for external_signer role', () => {
+    expect(isExternalSigner('external_signer')).toBe(true)
   })
   it('returns false for other roles', () => {
-    expect(isClient('staff')).toBe(false)
-    expect(isClient('admin')).toBe(false)
-    expect(isClient('super_admin')).toBe(false)
+    expect(isExternalSigner('staff')).toBe(false)
+    expect(isExternalSigner('org_admin')).toBe(false)
+    expect(isExternalSigner('program_manager')).toBe(false)
+    expect(isExternalSigner('super_admin')).toBe(false)
+  })
+  it('returns false for unknown role', () => {
+    expect(isExternalSigner('unknown')).toBe(false)
+  })
+  it('narrows type correctly when true', () => {
+    const role: string = 'external_signer'
+    if (isExternalSigner(role)) {
+      const narrowed: 'external_signer' = role
+      expect(narrowed).toBe('external_signer')
+    }
   })
 })
 
@@ -68,13 +118,33 @@ describe('getRoleRedirectPath', () => {
   it('redirects super_admin to /super-admin', () => {
     expect(getRoleRedirectPath('super_admin')).toBe('/super-admin')
   })
-  it('redirects admin to /admin', () => {
-    expect(getRoleRedirectPath('admin')).toBe('/admin')
+  it('redirects org_admin to /dashboard', () => {
+    expect(getRoleRedirectPath('org_admin')).toBe('/dashboard')
   })
-  it('redirects staff to /staff', () => {
-    expect(getRoleRedirectPath('staff')).toBe('/staff')
+  it('redirects program_manager to /dashboard', () => {
+    expect(getRoleRedirectPath('program_manager')).toBe('/dashboard')
   })
-  it('redirects client to /client', () => {
-    expect(getRoleRedirectPath('client')).toBe('/client')
+  it('redirects staff to /dashboard', () => {
+    expect(getRoleRedirectPath('staff')).toBe('/dashboard')
+  })
+  it('redirects external_signer to /client', () => {
+    expect(getRoleRedirectPath('external_signer')).toBe('/client')
+  })
+})
+
+describe('ROLE_PATHS exhaustiveness', () => {
+  const allRoles: Role[] = ['super_admin', 'org_admin', 'program_manager', 'staff', 'external_signer']
+
+  it('provides a redirect path for every role', () => {
+    for (const role of allRoles) {
+      expect(getRoleRedirectPath(role)).toEqual(expect.any(String))
+    }
+  })
+
+  it('has unique paths per role group', () => {
+    const paths = allRoles.map((r) => getRoleRedirectPath(r))
+    expect(paths.filter((p) => p === '/dashboard')).toHaveLength(3)
+    expect(paths.filter((p) => p === '/super-admin')).toHaveLength(1)
+    expect(paths.filter((p) => p === '/client')).toHaveLength(1)
   })
 })

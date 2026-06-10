@@ -6,7 +6,9 @@ describe('createClientSchema', () => {
     const result = createClientSchema.safeParse({
       firstName: 'Jane',
       lastName: 'Doe',
+      dateOfBirth: '1990-01-01',
       intakeDate: '2026-06-01',
+      program: 'ICS',
       state: 'MN',
     })
     expect(result.success).toBe(true)
@@ -16,7 +18,9 @@ describe('createClientSchema', () => {
     const result = createClientSchema.safeParse({
       firstName: '',
       lastName: 'Doe',
+      dateOfBirth: '1990-01-01',
       intakeDate: '2026-06-01',
+      program: 'ICS',
       state: 'MN',
     })
     expect(result.success).toBe(false)
@@ -27,7 +31,9 @@ describe('createClientSchema', () => {
     const result = createClientSchema.safeParse({
       firstName: 'Jane',
       lastName: '',
+      dateOfBirth: '1990-01-01',
       intakeDate: '2026-06-01',
+      program: 'ICS',
       state: 'MN',
     })
     expect(result.success).toBe(false)
@@ -38,6 +44,8 @@ describe('createClientSchema', () => {
     const result = createClientSchema.safeParse({
       firstName: 'Jane',
       lastName: 'Doe',
+      dateOfBirth: '1990-01-01',
+      program: 'ICS',
       state: 'MN',
     })
     expect(result.success).toBe(false)
@@ -47,7 +55,9 @@ describe('createClientSchema', () => {
     const result = createClientSchema.safeParse({
       firstName: 'Jane',
       lastName: 'Doe',
+      dateOfBirth: '1990-01-01',
       intakeDate: '2026-06-01',
+      program: 'ICS',
       state: 'MN',
       email: 'not-an-email',
     })
@@ -59,7 +69,9 @@ describe('createClientSchema', () => {
     const result = createClientSchema.safeParse({
       firstName: 'Jane',
       lastName: 'Doe',
+      dateOfBirth: '1990-01-01',
       intakeDate: '2026-06-01',
+      program: 'ICS',
       state: 'MN',
       email: '',
     })
@@ -70,7 +82,9 @@ describe('createClientSchema', () => {
     const result = createClientSchema.safeParse({
       firstName: 'Jane',
       lastName: 'Doe',
+      dateOfBirth: '1990-01-01',
       intakeDate: '2026-06-01',
+      program: 'ICS',
     })
     expect(result.success).toBe(true)
     expect(result.data?.state).toBe('MN')

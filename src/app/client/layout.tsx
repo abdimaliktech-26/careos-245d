@@ -1,5 +1,6 @@
 import { redirect } from 'next/navigation'
 import { getSession } from '@/lib/auth/get-session'
+import ClientSidebar from './_components/client-sidebar'
 
 export default async function ClientLayout({
   children,
@@ -8,21 +9,18 @@ export default async function ClientLayout({
 }) {
   const { user, error } = await getSession()
 
-  if (error || !user || user.role !== 'client') {
+  if (error || !user || user.role !== 'external_signer') {
     redirect('/auth/login')
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <nav className="bg-white border-b px-6 py-3 flex justify-between items-center">
-        <span className="font-bold text-lg text-gray-900">CareIntake</span>
-        <form action="/auth/logout" method="POST">
-          <button type="submit" className="text-sm text-gray-500 hover:text-gray-900">
-            Sign out
-          </button>
-        </form>
-      </nav>
-      <main className="p-6">{children}</main>
+    <div className="flex h-screen overflow-hidden bg-[#F0F4FF]">
+      <ClientSidebar user={user} />
+      <main className="flex-1 overflow-y-auto bg-[#F0F4FF]">
+        <div className="p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto">
+          {children}
+        </div>
+      </main>
     </div>
   )
 }

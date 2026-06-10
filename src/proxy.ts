@@ -3,19 +3,45 @@ import { NextResponse, type NextRequest } from 'next/server'
 import { getRoleRedirectPath } from '@/lib/auth/role-guards'
 import type { Role } from '@/types/app'
 
-const PUBLIC_PATHS = ['/auth/login', '/auth/callback']
+const PUBLIC_PATHS = [
+  '/', '/auth/login', '/auth/callback',
+  '/auth/forgot-password', '/auth/reset-password',
+  '/api/auth/forgot-password', '/api/auth/reset-password',
+  '/sign', '/api/chat',
+  '/api/cron',
+]
 
-const ROLE_PREFIXES: Record<string, Role> = {
-  '/super-admin': 'super_admin',
-  '/admin': 'admin',
-  '/staff': 'staff',
-  '/client': 'client',
-}
+/**
+ * Route prefixes that require a specific role.
+ * A user whose role does NOT match is redirected to their role home.
+ * Note: /admin/organizations and /admin/audit-log are also guarded at
+ * page level (super_admin check) so we only need the coarse splits here.
+ */
+const ROLE_REQUIRED_PREFIXES: Array<{ prefix: string; roles: Role[] }> = [
+  { prefix: '/super-admin', roles: ['super_admin'] },
+  { prefix: '/client',      roles: ['external_signer'] },
+  { prefix: '/dashboard',   roles: ['staff', 'program_manager', 'org_admin', 'super_admin'] },
+  { prefix: '/notifications', roles: ['staff', 'program_manager', 'org_admin', 'super_admin'] },
+  { prefix: '/clients',     roles: ['staff', 'program_manager', 'org_admin', 'super_admin'] },
+  { prefix: '/packets',     roles: ['staff', 'program_manager', 'org_admin', 'super_admin'] },
+  { prefix: '/notes',       roles: ['staff', 'program_manager', 'org_admin', 'super_admin'] },
+  { prefix: '/schedule',    roles: ['staff', 'program_manager', 'org_admin', 'super_admin'] },
+  { prefix: '/evv',         roles: ['staff', 'program_manager', 'org_admin', 'super_admin'] },
+  { prefix: '/incidents',   roles: ['staff', 'program_manager', 'org_admin', 'super_admin'] },
+  { prefix: '/billing-readiness', roles: ['staff', 'program_manager', 'org_admin', 'super_admin'] },
+  { prefix: '/documents',   roles: ['staff', 'program_manager', 'org_admin', 'super_admin'] },
+  { prefix: '/form-library',roles: ['staff', 'program_manager', 'org_admin', 'super_admin'] },
+  { prefix: '/ai', roles: ['staff', 'program_manager', 'org_admin', 'super_admin'] },
+  { prefix: '/qa', roles: ['staff', 'program_manager', 'org_admin', 'super_admin'] },
+  { prefix: '/staff/directory', roles: ['program_manager', 'org_admin', 'super_admin'] },
+  { prefix: '/admin/trainings', roles: ['program_manager', 'org_admin', 'super_admin'] },
+  { prefix: '/admin',       roles: ['org_admin', 'super_admin'] },
+]
 
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
 
-  let response = NextResponse.next({
+  const response = NextResponse.next({
     request: { headers: request.headers },
   })
 
@@ -37,14 +63,14 @@ export async function proxy(request: NextRequest) {
 
   const { data: { user } } = await supabase.auth.getUser()
 
-  // Allow public paths without auth
-  if (PUBLIC_PATHS.some((p) => pathname.startsWith(p))) {
+  // Allow public paths without auth; redirect authenticated users to their home
+  if (PUBLIC_PATHS.some((p) => pathname === p || pathname.startsWith(p + '/'))) {
     if (user) {
       const { data: profile } = await supabase
-        .from('users')
+        .from('organization_members')
         .select('role')
-        .eq('id', user.id)
-        .single()
+        .eq('user_id', user.id)
+        .maybeSingle()
 
       if (profile?.role) {
         return NextResponse.redirect(
@@ -60,12 +86,12 @@ export async function proxy(request: NextRequest) {
     return NextResponse.redirect(new URL('/auth/login', request.url))
   }
 
-  // Fetch role and enforce route access
+  // Fetch role once and enforce route access
   const { data: profile } = await supabase
-    .from('users')
+    .from('organization_members')
     .select('role')
-    .eq('id', user.id)
-    .single()
+    .eq('user_id', user.id)
+    .maybeSingle()
 
   if (!profile?.role) {
     return NextResponse.redirect(new URL('/auth/login', request.url))
@@ -73,11 +99,14 @@ export async function proxy(request: NextRequest) {
 
   const userRole = profile.role as Role
 
-  for (const [prefix, requiredRole] of Object.entries(ROLE_PREFIXES)) {
-    if (pathname.startsWith(prefix) && userRole !== requiredRole) {
-      return NextResponse.redirect(
-        new URL(getRoleRedirectPath(userRole), request.url)
-      )
+  for (const { prefix, roles } of ROLE_REQUIRED_PREFIXES) {
+    if (pathname === prefix || pathname.startsWith(prefix + '/')) {
+      if (!roles.includes(userRole)) {
+        return NextResponse.redirect(
+          new URL(getRoleRedirectPath(userRole), request.url)
+        )
+      }
+      break
     }
   }
 

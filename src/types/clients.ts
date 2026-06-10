@@ -1,24 +1,23 @@
 export type ClientSummary = {
   id: string
-  first_name: string
-  last_name: string
+  legal_name: string
+  preferred_name: string | null
   intake_date: string | null
-  status: 'active' | 'inactive' | 'discharged'
-  program_id: string | null
-  programs: { name: string; code: string } | null
+  status: 'active' | 'inactive' | 'discharged' | 'on_hold'
+  program: string
 }
 
 export type ClientDetail = {
   id: string
-  tenant_id: string
+  organization_id: string
   assigned_staff_id: string | null
-  program_id: string | null
-  first_name: string
-  last_name: string
+  program: string
+  legal_name: string
+  preferred_name: string | null
   date_of_birth: string | null
   phone: string | null
   email: string | null
-  address: string | null
+  home_address: string | null
   city: string | null
   state: string
   zip: string | null
@@ -27,25 +26,24 @@ export type ClientDetail = {
   guardian_email: string | null
   guardian_relationship: string | null
   intake_date: string | null
-  status: 'active' | 'inactive' | 'discharged'
+  status: 'active' | 'inactive' | 'discharged' | 'on_hold'
   created_at: string
   updated_at: string
-  programs: { id: string; name: string; code: string } | null
 }
 
 export type FormSetStatus = {
-  formSet: 'intake' | '45day' | 'semiannual' | 'annual'
+  formSet: 'intake' | '45_day_review' | 'semi_annual_review' | 'annual_review'
   label: string
   total: number
   completed: number
   overdue: number
   dueDate: string | null
+  firstPendingAssignmentId: string | null
 }
 
 export type StaffSummary = {
   id: string
-  first_name: string
-  last_name: string
+  full_name: string
   email: string
   phone: string | null
   is_active: boolean
