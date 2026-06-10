@@ -48,8 +48,6 @@ export function OnboardingWizard() {
     if (doneState.success) router.push('/dashboard')
   }, [doneState.success, router])
 
-  const isPending = profilePending || teamPending || clientPending || donePending
-
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#F8FAFC] to-[#EEF2FF] p-8">
       <div className="w-full max-w-lg">

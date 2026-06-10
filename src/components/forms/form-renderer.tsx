@@ -42,20 +42,20 @@ export function FormRenderer({
   const [appliedFields, setAppliedFields] = useState<Set<string>>(new Set())
   const [, setCarryForwardLoading] = useState(false)
 
-  const allFieldKeys = schema.sections.flatMap((s) => s.fields.map((f) => f.id))
+  const fieldKeysCsv = schema.sections.flatMap((s) => s.fields.map((f) => f.id)).join(',')
 
   useEffect(() => {
     if (!clientId || !templateCode) return
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setCarryForwardLoading(true)
-    fetch(`/api/forms/carry-forward?clientId=${clientId}&templateCode=${templateCode}&fieldKeys=${allFieldKeys.join(',')}`)
+    fetch(`/api/forms/carry-forward?clientId=${clientId}&templateCode=${templateCode}&fieldKeys=${fieldKeysCsv}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.suggestions) setCarryForwardSuggestions(data.suggestions)
       })
       .catch(() => {})
       .finally(() => setCarryForwardLoading(false))
-  }, [clientId, templateCode, allFieldKeys.join(',')])
+  }, [clientId, templateCode, fieldKeysCsv])
 
   const carryForwardMap = new Map(
     carryForwardSuggestions

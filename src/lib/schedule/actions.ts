@@ -64,12 +64,6 @@ export async function createScheduleEntry(_prev: ActionResult, formData: FormDat
 
   // Auto-create EVV visits if enabled
   if (createEvv) {
-    const { data: evvVisitTypes } = await supabase
-      .from('evv_visit_types')
-      .select('id')
-      .limit(1)
-      .maybeSingle()
-
     const evvInserts = dates.map((date) => ({
       organization_id: user.organizationId,
       client_id: clientId,

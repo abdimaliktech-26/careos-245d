@@ -157,7 +157,7 @@ export async function saveFormDraft(
   clientId: string,
   _templateId: string,
   formData: Record<string, unknown>,
-  existingSubmissionId?: string
+  _existingSubmissionId?: string
 ): Promise<ActionResult<{ id: string }>> {
   const { user, error: sessionError } = await getSession()
   if (sessionError || !user || !['staff', 'program_manager', 'org_admin'].includes(user.role)) {
@@ -190,7 +190,7 @@ export async function submitFormForSignatures(
   clientId: string,
   _templateId: string,
   formData: Record<string, unknown>,
-  existingSubmissionId?: string
+  _existingSubmissionId?: string
 ): Promise<ActionResult<{ submissionId: string }>> {
   const { user, error: sessionError } = await getSession()
   if (sessionError || !user || !['staff', 'program_manager', 'org_admin'].includes(user.role)) {

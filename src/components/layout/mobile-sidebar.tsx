@@ -19,6 +19,7 @@ export default function MobileSidebar({ children, branding }: { children: React.
       <div className="flex items-center justify-between border-b border-gray-100 bg-white px-4 py-3 lg:hidden shrink-0">
         <div className="flex items-center gap-2">
           {branding?.logo_url ? (
+            // eslint-disable-next-line @next/next/no-img-element -- user-uploaded remote logo
             <img src={branding.logo_url} alt="" className="h-7 w-7 rounded-[8px] object-contain border border-gray-100" />
           ) : (
             <div

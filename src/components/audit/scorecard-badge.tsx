@@ -35,8 +35,6 @@ export function ScorecardBadge({ score, health, size = 'md' }: ScorecardBadgePro
 }
 
 export function ScoreGauge({ score, size = 'md' }: { score: number; size?: 'sm' | 'md' | 'lg' }) {
-  const circumference = 2 * Math.PI * 36
-  const _offset = circumference - (score / 100) * circumference
   const color = score >= 80 ? '#10B981' : score >= 50 ? '#F59E0B' : '#EF4444'
 
   const dims = size === 'sm' ? 60 : size === 'lg' ? 100 : 80

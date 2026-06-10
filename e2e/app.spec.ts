@@ -83,7 +83,7 @@ test.describe('super admin', () => {
 test.describe('signing flow', () => {
   test('invalid token shows error', async ({ page }) => {
     await page.goto('/sign/invalid-token-12345678')
-    await expect(page.locator('text=not found|expired|invalid', { exact: false }).first()).toBeVisible({ timeout: 5000 })
+    await expect(page.locator('text=/not found|expired|invalid/i').first()).toBeVisible({ timeout: 5000 })
   })
 })
 

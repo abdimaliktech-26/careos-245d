@@ -106,6 +106,7 @@ export function OrganizationSettingsForm({ organization }: OrganizationSettingsF
         <FormField label="Logo URL" name="logoUrl" type="url" defaultValue={organization.logo_url ?? ''} placeholder="https://..." />
         {organization.logo_url && (
           <div className="flex items-center gap-3 rounded-lg border border-gray-100 bg-gray-50 px-3 py-2">
+            {/* eslint-disable-next-line @next/next/no-img-element -- user-uploaded remote logo preview */}
             <img src={organization.logo_url} alt="Organization logo preview" className="h-12 w-12 object-contain bg-white border border-gray-200 rounded" />
             <p className="text-xs text-gray-500">This logo appears on documents, signing pages, and the sidebar.</p>
           </div>

@@ -126,8 +126,8 @@ export async function createFirstClient(
 }
 
 export async function completeOnboarding(
-  prevState: OnboardingResult,
-  formData: FormData
+  _prevState: OnboardingResult,
+  _formData: FormData
 ): Promise<OnboardingResult> {
   const { user, error: sessionError } = await getSession()
   if (sessionError || !user) return { error: 'Unauthorized', success: false }

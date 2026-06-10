@@ -122,7 +122,7 @@ export function useVoiceInput({ lang, onResult, onEnd, onError }: UseVoiceInputO
     recRef.current = rec
     rec.start()
     setIsListening(true)
-  }, [lang, onResult, onEnd, onError])
+  }, [lang, onResult, onEnd, onError, clearSilenceTimer, stop])
 
   const toggle = useCallback(() => {
     if (isListening) stop()

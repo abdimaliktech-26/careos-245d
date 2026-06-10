@@ -63,7 +63,7 @@ export default function FormFillPage({ params }: Props) {
       setLoading(false)
     }
     load()
-  }, [assignmentId])
+  }, [assignmentId, clientId])
 
   const handleSaveDraft = async (values: Record<string, unknown>) => {
     if (!assignment) return

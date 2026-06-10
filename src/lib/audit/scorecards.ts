@@ -1,6 +1,5 @@
 import { createClient } from '@/lib/supabase/server'
 import { getPacketCompliance } from '@/lib/packets/compliance'
-import { validateRequiredSignatures } from '@/lib/forms/signature-validation'
 
 export type ClientScorecard = {
   clientId: string

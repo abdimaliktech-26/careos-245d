@@ -1,7 +1,6 @@
 'use client'
 
 import { useLocale } from './locale-provider'
-import type { Locale } from '@/lib/i18n/translations'
 
 export function LocaleSwitcher() {
   const { locale, setLocale } = useLocale()

@@ -263,6 +263,7 @@ export default function Sidebar({ user, branding }: SidebarProps) {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             {branding?.logo_url ? (
+              /* eslint-disable-next-line @next/next/no-img-element -- user-uploaded remote logo */
               <img src={branding.logo_url} alt="" className="h-8 w-8 rounded-[10px] object-contain border border-gray-100" />
             ) : (
               <div
