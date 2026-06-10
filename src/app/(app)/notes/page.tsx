@@ -15,8 +15,9 @@ export default async function NotesPage({
 
   const supabase = await createClient()
 
+  const now = Date.now()
   const today = new Date().toISOString().slice(0, 10)
-  const weekAgo = new Date(Date.now() - 7 * 86400000).toISOString().slice(0, 10)
+  const weekAgo = new Date(now - 7 * 86400000).toISOString().slice(0, 10)
 
   const [{ data: clients }, { data: notes }, { count: todayCount }] = await Promise.all([
     supabase
