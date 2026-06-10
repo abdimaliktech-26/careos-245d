@@ -24,19 +24,34 @@ export default function ResetPasswordPage() {
     }
 
     setLoading(true)
-    const res = await fetch('/api/auth/reset-password', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ password }),
-    })
-    const data = await res.json()
-    setLoading(false)
-    if (data.error) {
-      setError(data.error)
-      return
+    try {
+      const res = await fetch('/api/auth/reset-password', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password }),
+        redirect: 'manual',
+      })
+
+      const contentType = res.headers.get('content-type') ?? ''
+      if (!contentType.includes('application/json')) {
+        setError(`Unexpected response (HTTP ${res.status}). Try signing in again.`)
+        setLoading(false)
+        return
+      }
+
+      const data = await res.json()
+      if (!res.ok || data.error) {
+        setError(data.error ?? `Update failed (HTTP ${res.status}).`)
+        setLoading(false)
+        return
+      }
+
+      router.push('/dashboard')
+      router.refresh()
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Network error. Please try again.')
+      setLoading(false)
     }
-    router.push('/dashboard')
-    router.refresh()
   }
 
   return (
