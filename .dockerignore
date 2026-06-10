@@ -1,0 +1,12 @@
+node_modules/
+.next/
+*.tsbuildinfo
+.env
+.env.local
+.env*.local
+.git
+.gitignore
+coverage/
+tests/
+supabase/
+.vscode/

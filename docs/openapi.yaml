@@ -1,0 +1,143 @@
+openapi: "3.0.3"
+info:
+  title: CareIntake 245D Suite API
+  description: "REST API for 245D compliance management: forms, incidents, scheduling, EVV, billing, and analytics."
+  version: "1.0.0"
+  contact:
+    name: Stillwater Supports
+    url: https://careintake.app
+
+servers:
+  - url: https://careintake.app
+    description: Production
+  - url: http://localhost:3000
+    description: Local dev
+
+paths:
+  /api/ai/auto-fill:
+    post:
+      summary: "AI auto-fill form fields"
+      security: [{ bearerAuth: [] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                schema: { type: object, description: "FormSchema" }
+                description: { type: string }
+      responses:
+        '200':
+          description: "Field values JSON"
+
+  /api/ai/generate-narrative:
+    post:
+      summary: "AI narrative generation from form values"
+      security: [{ bearerAuth: [] }]
+      responses: { '200': { description: "Generated narrative text" } }
+
+  /api/ai/optimize-schedule:
+    post:
+      summary: "AI schedule optimization suggestions"
+      security: [{ bearerAuth: [] }]
+      responses: { '200': { description: "Suggested schedule assignments" } }
+
+  /api/webhooks:
+    get:
+      summary: "List configured webhooks and supported event types"
+      security: [{ bearerAuth: [] }]
+      responses:
+        '200':
+          description: "Webhook configurations"
+    post:
+      summary: "Test a webhook endpoint"
+      security: [{ bearerAuth: [] }]
+      responses: { '200': { description: "Delivery result" } }
+
+  /api/analytics/trends:
+    get:
+      summary: "Compliance trends and key metrics"
+      security: [{ bearerAuth: [] }]
+      responses:
+        '200':
+          description: "Trend data and aggregated metrics"
+
+  /api/billing/export/claims/{claimId}:
+    get:
+      summary: "Export CMS-1500 claim form as HTML"
+      security: [{ bearerAuth: [] }]
+      parameters:
+        - in: path
+          name: claimId
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        '200':
+          description: "CMS-1500 HTML document"
+
+  /api/notifications/send:
+    post:
+      summary: "Send email or SMS notification"
+      security: [{ bearerAuth: [] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                channel: { type: string, enum: [email, sms] }
+                recipient: { type: string }
+                subject: { type: string }
+                message: { type: string }
+      responses: { '200': { description: "Send result" } }
+
+  /api/auth/forgot-password:
+    post:
+      summary: "Request password reset email"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email: { type: string, format: email }
+      responses: { '200': { description: "Reset email sent" } }
+
+  /api/auth/reset-password:
+    post:
+      summary: "Update password after reset"
+      security: [{ bearerAuth: [] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                password: { type: string, minLength: 8 }
+      responses: { '200': { description: "Password updated" } }
+
+  /api/cron/audit:
+    get:
+      summary: "Trigger scheduled audit run"
+      parameters:
+        - in: query
+          name: token
+          schema: { type: string }
+      responses: { '200': { description: "Audit results" } }
+
+  /api/onboarding/complete:
+    post:
+      summary: "Mark onboarding as complete"
+      security: [{ bearerAuth: [] }]
+      responses: { '200': { description: "Onboarding marked complete" } }
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

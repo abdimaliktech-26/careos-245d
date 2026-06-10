@@ -1,0 +1,24 @@
+{
+  "name": "CareIntake 245D Suite",
+  "short_name": "CareIntake",
+  "description": "Minnesota 245D compliance management for home and community-based service providers. Manage clients, packets, notes, EVV, incidents, billing, and more.",
+  "start_url": "/dashboard",
+  "display": "standalone",
+  "background_color": "#F0F4FF",
+  "theme_color": "#4361EE",
+  "orientation": "portrait-primary",
+  "categories": ["business", "health", "productivity", "medical"],
+  "lang": "en-US",
+  "dir": "ltr",
+  "scope": "/",
+  "id": "/dashboard",
+  "display_override": ["standalone", "fullscreen", "minimal-ui"],
+  "edge_side_panel": {},
+  "icons": [
+    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ],
+  "screenshots": [],
+  "related_applications": [],
+  "prefer_related_applications": false
+}
