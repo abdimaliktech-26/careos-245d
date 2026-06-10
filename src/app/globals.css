@@ -45,13 +45,13 @@ html {
 .dark {
   --color-bg:              #1E1A2E;
   --color-surface:         #2A2440;
-  --color-text:            #EDE4F8;
-  --color-text-muted:      #A898B8;
+  --color-text:            #FFFFFF;
+  --color-text-muted:      #D8CEEA;
   --color-border:          rgba(200, 168, 232, 0.2);
   --color-border-strong:   rgba(200, 168, 232, 0.4);
   --care-primary:          #E8799E;
   --care-primary-end:      #C8A8E8;
-  --care-muted:            #A898B8;
+  --care-muted:            #D8CEEA;
   --care-line:             rgba(200, 168, 232, 0.2);
   --care-surface:          #2A2440;
   --care-surface-2:        #1E1A2E;
