@@ -45,9 +45,6 @@ export default async function ServiceAuthsPage({
     .eq('organization_id', user.organizationId)
 
   const safeAll = allAuths ?? []
-  const active = auths?.filter((a) => a.status === 'active') ?? []
-  const expired = auths?.filter((a) => a.status === 'expired') ?? []
-  const exhausted = auths?.filter((a) => a.status === 'exhausted') ?? []
 
   const totalActive = safeAll.filter((a) => a.status === 'active').length
   const totalExpired = safeAll.filter((a) => a.status === 'expired').length

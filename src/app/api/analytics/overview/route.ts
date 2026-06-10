@@ -1,8 +1,8 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { NextResponse } from 'next/server'
 import { getSession } from '@/lib/auth/get-session'
 import { createClient } from '@/lib/supabase/server'
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   const { user, error } = await getSession()
   if (error || !user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 

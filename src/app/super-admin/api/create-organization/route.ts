@@ -91,7 +91,7 @@ export async function POST(request: Request) {
     }
 
     return NextResponse.json({ id: org.id, adminPassword })
-  } catch (err) {
+  } catch {
     return NextResponse.json({ error: 'Invalid request' }, { status: 400 })
   }
 }

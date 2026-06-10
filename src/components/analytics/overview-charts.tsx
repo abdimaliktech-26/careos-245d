@@ -58,11 +58,11 @@ export function OverviewCharts({ range = 30 }: { range?: number }) {
       .finally(() => setLoading(false))
   }, [range])
 
-  const handleBarClick = useCallback((point: Record<string, unknown>) => {
+  const handleBarClick = useCallback(() => {
     router.push('/form-library')
   }, [router])
 
-  const handlePieClick = useCallback((point: Record<string, unknown>) => {
+  const handlePieClick = useCallback(() => {
     router.push('/packets')
   }, [router])
 

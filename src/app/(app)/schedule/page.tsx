@@ -1,8 +1,6 @@
 import { redirect } from 'next/navigation'
 import { getSession } from '@/lib/auth/get-session'
 import { createClient } from '@/lib/supabase/server'
-import { ScheduleForm } from '@/components/schedule/schedule-form'
-import { ScheduleWeek } from '@/components/schedule/schedule-week'
 import { ScheduleContainer } from './schedule-container'
 
 export default async function SchedulePage({

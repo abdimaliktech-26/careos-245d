@@ -21,8 +21,6 @@ function MailIcon() {
   )
 }
 
-undefined
-
 export default async function HelpCenterPage() {
   const { error } = await getSession()
   if (error) redirect('/auth/login')

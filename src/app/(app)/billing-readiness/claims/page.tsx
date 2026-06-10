@@ -175,7 +175,7 @@ export default async function ClaimsPage({
                 </div>
                 <div>
                   <span className="text-[10px] font-semibold uppercase tracking-[0.08em] text-gray-400 block">Client</span>
-                  <span className="text-[#3A2A4A] font-medium">{detailClient?.legal_name ?? '—'}</span>
+                  <span className="text-[#3A2A4A] font-medium">{((selectedClaim as Record<string, unknown>).clients as { legal_name?: string } | undefined)?.legal_name ?? '—'}</span>
                 </div>
                 <div>
                   <span className="text-[10px] font-semibold uppercase tracking-[0.08em] text-gray-400 block">Payer</span>

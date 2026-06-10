@@ -58,6 +58,60 @@ const PACKET_LABELS: Record<string, string> = {
   annual_review: 'Annual',
 }
 
+export async function checkUpcomingDeadlines(
+  organizationId: string,
+  supabaseClient?: SupabaseReader
+): Promise<UpcomingDeadline[]> {
+  const supabase = supabaseClient ?? await createClient()
+
+  const { data: packets } = await supabase
+    .from('packets')
+    .select(`
+      id,
+      packet_type,
+      due_date,
+      status,
+      packet_forms(
+        id,
+        status,
+        signatures(signer_role, signed_at)
+      ),
+      clients(legal_name)
+    `)
+    .eq('organization_id', organizationId)
+    .neq('status', 'completed')
+    .order('due_date', { ascending: true })
+
+  const results: UpcomingDeadline[] = []
+  const rows = (packets ?? []) as Array<Record<string, unknown>>
+
+  for (const p of rows) {
+    const client = p.clients as { legal_name: string } | null
+    const forms = (p.packet_forms ?? []) as Array<Record<string, unknown>>
+    const sigs = forms.flatMap((f) => (f.signatures ?? []) as Array<{ signer_role: string; signed_at?: string | null }>)
+    const validation = validateRequiredSignatures(sigs)
+    const missingSignatures = validation.missing.length
+    const missingForms = forms.filter((f) => f.status !== 'completed').length
+
+    const dueDate = p.due_date as string
+    const daysRemaining = Math.ceil(
+      (new Date(dueDate).getTime() - Date.now()) / (24 * 60 * 60 * 1000)
+    )
+
+    results.push({
+      packetId: p.id as string,
+      packetType: p.packet_type as string,
+      dueDate,
+      daysRemaining,
+      clientName: client?.legal_name ?? 'Unknown Client',
+      missingSignatures,
+      missingForms,
+    })
+  }
+
+  return results
+}
+
 export async function checkMissingSignatures(
   organizationId: string,
   supabaseClient?: SupabaseReader

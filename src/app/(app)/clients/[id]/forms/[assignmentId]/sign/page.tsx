@@ -7,12 +7,7 @@ import { captureSignatureAndComplete } from '@/lib/forms/actions'
 
 type Props = { params: Promise<{ id: string; assignmentId: string }> }
 
-// Only case managers can sign internally. Client/guardian sign via external portal.
-const SIGNER_TYPES = [
-  { value: 'case_manager', label: 'Case Manager' },
-] as const
-
-type SignerType = typeof SIGNER_TYPES[number]['value']
+type SignerType = 'case_manager'
 
 // Inner component reads search params — must be inside Suspense
 function SignatureForm({ clientId, assignmentId }: { clientId: string; assignmentId: string }) {

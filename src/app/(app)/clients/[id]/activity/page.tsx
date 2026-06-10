@@ -8,17 +8,6 @@ import { ActivityFilters } from './filters'
 
 type Props = { params: Promise<{ id: string }>; searchParams: Promise<{ type?: string }> }
 
-const TYPE_NAMES: Record<string, string> = {
-  signature: 'Signatures',
-  form: 'Forms',
-  incident: 'Incidents',
-  evv: 'EVV',
-  note: 'Notes',
-  document: 'Documents',
-  message: 'Messages',
-  goal: 'Goals',
-}
-
 export default async function ClientActivityPage({ params, searchParams }: Props) {
   const { id } = await params
   const { type } = await searchParams

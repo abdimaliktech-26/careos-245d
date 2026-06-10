@@ -4,7 +4,6 @@ import { getGoal } from '@/lib/goals/actions'
 import { ProgressTimeline, ProgressChart } from '@/components/goals/progress-timeline'
 import { ProgressFormModal } from './progress-form-modal'
 import { GoalEditButton } from './goal-edit-button'
-import type { GoalStatus } from '@/lib/goals/types'
 
 type Props = { params: Promise<{ id: string; goalId: string }> }
 

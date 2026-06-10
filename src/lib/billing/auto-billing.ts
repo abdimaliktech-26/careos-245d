@@ -188,6 +188,11 @@ export async function getAutoBillablePackets(orgId?: string): Promise<AutoBillab
     { data: [] as any[] }
 
   const clientMap = new Map(clients?.map(c => [c.id, c.legal_name]) ?? [])
+  const packetMap = new Map(packets?.map(p => [p.id, p]) ?? [])
+  const existingResults: Array<{ count: number }> = []
+  const ruleByCode = new Map(templates?.map((t: Record<string, unknown>) => [t.code, t]) ?? [])
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const results: any[] = []
 
   for (let i = 0; i < filtered.length; i++) {
     const pf = filtered[i]
