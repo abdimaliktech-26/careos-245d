@@ -33,4 +33,19 @@ describe('CommandPalette', () => {
     await user.click(screen.getByText('New Client'))
     expect(push).toHaveBeenCalledWith('/clients/new')
   })
+
+  test('typed query shows Ask CareAssist item that dispatches careassist:ask', async () => {
+    const user = userEvent.setup()
+    const askListener = vi.fn()
+    window.addEventListener('careassist:ask', askListener)
+    render(<CommandPalette role="staff" />)
+    await user.keyboard('{Meta>}k{/Meta}')
+    await user.type(screen.getByPlaceholderText(/search/i), 'what is a 45 day review')
+    const askItem = await screen.findByText(/Ask CareAssist/i)
+    await user.click(askItem)
+    expect(askListener).toHaveBeenCalledTimes(1)
+    const event = askListener.mock.calls[0][0] as CustomEvent<{ question: string }>
+    expect(event.detail.question).toBe('what is a 45 day review')
+    window.removeEventListener('careassist:ask', askListener)
+  })
 })
