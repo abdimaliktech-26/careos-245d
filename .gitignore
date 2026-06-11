@@ -44,3 +44,4 @@ next-env.d.ts
 # claude-flow runtime data
 /.claude-flow/
 /coverage
+.superpowers/

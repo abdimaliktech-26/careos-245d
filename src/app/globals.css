@@ -1,292 +1,209 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
 
 html {
   scroll-behavior: smooth;
 }
 
+/* ================================================================
+   CareIntake Modern tokens
+   Light = default. Dark = "Void Violet".
+   ================================================================ */
+
 :root {
-  --color-pink:           #F4B8CC;
-  --color-pink-light:     #FDE8F0;
-  --color-pink-mid:       #E8799E;
+  --background:            #FAFAFB;
+  --foreground:            #18181B;
+  --card:                  #FFFFFF;
+  --card-foreground:       #18181B;
+  --popover:               #FFFFFF;
+  --popover-foreground:    #18181B;
+  --primary:               #A21CAF;
+  --primary-foreground:    #FFFFFF;
+  --secondary:             #F4F4F5;
+  --secondary-foreground:  #18181B;
+  --muted:                 #F4F4F5;
+  --muted-foreground:      #71717A;
+  --accent:                #FAF5FF;
+  --accent-foreground:     #7C3AED;
+  --destructive:           #DC2626;
+  --destructive-foreground:#FFFFFF;
+  --border:                #E8E8EC;
+  --input:                 #E8E8EC;
+  --ring:                  #A21CAF;
+  --radius:                0.625rem;
 
-  --color-blue:           #7BC8F0;
-  --color-blue-light:     #D8EEFC;
-  --color-blue-mid:       #4AA8D8;
+  /* Brand gradient (logo, primary CTAs, active nav, key metrics ONLY) */
+  --brand-from:            #DB2777;
+  --brand-to:              #7C3AED;
 
-  --color-purple:         #C8A8E8;
-  --color-purple-light:   #EDE0F8;
+  /* Semantic status (badges) */
+  --status-warn-fg:        #B45309;
+  --status-warn-bg:        #FEF3C7;
+  --status-ok-fg:          #15803D;
+  --status-ok-bg:          #DCFCE7;
+  --status-error-fg:       #B91C1C;
+  --status-error-bg:       #FEE2E2;
 
-  --color-bg:             #EAE5F8;
-  --color-surface:        #FFFFFF;
-  --color-text:           #3A2A4A;
-  --color-text-muted:     #7A6A8A;
-  --color-border:         rgba(200, 168, 232, 0.3);
-  --color-border-strong:  rgba(200, 168, 232, 0.6);
-
-  --gradient-primary:      linear-gradient(135deg, #E8799E, #C8A8E8);
-  --gradient-hero:         linear-gradient(135deg, #E8799E 0%, #C8A8E8 50%, #4AA8D8 100%);
-  --gradient-soft:         linear-gradient(135deg, #FDE8F0, #EDE0F8);
-  --gradient-blue:         linear-gradient(135deg, #D8EEFC, #EAE5F8);
-
-  --shadow-card:           0 4px 24px rgba(180, 140, 220, 0.12);
-  --shadow-button:         0 6px 20px rgba(200, 120, 180, 0.3);
-  --shadow-modal:          0 16px 48px rgba(58, 42, 74, 0.15);
-
-  --care-primary:          #E8799E;
-  --care-primary-end:      #C8A8E8;
-  --care-accent:           #4AA8D8;
-  --care-muted:            #7A6A8A;
-  --care-line:             rgba(200, 168, 232, 0.3);
-  --care-surface:          #FFFFFF;
-  --care-surface-2:        #EDE0F8;
-  --care-cta:              linear-gradient(135deg, #E8799E, #C8A8E8);
+  /* ---- Legacy aliases (keep untouched pages rendering; remove as
+     pages migrate to semantic utilities) ---- */
+  --color-bg:              var(--background);
+  --color-surface:         var(--card);
+  --color-text:            var(--foreground);
+  --color-text-muted:      var(--muted-foreground);
+  --color-border:          var(--border);
+  --color-border-strong:   #D4D4D8;
+  --color-pink:            #F0ABFC;
+  --color-pink-light:      #FAF5FF;
+  --color-pink-mid:        #DB2777;
+  --color-blue:            #A5B4FC;
+  --color-blue-light:      #EEF2FF;
+  --color-blue-mid:        #7C3AED;
+  --color-purple:          #C4B5FD;
+  --color-purple-light:    #F5F3FF;
+  --gradient-primary:      linear-gradient(135deg, var(--brand-from), var(--brand-to));
+  --gradient-hero:         linear-gradient(135deg, var(--brand-from) 0%, var(--brand-to) 100%);
+  --gradient-soft:         linear-gradient(135deg, #FDF2F8, #F5F3FF);
+  --gradient-blue:         linear-gradient(135deg, #EEF2FF, #FAFAFB);
+  --shadow-card:           0 1px 2px rgba(24, 24, 27, 0.05);
+  --shadow-button:         0 1px 2px rgba(24, 24, 27, 0.1);
+  --shadow-modal:          0 16px 48px rgba(24, 24, 27, 0.18);
+  --care-primary:          var(--primary);
+  --care-primary-end:      var(--brand-to);
+  --care-accent:           var(--accent-foreground);
+  --care-muted:            var(--muted-foreground);
+  --care-line:             var(--border);
+  --care-surface:          var(--card);
+  --care-surface-2:        var(--muted);
+  --care-cta:              var(--gradient-primary);
 }
 
 .dark {
-  --color-bg:              #1E1A2E;
-  --color-surface:         #2A2440;
-  --color-text:            #FFFFFF;
-  --color-text-muted:      #D8CEEA;
-  --color-border:          rgba(200, 168, 232, 0.2);
-  --color-border-strong:   rgba(200, 168, 232, 0.4);
-  --care-primary:          #E8799E;
-  --care-primary-end:      #C8A8E8;
-  --care-muted:            #D8CEEA;
-  --care-line:             rgba(200, 168, 232, 0.2);
-  --care-surface:          #2A2440;
-  --care-surface-2:        #1E1A2E;
-}
+  --background:            #09090B;
+  --foreground:            #FAFAFA;
+  --card:                  #0F0F12;
+  --card-foreground:       #FAFAFA;
+  --popover:               #0F0F12;
+  --popover-foreground:    #FAFAFA;
+  --primary:               #A78BFA;
+  --primary-foreground:    #18181B;
+  --secondary:             #1C1C20;
+  --secondary-foreground:  #FAFAFA;
+  --muted:                 #1C1C20;
+  --muted-foreground:      #A1A1AA;
+  --accent:                #1C1528;
+  --accent-foreground:     #C4B5FD;
+  --destructive:           #F87171;
+  --destructive-foreground:#18181B;
+  --border:                #27272A;
+  --input:                 #27272A;
+  --ring:                  #A78BFA;
 
-:root, .dark {
-  --background:        var(--color-bg);
-  --foreground:        var(--color-text);
+  --brand-from:            #F472B6;
+  --brand-to:              #A78BFA;
+
+  --status-warn-fg:        #FBBF24;
+  --status-warn-bg:        rgba(245, 158, 11, 0.14);
+  --status-ok-fg:          #4ADE80;
+  --status-ok-bg:          rgba(34, 197, 94, 0.14);
+  --status-error-fg:       #F87171;
+  --status-error-bg:       rgba(239, 68, 68, 0.14);
+
+  --color-border-strong:   #3F3F46;
+  --color-pink-light:      #1C1528;
+  --color-blue-light:      #16162A;
+  --color-purple-light:    #1C1528;
+  --shadow-card:           0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-modal:          0 16px 48px rgba(0, 0, 0, 0.6);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-  --color-primary: var(--care-primary);
-  --color-app-bg: var(--color-bg);
+  --color-background:           var(--background);
+  --color-foreground:           var(--foreground);
+  --color-card:                 var(--card);
+  --color-card-foreground:      var(--card-foreground);
+  --color-popover:              var(--popover);
+  --color-popover-foreground:   var(--popover-foreground);
+  --color-primary:              var(--primary);
+  --color-primary-foreground:   var(--primary-foreground);
+  --color-secondary:            var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted:                var(--muted);
+  --color-muted-foreground:     var(--muted-foreground);
+  --color-accent:               var(--accent);
+  --color-accent-foreground:    var(--accent-foreground);
+  --color-destructive:          var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border:               var(--border);
+  --color-input:                var(--input);
+  --color-ring:                 var(--ring);
+  --color-brand-from:           var(--brand-from);
+  --color-brand-to:             var(--brand-to);
+  --color-status-warn:          var(--status-warn-fg);
+  --color-status-warn-bg:       var(--status-warn-bg);
+  --color-status-ok:            var(--status-ok-fg);
+  --color-status-ok-bg:         var(--status-ok-bg);
+  --color-status-error:         var(--status-error-fg);
+  --color-status-error-bg:      var(--status-error-bg);
+  --color-app-bg:               var(--background);
+
+  --font-sans: "Geist", "Geist Fallback", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Geist Mono", "Geist Mono Fallback", ui-monospace, monospace;
+
+  --radius-xs: calc(var(--radius) * 0.5);
+  --radius-sm: calc(var(--radius) * 0.75);
+  --radius-md: calc(var(--radius) * 0.875);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.5);
 }
 
-/* Auth/marketing surfaces */
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Auth/marketing surfaces (retinted to new brand) */
 .dot-grid {
   background:
-    radial-gradient(circle at 20% 10%, rgba(232, 121, 158, 0.08), transparent 28%),
-    radial-gradient(circle at 85% 0%, rgba(200, 168, 232, 0.07), transparent 26%),
-    radial-gradient(circle, rgba(232, 121, 158, 0.05) 1px, transparent 1px);
+    radial-gradient(circle at 20% 10%, rgba(219, 39, 119, 0.06), transparent 28%),
+    radial-gradient(circle at 85% 0%, rgba(124, 58, 237, 0.06), transparent 26%),
+    radial-gradient(circle, rgba(124, 58, 237, 0.05) 1px, transparent 1px);
   background-size: auto, auto, 28px 28px;
 }
 
-/* Card surfaces */
+/* Legacy card/input surfaces — kept until pages migrate to shadcn Card/Input */
 .care-panel {
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
+  background: var(--card);
+  border: 1px solid var(--border);
   box-shadow: var(--shadow-card);
 }
 
-/* Form inputs */
 .care-input {
-  border-color: var(--color-border);
-  background: var(--color-surface);
-  border-radius: 12px;
+  border-color: var(--input);
+  background: var(--card);
+  border-radius: var(--radius-md);
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
 .care-input:focus {
   outline: none;
-  border-color: var(--color-blue-mid);
-  box-shadow: 0 0 0 3px rgba(74, 168, 216, 0.3);
-}
-
-body {
-  background: var(--color-bg);
-  color: var(--color-text);
-  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  border-color: var(--ring);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 25%, transparent);
 }
 
 /* Thin scrollbar */
 .scrollbar-thin::-webkit-scrollbar          { width: 4px; height: 4px; }
 .scrollbar-thin::-webkit-scrollbar-track    { background: transparent; }
-.scrollbar-thin::-webkit-scrollbar-thumb    { background: #D8C8E8; border-radius: 4px; }
-.scrollbar-thin::-webkit-scrollbar-thumb:hover { background: #C8A8E8; }
-
-.dark .scrollbar-thin::-webkit-scrollbar-thumb {
-  background: #3A2A5A;
-}
-.dark .scrollbar-thin::-webkit-scrollbar-thumb:hover {
-  background: #5A4A7A;
-}
-
-/* Dark mode card / form overrides */
-.dark .care-panel {
-  background: var(--care-surface);
-  border-color: var(--care-line);
-}
-.dark .care-input {
-  background: var(--care-surface);
-  border-color: var(--care-line);
-  color: var(--foreground);
-}
-.dark .care-input:focus {
-  border-color: var(--color-blue-mid);
-  box-shadow: 0 0 0 3px rgba(74, 168, 216, 0.3);
-}
+.scrollbar-thin::-webkit-scrollbar-thumb    { background: var(--border); border-radius: 4px; }
+.scrollbar-thin::-webkit-scrollbar-thumb:hover { background: var(--color-border-strong); }
 
 /* ================================================================
-   LIGHT MODE COLOR OVERRIDES (apply to both :root active states)
-   ================================================================ */
-
-/* Backgrounds */
-.bg-white      { background: var(--color-surface) !important; }
-.bg-gray-50    { background: var(--color-bg) !important; }
-.bg-gray-100   { background: var(--color-purple-light) !important; }
-.bg-gray-200   { background: rgba(200, 168, 232, 0.2) !important; }
-.bg-gray-50\/50 { background: rgba(234, 229, 248, 0.5) !important; }
-.bg-gray-50\/60 { background: rgba(234, 229, 248, 0.6) !important; }
-
-/* Background — branded */
-.bg-\[\#EEF2FF\] { background: var(--color-blue-light) !important; }
-.bg-\[\#F8FAFC\] { background: var(--color-bg) !important; }
-.bg-\[\#F0F4FF\] { background: var(--color-bg) !important; }
-.bg-\[\#E5E7EB\] { background: rgba(200, 168, 232, 0.2) !important; }
-
-/* Text */
-.text-black       { color: var(--color-text) !important; }
-.text-\[\#0F172A\] { color: var(--color-text) !important; }
-.text-\[\#111827\] { color: var(--color-text) !important; }
-.text-\[\#374151\] { color: var(--color-text) !important; }
-.text-\[\#64748B\] { color: var(--color-text-muted) !important; }
-.text-\[\#94A3B8\] { color: var(--color-text-muted) !important; }
-.text-\[\#6B7280\] { color: var(--color-text-muted) !important; }
-.text-\[\#4361EE\] { color: var(--color-pink-mid) !important; }
-.text-gray-400 { color: var(--color-text-muted) !important; }
-.text-gray-500 { color: var(--color-text-muted) !important; }
-.text-gray-600 { color: var(--color-text-muted) !important; }
-.text-gray-700 { color: var(--color-text) !important; }
-.text-gray-800 { color: var(--color-text) !important; }
-.text-gray-900 { color: var(--color-text) !important; }
-
-/* Links */
-a:not([class*="text-"]) { color: var(--color-blue-mid); }
-a:not([class*="text-"]):hover { color: var(--color-pink-mid); }
-
-/* Borders */
-.border-gray-100,
-.border-gray-200,
-.border-\[\#E5E7EB\] { border-color: var(--color-border) !important; }
-.border-\[\#C7D2FE\] { border-color: var(--color-border-strong) !important; }
-.border-r { border-color: var(--color-border) !important; }
-
-/* Badges / status pills */
-.bg-blue-50    { background: var(--color-blue-light) !important; }
-.bg-green-50   { background: var(--color-purple-light) !important; }
-.bg-emerald-50 { background: var(--color-purple-light) !important; }
-.bg-red-50     { background: var(--color-pink-light) !important; }
-.bg-amber-50   { background: var(--color-pink-light) !important; }
-.bg-yellow-50  { background: var(--color-pink-light) !important; }
-.bg-orange-50  { background: var(--color-pink-light) !important; }
-.bg-purple-50  { background: var(--color-purple-light) !important; }
-.bg-indigo-50  { background: var(--color-blue-light) !important; }
-.bg-teal-50    { background: var(--color-blue-light) !important; }
-.bg-cyan-50    { background: var(--color-blue-light) !important; }
-.bg-pink-50    { background: var(--color-pink-light) !important; }
-.bg-violet-50  { background: var(--color-purple-light) !important; }
-
-/* Badge text */
-.text-blue-700    { color: var(--color-blue-mid) !important; }
-.text-green-700   { color: var(--color-text-muted) !important; }
-.text-emerald-700 { color: var(--color-text-muted) !important; }
-.text-red-700     { color: var(--color-pink-mid) !important; }
-.text-amber-700   { color: var(--color-pink-mid) !important; }
-.text-yellow-700  { color: var(--color-pink-mid) !important; }
-.text-orange-700  { color: var(--color-pink-mid) !important; }
-.text-purple-700  { color: #9060C0 !important; }
-.text-teal-700    { color: var(--color-blue-mid) !important; }
-
-/* Hover states */
-.hover\:bg-gray-50:hover,
-.hover\:bg-gray-50\/60:hover,
-.hover\:bg-gray-50\/50:hover { background: var(--color-pink-light) !important; }
-.hover\:bg-gray-100:hover { background: var(--color-pink-light) !important; }
-
-/* Table dividers */
-.divide-gray-50 > *  { border-color: var(--color-border) !important; }
-.divide-gray-100 > * { border-color: var(--color-border) !important; }
-
-/* Box shadows — soften */
-[style*="box-shadow"] {
-  box-shadow: var(--shadow-card) !important;
-}
-
-/* ================================================================
-   DARK MODE OVERRIDES
-   ================================================================ */
-
-.dark .bg-white      { background: var(--care-surface) !important; }
-.dark .bg-gray-50    { background: var(--care-surface-2) !important; }
-.dark .bg-gray-100   { background: var(--care-surface) !important; }
-.dark .bg-gray-200   { background: rgba(200, 168, 232, 0.1) !important; }
-.dark .bg-gray-50\/50 { background: rgba(30, 26, 46, 0.5) !important; }
-.dark .bg-gray-50\/60 { background: rgba(30, 26, 46, 0.6) !important; }
-.dark .bg-\[\#EEF2FF\] { background: rgba(74, 168, 216, 0.12) !important; }
-.dark .bg-\[\#F8FAFC\] { background: var(--care-surface-2) !important; }
-.dark .bg-\[\#F0F4FF\] { background: var(--care-surface-2) !important; }
-
-.dark .bg-blue-50    { background: rgba(74, 168, 216, 0.15) !important; }
-.dark .bg-green-50   { background: rgba(200, 168, 232, 0.15) !important; }
-.dark .bg-emerald-50 { background: rgba(200, 168, 232, 0.15) !important; }
-.dark .bg-red-50     { background: rgba(232, 121, 158, 0.15) !important; }
-.dark .bg-amber-50   { background: rgba(232, 121, 158, 0.15) !important; }
-.dark .bg-yellow-50  { background: rgba(232, 121, 158, 0.15) !important; }
-.dark .bg-orange-50  { background: rgba(232, 121, 158, 0.15) !important; }
-.dark .bg-purple-50  { background: rgba(200, 168, 232, 0.15) !important; }
-.dark .bg-indigo-50  { background: rgba(74, 168, 216, 0.15) !important; }
-.dark .bg-teal-50    { background: rgba(74, 168, 216, 0.15) !important; }
-.dark .bg-cyan-50    { background: rgba(74, 168, 216, 0.15) !important; }
-.dark .bg-pink-50    { background: rgba(232, 121, 158, 0.15) !important; }
-.dark .bg-violet-50  { background: rgba(200, 168, 232, 0.15) !important; }
-
-.dark .text-black       { color: var(--color-text) !important; }
-.dark .text-white       { color: var(--color-text) !important; }
-.dark .text-\[\#0F172A\] { color: var(--color-text) !important; }
-.dark .text-\[\#111827\] { color: var(--color-text) !important; }
-.dark .text-\[\#374151\] { color: var(--color-text) !important; }
-.dark .text-\[\#64748B\] { color: var(--color-text-muted) !important; }
-.dark .text-\[\#94A3B8\] { color: var(--color-text-muted) !important; }
-.dark .text-\[\#6B7280\] { color: var(--color-text-muted) !important; }
-.dark .text-\[\#4361EE\] { color: var(--color-pink-mid) !important; }
-.dark .text-gray-400 { color: var(--color-text-muted) !important; }
-.dark .text-gray-500 { color: var(--color-text-muted) !important; }
-.dark .text-gray-600 { color: var(--color-text-muted) !important; }
-.dark .text-gray-700 { color: var(--color-text) !important; }
-.dark .text-gray-800 { color: var(--color-text) !important; }
-.dark .text-gray-900 { color: var(--color-text) !important; }
-
-.dark .border-gray-100,
-.dark .border-gray-200,
-.dark .border-\[\#E5E7EB\] { border-color: var(--care-line) !important; }
-.dark .border-\[\#C7D2FE\] { border-color: rgba(200, 168, 232, 0.4) !important; }
-.dark .border-r { border-color: var(--care-line) !important; }
-
-.dark .hover\:bg-gray-100 { background: transparent !important; }
-.dark .hover\:bg-gray-50:hover,
-.dark .hover\:bg-gray-50\/60:hover,
-.dark .hover\:bg-gray-50\/50:hover { background: rgba(42, 36, 64, 0.8) !important; }
-
-.dark .divide-gray-50 > *  { border-color: var(--care-line) !important; }
-.dark .divide-gray-100 > * { border-color: var(--care-line) !important; }
-
-.dark [style*="box-shadow"] {
-  box-shadow: var(--shadow-modal) !important;
-}
-
-/* ================================================================
-   ANIMATIONS
+   ANIMATIONS (unchanged from previous system)
    ================================================================ */
 
 @keyframes slide-down {
@@ -308,7 +225,6 @@ a:not([class*="text-"]):hover { color: var(--color-pink-mid); }
 .animate-slide-up   { animation: slide-up 0.25s ease-out; }
 .animate-float      { animation: float 6s ease-in-out infinite; }
 
-/* Homepage mockup motion */
 @keyframes slide-in-left {
   from { transform: translateX(-20px); opacity: 0; }
   to   { transform: translateX(0); opacity: 1; }
@@ -346,38 +262,23 @@ a:not([class*="text-"]):hover { color: var(--color-pink-mid); }
   50% { opacity: 0.4; }
 }
 
-.stat-card-mockup {
-  animation: scale-in 0.5s ease-out both;
-}
-.table-row-mockup {
-  animation: slide-in-right 0.4s ease-out both;
-}
-.counter-mockup {
-  animation: count-up 0.6s ease-out both;
-}
+.stat-card-mockup { animation: scale-in 0.5s ease-out both; }
+.table-row-mockup { animation: slide-in-right 0.4s ease-out both; }
+.counter-mockup   { animation: count-up 0.6s ease-out both; }
 
-/* Scanning line effect */
 .scanline-mockup {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   height: 2px;
-  background: linear-gradient(90deg, transparent, rgba(232,121,158,0.4), transparent);
+  background: linear-gradient(90deg, transparent, rgba(219, 39, 119, 0.4), transparent);
   animation: scan 3s ease-in-out infinite;
   pointer-events: none;
   border-radius: 1px;
 }
 
-/* Typing bar */
-.typing-bar {
-  animation: typing 2.5s ease-in-out infinite;
-}
+.typing-bar { animation: typing 2.5s ease-in-out infinite; }
 
-/* Status blinks */
-.status-blink-danger {
-  animation: blink-warning 1.5s ease-in-out infinite;
-}
-.status-blink-normal {
-  animation: blink-warning 4s ease-in-out infinite;
-}
+.status-blink-danger { animation: blink-warning 1.5s ease-in-out infinite; }
+.status-blink-normal { animation: blink-warning 4s ease-in-out infinite; }

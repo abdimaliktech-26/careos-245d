@@ -3,6 +3,8 @@ import { getSession } from '@/lib/auth/get-session'
 import { createClient as createServerClient } from '@/lib/supabase/server'
 import Sidebar from '@/components/layout/sidebar'
 import MobileSidebar from '@/components/layout/mobile-sidebar'
+import { AppHeader } from '@/components/layout/app-header'
+import { CommandPalette } from '@/components/layout/command-palette'
 import CareAssistChat from '@/components/chat/CareAssistChat'
 import { SessionGuard } from '@/components/session-guard'
 import { RealtimeProvider } from '@/components/layout/realtime-provider'
@@ -38,7 +40,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
   return (
     <RealtimeProvider user={user}>
       <div
-        className="flex h-screen overflow-hidden bg-[#F0F4FF] dark:bg-[#3A2A4A]"
+        className="flex h-screen overflow-hidden bg-background"
         style={{
           '--brand-primary': brandPrimary,
           '--brand-accent': brandAccent,
@@ -47,14 +49,18 @@ export default async function AppLayout({ children }: { children: React.ReactNod
         <MobileSidebar branding={branding}>
           <Sidebar user={user} branding={branding} />
         </MobileSidebar>
-        <main className="flex-1 overflow-y-auto bg-[#F0F4FF] dark:bg-[#3A2A4A]">
-          <div className="p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto">
-            <SubscriptionBanner />
-            <ComplianceAlertBanner />
-            {children}
-          </div>
-        </main>
+        <div className="flex flex-1 flex-col overflow-hidden">
+          <AppHeader />
+          <main className="flex-1 overflow-y-auto bg-background">
+            <div className="mx-auto max-w-7xl p-4 sm:p-6 lg:p-8">
+              <SubscriptionBanner />
+              <ComplianceAlertBanner />
+              {children}
+            </div>
+          </main>
+        </div>
         <SessionGuard />
+        <CommandPalette role={user.role} />
         <CareAssistChat />
       </div>
     </RealtimeProvider>

@@ -42,8 +42,7 @@ export function SubscriptionBanner() {
           </div>
           <Link
             href="/admin/settings"
-            className="rounded-lg px-3 py-1.5 text-[11px] font-semibold text-white transition-opacity hover:opacity-90"
-            style={{ background: 'linear-gradient(135deg, #E8799E, #C8A8E8)' }}
+            className="rounded-lg bg-gradient-to-br from-brand-from to-brand-to px-3 py-1.5 text-[11px] font-semibold text-white transition-opacity hover:opacity-90"
           >
             Details
           </Link>
@@ -67,8 +66,7 @@ export function SubscriptionBanner() {
           </div>
           <Link
             href="/admin/settings"
-            className="rounded-lg px-3 py-1.5 text-[11px] font-semibold text-white transition-opacity hover:opacity-90"
-            style={{ background: 'linear-gradient(135deg, #E8799E, #C8A8E8)' }}
+            className="rounded-lg bg-gradient-to-br from-brand-from to-brand-to px-3 py-1.5 text-[11px] font-semibold text-white transition-opacity hover:opacity-90"
           >
             Details
           </Link>
