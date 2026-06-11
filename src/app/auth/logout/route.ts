@@ -8,7 +8,7 @@ export async function POST() {
   } catch {
     // signOut failed — still redirect to login
   }
-  return NextResponse.redirect(new URL('/auth/login', process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'))
+  return NextResponse.redirect(new URL('/auth/login', process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'), { status: 303 })
 }
 
 export async function GET() {

@@ -1,6 +1,7 @@
 import { redirect } from 'next/navigation'
 import { getSession } from '@/lib/auth/get-session'
 import { SuperAdminSidebar } from '@/components/super-admin/sidebar'
+import { SessionGuard } from '@/components/session-guard'
 
 export default async function SuperAdminLayout({
   children,
@@ -18,6 +19,7 @@ export default async function SuperAdminLayout({
       <main className="flex-1 overflow-y-auto bg-background">
         <div className="p-6 sm:p-8 lg:p-10 max-w-7xl mx-auto">
           {children}
+      <SessionGuard />
         </div>
       </main>
     </div>

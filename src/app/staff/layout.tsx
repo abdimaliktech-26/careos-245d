@@ -1,5 +1,6 @@
 import { redirect } from 'next/navigation'
 import { getSession } from '@/lib/auth/get-session'
+import { SessionGuard } from '@/components/session-guard'
 
 export default async function StaffLayout({
   children,
@@ -25,7 +26,8 @@ export default async function StaffLayout({
           </button>
         </form>
       </nav>
-      <main className="p-6">{children}</main>
+      <main className="p-6">{children}
+      <SessionGuard /></main>
     </div>
   )
 }
