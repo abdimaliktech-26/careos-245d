@@ -28,6 +28,13 @@ export default function LoginPage() {
         return
       }
 
+      // Step up to second factor when the account has verified MFA
+      const { data: aal } = await supabase.auth.mfa.getAuthenticatorAssuranceLevel()
+      if (aal?.nextLevel === 'aal2' && aal.nextLevel !== aal.currentLevel) {
+        router.push('/auth/mfa')
+        return
+      }
+
       router.push('/dashboard')
       router.refresh()
     } catch (err) {
