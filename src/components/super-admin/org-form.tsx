@@ -18,6 +18,8 @@ export function CreateOrgForm() {
     state: 'MN',
     zip: '',
   })
+  const [plan, setPlan] = useState('trial')
+  const [trialDays, setTrialDays] = useState(30)
   const [createAdmin, setCreateAdmin] = useState(true)
   const [adminName, setAdminName] = useState('')
   const [adminEmail, setAdminEmail] = useState(form.email)
@@ -31,6 +33,8 @@ export function CreateOrgForm() {
     try {
       const body = JSON.stringify({
         ...form,
+        plan,
+        trialDays: plan === 'trial' ? trialDays : undefined,
         createAdmin,
         adminName: createAdmin ? adminName.trim() : undefined,
         adminEmail: createAdmin ? adminEmail.trim() : undefined,
@@ -130,6 +134,43 @@ export function CreateOrgForm() {
           <label className="block text-[12px] font-semibold text-foreground mb-1">ZIP</label>
           <Input value={form.zip} onChange={(e) => setForm({ ...form, zip: e.target.value })} placeholder="55401" />
         </div>
+      </div>
+
+      {/* Subscription */}
+      <div className="rounded-xl border border-border bg-muted/40 p-4">
+        <p className="mb-3 text-[12px] font-semibold text-foreground">Subscription</p>
+        <div className="grid grid-cols-2 gap-3">
+          <div>
+            <label className="block text-[11px] font-semibold uppercase tracking-[0.06em] text-muted-foreground mb-1">Plan</label>
+            <select
+              value={plan}
+              onChange={(e) => setPlan(e.target.value)}
+              className="w-full rounded-lg border border-input bg-card px-3 py-2 text-sm text-foreground outline-none focus:border-ring focus:ring-2 focus:ring-ring/15"
+            >
+              <option value="trial">Trial (no card)</option>
+              <option value="starter">Starter</option>
+              <option value="pro">Pro</option>
+              <option value="enterprise">Enterprise</option>
+            </select>
+          </div>
+          {plan === 'trial' && (
+            <div>
+              <label className="block text-[11px] font-semibold uppercase tracking-[0.06em] text-muted-foreground mb-1">Trial length (days)</label>
+              <Input
+                type="number"
+                min={1}
+                max={120}
+                value={trialDays}
+                onChange={(e) => setTrialDays(Number(e.target.value) || 30)}
+              />
+            </div>
+          )}
+        </div>
+        <p className="mt-2 text-[11px] text-muted-foreground">
+          {plan === 'trial'
+            ? 'Org starts on a free trial; they subscribe via Stripe from Admin → Settings before it expires.'
+            : 'Paid plan is provisioned manually — Stripe billing must be set up by the org admin in Admin → Settings (their checkout will sync the plan).'}
+        </p>
       </div>
 
       {/* Admin user creation */}

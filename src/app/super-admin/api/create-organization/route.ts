@@ -5,11 +5,20 @@ import { createAdminClient } from '@/lib/supabase/admin'
 export async function POST(request: Request) {
   try {
     const body = await request.json()
-    const { name, email, phone, address, city, state, zip, createAdmin, adminName, adminEmail } = body
+    const { name, email, phone, address, city, state, zip, createAdmin, adminName, adminEmail, plan, trialDays } = body
 
     if (!name || typeof name !== 'string' || name.trim().length === 0) {
       return NextResponse.json({ error: 'Organization name is required' }, { status: 400 })
     }
+
+    const VALID_PLANS = new Set(['trial', 'starter', 'pro', 'enterprise'])
+    const chosenPlan = VALID_PLANS.has(plan) ? plan : 'trial'
+    const days = Number.isFinite(Number(trialDays)) ? Math.min(120, Math.max(1, Number(trialDays))) : 30
+    // Trial gets an explicit expiry; paid plans run until Stripe sync overwrites
+    const planExpiresAt =
+      chosenPlan === 'trial'
+        ? new Date(Date.now() + days * 24 * 60 * 60 * 1000).toISOString()
+        : null
 
     const admin = createAdminClient()
 
@@ -24,6 +33,8 @@ export async function POST(request: Request) {
         state: state || 'MN',
         zip: zip || null,
         status: 'pending',
+        plan: chosenPlan,
+        plan_expires_at: planExpiresAt,
       })
       .select('id')
       .single()
