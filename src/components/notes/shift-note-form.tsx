@@ -1,6 +1,7 @@
 'use client'
 
 import { useActionState, useState } from 'react'
+import { NoteQualityChecker } from '@/components/notes/note-quality-checker'
 import { createShiftNote, updateShiftNote } from '@/lib/notes/actions'
 import { useVoiceInput, type VoiceLang } from '@/hooks/use-voice-input'
 import { VoiceMicButton } from '@/components/ui/voice-mic-button'
@@ -189,6 +190,8 @@ export function ShiftNoteForm({ clients, editNote, onCancel }: { clients: Client
             isListening ? 'border-red-300 ring-2 ring-red-100' : ''
           }`}
         />
+
+        <NoteQualityChecker noteText={narrative} />
 
         {voiceError && (
           <p className="mt-1 flex items-center justify-between rounded-lg bg-orange-50 px-3 py-1.5 text-xs text-orange-700">

@@ -2,6 +2,7 @@
 
 import { useActionState } from 'react'
 import { createIncident } from '@/lib/incidents/actions'
+import { IncidentTriageHelper } from '@/components/incidents/incident-triage-helper'
 
 type ClientOption = {
   id: string
@@ -70,6 +71,8 @@ export function IncidentForm({ clients }: { clients: ClientOption[] }) {
         <span className="text-xs font-bold uppercase tracking-wide text-[#667085]">Description</span>
         <textarea name="description" required rows={4} className="care-input mt-1 w-full rounded-xl border px-3 py-2.5 text-sm" />
       </label>
+
+      <IncidentTriageHelper />
 
       <label className="block">
         <span className="text-xs font-bold uppercase tracking-wide text-[#667085]">Immediate Actions</span>
