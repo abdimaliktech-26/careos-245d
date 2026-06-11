@@ -20,7 +20,7 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 1,
-  themeColor: "#E8799E",
+  themeColor: "#A21CAF",
 };
 
 export const metadata: Metadata = {
@@ -56,7 +56,7 @@ export default function RootLayout({
         <OfflineBanner />
         <script
           dangerouslySetInnerHTML={{
-            __html: `if('serviceWorker'in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('/sw.js').catch(()=>{})})}`,
+            __html: `if('serviceWorker'in navigator){var h=location.hostname;if(h==='localhost'||h==='127.0.0.1'){navigator.serviceWorker.getRegistrations().then(rs=>rs.forEach(r=>r.unregister())).catch(()=>{})}else{window.addEventListener('load',()=>{navigator.serviceWorker.register('/sw.js').catch(()=>{})})}}`,
           }}
         />
       </body>

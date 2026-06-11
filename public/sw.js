@@ -1,6 +1,6 @@
-const STATIC_CACHE = 'careintake-static-v3'
-const NAV_CACHE = 'careintake-nav-v3'
-const API_CACHE = 'careintake-api-v3'
+const STATIC_CACHE = 'careintake-static-v4'
+const NAV_CACHE = 'careintake-nav-v4'
+const API_CACHE = 'careintake-api-v4'
 
 const PRECACHE_URLS = [
   '/',

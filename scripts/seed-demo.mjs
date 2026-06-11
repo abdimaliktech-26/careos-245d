@@ -42,7 +42,7 @@ async function deleteExistingDemo() {
   }
 
   let page = 1
-  // eslint-disable-next-line no-constant-condition
+   
   while (true) {
     const { data } = await admin.auth.admin.listUsers({ page, perPage: 200 })
     const users = data?.users ?? []

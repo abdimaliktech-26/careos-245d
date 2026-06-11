@@ -48,7 +48,7 @@ function teamsMessage(title: string, text: string) {
   return {
     '@type': 'MessageCard',
     '@context': 'http://schema.org/extensions',
-    themeColor: '4361EE',
+    themeColor: 'A21CAF',
     summary: title,
     title,
     text: text.slice(0, 2000),
