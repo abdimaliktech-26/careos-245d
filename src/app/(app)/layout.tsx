@@ -4,6 +4,7 @@ import { createClient as createServerClient } from '@/lib/supabase/server'
 import Sidebar from '@/components/layout/sidebar'
 import MobileSidebar from '@/components/layout/mobile-sidebar'
 import { AppHeader } from '@/components/layout/app-header'
+import { CommandPalette } from '@/components/layout/command-palette'
 import CareAssistChat from '@/components/chat/CareAssistChat'
 import { SessionGuard } from '@/components/session-guard'
 import { RealtimeProvider } from '@/components/layout/realtime-provider'
@@ -59,6 +60,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
           </main>
         </div>
         <SessionGuard />
+        <CommandPalette role={user.role} />
         <CareAssistChat />
       </div>
     </RealtimeProvider>
