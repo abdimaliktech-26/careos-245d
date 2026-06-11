@@ -4,7 +4,7 @@ import { useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 
 // HIPAA §164.312(a)(2)(iii) — automatic logoff after period of inactivity
-const IDLE_MS = 30 * 60 * 1000 // 30 minutes
+const IDLE_MS = 10 * 60 * 1000 // 10 minutes
 
 export function SessionGuard() {
   const router = useRouter()

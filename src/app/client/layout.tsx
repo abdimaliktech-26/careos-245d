@@ -1,6 +1,7 @@
 import { redirect } from 'next/navigation'
 import { getSession } from '@/lib/auth/get-session'
 import ClientSidebar from './_components/client-sidebar'
+import { SessionGuard } from '@/components/session-guard'
 
 export default async function ClientLayout({
   children,
@@ -19,6 +20,7 @@ export default async function ClientLayout({
       <main className="flex-1 overflow-y-auto bg-background">
         <div className="p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto">
           {children}
+      <SessionGuard />
         </div>
       </main>
     </div>
