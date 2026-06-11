@@ -75,13 +75,13 @@ export function ActivityTimeline({ entries, filter }: { entries: ActivityEntry[]
   if (filtered.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center py-16 text-center">
-        <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-[#EEF2FF]">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#E8799E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-accent">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#DB2777" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
           </svg>
         </div>
-        <p className="text-sm font-semibold text-[#3A2A4A]">No activity yet</p>
-        <p className="mt-1 text-xs text-[#94A3B8]">Activity from all sources will appear here.</p>
+        <p className="text-sm font-semibold text-foreground">No activity yet</p>
+        <p className="mt-1 text-xs text-muted-foreground">Activity from all sources will appear here.</p>
       </div>
     )
   }
@@ -97,12 +97,12 @@ export function ActivityTimeline({ entries, filter }: { entries: ActivityEntry[]
     <div className="space-y-8">
       {Object.entries(grouped).map(([dateLabel, group]) => (
         <div key={dateLabel}>
-          <h3 className="text-[10px] font-bold uppercase tracking-[0.14em] text-[#94A3B8] mb-4">{dateLabel}</h3>
+          <h3 className="text-[10px] font-bold uppercase tracking-[0.14em] text-muted-foreground mb-4">{dateLabel}</h3>
           <div className="relative">
-            <div className="absolute left-[11px] top-2 bottom-2 w-px bg-gray-200" />
+            <div className="absolute left-[11px] top-2 bottom-2 w-px bg-muted" />
             <div className="space-y-3">
               {group.map((entry) => {
-                const colors = TYPE_COLORS[entry.type] ?? { dot: 'bg-gray-400', line: 'border-gray-300', bg: 'bg-gray-50' }
+                const colors = TYPE_COLORS[entry.type] ?? { dot: 'bg-gray-400', line: 'border-gray-300', bg: 'bg-muted' }
                 return (
                   <div key={entry.id} className="flex gap-3">
                     <div className="relative flex flex-col items-center">
@@ -118,12 +118,12 @@ export function ActivityTimeline({ entries, filter }: { entries: ActivityEntry[]
                     </div>
                     <div className="flex-1 min-w-0 pb-3">
                       <div className="care-panel rounded-xl px-4 py-3">
-                        <p className="text-[12px] font-semibold text-[#3A2A4A] capitalize">{entry.action.replaceAll('_', ' ')}</p>
-                        <p className="text-[11px] text-[#64748B] mt-0.5">{entry.description}</p>
+                        <p className="text-[12px] font-semibold text-foreground capitalize">{entry.action.replaceAll('_', ' ')}</p>
+                        <p className="text-[11px] text-muted-foreground mt-0.5">{entry.description}</p>
                         <div className="flex items-center gap-2 mt-1.5">
-                          <span className="text-[9px] font-bold uppercase tracking-wider text-[#94A3B8]">{entry.userName}</span>
+                          <span className="text-[9px] font-bold uppercase tracking-wider text-muted-foreground">{entry.userName}</span>
                           <span className="w-1 h-1 rounded-full bg-[#CBD5E1]" />
-                          <span className="text-[9px] text-[#94A3B8]">{formatTimestamp(entry.timestamp)}</span>
+                          <span className="text-[9px] text-muted-foreground">{formatTimestamp(entry.timestamp)}</span>
                         </div>
                       </div>
                     </div>

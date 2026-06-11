@@ -54,7 +54,7 @@ export function CreateUserDialog({ organizations: orgs }: Props) {
       <button
         onClick={() => { setError(null); setResult(null); setFirstName(''); setLastName(''); setEmail(''); setRole('staff'); setOrgId(''); setOpen(true) }}
         className="inline-flex items-center gap-1.5 rounded-xl px-4 py-2.5 text-[13px] font-semibold text-white shadow-sm transition-all hover:shadow-md hover:scale-[1.01]"
-        style={{ background: 'linear-gradient(135deg, #E8799E 0%, #C8A8E8 100%)' }}
+        style={{ background: 'var(--gradient-primary)' }}
       >
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
           <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
@@ -66,15 +66,15 @@ export function CreateUserDialog({ organizations: orgs }: Props) {
         <div className="fixed inset-0 z-50 flex items-center justify-center">
           <div className="absolute inset-0 bg-black/40" onClick={handleClose} />
 
-          <div className="relative z-10 w-full max-w-md rounded-2xl border border-gray-100 bg-white p-6 shadow-2xl">
+          <div className="relative z-10 w-full max-w-md rounded-2xl border border-border bg-card p-6 shadow-2xl">
             <div className="mb-5 flex items-center justify-between">
               <div>
-                <h2 className="text-lg font-bold text-[#3A2A4A]">Create User Account</h2>
-                <p className="mt-0.5 text-[12px] text-[#94A3B8]">Add an org admin, program manager, or staff member</p>
+                <h2 className="text-lg font-bold text-foreground">Create User Account</h2>
+                <p className="mt-0.5 text-[12px] text-muted-foreground">Add an org admin, program manager, or staff member</p>
               </div>
               <button
                 onClick={handleClose}
-                className="flex h-8 w-8 items-center justify-center rounded-lg text-[#94A3B8] hover:bg-gray-100 hover:text-[#3A2A4A] transition-colors"
+                className="flex h-8 w-8 items-center justify-center rounded-lg text-muted-foreground hover:bg-muted/40 hover:text-foreground transition-colors"
               >
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
                   <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
@@ -102,7 +102,7 @@ export function CreateUserDialog({ organizations: orgs }: Props) {
                 <button
                   onClick={handleClose}
                   className="w-full rounded-xl px-4 py-2.5 text-[13px] font-semibold text-white transition-opacity hover:opacity-90"
-                  style={{ background: 'linear-gradient(135deg, #E8799E 0%, #C8A8E8 100%)' }}
+                  style={{ background: 'var(--gradient-primary)' }}
                 >
                   Done
                 </button>
@@ -111,47 +111,47 @@ export function CreateUserDialog({ organizations: orgs }: Props) {
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-[11px] font-semibold uppercase tracking-[0.06em] text-[#64748B] mb-1">First Name</label>
+                    <label className="block text-[11px] font-semibold uppercase tracking-[0.06em] text-muted-foreground mb-1">First Name</label>
                     <input
                       type="text"
                       required
                       value={firstName}
                       onChange={(e) => setFirstName(e.target.value)}
-                      className="w-full rounded-xl border border-gray-200 px-3 py-2 text-[13px] bg-white focus:outline-none focus:ring-2 focus:ring-[#E8799E]/20 focus:border-[#E8799E]"
+                      className="w-full rounded-xl border border-border px-3 py-2 text-[13px] bg-card focus:outline-none focus:ring-2 focus:ring-ring/20 focus:border-ring"
                       placeholder="Jane"
                     />
                   </div>
                   <div>
-                    <label className="block text-[11px] font-semibold uppercase tracking-[0.06em] text-[#64748B] mb-1">Last Name</label>
+                    <label className="block text-[11px] font-semibold uppercase tracking-[0.06em] text-muted-foreground mb-1">Last Name</label>
                     <input
                       type="text"
                       required
                       value={lastName}
                       onChange={(e) => setLastName(e.target.value)}
-                      className="w-full rounded-xl border border-gray-200 px-3 py-2 text-[13px] bg-white focus:outline-none focus:ring-2 focus:ring-[#E8799E]/20 focus:border-[#E8799E]"
+                      className="w-full rounded-xl border border-border px-3 py-2 text-[13px] bg-card focus:outline-none focus:ring-2 focus:ring-ring/20 focus:border-ring"
                       placeholder="Doe"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-[11px] font-semibold uppercase tracking-[0.06em] text-[#64748B] mb-1">Email</label>
+                  <label className="block text-[11px] font-semibold uppercase tracking-[0.06em] text-muted-foreground mb-1">Email</label>
                   <input
                     type="email"
                     required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="w-full rounded-xl border border-gray-200 px-3 py-2 text-[13px] bg-white focus:outline-none focus:ring-2 focus:ring-[#E8799E]/20 focus:border-[#E8799E]"
+                    className="w-full rounded-xl border border-border px-3 py-2 text-[13px] bg-card focus:outline-none focus:ring-2 focus:ring-ring/20 focus:border-ring"
                     placeholder="jane@agency.org"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-[11px] font-semibold uppercase tracking-[0.06em] text-[#64748B] mb-1">Role</label>
+                  <label className="block text-[11px] font-semibold uppercase tracking-[0.06em] text-muted-foreground mb-1">Role</label>
                   <select
                     value={role}
                     onChange={(e) => setRole(e.target.value)}
-                    className="w-full rounded-xl border border-gray-200 px-3 py-2 text-[13px] bg-white focus:outline-none focus:ring-2 focus:ring-[#E8799E]/20 focus:border-[#E8799E]"
+                    className="w-full rounded-xl border border-border px-3 py-2 text-[13px] bg-card focus:outline-none focus:ring-2 focus:ring-ring/20 focus:border-ring"
                   >
                     <option value="org_admin">Org Admin</option>
                     <option value="program_manager">Program Manager</option>
@@ -163,12 +163,12 @@ export function CreateUserDialog({ organizations: orgs }: Props) {
                 </div>
 
                 <div>
-                  <label className="block text-[11px] font-semibold uppercase tracking-[0.06em] text-[#64748B] mb-1">Organization</label>
+                  <label className="block text-[11px] font-semibold uppercase tracking-[0.06em] text-muted-foreground mb-1">Organization</label>
                   <select
                     required
                     value={orgId}
                     onChange={(e) => setOrgId(e.target.value)}
-                    className="w-full rounded-xl border border-gray-200 px-3 py-2 text-[13px] bg-white focus:outline-none focus:ring-2 focus:ring-[#E8799E]/20 focus:border-[#E8799E]"
+                    className="w-full rounded-xl border border-border px-3 py-2 text-[13px] bg-card focus:outline-none focus:ring-2 focus:ring-ring/20 focus:border-ring"
                   >
                     <option value="">Select an organization...</option>
                     {orgs.map((org) => (
@@ -187,7 +187,7 @@ export function CreateUserDialog({ organizations: orgs }: Props) {
                   <button
                     type="button"
                     onClick={handleClose}
-                    className="flex-1 rounded-xl border border-gray-200 px-4 py-2.5 text-[13px] font-semibold text-[#64748B] hover:bg-gray-50 transition-colors"
+                    className="flex-1 rounded-xl border border-border px-4 py-2.5 text-[13px] font-semibold text-muted-foreground hover:bg-muted/40 transition-colors"
                   >
                     Cancel
                   </button>
@@ -195,7 +195,7 @@ export function CreateUserDialog({ organizations: orgs }: Props) {
                     type="submit"
                     disabled={loading || !orgId}
                     className="flex-1 rounded-xl px-4 py-2.5 text-[13px] font-semibold text-white transition-all hover:opacity-90 disabled:opacity-50"
-                    style={{ background: 'linear-gradient(135deg, #E8799E 0%, #C8A8E8 100%)' }}
+                    style={{ background: 'var(--gradient-primary)' }}
                   >
                     {loading ? 'Creating...' : 'Create Account'}
                   </button>

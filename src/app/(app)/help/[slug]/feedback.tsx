@@ -23,8 +23,8 @@ export function ArticleFeedback() {
 
   if (feedback) {
     return (
-      <div className="mt-8 pt-6 border-t border-gray-100">
-        <p className="text-sm text-gray-500 text-center">
+      <div className="mt-8 pt-6 border-t border-border">
+        <p className="text-sm text-muted-foreground text-center">
           {feedback === 'up' ? 'Glad this helped!' : 'Thanks for your feedback.'}
         </p>
       </div>
@@ -32,14 +32,14 @@ export function ArticleFeedback() {
   }
 
   return (
-    <div className="mt-8 pt-6 border-t border-gray-100">
+    <div className="mt-8 pt-6 border-t border-border">
       <div className="flex items-center justify-center gap-4">
-        <p className="text-sm text-gray-500">Was this helpful?</p>
+        <p className="text-sm text-muted-foreground">Was this helpful?</p>
         <div className="flex items-center gap-2">
           <button
             type="button"
             onClick={() => setFeedback('up')}
-            className="inline-flex items-center gap-1.5 rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-medium text-gray-600 hover:bg-[#EEF2FF] hover:text-[#E8799E] hover:border-[#E8799E]/30 transition-colors"
+            className="inline-flex items-center gap-1.5 rounded-lg border border-border px-3 py-1.5 text-xs font-medium text-muted-foreground hover:bg-accent hover:text-primary hover:border-brand-to/40 transition-colors"
           >
             <ThumbUpIcon />
             Yes
@@ -47,7 +47,7 @@ export function ArticleFeedback() {
           <button
             type="button"
             onClick={() => setFeedback('down')}
-            className="inline-flex items-center gap-1.5 rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-medium text-gray-600 hover:bg-red-50 hover:text-red-600 hover:border-red-200 transition-colors"
+            className="inline-flex items-center gap-1.5 rounded-lg border border-border px-3 py-1.5 text-xs font-medium text-muted-foreground hover:bg-red-50 hover:text-red-600 hover:border-red-200 transition-colors"
           >
             <ThumbDownIcon />
             No

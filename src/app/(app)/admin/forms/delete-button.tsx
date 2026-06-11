@@ -16,7 +16,7 @@ export function DeleteTemplateButton({ id }: { id: string }) {
     <button
       type="button"
       onClick={handleDelete}
-      className="rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-semibold text-red-500 hover:bg-red-50 transition-colors"
+      className="rounded-lg border border-border px-3 py-1.5 text-xs font-semibold text-red-500 hover:bg-red-50 transition-colors"
     >
       Delete
     </button>

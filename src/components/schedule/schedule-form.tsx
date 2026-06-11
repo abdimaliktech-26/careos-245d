@@ -38,7 +38,7 @@ const RECURRENCE_OPTIONS: [RecurrencePattern, string][] = [
   ['weekly', 'Weekly (same day)'],
 ]
 
-const labelClass = 'text-xs font-semibold uppercase tracking-widest text-gray-400'
+const labelClass = 'text-xs font-semibold uppercase tracking-widest text-muted-foreground'
 const inputClass = 'care-input mt-1 w-full rounded-xl border px-3 py-2.5 text-sm'
 
 export function ScheduleForm({ clients, editEntry, onCancel }: { clients: ClientOption[]; editEntry?: EditEntry | null; onCancel?: () => void }) {
@@ -65,15 +65,15 @@ export function ScheduleForm({ clients, editEntry, onCancel }: { clients: Client
   }
 
   return (
-    <form ref={formRef} action={action} className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 space-y-4">
+    <form ref={formRef} action={action} className="bg-card rounded-2xl border border-border shadow-sm p-6 space-y-4">
       {isEditing && <input type="hidden" name="entryId" value={editEntry.id} />}
       {!isEditing && <input type="hidden" name="createEvv" value="" />}
 
       <div>
-        <p className="text-[10px] font-bold uppercase tracking-widest text-[#E8799E]">
+        <p className="text-[10px] font-bold uppercase tracking-widest text-primary">
           {isEditing ? 'Edit Shift' : 'New Shift'}
         </p>
-        <h2 className="mt-1 text-xl font-black text-[#111827]">
+        <h2 className="mt-1 text-xl font-black text-foreground">
           {isEditing ? 'Update Visit' : 'Schedule a Visit'}
         </h2>
       </div>
@@ -154,8 +154,8 @@ export function ScheduleForm({ clients, editEntry, onCancel }: { clients: Client
           </label>
 
           <label className="flex items-center gap-2 cursor-pointer">
-            <input name="createEvv" type="checkbox" value="true" className="rounded border-gray-300 text-[#E8799E] focus:ring-[#E8799E]/20" />
-            <span className="text-xs text-gray-600">Auto-create EVV visits for billing</span>
+            <input name="createEvv" type="checkbox" value="true" className="rounded border-gray-300 text-primary focus:ring-ring/20" />
+            <span className="text-xs text-muted-foreground">Auto-create EVV visits for billing</span>
           </label>
         </>
       )}
@@ -174,14 +174,14 @@ export function ScheduleForm({ clients, editEntry, onCancel }: { clients: Client
               type="submit"
               disabled={isPending}
               className="flex-1 rounded-xl py-3 text-sm font-bold text-white transition hover:opacity-90 disabled:opacity-50"
-              style={{ background: 'linear-gradient(135deg, #E8799E 0%, #C8A8E8 100%)' }}
+              style={{ background: 'var(--gradient-primary)' }}
             >
               {isPending ? 'Saving…' : 'Save Changes'}
             </button>
             <button
               type="button"
               onClick={onCancel}
-              className="rounded-xl border border-gray-200 px-4 py-3 text-sm font-semibold text-gray-600 hover:bg-gray-50 transition"
+              className="rounded-xl border border-border px-4 py-3 text-sm font-semibold text-muted-foreground hover:bg-muted/40 transition"
             >
               Cancel
             </button>
@@ -199,7 +199,7 @@ export function ScheduleForm({ clients, editEntry, onCancel }: { clients: Client
             type="submit"
             disabled={isPending}
             className="w-full rounded-xl py-3 text-sm font-bold text-white transition hover:opacity-90 disabled:opacity-50"
-            style={{ background: 'linear-gradient(135deg, #E8799E 0%, #C8A8E8 100%)' }}
+            style={{ background: 'var(--gradient-primary)' }}
           >
             {isPending ? 'Scheduling…' : 'Schedule Shift'}
           </button>

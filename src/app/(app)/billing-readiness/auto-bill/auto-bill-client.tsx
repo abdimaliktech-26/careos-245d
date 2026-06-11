@@ -48,25 +48,25 @@ export function AutoBillClient({ packets }: { packets: AutoBillablePacket[] }) {
         <div className="flex items-center gap-2">
           <button
             onClick={toggleAll}
-            className="rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-semibold text-gray-600 hover:bg-gray-50"
+            className="rounded-lg border border-border px-3 py-1.5 text-xs font-semibold text-muted-foreground hover:bg-muted/40"
           >
             {selected.size === packets.length ? 'Deselect All' : 'Select All'}
           </button>
           {selected.size > 0 && (
-            <span className="text-xs text-gray-500">{selected.size} selected</span>
+            <span className="text-xs text-muted-foreground">{selected.size} selected</span>
           )}
         </div>
         <button
           onClick={handleGenerate}
           disabled={selected.size === 0 || generating}
-          className="rounded-lg bg-[#E8799E] px-4 py-2 text-xs font-bold text-white hover:opacity-90 disabled:opacity-40"
+          className="rounded-lg bg-primary px-4 py-2 text-xs font-bold text-white hover:opacity-90 disabled:opacity-40"
         >
           {generating ? 'Generating...' : `Generate Claims (${selected.size})`}
         </button>
       </div>
 
       {result && (
-        <div className="rounded-2xl border p-4 bg-gray-50 text-sm space-y-1">
+        <div className="rounded-2xl border p-4 bg-muted text-sm space-y-1">
           {result.claimIds.length > 0 && (
             <p className="text-emerald-600 font-semibold">{result.claimIds.length} claims generated successfully.</p>
           )}
@@ -82,15 +82,15 @@ export function AutoBillClient({ packets }: { packets: AutoBillablePacket[] }) {
       )}
 
       {packets.length === 0 ? (
-        <div className="rounded-2xl border border-gray-100 bg-white p-12 text-center" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
-          <p className="text-lg font-bold text-[#3A2A4A]">No packets ready for billing</p>
-          <p className="text-sm text-gray-500 mt-1">Complete forms with valid signatures will appear here.</p>
+        <div className="rounded-2xl border border-border bg-card p-12 text-center" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
+          <p className="text-lg font-bold text-foreground">No packets ready for billing</p>
+          <p className="text-sm text-muted-foreground mt-1">Complete forms with valid signatures will appear here.</p>
         </div>
       ) : (
-        <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
+        <div className="bg-card rounded-2xl border border-border overflow-hidden" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-gray-100 text-left">
+              <tr className="border-b border-border text-left">
                 <th className="px-4 py-3 w-10">
                   <input
                     type="checkbox"
@@ -99,16 +99,16 @@ export function AutoBillClient({ packets }: { packets: AutoBillablePacket[] }) {
                     className="rounded border-gray-300"
                   />
                 </th>
-                <th className="px-4 py-3 text-[10px] font-semibold uppercase tracking-[0.08em] text-gray-400">Client</th>
-                <th className="px-4 py-3 text-[10px] font-semibold uppercase tracking-[0.08em] text-gray-400">Form</th>
-                <th className="px-4 py-3 text-[10px] font-semibold uppercase tracking-[0.08em] text-gray-400">CPT</th>
-                <th className="px-4 py-3 text-[10px] font-semibold uppercase tracking-[0.08em] text-gray-400">Completed</th>
-                <th className="px-4 py-3 text-[10px] font-semibold uppercase tracking-[0.08em] text-gray-400 text-right">Est. Amount</th>
+                <th className="px-4 py-3 text-[10px] font-semibold uppercase tracking-[0.08em] text-muted-foreground">Client</th>
+                <th className="px-4 py-3 text-[10px] font-semibold uppercase tracking-[0.08em] text-muted-foreground">Form</th>
+                <th className="px-4 py-3 text-[10px] font-semibold uppercase tracking-[0.08em] text-muted-foreground">CPT</th>
+                <th className="px-4 py-3 text-[10px] font-semibold uppercase tracking-[0.08em] text-muted-foreground">Completed</th>
+                <th className="px-4 py-3 text-[10px] font-semibold uppercase tracking-[0.08em] text-muted-foreground text-right">Est. Amount</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-50">
+            <tbody className="divide-y divide-border/60">
               {packets.map((p) => (
-                <tr key={p.packetFormId} className="hover:bg-gray-50/60 transition-colors">
+                <tr key={p.packetFormId} className="hover:bg-muted/40 transition-colors">
                   <td className="px-4 py-3">
                     <input
                       type="checkbox"
@@ -117,13 +117,13 @@ export function AutoBillClient({ packets }: { packets: AutoBillablePacket[] }) {
                       className="rounded border-gray-300"
                     />
                   </td>
-                  <td className="px-4 py-3 font-medium text-[#3A2A4A]">{p.clientName}</td>
+                  <td className="px-4 py-3 font-medium text-foreground">{p.clientName}</td>
                   <td className="px-4 py-3">
-                    <span className="text-xs text-gray-600">{p.formTemplateCode}</span>
-                    <span className="text-[10px] text-gray-400 ml-1">{p.formTemplateName}</span>
+                    <span className="text-xs text-muted-foreground">{p.formTemplateCode}</span>
+                    <span className="text-[10px] text-muted-foreground ml-1">{p.formTemplateName}</span>
                   </td>
                   <td className="px-4 py-3 font-mono text-xs">{p.cptCode ?? '—'}</td>
-                  <td className="px-4 py-3 text-xs text-gray-500">
+                  <td className="px-4 py-3 text-xs text-muted-foreground">
                     {new Date(p.completedAt).toLocaleDateString()}
                   </td>
                   <td className="px-4 py-3 text-right font-semibold">{formatCurrency(p.estimatedAmount)}</td>

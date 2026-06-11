@@ -27,11 +27,11 @@ const PACKET_LABELS: Record<string, string> = {
 }
 
 const STATUS_CLASSES: Record<string, string> = {
-  not_started: 'bg-gray-100 text-gray-600',
-  in_progress: 'bg-blue-50 text-blue-700',
-  needs_signature: 'bg-orange-50 text-orange-700',
-  completed: 'bg-green-50 text-green-700',
-  overdue: 'bg-red-50 text-red-700',
+  not_started: 'bg-muted text-muted-foreground',
+  in_progress: 'bg-blue-50 text-blue-700 dark:bg-blue-500/15 dark:text-blue-300',
+  needs_signature: 'bg-status-warn-bg text-status-warn',
+  completed: 'bg-status-ok-bg text-status-ok',
+  overdue: 'bg-status-error-bg text-status-error',
 }
 
 function getTemplate(form: Record<string, unknown>) {
@@ -86,13 +86,13 @@ export default async function ClientProfilePage({ params }: Props) {
     <div className="p-8 max-w-4xl mx-auto space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <Link href="/clients" className="text-sm text-gray-500 hover:text-gray-700">
+          <Link href="/clients" className="text-sm text-muted-foreground hover:text-foreground">
             ← Back to clients
           </Link>
-          <h1 className="text-2xl font-semibold text-gray-900 mt-1">
+          <h1 className="text-2xl font-semibold text-foreground mt-1">
             {client.legal_name}
           </h1>
-          <p className="text-sm text-gray-500">
+          <p className="text-sm text-muted-foreground">
             {client.program} · <span className="capitalize">{client.status}</span>
           </p>
         </div>
@@ -102,28 +102,28 @@ export default async function ClientProfilePage({ params }: Props) {
 
       <AiSummaryCard clientId={id} />
 
-      <section className="bg-white border border-gray-200 rounded-xl p-5">
-        <h2 className="font-semibold text-gray-800 mb-4">Demographics</h2>
+      <section className="bg-card border border-border rounded-xl p-5">
+        <h2 className="font-semibold text-foreground mb-4">Demographics</h2>
         <dl className="grid grid-cols-2 gap-x-6 gap-y-3 text-sm">
           <div>
-            <dt className="text-gray-500">Date of Birth</dt>
-            <dd className="text-gray-900 font-medium">{client.date_of_birth ?? '—'}</dd>
+            <dt className="text-muted-foreground">Date of Birth</dt>
+            <dd className="text-foreground font-medium">{client.date_of_birth ?? '—'}</dd>
           </div>
           <div>
-            <dt className="text-gray-500">Intake Date</dt>
-            <dd className="text-gray-900 font-medium">{client.intake_date ?? '—'}</dd>
+            <dt className="text-muted-foreground">Intake Date</dt>
+            <dd className="text-foreground font-medium">{client.intake_date ?? '—'}</dd>
           </div>
           <div>
-            <dt className="text-gray-500">Phone</dt>
-            <dd className="text-gray-900 font-medium">{client.phone ?? '—'}</dd>
+            <dt className="text-muted-foreground">Phone</dt>
+            <dd className="text-foreground font-medium">{client.phone ?? '—'}</dd>
           </div>
           <div>
-            <dt className="text-gray-500">Email</dt>
-            <dd className="text-gray-900 font-medium">{client.email ?? '—'}</dd>
+            <dt className="text-muted-foreground">Email</dt>
+            <dd className="text-foreground font-medium">{client.email ?? '—'}</dd>
           </div>
           <div className="col-span-2">
-            <dt className="text-gray-500">Address</dt>
-            <dd className="text-gray-900 font-medium">
+            <dt className="text-muted-foreground">Address</dt>
+            <dd className="text-foreground font-medium">
               {client.home_address
                 ? `${client.home_address}, ${client.city ?? ''}, ${client.state} ${client.zip ?? ''}`
                 : '—'}
@@ -133,25 +133,25 @@ export default async function ClientProfilePage({ params }: Props) {
       </section>
 
       {scorecard && (
-        <section className="bg-white border border-gray-200 rounded-xl p-5">
+        <section className="bg-card border border-border rounded-xl p-5">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="font-semibold text-gray-800">Compliance Scorecard</h2>
+            <h2 className="font-semibold text-foreground">Compliance Scorecard</h2>
             <ScorecardBadge score={scorecard.packetScore} health={scorecard.overallHealth} size="sm" />
           </div>
           <div className="flex items-center gap-8">
             <ScoreGauge score={scorecard.packetScore} size="lg" />
             <div className="grid grid-cols-3 gap-6 text-sm">
               <div>
-                <p className="text-2xl font-bold text-gray-900">{scorecard.completedPackets}/{scorecard.totalPackets}</p>
-                <p className="text-xs text-gray-500">Packets Complete</p>
+                <p className="text-2xl font-bold text-foreground">{scorecard.completedPackets}/{scorecard.totalPackets}</p>
+                <p className="text-xs text-muted-foreground">Packets Complete</p>
               </div>
               <div>
-                <p className={`text-2xl font-bold ${scorecard.overduePackets > 0 ? 'text-red-600' : 'text-gray-900'}`}>{scorecard.overduePackets}</p>
-                <p className="text-xs text-gray-500">Overdue</p>
+                <p className={`text-2xl font-bold ${scorecard.overduePackets > 0 ? 'text-red-600' : 'text-foreground'}`}>{scorecard.overduePackets}</p>
+                <p className="text-xs text-muted-foreground">Overdue</p>
               </div>
               <div>
-                <p className={`text-2xl font-bold ${scorecard.inProgressPackets > 0 ? 'text-amber-600' : 'text-gray-900'}`}>{scorecard.inProgressPackets}</p>
-                <p className="text-xs text-gray-500">In Progress</p>
+                <p className={`text-2xl font-bold ${scorecard.inProgressPackets > 0 ? 'text-amber-600' : 'text-foreground'}`}>{scorecard.inProgressPackets}</p>
+                <p className="text-xs text-muted-foreground">In Progress</p>
               </div>
             </div>
           </div>
@@ -159,43 +159,43 @@ export default async function ClientProfilePage({ params }: Props) {
       )}
 
       {client.guardian_name && (
-        <section className="bg-white border border-gray-200 rounded-xl p-5">
-          <h2 className="font-semibold text-gray-800 mb-4">Guardian</h2>
+        <section className="bg-card border border-border rounded-xl p-5">
+          <h2 className="font-semibold text-foreground mb-4">Guardian</h2>
           <dl className="grid grid-cols-2 gap-x-6 gap-y-3 text-sm">
             <div>
-              <dt className="text-gray-500">Name</dt>
-              <dd className="text-gray-900 font-medium">{client.guardian_name}</dd>
+              <dt className="text-muted-foreground">Name</dt>
+              <dd className="text-foreground font-medium">{client.guardian_name}</dd>
             </div>
             <div>
-              <dt className="text-gray-500">Relationship</dt>
-              <dd className="text-gray-900 font-medium">{client.guardian_relationship ?? '—'}</dd>
+              <dt className="text-muted-foreground">Relationship</dt>
+              <dd className="text-foreground font-medium">{client.guardian_relationship ?? '—'}</dd>
             </div>
             <div>
-              <dt className="text-gray-500">Phone</dt>
-              <dd className="text-gray-900 font-medium">{client.guardian_phone ?? '—'}</dd>
+              <dt className="text-muted-foreground">Phone</dt>
+              <dd className="text-foreground font-medium">{client.guardian_phone ?? '—'}</dd>
             </div>
             <div>
-              <dt className="text-gray-500">Email</dt>
-              <dd className="text-gray-900 font-medium">{client.guardian_email ?? '—'}</dd>
+              <dt className="text-muted-foreground">Email</dt>
+              <dd className="text-foreground font-medium">{client.guardian_email ?? '—'}</dd>
             </div>
           </dl>
         </section>
       )}
 
-      <section className="bg-white border border-gray-200 rounded-xl p-5">
-        <h2 className="font-semibold text-gray-800 mb-4">Form Tracker</h2>
+      <section className="bg-card border border-border rounded-xl p-5">
+        <h2 className="font-semibold text-foreground mb-4">Form Tracker</h2>
         <div className="grid grid-cols-2 gap-3">
           {formStatus?.map((fs) => (
             <div
               key={fs.formSet}
-              className={`border rounded-xl p-4 ${FORM_SET_COLORS[fs.formSet] ?? 'bg-gray-50 border-gray-200'}`}
+              className={`border rounded-xl p-4 ${FORM_SET_COLORS[fs.formSet] ?? 'bg-muted border-border'}`}
             >
-              <p className="font-medium text-gray-800 text-sm">{fs.label}</p>
-              <p className="text-2xl font-bold text-gray-900 mt-1">
+              <p className="font-medium text-foreground text-sm">{fs.label}</p>
+              <p className="text-2xl font-bold text-foreground mt-1">
                 {fs.completed}
-                <span className="text-sm font-normal text-gray-500">/{fs.total}</span>
+                <span className="text-sm font-normal text-muted-foreground">/{fs.total}</span>
               </p>
-              <p className="text-xs text-gray-500 mt-0.5">
+              <p className="text-xs text-muted-foreground mt-0.5">
                 {fs.dueDate
                   ? `Due ${new Date(fs.dueDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}`
                   : 'Not scheduled'}
@@ -217,10 +217,10 @@ export default async function ClientProfilePage({ params }: Props) {
         </div>
       </section>
 
-      <section className="bg-white border border-gray-200 rounded-xl p-5">
-        <h2 className="font-semibold text-gray-800 mb-4">Packet Forms</h2>
+      <section className="bg-card border border-border rounded-xl p-5">
+        <h2 className="font-semibold text-foreground mb-4">Packet Forms</h2>
         {packetRows.length === 0 ? (
-          <p className="text-sm text-gray-500">No packets scheduled.</p>
+          <p className="text-sm text-muted-foreground">No packets scheduled.</p>
         ) : (
           <div className="space-y-5">
             {packetRows.map((packet) => {
@@ -232,21 +232,21 @@ export default async function ClientProfilePage({ params }: Props) {
                 .toSorted((a, b) => Number(a.sort_order ?? 0) - Number(b.sort_order ?? 0))
 
               return (
-                <div key={packet.id as string} className="rounded-lg border border-gray-100 overflow-hidden">
-                  <div className="bg-gray-50 px-4 py-3 flex items-center justify-between">
+                <div key={packet.id as string} className="rounded-lg border border-border overflow-hidden">
+                  <div className="bg-muted px-4 py-3 flex items-center justify-between">
                     <div>
-                      <p className="text-sm font-semibold text-gray-900">
+                      <p className="text-sm font-semibold text-foreground">
                         {PACKET_LABELS[packet.packet_type as string] ?? String(packet.packet_type).replaceAll('_', ' ')}
                       </p>
-                      <p className="text-xs text-gray-500">
+                      <p className="text-xs text-muted-foreground">
                         {packetForms.length} forms · Due {new Date(packet.due_date as string).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
                       </p>
                     </div>
-                    <span className={`text-xs font-semibold px-2.5 py-1 rounded-full ${STATUS_CLASSES[packet.status as string] ?? 'bg-gray-100 text-gray-600'}`}>
+                    <span className={`text-xs font-semibold px-2.5 py-1 rounded-full ${STATUS_CLASSES[packet.status as string] ?? 'bg-muted text-muted-foreground'}`}>
                       {String(packet.status).replaceAll('_', ' ').toUpperCase()}
                     </span>
                   </div>
-                  <div className="divide-y divide-gray-100">
+                  <div className="divide-y divide-border/60">
                     {packetForms.map((form) => {
                       const template = getTemplate(form)
                       const status = String(form.status ?? 'not_started')
@@ -256,15 +256,15 @@ export default async function ClientProfilePage({ params }: Props) {
                       return (
                         <div key={form.id as string} className="px-4 py-3 flex items-center justify-between gap-4">
                           <div>
-                            <p className="text-sm font-medium text-gray-900">
+                            <p className="text-sm font-medium text-foreground">
                               {template?.code} · {template?.name}
                             </p>
                             <div className="mt-1 flex flex-wrap items-center gap-2">
-                              <span className={`inline-flex text-[11px] font-semibold px-2 py-0.5 rounded-full ${STATUS_CLASSES[status] ?? 'bg-gray-100 text-gray-600'}`}>
+                              <span className={`inline-flex text-[11px] font-semibold px-2 py-0.5 rounded-full ${STATUS_CLASSES[status] ?? 'bg-muted text-muted-foreground'}`}>
                                 {status.replaceAll('_', ' ').toUpperCase()}
                               </span>
                               {signatureAlert && (
-                                <span className="inline-flex text-[11px] font-semibold px-2 py-0.5 rounded-full bg-red-50 text-red-700">
+                                <span className="inline-flex text-[11px] font-semibold px-2 py-0.5 rounded-full bg-status-error-bg text-status-error">
                                   AI ALERT: {signatureValidation.alert}
                                 </span>
                               )}
@@ -274,7 +274,7 @@ export default async function ClientProfilePage({ params }: Props) {
                             {canDownload && (
                               <a
                                 href={`/api/forms/${form.id as string}/download`}
-                                className="text-xs font-semibold px-3 py-1.5 rounded-md border border-gray-200 text-gray-700 hover:bg-gray-50"
+                                className="text-xs font-semibold px-3 py-1.5 rounded-md border border-border text-foreground hover:bg-muted/40"
                               >
                                 Download
                               </a>
@@ -311,28 +311,28 @@ export default async function ClientProfilePage({ params }: Props) {
         )}
       </section>
 
-      <section className="bg-white border border-gray-200 rounded-xl p-5">
-        <h2 className="font-semibold text-gray-800 mb-4">Completed Documents</h2>
+      <section className="bg-card border border-border rounded-xl p-5">
+        <h2 className="font-semibold text-foreground mb-4">Completed Documents</h2>
         {completedForms.length === 0 ? (
-          <p className="text-sm text-gray-500">Completed forms will appear here for download and remain stored on the server.</p>
+          <p className="text-sm text-muted-foreground">Completed forms will appear here for download and remain stored on the server.</p>
         ) : (
-          <div className="divide-y divide-gray-100">
+          <div className="divide-y divide-border/60">
             {completedForms.map((form: Record<string, unknown>) => {
               const template = getTemplate(form)
               const packet = form.packet as { packet_type: string; due_date: string } | null
               return (
                 <div key={form.id as string} className="py-3 flex items-center justify-between gap-4">
                   <div>
-                    <p className="text-sm font-medium text-gray-900">
+                    <p className="text-sm font-medium text-foreground">
                       {template?.code} · {template?.name}
                     </p>
-                    <p className="text-xs text-gray-500 capitalize">
+                    <p className="text-xs text-muted-foreground capitalize">
                       {packet?.packet_type?.replaceAll('_', ' ') ?? 'Packet'} · Completed {form.submitted_at ? new Date(form.submitted_at as string).toLocaleDateString('en-US') : '—'}
                     </p>
                   </div>
                   <a
                     href={`/api/forms/${form.id as string}/download`}
-                    className="text-xs font-semibold px-3 py-1.5 rounded-md border border-gray-200 text-gray-700 hover:bg-gray-50"
+                    className="text-xs font-semibold px-3 py-1.5 rounded-md border border-border text-foreground hover:bg-muted/40"
                   >
                     Download
                   </a>
@@ -344,43 +344,43 @@ export default async function ClientProfilePage({ params }: Props) {
       </section>
 
       {/* Service Goals */}
-      <section className="bg-white border border-gray-200 rounded-xl p-5">
+      <section className="bg-card border border-border rounded-xl p-5">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="font-semibold text-gray-800">Service Goals</h2>
-          <Link href={`/clients/${id}/goals`} className="text-xs font-semibold text-[#E8799E] hover:underline">
+          <h2 className="font-semibold text-foreground">Service Goals</h2>
+          <Link href={`/clients/${id}/goals`} className="text-xs font-semibold text-primary hover:underline">
             View All
           </Link>
         </div>
-        <p className="text-sm text-gray-500">
+        <p className="text-sm text-muted-foreground">
           Track person-centered goals across 45-day, semi-annual, and annual review periods.
         </p>
       </section>
 
       {/* Client Incidents */}
-      <section className="bg-white border border-gray-200 rounded-xl p-5">
+      <section className="bg-card border border-border rounded-xl p-5">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="font-semibold text-gray-800">Incidents</h2>
-          <Link href={`/clients/${id}/incidents`} className="text-xs font-semibold text-[#E8799E] hover:underline">
+          <h2 className="font-semibold text-foreground">Incidents</h2>
+          <Link href={`/clients/${id}/incidents`} className="text-xs font-semibold text-primary hover:underline">
             View All
           </Link>
         </div>
         {(clientIncidents ?? []).length === 0 ? (
-          <p className="text-sm text-gray-500">No incidents reported for this client.</p>
+          <p className="text-sm text-muted-foreground">No incidents reported for this client.</p>
         ) : (
           <div className="space-y-2">
             {clientIncidents?.slice(0, 5).map((inc: Record<string, unknown>) => (
-              <Link key={inc.id as string} href={`/incidents/${inc.id as string}`} className="flex items-center justify-between rounded-lg border border-gray-100 px-3 py-2 hover:bg-gray-50 transition-colors">
+              <Link key={inc.id as string} href={`/incidents/${inc.id as string}`} className="flex items-center justify-between rounded-lg border border-border px-3 py-2 hover:bg-muted/40 transition-colors">
                 <div>
-                  <p className="text-sm font-semibold text-gray-900">{inc.incident_number as string}</p>
-                  <p className="text-xs text-gray-500">
+                  <p className="text-sm font-semibold text-foreground">{inc.incident_number as string}</p>
+                  <p className="text-xs text-muted-foreground">
                     {inc.category as string} · {new Date(inc.occurred_at as string).toLocaleDateString('en-US')}
                   </p>
                 </div>
                 <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-semibold ${
-                  inc.status === 'open' ? 'bg-blue-50 text-blue-700' :
-                  inc.status === 'under_review' ? 'bg-amber-50 text-amber-700' :
-                  inc.status === 'reported_to_state' ? 'bg-red-50 text-red-700' :
-                  'bg-emerald-50 text-emerald-700'
+                  inc.status === 'open' ? 'bg-blue-50 text-blue-700 dark:bg-blue-500/15 dark:text-blue-300' :
+                  inc.status === 'under_review' ? 'bg-status-warn-bg text-status-warn' :
+                  inc.status === 'reported_to_state' ? 'bg-status-error-bg text-status-error' :
+                  'bg-status-ok-bg text-status-ok'
                 }`}>
                   {inc.status as string}
                 </span>

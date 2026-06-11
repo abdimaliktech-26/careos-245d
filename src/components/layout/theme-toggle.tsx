@@ -57,7 +57,7 @@ export function ThemeToggle() {
     <button
       type="button"
       onClick={toggle}
-      className="flex h-6 w-6 items-center justify-center rounded-md text-[#CBD5E1] hover:bg-gray-100 hover:text-[#64748B] transition-colors dark:hover:bg-[#334155] dark:hover:text-[#94A3B8]"
+      className="flex h-6 w-6 items-center justify-center rounded-md text-muted-foreground/60 hover:bg-muted/40 hover:text-muted-foreground transition-colors dark:hover:bg-[#334155] dark:hover:text-muted-foreground"
       title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
     >
       {theme === 'dark' ? (

@@ -19,7 +19,7 @@ export default async function EditFormTemplatePage({ params }: Props) {
     return (
       <div className="text-center py-16">
         <p className="text-sm text-red-500">{result.error ?? 'Template not found'}</p>
-        <Link href="/admin/forms" className="text-sm text-[#E8799E] hover:underline mt-2 inline-block">
+        <Link href="/admin/forms" className="text-sm text-primary hover:underline mt-2 inline-block">
           Back to templates
         </Link>
       </div>
@@ -29,9 +29,9 @@ export default async function EditFormTemplatePage({ params }: Props) {
   return (
     <div>
       <div className="mb-8">
-        <p className="text-xs font-semibold tracking-[0.16em] text-gray-400 uppercase mb-2">Admin</p>
-        <h1 className="text-3xl font-bold text-gray-900">Edit: {result.data.name}</h1>
-        <p className="text-gray-500 mt-1">Modify fields, sections, and settings for this template.</p>
+        <p className="text-xs font-semibold tracking-[0.16em] text-muted-foreground uppercase mb-2">Admin</p>
+        <h1 className="text-3xl font-bold text-foreground">Edit: {result.data.name}</h1>
+        <p className="text-muted-foreground mt-1">Modify fields, sections, and settings for this template.</p>
       </div>
       <FormBuilder initial={result.data} />
     </div>

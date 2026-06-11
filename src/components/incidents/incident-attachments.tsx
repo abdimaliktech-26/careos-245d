@@ -29,23 +29,23 @@ export function IncidentAttachments({ incidentId }: { incidentId: string }) {
   }, [incidentId])
 
   return (
-    <div className="rounded-2xl border border-gray-100 bg-white p-5" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
-      <h2 className="text-xs font-semibold tracking-[0.08em] text-gray-400 uppercase mb-3">Attachments</h2>
+    <div className="rounded-2xl border border-border bg-card p-5" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
+      <h2 className="text-xs font-semibold tracking-[0.08em] text-muted-foreground uppercase mb-3">Attachments</h2>
       {loading ? (
-        <p className="text-sm text-gray-400">Loading...</p>
+        <p className="text-sm text-muted-foreground">Loading...</p>
       ) : attachments.length === 0 ? (
-        <p className="text-sm text-gray-400">No attachments</p>
+        <p className="text-sm text-muted-foreground">No attachments</p>
       ) : (
         <div className="space-y-2">
           {attachments.map((a) => (
-            <div key={a.id} className="flex items-center justify-between rounded-lg border border-gray-100 px-3 py-2">
+            <div key={a.id} className="flex items-center justify-between rounded-lg border border-border px-3 py-2">
               <div className="min-w-0">
-                <p className="text-sm font-medium text-[#3A2A4A] truncate">{a.name}</p>
-                <p className="text-xs text-gray-400">{new Date(a.created_at).toLocaleDateString()}</p>
+                <p className="text-sm font-medium text-foreground truncate">{a.name}</p>
+                <p className="text-xs text-muted-foreground">{new Date(a.created_at).toLocaleDateString()}</p>
               </div>
               <a
                 href={`/api/documents/${a.id}/download`}
-                className="shrink-0 rounded-lg border border-gray-200 px-3 py-1 text-xs font-semibold text-gray-600 hover:bg-gray-50"
+                className="shrink-0 rounded-lg border border-border px-3 py-1 text-xs font-semibold text-muted-foreground hover:bg-muted/40"
               >
                 Download
               </a>

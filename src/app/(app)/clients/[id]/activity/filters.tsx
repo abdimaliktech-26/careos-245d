@@ -41,7 +41,7 @@ export function ActivityFilters({
 
   return (
     <div className="flex flex-wrap items-center gap-2">
-      <span className="text-[10px] font-bold uppercase tracking-wider text-[#94A3B8] mr-1">
+      <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground mr-1">
         Filter: {filtered}/{total}
       </span>
       {TYPE_OPTIONS.map((opt) => {
@@ -51,7 +51,7 @@ export function ActivityFilters({
             key={opt.value}
             onClick={() => toggle(opt.value)}
             className={`inline-flex items-center rounded-full border px-2.5 py-1 text-[10px] font-semibold transition-all ${
-              isActive ? opt.color : 'border-gray-200 text-[#94A3B8] bg-white hover:border-gray-300'
+              isActive ? opt.color : 'border-border text-muted-foreground bg-card hover:border-gray-300'
             }`}
           >
             {opt.label}

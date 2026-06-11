@@ -20,11 +20,11 @@ export default async function OrganizationSettingsPage() {
   return (
     <div className="max-w-3xl">
       <div className="mb-8">
-        <p className="text-xs font-semibold tracking-[0.16em] text-gray-400 uppercase mb-2">
+        <p className="text-xs font-semibold tracking-[0.16em] text-muted-foreground uppercase mb-2">
           Organization
         </p>
-        <h1 className="text-3xl font-bold text-gray-900">Business Settings</h1>
-        <p className="text-gray-500 mt-1">
+        <h1 className="text-3xl font-bold text-foreground">Business Settings</h1>
+        <p className="text-muted-foreground mt-1">
           These details appear on completed form downloads and organization records.
         </p>
       </div>

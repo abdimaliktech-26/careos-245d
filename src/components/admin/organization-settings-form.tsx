@@ -37,7 +37,7 @@ export function OrganizationSettingsForm({ organization }: OrganizationSettingsF
   const [state, action, isPending] = useActionState(updateOrganizationSettings, initialState)
 
   return (
-    <form action={action} className="bg-white rounded-xl border border-gray-200 p-6 space-y-6">
+    <form action={action} className="bg-card rounded-xl border border-border p-6 space-y-6">
       {state.error && (
         <p className="text-sm text-red-700 bg-red-50 border border-red-100 rounded-lg px-3 py-2">
           {state.error}
@@ -50,7 +50,7 @@ export function OrganizationSettingsForm({ organization }: OrganizationSettingsF
       )}
 
       <section className="space-y-4">
-        <h2 className="text-sm font-semibold text-gray-900">Business Information</h2>
+        <h2 className="text-sm font-semibold text-foreground">Business Information</h2>
         <div className="grid grid-cols-2 gap-4">
           <div className="col-span-2">
             <FormField label="Business Name" name="name" required defaultValue={organization.name} />
@@ -67,7 +67,7 @@ export function OrganizationSettingsForm({ organization }: OrganizationSettingsF
       </section>
 
       <section className="space-y-4">
-        <h2 className="text-sm font-semibold text-gray-900">Address</h2>
+        <h2 className="text-sm font-semibold text-foreground">Address</h2>
         <FormField label="Street Address" name="address" defaultValue={organization.address ?? ''} />
         <div className="grid grid-cols-4 gap-4">
           <div className="col-span-2">
@@ -79,7 +79,7 @@ export function OrganizationSettingsForm({ organization }: OrganizationSettingsF
       </section>
 
       <section className="space-y-4">
-        <h2 className="text-sm font-semibold text-gray-900">Regional & Rates</h2>
+        <h2 className="text-sm font-semibold text-foreground">Regional & Rates</h2>
         <div className="grid grid-cols-2 gap-4">
           <FormField label="Timezone" name="timezone" defaultValue={organization.timezone ?? 'America/Chicago'} list="timezone-options" />
           <FormField label="Default Hourly Rate ($)" name="defaultHourlyRate" type="number" step="0.01" defaultValue={organization.default_hourly_rate?.toString() ?? ''} />
@@ -95,57 +95,57 @@ export function OrganizationSettingsForm({ organization }: OrganizationSettingsF
       </section>
 
       <section className="space-y-4">
-        <h2 className="text-sm font-semibold text-gray-900">Notifications</h2>
-        <p className="text-xs text-gray-500">Receive audit alerts via Slack or Microsoft Teams webhooks.</p>
+        <h2 className="text-sm font-semibold text-foreground">Notifications</h2>
+        <p className="text-xs text-muted-foreground">Receive audit alerts via Slack or Microsoft Teams webhooks.</p>
         <FormField label="Slack Webhook URL" name="slackWebhookUrl" type="url" defaultValue={organization.slack_webhook_url ?? ''} placeholder="https://hooks.slack.com/services/..." />
         <FormField label="Teams Webhook URL" name="teamsWebhookUrl" type="url" defaultValue={organization.teams_webhook_url ?? ''} placeholder="https://yourdomain.webhook.office.com/..." />
       </section>
 
       <section className="space-y-4">
-        <h2 className="text-sm font-semibold text-gray-900">Portal & Document Branding</h2>
-        <p className="text-xs text-gray-500">Customize your organization&apos;s look. These colors and logo appear in the sidebar, documents, and signing pages.</p>
+        <h2 className="text-sm font-semibold text-foreground">Portal & Document Branding</h2>
+        <p className="text-xs text-muted-foreground">Customize your organization&apos;s look. These colors and logo appear in the sidebar, documents, and signing pages.</p>
         <FormField label="Logo URL" name="logoUrl" type="url" defaultValue={organization.logo_url ?? ''} placeholder="https://..." />
         {organization.logo_url && (
-          <div className="flex items-center gap-3 rounded-lg border border-gray-100 bg-gray-50 px-3 py-2">
-            <Image src={organization.logo_url} alt="Organization logo preview" width={48} height={48} unoptimized className="h-12 w-12 object-contain bg-white border border-gray-200 rounded" />
-            <p className="text-xs text-gray-500">This logo appears on documents, signing pages, and the sidebar.</p>
+          <div className="flex items-center gap-3 rounded-lg border border-border bg-muted px-3 py-2">
+            <Image src={organization.logo_url} alt="Organization logo preview" width={48} height={48} unoptimized className="h-12 w-12 object-contain bg-card border border-border rounded" />
+            <p className="text-xs text-muted-foreground">This logo appears on documents, signing pages, and the sidebar.</p>
           </div>
         )}
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="mb-1.5 block text-xs font-medium text-gray-700">Primary Color</label>
+            <label className="mb-1.5 block text-xs font-medium text-foreground">Primary Color</label>
             <div className="flex items-center gap-2">
               <input
                 type="color"
                 name="brandPrimary"
-                defaultValue={organization.brand_primary ?? '#E8799E'}
-                className="h-9 w-9 cursor-pointer rounded border border-gray-200 bg-transparent p-0.5"
+                defaultValue={organization.brand_primary ?? '#DB2777'}
+                className="h-9 w-9 cursor-pointer rounded border border-border bg-transparent p-0.5"
               />
               <input
                 type="text"
                 name="brandPrimary"
-                defaultValue={organization.brand_primary ?? '#E8799E'}
-                className="flex-1 rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-mono outline-none focus:border-[#E8799E] focus:ring-2 focus:ring-[#E8799E]/10"
-                placeholder="#E8799E"
+                defaultValue={organization.brand_primary ?? '#DB2777'}
+                className="flex-1 rounded-lg border border-border px-3 py-1.5 text-xs font-mono outline-none focus:border-ring focus:ring-2 focus:ring-ring/15"
+                placeholder="#DB2777"
                 pattern="^#[0-9A-Fa-f]{6}$"
               />
             </div>
           </div>
           <div>
-            <label className="mb-1.5 block text-xs font-medium text-gray-700">Accent Color</label>
+            <label className="mb-1.5 block text-xs font-medium text-foreground">Accent Color</label>
             <div className="flex items-center gap-2">
               <input
                 type="color"
                 name="brandAccent"
-                defaultValue={organization.brand_accent ?? '#C8A8E8'}
-                className="h-9 w-9 cursor-pointer rounded border border-gray-200 bg-transparent p-0.5"
+                defaultValue={organization.brand_accent ?? '#A78BFA'}
+                className="h-9 w-9 cursor-pointer rounded border border-border bg-transparent p-0.5"
               />
               <input
                 type="text"
                 name="brandAccent"
-                defaultValue={organization.brand_accent ?? '#C8A8E8'}
-                className="flex-1 rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-mono outline-none focus:border-[#E8799E] focus:ring-2 focus:ring-[#E8799E]/10"
-                placeholder="#C8A8E8"
+                defaultValue={organization.brand_accent ?? '#A78BFA'}
+                className="flex-1 rounded-lg border border-border px-3 py-1.5 text-xs font-mono outline-none focus:border-ring focus:ring-2 focus:ring-ring/15"
+                placeholder="#A78BFA"
                 pattern="^#[0-9A-Fa-f]{6}$"
               />
             </div>

@@ -125,7 +125,7 @@ export function SignaturePad({ onChange }: Props) {
         ref={canvasRef}
         width={600}
         height={180}
-        className="w-full cursor-crosshair rounded-xl border border-[#eadfd6] bg-white"
+        className="w-full cursor-crosshair rounded-xl border border-[#eadfd6] bg-card"
         style={{ touchAction: 'none' }}
       />
       <button

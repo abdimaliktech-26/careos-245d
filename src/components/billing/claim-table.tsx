@@ -6,10 +6,10 @@ import { useState } from 'react'
 import { submitClaim, payClaim, denyClaim } from '@/lib/billing/actions'
 
 const STATUS_STYLES: Record<string, string> = {
-  draft: 'bg-gray-100 text-gray-700 border border-gray-200',
-  submitted: 'bg-blue-50 text-blue-700 border border-blue-200',
-  paid: 'bg-emerald-50 text-emerald-700 border border-emerald-200',
-  denied: 'bg-red-50 text-red-700 border border-red-200',
+  draft: 'bg-muted text-foreground border border-border',
+  submitted: 'bg-blue-50 text-blue-700 dark:bg-blue-500/15 dark:text-blue-300 border border-blue-200',
+  paid: 'bg-status-ok-bg text-status-ok border border-emerald-200',
+  denied: 'bg-status-error-bg text-status-error border border-red-200',
 }
 
 const STATUS_ICONS: Record<string, string> = {
@@ -67,14 +67,14 @@ export function ClaimTable({
 
   if (claims.length === 0) {
     return (
-      <div className="rounded-2xl border border-gray-100 bg-white p-12 text-center" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
-        <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-[#EEF2FF]">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#E8799E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <div className="rounded-2xl border border-border bg-card p-12 text-center" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
+        <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-accent">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#DB2777" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
           </svg>
         </div>
-        <p className="text-[13px] font-semibold text-[#3A2A4A]">No claims yet</p>
-        <p className="mt-1 text-[12px] text-[#94A3B8]">Create your first claim to start tracking billing.</p>
+        <p className="text-[13px] font-semibold text-foreground">No claims yet</p>
+        <p className="mt-1 text-[12px] text-muted-foreground">Create your first claim to start tracking billing.</p>
       </div>
     )
   }
@@ -87,8 +87,8 @@ export function ClaimTable({
         </div>
       )}
 
-      <div className="rounded-2xl border border-gray-100 bg-white overflow-hidden" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
-        <div className="divide-y divide-gray-50">
+      <div className="rounded-2xl border border-border bg-card overflow-hidden" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
+        <div className="divide-y divide-border/60">
           {claims.map((claim) => {
             const status = (claim.status as string) ?? 'draft'
             const id = claim.id as string
@@ -101,8 +101,8 @@ export function ClaimTable({
                 href={`${basePath}?selected=${id}${status !== 'draft' ? `&status=${status}` : ''}`}
                 className={`flex items-center justify-between px-6 py-4 transition-all ${
                   isSelected
-                    ? 'bg-[#EEF2FF] ring-1 ring-inset ring-[#E8799E]/20'
-                    : 'hover:bg-gray-50/80'
+                    ? 'bg-accent ring-1 ring-inset ring-ring/20'
+                    : 'hover:bg-muted/40/80'
                 }`}
               >
                 <div className="flex-1 min-w-0">
@@ -111,19 +111,19 @@ export function ClaimTable({
                       status === 'paid' ? 'bg-emerald-100 text-emerald-700' :
                       status === 'denied' ? 'bg-red-100 text-red-700' :
                       status === 'submitted' ? 'bg-blue-100 text-blue-700' :
-                      'bg-gray-100 text-gray-500'
+                      'bg-muted text-muted-foreground'
                     }`}>
                       {STATUS_ICONS[status] ?? '○'}
                     </span>
-                    <p className="text-sm font-semibold text-[#3A2A4A] font-mono text-[11px] tracking-wide">
+                    <p className="text-sm font-semibold text-foreground font-mono text-[11px] tracking-wide">
                       {claim.claim_number as string}
                     </p>
                     <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-[10px] font-semibold ${STATUS_STYLES[status] ?? ''}`}>
                       {status.charAt(0).toUpperCase() + status.slice(1)}
                     </span>
                   </div>
-                  <div className="flex items-center gap-1.5 mt-1.5 text-xs text-gray-500">
-                    <span className="font-medium text-gray-700">
+                  <div className="flex items-center gap-1.5 mt-1.5 text-xs text-muted-foreground">
+                    <span className="font-medium text-foreground">
                       {(claim.clients as { legal_name?: string } | null)?.legal_name ?? 'Unknown'}
                     </span>
                     <span className="text-gray-300">·</span>
@@ -133,10 +133,10 @@ export function ClaimTable({
                   </div>
                   <div className="flex items-center gap-3 mt-1">
                     {typeof claim.amount === 'number' && (
-                      <span className="text-sm font-bold text-[#3A2A4A]">{formatCurrency(claim.amount)}</span>
+                      <span className="text-sm font-bold text-foreground">{formatCurrency(claim.amount)}</span>
                     )}
                     {(claim.payer as string) && (
-                      <span className="text-[11px] text-gray-400">{claim.payer as string}</span>
+                      <span className="text-[11px] text-muted-foreground">{claim.payer as string}</span>
                     )}
                   </div>
                 </div>
@@ -145,7 +145,7 @@ export function ClaimTable({
                   <a
                     href={`/api/billing/export/claims/${id}`}
                     onClick={(e) => e.stopPropagation()}
-                    className="rounded-lg border border-gray-200 px-2.5 py-1.5 text-[10px] font-semibold text-gray-500 hover:bg-[#EEF2FF] hover:border-[#C7D2FE] hover:text-[#E8799E] transition-colors flex items-center gap-1"
+                    className="rounded-lg border border-border px-2.5 py-1.5 text-[10px] font-semibold text-muted-foreground hover:bg-accent hover:border-border hover:text-primary transition-colors flex items-center gap-1"
                     title="Export CMS-1500"
                   >
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -157,13 +157,13 @@ export function ClaimTable({
                   </a>
 
                   {isLoading && (
-                    <span className="text-[10px] text-gray-400 animate-pulse">Processing...</span>
+                    <span className="text-[10px] text-muted-foreground animate-pulse">Processing...</span>
                   )}
 
                   {!isLoading && status === 'draft' && (
                     <button
                       onClick={(e) => { e.stopPropagation(); handleAction(id, 'submit') }}
-                      className="rounded-lg bg-[#E8799E] px-3 py-1.5 text-xs font-semibold text-white hover:opacity-90 transition-all"
+                      className="rounded-lg bg-primary px-3 py-1.5 text-xs font-semibold text-white hover:opacity-90 transition-all"
                     >
                       Submit
                     </button>
@@ -195,18 +195,18 @@ export function ClaimTable({
       {/* Deny dialog */}
       {denyingId && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30" onClick={() => setDenyingId(null)}>
-          <div className="bg-white rounded-2xl p-6 w-full max-w-sm mx-4 shadow-xl" onClick={(e) => e.stopPropagation()} style={{ boxShadow: '0 25px 50px rgba(0,0,0,0.15)' }}>
-            <p className="text-sm font-bold text-[#3A2A4A] mb-1">Deny Claim</p>
-            <p className="text-xs text-gray-500 mb-4">Provide a reason for denying this claim (optional).</p>
+          <div className="bg-card rounded-2xl p-6 w-full max-w-sm mx-4 shadow-xl" onClick={(e) => e.stopPropagation()} style={{ boxShadow: '0 25px 50px rgba(0,0,0,0.15)' }}>
+            <p className="text-sm font-bold text-foreground mb-1">Deny Claim</p>
+            <p className="text-xs text-muted-foreground mb-4">Provide a reason for denying this claim (optional).</p>
             <textarea
               value={denyReason}
               onChange={(e) => setDenyReason(e.target.value)}
               rows={3}
-              className="w-full rounded-xl border border-gray-200 px-3 py-2 text-sm resize-none mb-4"
+              className="w-full rounded-xl border border-border px-3 py-2 text-sm resize-none mb-4"
               placeholder="Denial reason..."
             />
             <div className="flex gap-2 justify-end">
-              <button onClick={() => setDenyingId(null)} className="rounded-lg border border-gray-200 px-4 py-2 text-xs font-semibold text-gray-600 hover:bg-gray-50">
+              <button onClick={() => setDenyingId(null)} className="rounded-lg border border-border px-4 py-2 text-xs font-semibold text-muted-foreground hover:bg-muted/40">
                 Cancel
               </button>
               <button onClick={handleDenyConfirm} className="rounded-lg bg-red-500 px-4 py-2 text-xs font-semibold text-white hover:opacity-90">

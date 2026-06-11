@@ -34,8 +34,8 @@ export default async function ClientActivityPage({ params, searchParams }: Props
   return (
     <div className="p-8 max-w-4xl mx-auto space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-[#3A2A4A]">{client.legal_name}</h1>
-        <p className="text-sm text-[#64748B] mt-0.5">Activity timeline</p>
+        <h1 className="text-2xl font-bold text-foreground">{client.legal_name}</h1>
+        <p className="text-sm text-muted-foreground mt-0.5">Activity timeline</p>
       </div>
 
       <ClientSubNav clientId={id} activeTab="activity" />

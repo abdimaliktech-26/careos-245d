@@ -9,8 +9,8 @@ type Props = { params: Promise<{ id: string }> }
 function InfoRow({ label, value }: { label: string; value: string }) {
   return (
     <div className="flex items-start justify-between py-3 border-b border-gray-50 last:border-0">
-      <span className="text-[12px] font-medium text-[#64748B]">{label}</span>
-      <span className="text-[12px] font-semibold text-[#3A2A4A] text-right">{value}</span>
+      <span className="text-[12px] font-medium text-muted-foreground">{label}</span>
+      <span className="text-[12px] font-semibold text-foreground text-right">{value}</span>
     </div>
   )
 }
@@ -25,9 +25,9 @@ function DetailPanel({ children }: { children: React.ReactNode }) {
 
 function SectionHeader({ title, subtitle }: { title: string; subtitle?: string }) {
   return (
-    <div className="border-b border-gray-100 px-6 py-4">
-      <h2 className="text-sm font-bold text-[#3A2A4A]">{title}</h2>
-      {subtitle && <p className="text-[11px] text-[#64748B] mt-0.5">{subtitle}</p>}
+    <div className="border-b border-border px-6 py-4">
+      <h2 className="text-sm font-bold text-foreground">{title}</h2>
+      {subtitle && <p className="text-[11px] text-muted-foreground mt-0.5">{subtitle}</p>}
     </div>
   )
 }
@@ -89,7 +89,7 @@ export default async function DocumentDetailPage({ params }: Props) {
       {/* Back link */}
       <Link
         href="/client/documents"
-        className="inline-flex items-center gap-1.5 text-[12px] font-medium text-[#64748B] hover:text-[#334155] transition-colors"
+        className="inline-flex items-center gap-1.5 text-[12px] font-medium text-muted-foreground hover:text-[#334155] transition-colors"
       >
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <polyline points="15 18 9 12 15 6"/>
@@ -159,8 +159,8 @@ export default async function DocumentDetailPage({ params }: Props) {
           {isPending && (
             <Link
               href={`/sign/${link.token}`}
-              className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#E8799E] px-5 py-3 text-[13px] font-semibold text-white shadow-sm hover:opacity-90 transition-opacity"
-              style={{ background: 'linear-gradient(135deg, #E8799E 0%, #C8A8E8 100%)' }}
+              className="flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-5 py-3 text-[13px] font-semibold text-white shadow-sm hover:opacity-90 transition-opacity"
+              style={{ background: 'var(--gradient-primary)' }}
             >
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
@@ -171,7 +171,7 @@ export default async function DocumentDetailPage({ params }: Props) {
           {isSigned && documentId && (
             <Link
               href={`/api/documents/${documentId}/download`}
-              className="flex w-full items-center justify-center gap-2 rounded-xl border border-gray-200 bg-white px-5 py-3 text-[13px] font-semibold text-[#334155] hover:bg-gray-50 transition-colors"
+              className="flex w-full items-center justify-center gap-2 rounded-xl border border-border bg-card px-5 py-3 text-[13px] font-semibold text-[#334155] hover:bg-muted/40 transition-colors"
             >
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
@@ -182,18 +182,18 @@ export default async function DocumentDetailPage({ params }: Props) {
             </Link>
           )}
           {isSigned && !documentId && (
-            <div className="rounded-xl border border-gray-200 bg-gray-50 px-5 py-4 text-center">
-              <p className="text-[12px] text-[#64748B]">The signed document is being processed and will be available for download shortly.</p>
+            <div className="rounded-xl border border-border bg-muted px-5 py-4 text-center">
+              <p className="text-[12px] text-muted-foreground">The signed document is being processed and will be available for download shortly.</p>
             </div>
           )}
           {expired && (
-            <div className="rounded-xl border border-gray-200 bg-gray-50 px-5 py-4 text-center">
-              <p className="text-[12px] text-[#64748B]">This signing link has expired. Please contact your care provider to request a new one.</p>
+            <div className="rounded-xl border border-border bg-muted px-5 py-4 text-center">
+              <p className="text-[12px] text-muted-foreground">This signing link has expired. Please contact your care provider to request a new one.</p>
             </div>
           )}
           {link.is_revoked && (
-            <div className="rounded-xl border border-gray-200 bg-gray-50 px-5 py-4 text-center">
-              <p className="text-[12px] text-[#64748B]">This signing link has been revoked by your care provider.</p>
+            <div className="rounded-xl border border-border bg-muted px-5 py-4 text-center">
+              <p className="text-[12px] text-muted-foreground">This signing link has been revoked by your care provider.</p>
             </div>
           )}
         </div>

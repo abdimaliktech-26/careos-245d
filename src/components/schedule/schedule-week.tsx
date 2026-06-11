@@ -4,10 +4,10 @@ import { useRouter } from 'next/navigation'
 import { updateScheduleStatus } from '@/lib/schedule/actions'
 
 const STATUS_STYLE: Record<string, string> = {
-  scheduled:  'bg-[#EEF2FF] text-[#E8799E] border-[#C7D2FE]',
-  completed:  'bg-green-50 text-green-700 border-green-200',
-  cancelled:  'bg-gray-50 text-gray-400 border-gray-200 line-through',
-  no_show:    'bg-red-50 text-red-600 border-red-200',
+  scheduled:  'bg-accent text-primary border-border',
+  completed:  'bg-status-ok-bg text-status-ok border-green-200',
+  cancelled:  'bg-muted text-muted-foreground border-border line-through',
+  no_show:    'bg-status-error-bg text-status-error border-red-200',
 }
 
 const DAY_NAMES = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
@@ -45,28 +45,28 @@ export function ScheduleWeek({ schedules, mondayStr, sundayStr, onSelectEntry }:
   }
 
   return (
-    <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+    <div className="bg-card rounded-2xl border border-border shadow-sm overflow-hidden">
       {/* Week nav */}
-      <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100">
+      <div className="flex items-center justify-between px-5 py-4 border-b border-border">
         <button
           onClick={() => router.push(`/schedule?week=${prevWeek}`)}
-          className="flex h-8 w-8 items-center justify-center rounded-lg border border-gray-200 text-gray-500 hover:bg-gray-50 transition"
+          className="flex h-8 w-8 items-center justify-center rounded-lg border border-border text-muted-foreground hover:bg-muted/40 transition"
         >
           ‹
         </button>
-        <p className="text-sm font-semibold text-[#111827]">
+        <p className="text-sm font-semibold text-foreground">
           {formatDate(mondayStr)} — {formatDate(sundayStr)}
         </p>
         <button
           onClick={() => router.push(`/schedule?week=${nextWeek}`)}
-          className="flex h-8 w-8 items-center justify-center rounded-lg border border-gray-200 text-gray-500 hover:bg-gray-50 transition"
+          className="flex h-8 w-8 items-center justify-center rounded-lg border border-border text-muted-foreground hover:bg-muted/40 transition"
         >
           ›
         </button>
       </div>
 
       {/* Day columns */}
-      <div className="grid grid-cols-7 divide-x divide-gray-100 min-h-[400px]">
+      <div className="grid grid-cols-7 divide-x divide-border/60 min-h-[400px]">
         {days.map((dayIso, idx) => {
           const daySchedules = schedules.filter((s) => s.scheduled_date === dayIso)
           const isToday = dayIso === new Date().toISOString().slice(0, 10)
@@ -74,11 +74,11 @@ export function ScheduleWeek({ schedules, mondayStr, sundayStr, onSelectEntry }:
           return (
             <div key={dayIso} className="flex flex-col">
               {/* Day header */}
-              <div className={`px-2 py-2.5 text-center border-b border-gray-100 ${isToday ? 'bg-[#EEF2FF]' : 'bg-gray-50'}`}>
-                <p className={`text-[10px] font-bold uppercase tracking-widest ${isToday ? 'text-[#E8799E]' : 'text-gray-400'}`}>
+              <div className={`px-2 py-2.5 text-center border-b border-border ${isToday ? 'bg-accent' : 'bg-muted'}`}>
+                <p className={`text-[10px] font-bold uppercase tracking-widest ${isToday ? 'text-primary' : 'text-muted-foreground'}`}>
                   {DAY_NAMES[idx]}
                 </p>
-                <p className={`text-sm font-black mt-0.5 ${isToday ? 'text-[#E8799E]' : 'text-[#111827]'}`}>
+                <p className={`text-sm font-black mt-0.5 ${isToday ? 'text-primary' : 'text-foreground'}`}>
                   {new Date(dayIso + 'T00:00:00').getDate()}
                 </p>
               </div>
@@ -116,7 +116,7 @@ export function ScheduleWeek({ schedules, mondayStr, sundayStr, onSelectEntry }:
                           <div className="mt-1.5 flex gap-1" onClick={(e) => e.stopPropagation()}>
                             <button
                               onClick={() => handleStatusChange(s.id as string, 'completed')}
-                              className="rounded px-1 py-0.5 text-[9px] font-semibold bg-green-100 text-green-700 hover:bg-green-200 transition"
+                              className="rounded px-1 py-0.5 text-[9px] font-semibold bg-status-ok-bg text-status-ok hover:bg-green-200 transition"
                             >
                               Done
                             </button>

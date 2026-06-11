@@ -81,24 +81,24 @@ export function CsvUploader() {
           onDragOver={e => { e.preventDefault(); setDragOver(true) }}
           onDragLeave={() => setDragOver(false)}
           className={`border-2 border-dashed rounded-2xl p-12 text-center cursor-pointer transition-colors ${
-            dragOver ? 'border-[#E8799E] bg-blue-50' : 'border-gray-200 hover:border-gray-300 bg-white'
+            dragOver ? 'border-primary bg-blue-50' : 'border-border hover:border-gray-300 bg-card'
           }`}
           style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}
           onClick={() => inputRef.current?.click()}
         >
           <div className="flex justify-center mb-3">
-            <div className="w-12 h-12 rounded-xl bg-[#EEF2FF] flex items-center justify-center">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#E8799E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <div className="w-12 h-12 rounded-xl bg-accent flex items-center justify-center">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#DB2777" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
                 <polyline points="17 8 12 3 7 8" />
                 <line x1="12" y1="3" x2="12" y2="15" />
               </svg>
             </div>
           </div>
-          <p className="text-sm font-semibold text-[#3A2A4A]">
+          <p className="text-sm font-semibold text-foreground">
             Drop CSV file here or click to browse
           </p>
-          <p className="text-xs text-gray-400 mt-1">CSV files only, max 5MB</p>
+          <p className="text-xs text-muted-foreground mt-1">CSV files only, max 5MB</p>
           <input ref={inputRef} type="file" accept=".csv" onChange={handleFileSelect} className="hidden" />
         </div>
       </div>
@@ -110,12 +110,12 @@ export function CsvUploader() {
       <div className="space-y-4">
         <div className="flex items-center justify-between">
           <div>
-            <p className="text-sm font-bold text-[#3A2A4A]">{file?.name}</p>
-            <p className="text-xs text-gray-400">{parsed.rowCount} rows, {parsed.headers.length} columns</p>
+            <p className="text-sm font-bold text-foreground">{file?.name}</p>
+            <p className="text-xs text-muted-foreground">{parsed.rowCount} rows, {parsed.headers.length} columns</p>
           </div>
           <button
             onClick={() => { setStep('upload'); setFile(null); setParsed(null) }}
-            className="rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-semibold text-gray-600 hover:bg-gray-50"
+            className="rounded-lg border border-border px-3 py-1.5 text-xs font-semibold text-muted-foreground hover:bg-muted/40"
           >
             Change File
           </button>
@@ -131,18 +131,18 @@ export function CsvUploader() {
         )}
 
         <div>
-          <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-gray-400 mb-2">Preview (first {parsed.sampleRows.length} rows)</p>
-          <div className="overflow-x-auto rounded-xl border border-gray-200">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-muted-foreground mb-2">Preview (first {parsed.sampleRows.length} rows)</p>
+          <div className="overflow-x-auto rounded-xl border border-border">
             <table className="w-full text-xs">
               <thead>
-                <tr className="bg-gray-50">
-                  {parsed.headers.map(h => <th key={h} className="px-3 py-2 text-left font-semibold text-gray-600">{h}</th>)}
+                <tr className="bg-muted">
+                  {parsed.headers.map(h => <th key={h} className="px-3 py-2 text-left font-semibold text-muted-foreground">{h}</th>)}
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-100">
+              <tbody className="divide-y divide-border/60">
                 {parsed.sampleRows.map((row, i) => (
                   <tr key={i}>
-                    {parsed.headers.map(h => <td key={h} className="px-3 py-2 text-gray-700">{row[h] || '—'}</td>)}
+                    {parsed.headers.map(h => <td key={h} className="px-3 py-2 text-foreground">{row[h] || '—'}</td>)}
                   </tr>
                 ))}
               </tbody>
@@ -152,7 +152,7 @@ export function CsvUploader() {
 
         <button
           onClick={() => setStep('mapping')}
-          className="rounded-lg bg-[#E8799E] px-4 py-2 text-xs font-bold text-white hover:opacity-90"
+          className="rounded-lg bg-primary px-4 py-2 text-xs font-bold text-white hover:opacity-90"
         >
           Continue to Column Mapping
         </button>
@@ -168,18 +168,18 @@ export function CsvUploader() {
 
     return (
       <div className="space-y-4">
-        <p className="text-sm font-bold text-[#3A2A4A]">Map CSV Columns to System Fields</p>
-        <p className="text-xs text-gray-400">Match each CSV column to a field in the system.</p>
+        <p className="text-sm font-bold text-foreground">Map CSV Columns to System Fields</p>
+        <p className="text-xs text-muted-foreground">Match each CSV column to a field in the system.</p>
 
         <div className="space-y-2">
           {mapping.map((m) => (
-            <div key={m.csvColumn} className="flex items-center gap-3 rounded-lg border border-gray-200 bg-white px-4 py-3">
-              <span className="text-sm font-medium text-[#3A2A4A] w-40">{m.csvColumn}</span>
+            <div key={m.csvColumn} className="flex items-center gap-3 rounded-lg border border-border bg-card px-4 py-3">
+              <span className="text-sm font-medium text-foreground w-40">{m.csvColumn}</span>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" strokeWidth="2"><polyline points="9 18 15 12 9 6" /></svg>
               <select
                 value={m.systemField}
                 onChange={e => updateMapping(m.csvColumn, e.target.value)}
-                className="flex-1 rounded-lg border border-gray-200 px-3 py-2 text-xs bg-white"
+                className="flex-1 rounded-lg border border-border px-3 py-2 text-xs bg-card"
               >
                 {systemFields.map((sf: { key: string; label: string }) => (
                   <option key={sf.key} value={sf.key}>{sf.label}</option>
@@ -192,14 +192,14 @@ export function CsvUploader() {
         <div className="flex gap-2">
           <button
             onClick={() => setStep('preview')}
-            className="rounded-lg border border-gray-200 px-4 py-2 text-xs font-semibold text-gray-600 hover:bg-gray-50"
+            className="rounded-lg border border-border px-4 py-2 text-xs font-semibold text-muted-foreground hover:bg-muted/40"
           >
             Back
           </button>
           <button
             onClick={handleImport}
             disabled={importing}
-            className="rounded-lg bg-[#E8799E] px-4 py-2 text-xs font-bold text-white hover:opacity-90 disabled:opacity-40"
+            className="rounded-lg bg-primary px-4 py-2 text-xs font-bold text-white hover:opacity-90 disabled:opacity-40"
           >
             {importing ? 'Importing...' : `Import ${rows.length} Clients`}
           </button>
@@ -211,8 +211,8 @@ export function CsvUploader() {
   if (step === 'results' && importResult) {
     return (
       <div className="space-y-4">
-        <div className="rounded-2xl border border-gray-100 bg-white p-6" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
-          <h3 className="text-sm font-bold text-[#3A2A4A] mb-4">Import Results</h3>
+        <div className="rounded-2xl border border-border bg-card p-6" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
+          <h3 className="text-sm font-bold text-foreground mb-4">Import Results</h3>
           <div className="grid grid-cols-3 gap-3 mb-4">
             <div className="rounded-xl bg-emerald-50 border border-emerald-200 p-3 text-center">
               <p className="text-xl font-bold text-emerald-600">{importResult.imported}</p>
@@ -222,16 +222,16 @@ export function CsvUploader() {
               <p className="text-xl font-bold text-red-600">{importResult.errors.length}</p>
               <p className="text-[10px] font-semibold uppercase text-red-700">Errors</p>
             </div>
-            <div className="rounded-xl bg-gray-50 border border-gray-200 p-3 text-center">
-              <p className="text-xl font-bold text-gray-600">{importResult.skipped}</p>
-              <p className="text-[10px] font-semibold uppercase text-gray-600">Skipped</p>
+            <div className="rounded-xl bg-muted border border-border p-3 text-center">
+              <p className="text-xl font-bold text-muted-foreground">{importResult.skipped}</p>
+              <p className="text-[10px] font-semibold uppercase text-muted-foreground">Skipped</p>
             </div>
           </div>
 
           {importResult.errors.length > 0 && (
             <div>
-              <p className="text-xs font-semibold text-gray-600 mb-2">Error Report:</p>
-              <div className="max-h-48 overflow-y-auto bg-gray-50 rounded-lg p-3">
+              <p className="text-xs font-semibold text-muted-foreground mb-2">Error Report:</p>
+              <div className="max-h-48 overflow-y-auto bg-muted rounded-lg p-3">
                 {importResult.errors.map((e, i) => (
                   <p key={i} className="text-xs text-red-600 font-mono mb-1">Row {e.row}: {e.message}</p>
                 ))}
@@ -247,7 +247,7 @@ export function CsvUploader() {
                   a.click()
                   URL.revokeObjectURL(url)
                 }}
-                className="mt-2 rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-semibold text-gray-600 hover:bg-gray-50"
+                className="mt-2 rounded-lg border border-border px-3 py-1.5 text-xs font-semibold text-muted-foreground hover:bg-muted/40"
               >
                 Download Error Report
               </button>
@@ -257,7 +257,7 @@ export function CsvUploader() {
 
         <button
           onClick={() => { setStep('upload'); setFile(null); setParsed(null); setImportResult(null) }}
-          className="rounded-lg bg-[#E8799E] px-4 py-2 text-xs font-bold text-white hover:opacity-90"
+          className="rounded-lg bg-primary px-4 py-2 text-xs font-bold text-white hover:opacity-90"
         >
           Import Another File
         </button>

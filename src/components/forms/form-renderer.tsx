@@ -185,8 +185,8 @@ export function FormRenderer({
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       <div>
-        <h2 className="text-xl font-bold text-gray-900">{schema.title}</h2>
-        {schema.description && <p className="text-sm text-gray-500 mt-1">{schema.description}</p>}
+        <h2 className="text-xl font-bold text-foreground">{schema.title}</h2>
+        {schema.description && <p className="text-sm text-muted-foreground mt-1">{schema.description}</p>}
       </div>
 
       {validationError && (
@@ -205,15 +205,15 @@ export function FormRenderer({
         />
       )}
 
-      <div className="rounded-2xl border border-[#E8799E]/20 bg-[#EEF2FF] p-4 space-y-3">
+      <div className="rounded-2xl border border-primary/20 bg-accent p-4 space-y-3">
         <div className="flex items-center justify-between">
-          <p className="text-xs font-bold uppercase tracking-widest text-[#E8799E]">AI Assistant</p>
+          <p className="text-xs font-bold uppercase tracking-widest text-primary">AI Assistant</p>
           <div className="flex gap-2">
             <button
               type="button"
               onClick={handleGenerateNarrative}
               disabled={generatingNarrative || aiFilling}
-              className="rounded-lg border border-gray-200 bg-white px-3 py-1.5 text-[11px] font-semibold text-gray-700 hover:bg-gray-50 transition-colors disabled:opacity-50"
+              className="rounded-lg border border-border bg-card px-3 py-1.5 text-[11px] font-semibold text-foreground hover:bg-muted/40 transition-colors disabled:opacity-50"
             >
               {generatingNarrative ? 'Generating…' : 'Generate Narrative'}
             </button>
@@ -225,7 +225,7 @@ export function FormRenderer({
             value={aiFillDescription}
             onChange={(e) => setAiFillDescription(e.target.value)}
             placeholder="Describe the visit in natural language to auto-fill the form…"
-            className="flex-1 rounded-xl border border-gray-200 px-3 py-2 text-sm"
+            className="flex-1 rounded-xl border border-border px-3 py-2 text-sm"
             onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); handleAiFill() } }}
           />
           <Button type="button" loading={aiFilling} onClick={handleAiFill} disabled={!aiFillDescription.trim() || generatingNarrative}>
@@ -247,7 +247,7 @@ export function FormRenderer({
         />
       ))}
 
-      <div className="flex items-center justify-between pt-2 border-t border-gray-100">
+      <div className="flex items-center justify-between pt-2 border-t border-border">
         <span className="text-xs text-green-600">{savedAt ? `Draft saved at ${savedAt}` : ''}</span>
         <div className="flex gap-3">
           <Button type="button" variant="secondary" loading={saving} onClick={handleSaveDraft}>

@@ -9,7 +9,7 @@ type SelectFieldProps = {
 export function SelectField({ field, value, onChange }: SelectFieldProps) {
   return (
     <div className="flex flex-col gap-1">
-      <label htmlFor={field.id} className="text-sm font-medium text-gray-700">
+      <label htmlFor={field.id} className="text-sm font-medium text-foreground">
         {field.label}
         {field.required && <span className="text-red-500 ml-1">*</span>}
       </label>

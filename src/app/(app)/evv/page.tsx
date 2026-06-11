@@ -79,21 +79,21 @@ export default async function EvvPage({
     <div>
       {/* Header */}
       <div className="mb-8">
-        <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#94A3B8]">
+        <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
           Electronic Visit Verification
         </p>
-        <h1 className="mt-1.5 text-2xl font-bold tracking-tight text-[#3A2A4A]">EVV Visits</h1>
-        <p className="mt-1 text-[13px] text-[#64748B]">
+        <h1 className="mt-1.5 text-2xl font-bold tracking-tight text-foreground">EVV Visits</h1>
+        <p className="mt-1 text-[13px] text-muted-foreground">
           Track visit evidence used by the AI Audit Assistant — service date, staff, client, time records, and exceptions.
         </p>
       </div>
 
       {/* Status summary cards */}
       <div className="mb-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
-        <StatusSummaryCard label="Scheduled" value={scheduledCount} color="text-blue-600" bg="bg-blue-50" />
-        <StatusSummaryCard label="In Progress" value={inProgressCount} color="text-amber-600" bg="bg-amber-50" />
-        <StatusSummaryCard label="Completed" value={completedCount} color="text-emerald-600" bg="bg-emerald-50" />
-        <StatusSummaryCard label="Missed" value={missedCount} color="text-red-600" bg="bg-red-50" />
+        <StatusSummaryCard label="Scheduled" value={scheduledCount} color="text-blue-600 dark:text-blue-300" bg="bg-blue-50 dark:bg-blue-500/15" />
+        <StatusSummaryCard label="In Progress" value={inProgressCount} color="text-status-warn" bg="bg-status-warn-bg" />
+        <StatusSummaryCard label="Completed" value={completedCount} color="text-status-ok" bg="bg-status-ok-bg" />
+        <StatusSummaryCard label="Missed" value={missedCount} color="text-status-error" bg="bg-status-error-bg" />
       </div>
 
       {/* Date range filter */}
@@ -102,7 +102,7 @@ export default async function EvvPage({
       {/* Today's GPS check-in/out */}
       {visits && visits.length > 0 && (
         <div className="mb-6 space-y-3">
-          <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#94A3B8]">GPS Check-in/out</p>
+          <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">GPS Check-in/out</p>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {(annotatedVisits as Array<Record<string, unknown>>)
               .filter((v) => v.status === 'scheduled' || v.status === 'in_progress')
@@ -131,7 +131,7 @@ export default async function EvvPage({
       <div className="grid gap-6 xl:grid-cols-[1fr_420px]">
         {visitsError ? (
           <div
-            className="rounded-2xl border border-amber-100 bg-amber-50 p-6"
+            className="rounded-2xl border border-amber-100 bg-status-warn-bg p-6"
             style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}
           >
             <div className="flex items-start gap-3">
@@ -142,8 +142,8 @@ export default async function EvvPage({
                 </svg>
               </div>
               <div>
-                <p className="text-[13px] font-semibold text-amber-800">EVV table not active yet</p>
-                <p className="mt-1 text-[12px] text-amber-700 leading-relaxed">
+                <p className="text-[13px] font-semibold text-status-warn">EVV table not active yet</p>
+                <p className="mt-1 text-[12px] text-status-warn leading-relaxed">
                   Apply migration{' '}
                   <code className="rounded bg-amber-100 px-1.5 py-0.5 font-mono text-[11px]">
                     202606070005_audit_automation_evv.sql
@@ -155,18 +155,18 @@ export default async function EvvPage({
           </div>
         ) : (
           <div
-            className="overflow-hidden rounded-2xl border border-gray-100 bg-white"
+            className="overflow-hidden rounded-2xl border border-border bg-card"
             style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}
           >
             {!visits || visits.length === 0 ? (
               <div className="px-6 py-20 text-center">
-                <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-[#EEF2FF]">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#E8799E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-accent">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#DB2777" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
                   </svg>
                 </div>
-                <p className="text-[13px] font-semibold text-[#3A2A4A]">No EVV visits recorded</p>
-                <p className="mt-1 text-[12px] text-[#94A3B8]">
+                <p className="text-[13px] font-semibold text-foreground">No EVV visits recorded</p>
+                <p className="mt-1 text-[12px] text-muted-foreground">
                   Import or enter EVV visits so the audit assistant can verify them.
                 </p>
               </div>
@@ -174,15 +174,15 @@ export default async function EvvPage({
               <div className="overflow-x-auto">
                 <table className="w-full text-sm">
                   <thead>
-                    <tr className="border-b border-gray-100 bg-gray-50/50">
+                    <tr className="border-b border-border bg-muted/50">
                       {['Date', 'Client', 'Staff', 'Service', 'Scheduled', 'Actual', 'Status', 'Schedule Link'].map((h) => (
-                        <th key={h} className="px-5 py-3 text-left text-[10px] font-semibold uppercase tracking-[0.08em] text-[#94A3B8]">
+                        <th key={h} className="px-5 py-3 text-left text-[10px] font-semibold uppercase tracking-[0.08em] text-muted-foreground">
                           {h}
                         </th>
                       ))}
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-gray-50">
+                  <tbody className="divide-y divide-border/60">
                     {annotatedVisits.map((visit: Record<string, unknown>) => {
                       const client = visit.clients as { legal_name: string } | null
                       const staffProfile = visit.staff_profiles as { full_name: string } | null
@@ -192,17 +192,17 @@ export default async function EvvPage({
                         ts ? new Date(ts as string).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' }) : '—'
                       const linkedSchedules = visit._linkedSchedules as Array<Record<string, unknown>> | undefined
                       return (
-                        <tr key={visit.id as string} className="transition-colors hover:bg-gray-50/60">
-                          <td className="px-5 py-3.5 text-[13px] font-medium tabular-nums text-[#3A2A4A]">
+                        <tr key={visit.id as string} className="transition-colors hover:bg-muted/40">
+                          <td className="px-5 py-3.5 text-[13px] font-medium tabular-nums text-foreground">
                             {visit.service_date as string}
                           </td>
-                          <td className="px-5 py-3.5 text-[13px] text-[#64748B]">{client?.legal_name ?? '—'}</td>
-                          <td className="px-5 py-3.5 text-[13px] text-[#64748B]">{staffProfile?.full_name ?? '—'}</td>
-                          <td className="px-5 py-3.5 text-[12px] text-[#64748B]">{(visit.service_name as string) ?? '—'}</td>
-                          <td className="px-5 py-3.5 text-[12px] tabular-nums text-[#94A3B8]">
+                          <td className="px-5 py-3.5 text-[13px] text-muted-foreground">{client?.legal_name ?? '—'}</td>
+                          <td className="px-5 py-3.5 text-[13px] text-muted-foreground">{staffProfile?.full_name ?? '—'}</td>
+                          <td className="px-5 py-3.5 text-[12px] text-muted-foreground">{(visit.service_name as string) ?? '—'}</td>
+                          <td className="px-5 py-3.5 text-[12px] tabular-nums text-muted-foreground">
                             {fmtTime(visit.scheduled_start)}–{fmtTime(visit.scheduled_end)}
                           </td>
-                          <td className="px-5 py-3.5 text-[12px] tabular-nums text-[#94A3B8]">
+                          <td className="px-5 py-3.5 text-[12px] tabular-nums text-muted-foreground">
                             {fmtTime(visit.actual_start)}–{fmtTime(visit.actual_end)}
                           </td>
                           <td className="px-5 py-3.5">
@@ -215,12 +215,12 @@ export default async function EvvPage({
                             {linkedSchedules && linkedSchedules.length > 0 ? (
                               <a
                                 href={`/schedule?edit=${linkedSchedules[0].id}`}
-                                className="text-[10px] font-semibold text-[#E8799E] hover:underline"
+                                className="text-[10px] font-semibold text-primary hover:underline"
                               >
                                 View Schedule
                               </a>
                             ) : (
-                              <span className="text-[10px] text-gray-300">—</span>
+                              <span className="text-[10px] text-muted-foreground">—</span>
                             )}
                           </td>
                         </tr>
@@ -243,18 +243,18 @@ export default async function EvvPage({
 }
 
 const STATUS_STYLE: Record<string, { bg: string; dot: string; label: string }> = {
-  scheduled:   { bg: 'bg-blue-50 text-blue-700',    dot: 'bg-blue-500',    label: 'Scheduled' },
-  in_progress: { bg: 'bg-amber-50 text-amber-700',  dot: 'bg-amber-500',   label: 'In Progress' },
-  completed:   { bg: 'bg-emerald-50 text-emerald-700', dot: 'bg-emerald-500', label: 'Completed' },
-  missed:      { bg: 'bg-red-50 text-red-700',      dot: 'bg-red-500',     label: 'Missed' },
-  exception:   { bg: 'bg-orange-50 text-orange-700',dot: 'bg-orange-500',  label: 'Exception' },
+  scheduled:   { bg: 'bg-blue-50 text-blue-700 dark:bg-blue-500/15 dark:text-blue-300',    dot: 'bg-blue-500',    label: 'Scheduled' },
+  in_progress: { bg: 'bg-status-warn-bg text-status-warn',  dot: 'bg-status-warn',   label: 'In Progress' },
+  completed:   { bg: 'bg-status-ok-bg text-status-ok', dot: 'bg-status-ok', label: 'Completed' },
+  missed:      { bg: 'bg-status-error-bg text-status-error',      dot: 'bg-status-error',     label: 'Missed' },
+  exception:   { bg: 'bg-status-warn-bg text-status-warn',dot: 'bg-status-warn',  label: 'Exception' },
 }
 
 function StatusSummaryCard({ label, value, color, bg }: { label: string; value: number; color: string; bg: string }) {
   return (
-    <div className={`rounded-2xl border border-gray-100 shadow-sm px-5 py-4 ${bg}`}>
+    <div className={`rounded-2xl border border-border shadow-sm px-5 py-4 ${bg}`}>
       <p className={`text-2xl font-black ${color}`}>{value}</p>
-      <p className="text-[10px] font-semibold uppercase tracking-widest text-gray-500 mt-1">{label}</p>
+      <p className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground mt-1">{label}</p>
     </div>
   )
 }

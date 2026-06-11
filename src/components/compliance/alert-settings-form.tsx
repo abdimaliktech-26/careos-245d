@@ -37,10 +37,10 @@ export function AlertSettingsForm({ initial }: { initial: Settings }) {
   return (
     <div className="space-y-5">
       <div>
-        <label className="block text-[12px] font-semibold text-gray-700 mb-1">
+        <label className="block text-[12px] font-semibold text-foreground mb-1">
           Deadline Warning Days
         </label>
-        <p className="text-[11px] text-gray-500 mb-2">
+        <p className="text-[11px] text-muted-foreground mb-2">
           How many days before a deadline should an alert fire?
         </p>
         <input
@@ -49,15 +49,15 @@ export function AlertSettingsForm({ initial }: { initial: Settings }) {
           max={90}
           value={settings.deadlineWarningDays}
           onChange={(e) => setSettings((s) => ({ ...s, deadlineWarningDays: Number(e.target.value) }))}
-          className="w-full rounded-xl border border-gray-200 px-3 py-2 text-[13px]"
+          className="w-full rounded-xl border border-border px-3 py-2 text-[13px]"
         />
       </div>
 
       <div>
-        <label className="block text-[12px] font-semibold text-gray-700 mb-1">
+        <label className="block text-[12px] font-semibold text-foreground mb-1">
           Remind Interval (hours)
         </label>
-        <p className="text-[11px] text-gray-500 mb-2">
+        <p className="text-[11px] text-muted-foreground mb-2">
           How often to re-alert on still-active issues.
         </p>
         <input
@@ -66,12 +66,12 @@ export function AlertSettingsForm({ initial }: { initial: Settings }) {
           max={168}
           value={settings.remindIntervalHours}
           onChange={(e) => setSettings((s) => ({ ...s, remindIntervalHours: Number(e.target.value) }))}
-          className="w-full rounded-xl border border-gray-200 px-3 py-2 text-[13px]"
+          className="w-full rounded-xl border border-border px-3 py-2 text-[13px]"
         />
       </div>
 
       <div className="space-y-3">
-        <p className="text-[12px] font-semibold text-gray-700">Webhook Notifications</p>
+        <p className="text-[12px] font-semibold text-foreground">Webhook Notifications</p>
         <label className="flex items-center gap-3 cursor-pointer">
           <input
             type="checkbox"
@@ -79,7 +79,7 @@ export function AlertSettingsForm({ initial }: { initial: Settings }) {
             onChange={(e) => setSettings((s) => ({ ...s, criticalWebhookEnabled: e.target.checked }))}
             className="rounded border-gray-300"
           />
-          <span className="text-[12px] text-gray-600">Send webhook for critical alerts</span>
+          <span className="text-[12px] text-muted-foreground">Send webhook for critical alerts</span>
         </label>
         <label className="flex items-center gap-3 cursor-pointer">
           <input
@@ -88,7 +88,7 @@ export function AlertSettingsForm({ initial }: { initial: Settings }) {
             onChange={(e) => setSettings((s) => ({ ...s, warningWebhookEnabled: e.target.checked }))}
             className="rounded border-gray-300"
           />
-          <span className="text-[12px] text-gray-600">Send webhook for warning alerts</span>
+          <span className="text-[12px] text-muted-foreground">Send webhook for warning alerts</span>
         </label>
       </div>
 

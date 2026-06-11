@@ -353,8 +353,8 @@ export default function LandingPage() {
         {/* CTA */}
         <section className="relative overflow-hidden bg-gradient-to-br from-brand-from to-brand-to py-20">
           <div className="pointer-events-none absolute inset-0">
-            <div className="absolute -left-16 -top-16 h-48 w-48 rounded-full bg-white/5 blur-2xl" />
-            <div className="absolute -bottom-16 -right-16 h-64 w-64 rounded-full bg-white/5 blur-3xl" />
+            <div className="absolute -left-16 -top-16 h-48 w-48 rounded-full bg-card/5 blur-2xl" />
+            <div className="absolute -bottom-16 -right-16 h-64 w-64 rounded-full bg-card/5 blur-3xl" />
           </div>
           <div className="relative mx-auto max-w-3xl px-5 text-center sm:px-8">
             <h2 className="text-3xl font-black text-white sm:text-4xl">Ready to simplify your compliance workflow?</h2>
@@ -364,13 +364,13 @@ export default function LandingPage() {
             <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
               <Link
                 href="/auth/login"
-                className="inline-flex items-center gap-2 rounded-lg bg-white px-7 py-3.5 text-sm font-bold text-fuchsia-700 shadow-lg transition-all hover:scale-[1.02] hover:shadow-xl"
+                className="inline-flex items-center gap-2 rounded-lg bg-card px-7 py-3.5 text-sm font-bold text-fuchsia-700 shadow-lg transition-all hover:scale-[1.02] hover:shadow-xl"
               >
                 Start free trial <ArrowRightIcon />
               </Link>
               <Link
                 href="#features"
-                className="inline-flex items-center gap-2 rounded-lg border border-white/30 px-7 py-3.5 text-sm font-bold text-white transition-all hover:bg-white/10"
+                className="inline-flex items-center gap-2 rounded-lg border border-white/30 px-7 py-3.5 text-sm font-bold text-white transition-all hover:bg-card/10"
               >
                 Talk to sales
               </Link>

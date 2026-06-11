@@ -68,44 +68,44 @@ export default async function SystemSettingsPage() {
   return (
     <div>
       <div className="mb-8">
-        <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#94A3B8]">Super Admin</p>
-        <h1 className="mt-1.5 text-2xl font-bold tracking-tight text-[#3A2A4A]">System Settings</h1>
-        <p className="mt-1 text-[13px] text-[#64748B]">Platform configuration and health overview.</p>
+        <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">Super Admin</p>
+        <h1 className="mt-1.5 text-2xl font-bold tracking-tight text-foreground">System Settings</h1>
+        <p className="mt-1 text-[13px] text-muted-foreground">Platform configuration and health overview.</p>
       </div>
 
       <div className="grid gap-6 lg:grid-cols-2">
         {/* Environment Variables */}
-        <div className="rounded-2xl border border-gray-100 bg-white p-6" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
+        <div className="rounded-2xl border border-border bg-card p-6" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
           <div className="mb-4 flex items-center gap-2.5">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-50 text-indigo-600">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-50 text-indigo-600 dark:bg-indigo-500/15 dark:text-indigo-300">
               <KeyIcon />
             </div>
             <div>
-              <h3 className="text-[14px] font-bold text-[#3A2A4A]">Environment Variables</h3>
-              <p className="text-[11px] text-[#94A3B8]">Required integration keys</p>
+              <h3 className="text-[14px] font-bold text-foreground">Environment Variables</h3>
+              <p className="text-[11px] text-muted-foreground">Required integration keys</p>
             </div>
           </div>
 
           <div className="space-y-3">
             {/* Supabase URL */}
-            <div className="rounded-xl border border-gray-100 bg-gray-50/50 px-4 py-3">
+            <div className="rounded-xl border border-border bg-muted/50 px-4 py-3">
               <div className="flex items-center justify-between">
-                <span className="text-[12px] font-semibold text-[#3A2A4A]">Supabase URL</span>
-                <span className="inline-flex items-center gap-1 rounded-full bg-blue-50 px-2 py-0.5 text-[10px] font-semibold text-blue-700">
+                <span className="text-[12px] font-semibold text-foreground">Supabase URL</span>
+                <span className="inline-flex items-center gap-1 rounded-full bg-blue-50 px-2 py-0.5 text-[10px] font-semibold text-blue-700 dark:bg-blue-500/15 dark:text-blue-300">
                   <span className="h-1.5 w-1.5 rounded-full bg-blue-500" />
                   Connected
                 </span>
               </div>
-              <code className="mt-1 block text-[11px] text-[#64748B] truncate">{NEXT_PUBLIC_SUPABASE_URL}</code>
+              <code className="mt-1 block text-[11px] text-muted-foreground truncate">{NEXT_PUBLIC_SUPABASE_URL}</code>
             </div>
 
             {envVars.map((env) => (
-              <div key={env.key} className="flex items-center justify-between rounded-xl border border-gray-100 bg-gray-50/50 px-4 py-3">
-                <span className="text-[12px] font-semibold text-[#3A2A4A]">{env.label}</span>
+              <div key={env.key} className="flex items-center justify-between rounded-xl border border-border bg-muted/50 px-4 py-3">
+                <span className="text-[12px] font-semibold text-foreground">{env.label}</span>
                 <span className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-semibold ${
-                  env.ok ? 'bg-emerald-50 text-emerald-700' : 'bg-gray-100 text-gray-500'
+                  env.ok ? 'bg-status-ok-bg text-status-ok' : 'bg-muted text-muted-foreground'
                 }`}>
-                  <span className={`h-1.5 w-1.5 rounded-full ${env.ok ? 'bg-emerald-500' : 'bg-gray-400'}`} />
+                  <span className={`h-1.5 w-1.5 rounded-full ${env.ok ? 'bg-status-ok' : 'bg-gray-400'}`} />
                   {env.ok ? 'Configured' : 'Not Set'}
                 </span>
               </div>
@@ -114,20 +114,20 @@ export default async function SystemSettingsPage() {
         </div>
 
         {/* System Stats */}
-        <div className="rounded-2xl border border-gray-100 bg-white p-6" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
+        <div className="rounded-2xl border border-border bg-card p-6" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
           <div className="mb-4 flex items-center gap-2.5">
             <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-50 text-emerald-600">
               <ServerIcon />
             </div>
             <div>
-              <h3 className="text-[14px] font-bold text-[#3A2A4A]">Platform Stats</h3>
-              <p className="text-[11px] text-[#94A3B8]">Real-time system metrics</p>
+              <h3 className="text-[14px] font-bold text-foreground">Platform Stats</h3>
+              <p className="text-[11px] text-muted-foreground">Real-time system metrics</p>
             </div>
           </div>
 
           <div className="grid grid-cols-2 gap-3">
             {[
-              { label: 'Total Orgs', value: stats.totalOrganizations, color: '#E8799E' },
+              { label: 'Total Orgs', value: stats.totalOrganizations, color: '#DB2777' },
               { label: 'Active Orgs', value: stats.activeOrganizations, color: '#10B981' },
               { label: 'Pending Orgs', value: stats.pendingOrganizations, color: '#F59E0B' },
               { label: 'Suspended', value: stats.suspendedOrganizations, color: '#EF4444' },
@@ -136,23 +136,23 @@ export default async function SystemSettingsPage() {
               { label: 'Total Packets', value: stats.totalPackets, color: '#F97316' },
               { label: 'Total Incidents', value: stats.totalIncidents, color: '#14B8A6' },
             ].map((s) => (
-              <div key={s.label} className="rounded-xl border border-gray-100 p-3 text-center">
+              <div key={s.label} className="rounded-xl border border-border p-3 text-center">
                 <p className="text-xl font-bold" style={{ color: s.color }}>{s.value}</p>
-                <p className="text-[10px] font-semibold uppercase tracking-[0.06em] text-[#94A3B8]">{s.label}</p>
+                <p className="text-[10px] font-semibold uppercase tracking-[0.06em] text-muted-foreground">{s.label}</p>
               </div>
             ))}
           </div>
         </div>
 
         {/* Security */}
-        <div className="rounded-2xl border border-gray-100 bg-white p-6" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
+        <div className="rounded-2xl border border-border bg-card p-6" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
           <div className="mb-4 flex items-center gap-2.5">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-50 text-blue-600">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-50 text-blue-600 dark:bg-blue-500/15 dark:text-blue-300">
               <ShieldCheckIcon />
             </div>
             <div>
-              <h3 className="text-[14px] font-bold text-[#3A2A4A]">Security</h3>
-              <p className="text-[11px] text-[#94A3B8]">HIPAA & platform security</p>
+              <h3 className="text-[14px] font-bold text-foreground">Security</h3>
+              <p className="text-[11px] text-muted-foreground">HIPAA & platform security</p>
             </div>
           </div>
 
@@ -176,7 +176,7 @@ export default async function SystemSettingsPage() {
                     <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
                   </svg>
                 )}
-                <span className="text-[12px] text-[#3A2A4A]">{item.label}</span>
+                <span className="text-[12px] text-foreground">{item.label}</span>
               </div>
             ))}
           </div>
@@ -184,14 +184,14 @@ export default async function SystemSettingsPage() {
 
         {/* Cron & AI */}
         <div className="space-y-6">
-          <div className="rounded-2xl border border-gray-100 bg-white p-6" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
+          <div className="rounded-2xl border border-border bg-card p-6" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
             <div className="mb-4 flex items-center gap-2.5">
               <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-amber-50 text-amber-600">
                 <ClockIcon />
               </div>
               <div>
-                <h3 className="text-[14px] font-bold text-[#3A2A4A]">Scheduled Jobs</h3>
-                <p className="text-[11px] text-[#94A3B8]">Vercel Cron configuration</p>
+                <h3 className="text-[14px] font-bold text-foreground">Scheduled Jobs</h3>
+                <p className="text-[11px] text-muted-foreground">Vercel Cron configuration</p>
               </div>
             </div>
 
@@ -200,44 +200,44 @@ export default async function SystemSettingsPage() {
                 { label: 'Daily Audit', endpoint: '/api/cron/audit', schedule: '6:00 AM daily' },
                 { label: 'Compliance Alerts', endpoint: '/api/cron/compliance-alerts', schedule: 'On demand' },
               ].map((job) => (
-                <div key={job.label} className="rounded-xl border border-gray-100 bg-gray-50/50 px-4 py-3">
+                <div key={job.label} className="rounded-xl border border-border bg-muted/50 px-4 py-3">
                   <div className="flex items-center justify-between">
-                    <span className="text-[12px] font-semibold text-[#3A2A4A]">{job.label}</span>
-                    <span className="text-[10px] font-semibold text-[#94A3B8]">{job.schedule}</span>
+                    <span className="text-[12px] font-semibold text-foreground">{job.label}</span>
+                    <span className="text-[10px] font-semibold text-muted-foreground">{job.schedule}</span>
                   </div>
-                  <code className="mt-1 block text-[11px] text-[#64748B] truncate">{job.endpoint}</code>
+                  <code className="mt-1 block text-[11px] text-muted-foreground truncate">{job.endpoint}</code>
                 </div>
               ))}
             </div>
           </div>
 
-          <div className="rounded-2xl border border-gray-100 bg-white p-6" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
+          <div className="rounded-2xl border border-border bg-card p-6" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
             <div className="mb-4 flex items-center gap-2.5">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-purple-50 text-purple-600">
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-purple-50 text-purple-600 dark:bg-purple-500/15 dark:text-purple-300">
                 <BotIcon />
               </div>
               <div>
-                <h3 className="text-[14px] font-bold text-[#3A2A4A]">AI Integration</h3>
-                <p className="text-[11px] text-[#94A3B8]">DeepSeek AI configuration</p>
+                <h3 className="text-[14px] font-bold text-foreground">AI Integration</h3>
+                <p className="text-[11px] text-muted-foreground">DeepSeek AI configuration</p>
               </div>
             </div>
 
             <div className="space-y-2">
-              <div className="rounded-xl border border-gray-100 bg-gray-50/50 px-4 py-3">
+              <div className="rounded-xl border border-border bg-muted/50 px-4 py-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-[12px] font-semibold text-[#3A2A4A]">DeepSeek API</span>
-                  <span className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-semibold ${process.env.DEEPSEEK_API_KEY ? 'bg-emerald-50 text-emerald-700' : 'bg-gray-100 text-gray-500'}`}>
-                    <span className={`h-1.5 w-1.5 rounded-full ${process.env.DEEPSEEK_API_KEY ? 'bg-emerald-500' : 'bg-gray-400'}`} />
+                  <span className="text-[12px] font-semibold text-foreground">DeepSeek API</span>
+                  <span className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-semibold ${process.env.DEEPSEEK_API_KEY ? 'bg-status-ok-bg text-status-ok' : 'bg-muted text-muted-foreground'}`}>
+                    <span className={`h-1.5 w-1.5 rounded-full ${process.env.DEEPSEEK_API_KEY ? 'bg-status-ok' : 'bg-gray-400'}`} />
                     {process.env.DEEPSEEK_API_KEY ? 'Configured' : 'Not Set'}
                   </span>
                 </div>
               </div>
-              <div className="rounded-xl border border-gray-100 bg-gray-50/50 px-4 py-3">
+              <div className="rounded-xl border border-border bg-muted/50 px-4 py-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-[12px] font-semibold text-[#3A2A4A]">AI Endpoints</span>
-                  <span className="text-[10px] font-semibold text-emerald-700">5 active</span>
+                  <span className="text-[12px] font-semibold text-foreground">AI Endpoints</span>
+                  <span className="text-[10px] font-semibold text-status-ok">5 active</span>
                 </div>
-                <p className="mt-1 text-[11px] text-[#94A3B8]">Auto-fill, Narrative, Translation, Fatal Five, Schedule Optimizer</p>
+                <p className="mt-1 text-[11px] text-muted-foreground">Auto-fill, Narrative, Translation, Fatal Five, Schedule Optimizer</p>
               </div>
             </div>
           </div>

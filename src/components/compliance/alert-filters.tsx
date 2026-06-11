@@ -36,7 +36,7 @@ export function AlertFilters() {
       <select
         value={currentType}
         onChange={(e) => updateParam('type', e.target.value)}
-        className="rounded-xl border border-gray-200 px-3 py-2 text-[12px] font-medium text-gray-700 bg-white"
+        className="rounded-xl border border-border px-3 py-2 text-[12px] font-medium text-foreground bg-card"
       >
         {TYPES.map((t) => (
           <option key={t.value} value={t.value}>{t.label}</option>
@@ -45,7 +45,7 @@ export function AlertFilters() {
       <select
         value={currentSeverity}
         onChange={(e) => updateParam('severity', e.target.value)}
-        className="rounded-xl border border-gray-200 px-3 py-2 text-[12px] font-medium text-gray-700 bg-white"
+        className="rounded-xl border border-border px-3 py-2 text-[12px] font-medium text-foreground bg-card"
       >
         {SEVERITIES.map((s) => (
           <option key={s.value} value={s.value}>{s.label}</option>

@@ -28,14 +28,14 @@ export default async function AppLayout({ children }: { children: React.ReactNod
       branding = {
         name: org.name,
         logo_url: org.logo_url,
-        brand_primary: org.brand_primary ?? '#E8799E',
-        brand_accent: org.brand_accent ?? '#C8A8E8',
+        brand_primary: org.brand_primary ?? '#DB2777',
+        brand_accent: org.brand_accent ?? '#A78BFA',
       }
     }
   }
 
-  const brandPrimary = branding?.brand_primary ?? '#E8799E'
-  const brandAccent = branding?.brand_accent ?? '#C8A8E8'
+  const brandPrimary = branding?.brand_primary ?? '#DB2777'
+  const brandAccent = branding?.brand_accent ?? '#A78BFA'
 
   return (
     <RealtimeProvider user={user}>

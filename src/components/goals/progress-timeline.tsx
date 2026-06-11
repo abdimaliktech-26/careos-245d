@@ -7,7 +7,7 @@ type ProgressTimelineProps = {
 export function ProgressTimeline({ progress }: ProgressTimelineProps) {
   if (progress.length === 0) {
     return (
-      <p className="text-sm text-[#64748B] py-6 text-center">
+      <p className="text-sm text-muted-foreground py-6 text-center">
         No progress recorded yet. Add your first progress entry above.
       </p>
     )
@@ -15,18 +15,18 @@ export function ProgressTimeline({ progress }: ProgressTimelineProps) {
 
   return (
     <div className="relative">
-      <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-gray-100" />
+      <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-muted" />
       <div className="space-y-4">
         {progress.map((entry, i) => (
           <div key={entry.id} className="relative pl-10">
             <div
-              className={`absolute left-2.5 top-1.5 w-3 h-3 rounded-full border-2 bg-white ${
-                i === 0 ? 'border-[#E8799E]' : 'border-gray-300'
+              className={`absolute left-2.5 top-1.5 w-3 h-3 rounded-full border-2 bg-card ${
+                i === 0 ? 'border-primary' : 'border-gray-300'
               }`}
             />
-            <div className="bg-white border border-gray-200 rounded-xl p-4">
+            <div className="bg-card border border-border rounded-xl p-4">
               <div className="flex items-center justify-between mb-2">
-                <span className="text-xs text-[#64748B]">
+                <span className="text-xs text-muted-foreground">
                   {new Date(entry.recorded_at).toLocaleDateString('en-US', {
                     month: 'short',
                     day: 'numeric',
@@ -49,7 +49,7 @@ export function ProgressTimeline({ progress }: ProgressTimelineProps) {
                   </span>
                 )}
               </div>
-              <p className="text-sm text-[#3A2A4A] whitespace-pre-wrap">{entry.progress_note}</p>
+              <p className="text-sm text-foreground whitespace-pre-wrap">{entry.progress_note}</p>
             </div>
           </div>
         ))}
@@ -89,8 +89,8 @@ export function ProgressChart({ progress }: { progress: GoalProgress[] }) {
   const gridLines = [0, 25, 50, 75, 100].filter((v) => v >= minScore && v <= maxScore)
 
   return (
-    <div className="bg-white border border-gray-200 rounded-xl p-4">
-      <h3 className="text-sm font-semibold text-[#3A2A4A] mb-3">Progress Over Time</h3>
+    <div className="bg-card border border-border rounded-xl p-4">
+      <h3 className="text-sm font-semibold text-foreground mb-3">Progress Over Time</h3>
       <svg viewBox={`0 0 ${width} ${height}`} className="w-full h-auto" style={{ maxHeight: '180px' }}>
         {gridLines.map((line) => {
           const y = padding.top + chartH - ((line - minScore) / range) * chartH
@@ -118,7 +118,7 @@ export function ProgressChart({ progress }: { progress: GoalProgress[] }) {
         })}
 
         {pathD && (
-          <path d={pathD} fill="none" stroke="#E8799E" strokeWidth={2} strokeLinejoin="round" strokeLinecap="round" />
+          <path d={pathD} fill="none" stroke="#DB2777" strokeWidth={2} strokeLinejoin="round" strokeLinecap="round" />
         )}
 
         {scored.map((s, i) => {

@@ -16,7 +16,7 @@ export function ProgressFormModal({ goalId }: ProgressFormModalProps) {
         type="button"
         onClick={() => setOpen(true)}
         className="text-xs font-semibold px-3 py-1.5 rounded-full text-white transition-opacity hover:opacity-90"
-        style={{ backgroundColor: '#E8799E' }}
+        style={{ backgroundColor: '#DB2777' }}
       >
         + Record Progress
       </button>
@@ -24,13 +24,13 @@ export function ProgressFormModal({ goalId }: ProgressFormModalProps) {
       {open && (
         <div className="fixed inset-0 z-50 flex items-start justify-center pt-20">
           <div className="fixed inset-0 bg-black/40" onClick={() => setOpen(false)} />
-          <div className="relative bg-white rounded-2xl shadow-xl border border-gray-200 w-full max-w-lg p-6 max-h-[85vh] overflow-y-auto">
+          <div className="relative bg-card rounded-2xl shadow-xl border border-border w-full max-w-lg p-6 max-h-[85vh] overflow-y-auto">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg font-semibold text-[#3A2A4A]">Record Progress</h2>
+              <h2 className="text-lg font-semibold text-foreground">Record Progress</h2>
               <button
                 type="button"
                 onClick={() => setOpen(false)}
-                className="text-gray-400 hover:text-gray-600 text-xl leading-none"
+                className="text-muted-foreground hover:text-foreground text-xl leading-none"
               >
                 &times;
               </button>

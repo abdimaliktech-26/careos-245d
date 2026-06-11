@@ -28,8 +28,8 @@ export function UserTable({ users }: { users: UserListItem[] }) {
   if (users.length === 0) {
     return (
       <div className="px-6 py-16 text-center">
-        <p className="text-[13px] font-semibold text-[#3A2A4A]">No users found</p>
-        <p className="mt-1 text-[12px] text-[#94A3B8]">Create users or invite them to organizations.</p>
+        <p className="text-[13px] font-semibold text-foreground">No users found</p>
+        <p className="mt-1 text-[12px] text-muted-foreground">Create users or invite them to organizations.</p>
       </div>
     )
   }
@@ -44,17 +44,17 @@ export function UserTable({ users }: { users: UserListItem[] }) {
       )}
       <table className="w-full">
         <thead>
-          <tr className="border-b border-gray-100 bg-gray-50/50">
+          <tr className="border-b border-border bg-muted/40">
             {['Name', 'Email', 'Role', 'Organization', 'Status', 'Joined', 'Actions'].map((h) => (
-              <th key={h} className="px-5 py-3 text-left text-[10px] font-semibold uppercase tracking-[0.08em] text-[#94A3B8]">{h}</th>
+              <th key={h} className="px-5 py-3 text-left text-[10px] font-semibold uppercase tracking-[0.08em] text-muted-foreground">{h}</th>
             ))}
           </tr>
         </thead>
-        <tbody className="divide-y divide-gray-50">
+        <tbody className="divide-y divide-border/60">
           {users.map((u) => (
-            <tr key={u.id} className="transition-colors hover:bg-gray-50/60">
-              <td className="px-5 py-3.5 text-[13px] font-medium text-[#3A2A4A]">{u.fullName ?? '—'}</td>
-              <td className="px-5 py-3.5 text-[12px] text-[#64748B]">{u.email ?? '—'}</td>
+            <tr key={u.id} className="transition-colors hover:bg-muted/40">
+              <td className="px-5 py-3.5 text-[13px] font-medium text-foreground">{u.fullName ?? '—'}</td>
+              <td className="px-5 py-3.5 text-[12px] text-muted-foreground">{u.email ?? '—'}</td>
               <td className="px-5 py-3.5">
                 {u.role === 'super_admin' ? (
                   <RoleBadge role={u.role} />
@@ -63,7 +63,7 @@ export function UserTable({ users }: { users: UserListItem[] }) {
                     value={u.role}
                     disabled={actingId === u.id}
                     onChange={(e) => handleRoleChange(u.id, e.target.value)}
-                    className="rounded-lg border border-gray-200 bg-white px-2 py-1 text-[11px] font-semibold text-[#3A2A4A] focus:outline-none focus:ring-2 focus:ring-[#E8799E]/20 focus:border-[#E8799E] disabled:opacity-50"
+                    className="rounded-lg border border-border bg-card px-2 py-1 text-[11px] font-semibold text-foreground focus:outline-none focus:ring-2 focus:ring-ring/20 focus:border-ring disabled:opacity-50"
                   >
                     <option value="org_admin">Org Admin</option>
                     <option value="program_manager">Program Manager</option>
@@ -71,7 +71,7 @@ export function UserTable({ users }: { users: UserListItem[] }) {
                   </select>
                 )}
               </td>
-              <td className="px-5 py-3.5 text-[12px] text-[#64748B]">{u.organizationName ?? '—'}</td>
+              <td className="px-5 py-3.5 text-[12px] text-muted-foreground">{u.organizationName ?? '—'}</td>
               <td className="px-5 py-3.5">
                 {u.role === 'super_admin' ? (
                   <span className="inline-flex items-center gap-1.5 rounded-full bg-purple-50 px-2.5 py-0.5 text-[10px] font-semibold text-purple-700">
@@ -84,8 +84,8 @@ export function UserTable({ users }: { users: UserListItem[] }) {
                     disabled={actingId === u.id}
                     className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-[10px] font-semibold transition-colors disabled:opacity-50 ${
                       u.isActive
-                        ? 'bg-emerald-50 text-emerald-700 hover:bg-emerald-100'
-                        : 'bg-gray-100 text-gray-500 hover:bg-gray-200'
+                        ? 'bg-status-ok-bg text-status-ok hover:bg-emerald-100'
+                        : 'bg-muted text-muted-foreground hover:bg-muted'
                     }`}
                   >
                     <span className={`h-1.5 w-1.5 rounded-full ${u.isActive ? 'bg-emerald-500' : 'bg-gray-400'}`} />
@@ -93,12 +93,12 @@ export function UserTable({ users }: { users: UserListItem[] }) {
                   </button>
                 )}
               </td>
-              <td className="px-5 py-3.5 text-[12px] text-[#94A3B8]">
+              <td className="px-5 py-3.5 text-[12px] text-muted-foreground">
                 {new Date(u.joinedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
               </td>
               <td className="px-5 py-3.5">
                 {actingId === u.id && (
-                  <span className="inline-flex items-center gap-1 text-[11px] text-[#94A3B8]">
+                  <span className="inline-flex items-center gap-1 text-[11px] text-muted-foreground">
                     <svg className="animate-spin h-3 w-3" viewBox="0 0 24 24" fill="none">
                       <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" opacity="0.25" />
                       <path d="M4 12a8 8 0 018-8" stroke="currentColor" strokeWidth="4" strokeLinecap="round" />

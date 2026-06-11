@@ -35,9 +35,9 @@ export default async function SuperAdminAuditLogPage({
   return (
     <div>
       <div className="mb-8">
-        <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#94A3B8]">Super Admin</p>
-        <h1 className="mt-1.5 text-2xl font-bold tracking-tight text-[#3A2A4A]">Audit Log</h1>
-        <p className="mt-1 text-[13px] text-[#64748B]">System-wide activity across all organizations. {result.total} total entries.</p>
+        <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">Super Admin</p>
+        <h1 className="mt-1.5 text-2xl font-bold tracking-tight text-foreground">Audit Log</h1>
+        <p className="mt-1 text-[13px] text-muted-foreground">System-wide activity across all organizations. {result.total} total entries.</p>
       </div>
 
       {/* Filters */}
@@ -48,12 +48,12 @@ export default async function SuperAdminAuditLogPage({
             type="text"
             defaultValue={search ?? ''}
             placeholder="Search email or resource..."
-            className="w-full max-w-xs rounded-xl border border-gray-200 px-4 py-2.5 text-[13px] bg-white placeholder:text-[#94A3B8] focus:outline-none focus:ring-2 focus:ring-[#E8799E]/20 focus:border-[#E8799E]"
+            className="w-full max-w-xs rounded-xl border border-border px-4 py-2.5 text-[13px] bg-card placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring/15 focus:border-ring"
           />
           <select
             name="action"
             defaultValue={action ?? ''}
-            className="rounded-xl border border-gray-200 px-4 py-2.5 text-[13px] bg-white text-[#3A2A4A] focus:outline-none focus:ring-2 focus:ring-[#E8799E]/20 focus:border-[#E8799E]"
+            className="rounded-xl border border-border px-4 py-2.5 text-[13px] bg-card text-foreground focus:outline-none focus:ring-2 focus:ring-ring/15 focus:border-ring"
           >
             <option value="">All Actions</option>
             {ACTION_OPTIONS.map((a) => (
@@ -62,15 +62,14 @@ export default async function SuperAdminAuditLogPage({
           </select>
           <button
             type="submit"
-            className="rounded-xl px-4 py-2.5 text-[13px] font-semibold text-white transition-opacity hover:opacity-90"
-            style={{ background: 'linear-gradient(135deg, #E8799E 0%, #C8A8E8 100%)' }}
+            className="rounded-xl bg-gradient-to-br from-brand-from to-brand-to px-4 py-2.5 text-[13px] font-semibold text-white transition-opacity hover:opacity-90"
           >
             Filter
           </button>
           {(search || action) && (
             <Link
               href="/super-admin/audit-log"
-              className="rounded-xl border border-gray-200 px-4 py-2.5 text-[13px] font-semibold text-[#64748B] hover:bg-gray-50 transition-colors"
+              className="rounded-xl border border-border px-4 py-2.5 text-[13px] font-semibold text-muted-foreground hover:bg-muted/40 transition-colors"
             >
               Clear
             </Link>
@@ -79,7 +78,7 @@ export default async function SuperAdminAuditLogPage({
       </div>
 
       {/* Table */}
-      <div className="overflow-hidden rounded-2xl border border-gray-100 bg-white" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
+      <div className="overflow-hidden rounded-2xl border border-border bg-card" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
         <AuditLogTable entries={result.entries} />
       </div>
 
@@ -89,18 +88,18 @@ export default async function SuperAdminAuditLogPage({
           {page > 1 && (
             <Link
               href={`/super-admin/audit-log?${new URLSearchParams({ ...(action ? { action } : {}), ...(search ? { search } : {}), page: String(page - 1) }).toString()}`}
-              className="rounded-lg border border-gray-200 px-3 py-1.5 text-[12px] font-medium text-[#64748B] hover:bg-gray-50"
+              className="rounded-lg border border-border px-3 py-1.5 text-[12px] font-medium text-muted-foreground hover:bg-muted/40"
             >
               Previous
             </Link>
           )}
-          <span className="text-[12px] text-[#94A3B8]">
+          <span className="text-[12px] text-muted-foreground">
             Page {page} of {totalPages}
           </span>
           {page < totalPages && (
             <Link
               href={`/super-admin/audit-log?${new URLSearchParams({ ...(action ? { action } : {}), ...(search ? { search } : {}), page: String(page + 1) }).toString()}`}
-              className="rounded-lg border border-gray-200 px-3 py-1.5 text-[12px] font-medium text-[#64748B] hover:bg-gray-50"
+              className="rounded-lg border border-border px-3 py-1.5 text-[12px] font-medium text-muted-foreground hover:bg-muted/40"
             >
               Next
             </Link>

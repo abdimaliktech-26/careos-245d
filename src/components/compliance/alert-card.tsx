@@ -48,18 +48,18 @@ export function AlertCard({ alert, onDismiss, showActions = true }: AlertCardPro
               {alert.type.replace(/_/g, ' ')}
             </span>
             {alert.daysUntilDue !== null && (
-              <span className={`text-[11px] ${alert.daysUntilDue <= 0 ? 'text-red-600 font-semibold' : 'text-gray-500'}`}>
+              <span className={`text-[11px] ${alert.daysUntilDue <= 0 ? 'text-red-600 font-semibold' : 'text-muted-foreground'}`}>
                 {alert.daysUntilDue <= 0
                   ? `${Math.abs(alert.daysUntilDue)} day${Math.abs(alert.daysUntilDue) === 1 ? '' : 's'} overdue`
                   : `${alert.daysUntilDue} day${alert.daysUntilDue === 1 ? '' : 's'} left`}
               </span>
             )}
           </div>
-          <h3 className="text-[13px] font-semibold text-gray-900">{alert.title}</h3>
+          <h3 className="text-[13px] font-semibold text-foreground">{alert.title}</h3>
           {alert.description && (
-            <p className="mt-0.5 text-[12px] leading-relaxed text-gray-600">{alert.description}</p>
+            <p className="mt-0.5 text-[12px] leading-relaxed text-muted-foreground">{alert.description}</p>
           )}
-          <div className="mt-2 flex items-center gap-2 text-[11px] text-gray-400">
+          <div className="mt-2 flex items-center gap-2 text-[11px] text-muted-foreground">
             <span>{relativeDate(alert.createdAt)}</span>
             {alert.dueDate && (
               <>
@@ -74,7 +74,7 @@ export function AlertCard({ alert, onDismiss, showActions = true }: AlertCardPro
             {href && (
               <Link
                 href={href}
-                className="rounded-lg bg-white border border-gray-200 px-3 py-1.5 text-[11px] font-semibold text-gray-700 hover:bg-gray-50 transition-colors"
+                className="rounded-lg bg-card border border-border px-3 py-1.5 text-[11px] font-semibold text-foreground hover:bg-muted/40 transition-colors"
               >
                 View
               </Link>
@@ -83,7 +83,7 @@ export function AlertCard({ alert, onDismiss, showActions = true }: AlertCardPro
               <button
                 type="button"
                 onClick={() => onDismiss(alert.id)}
-                className="rounded-lg px-3 py-1.5 text-[11px] font-semibold text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors"
+                className="rounded-lg px-3 py-1.5 text-[11px] font-semibold text-muted-foreground hover:text-muted-foreground hover:bg-muted/40 transition-colors"
               >
                 Dismiss
               </button>

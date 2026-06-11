@@ -16,7 +16,7 @@ type Packet = {
 }
 
 const COLUMNS = [
-  { key: 'not_started', label: 'Not Started', color: 'border-t-gray-400', bg: 'bg-gray-50' },
+  { key: 'not_started', label: 'Not Started', color: 'border-t-gray-400', bg: 'bg-muted' },
   { key: 'in_progress', label: 'In Progress', color: 'border-t-blue-500', bg: 'bg-blue-50/30' },
   { key: 'needs_signature', label: 'Needs Signature', color: 'border-t-violet-500', bg: 'bg-violet-50/30' },
   { key: 'completed', label: 'Completed', color: 'border-t-emerald-500', bg: 'bg-emerald-50/30' },
@@ -78,15 +78,15 @@ export function KanbanBoard({ packets }: KanbanBoardProps) {
           key={col.key}
           onDragOver={handleDragOver}
           onDrop={(e) => handleDrop(e, col.key)}
-          className={`rounded-2xl border border-gray-100 ${col.color} border-t-4 ${col.bg} transition-colors ${
-            draggingId ? 'ring-2 ring-[#E8799E]/20' : ''
+          className={`rounded-2xl border border-border ${col.color} border-t-4 ${col.bg} transition-colors ${
+            draggingId ? 'ring-2 ring-ring/20' : ''
           }`}
           style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}
         >
-          <div className="px-4 py-3 border-b border-gray-100">
+          <div className="px-4 py-3 border-b border-border">
             <div className="flex items-center justify-between">
-              <h3 className="text-xs font-bold uppercase tracking-wider text-gray-700">{col.label}</h3>
-              <span className="flex h-5 w-5 items-center justify-center rounded-full bg-white border border-gray-200 text-[10px] font-bold text-gray-500">
+              <h3 className="text-xs font-bold uppercase tracking-wider text-foreground">{col.label}</h3>
+              <span className="flex h-5 w-5 items-center justify-center rounded-full bg-card border border-border text-[10px] font-bold text-muted-foreground">
                 {col.packets.length}
               </span>
             </div>
@@ -95,7 +95,7 @@ export function KanbanBoard({ packets }: KanbanBoardProps) {
           <div className="p-3 space-y-2 min-h-[200px]">
             {col.packets.length === 0 ? (
               <div className="flex items-center justify-center h-20">
-                <p className="text-[11px] text-gray-400">Drop packets here</p>
+                <p className="text-[11px] text-muted-foreground">Drop packets here</p>
               </div>
             ) : (
               col.packets.map((packet) => (
@@ -103,15 +103,15 @@ export function KanbanBoard({ packets }: KanbanBoardProps) {
                   key={packet.id}
                   draggable={updating !== packet.id}
                   onDragStart={(e) => handleDragStart(e, packet.id)}
-                  className={`bg-white rounded-xl border border-gray-100 p-3 cursor-grab active:cursor-grabbing transition-all hover:shadow-md ${
+                  className={`bg-card rounded-xl border border-border p-3 cursor-grab active:cursor-grabbing transition-all hover:shadow-md ${
                     draggingId === packet.id ? 'opacity-50 scale-[0.97]' : ''
                   } ${updating === packet.id ? 'opacity-50 pointer-events-none' : ''}`}
                   style={{ boxShadow: '0 1px 2px rgba(0,0,0,0.04)' }}
                 >
                   <Link href={`/clients/${packet.clientId}`} className="block">
-                    <p className="text-[13px] font-semibold text-[#3A2A4A] truncate">{packet.clientName}</p>
-                    <p className="text-[11px] text-[#64748B] mt-0.5 capitalize">{packet.packetType} · {packet.program}</p>
-                    <p className="text-[10px] text-[#94A3B8] mt-1 tabular-nums">Due {packet.dueDate}</p>
+                    <p className="text-[13px] font-semibold text-foreground truncate">{packet.clientName}</p>
+                    <p className="text-[11px] text-muted-foreground mt-0.5 capitalize">{packet.packetType} · {packet.program}</p>
+                    <p className="text-[10px] text-muted-foreground mt-1 tabular-nums">Due {packet.dueDate}</p>
                   </Link>
                 </div>
               ))

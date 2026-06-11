@@ -6,8 +6,8 @@ export function OrgTable({ orgs }: { orgs: OrgListItem[] }) {
   if (orgs.length === 0) {
     return (
       <div className="px-6 py-16 text-center">
-        <p className="text-[13px] font-semibold text-[#3A2A4A]">No organizations found</p>
-        <p className="mt-1 text-[12px] text-[#94A3B8]">Create your first organization to get started.</p>
+        <p className="text-[13px] font-semibold text-foreground">No organizations found</p>
+        <p className="mt-1 text-[12px] text-muted-foreground">Create your first organization to get started.</p>
       </div>
     )
   }
@@ -15,25 +15,25 @@ export function OrgTable({ orgs }: { orgs: OrgListItem[] }) {
   return (
     <table className="w-full">
       <thead>
-        <tr className="border-b border-gray-100 bg-gray-50/50">
+        <tr className="border-b border-border bg-muted/40">
           {['Name', 'Status', 'Plan', 'Members', 'Clients', 'Created'].map((h) => (
-            <th key={h} className="px-5 py-3 text-left text-[10px] font-semibold uppercase tracking-[0.08em] text-[#94A3B8]">{h}</th>
+            <th key={h} className="px-5 py-3 text-left text-[10px] font-semibold uppercase tracking-[0.08em] text-muted-foreground">{h}</th>
           ))}
         </tr>
       </thead>
-      <tbody className="divide-y divide-gray-50">
+      <tbody className="divide-y divide-border/60">
         {orgs.map((org) => (
-          <tr key={org.id} className="transition-colors hover:bg-gray-50/60">
+          <tr key={org.id} className="transition-colors hover:bg-muted/40">
             <td className="px-5 py-3.5">
-              <Link href={`/super-admin/organizations/${org.id}`} className="text-[13px] font-semibold text-[#3A2A4A] hover:text-[#E8799E]">
+              <Link href={`/super-admin/organizations/${org.id}`} className="text-[13px] font-semibold text-foreground hover:text-primary">
                 {org.name}
               </Link>
             </td>
             <td className="px-5 py-3.5"><StatusBadge status={org.status} /></td>
-            <td className="px-5 py-3.5 text-[12px] capitalize text-[#64748B]">{org.plan ?? '—'}</td>
-            <td className="px-5 py-3.5 text-[13px] text-[#64748B]">{org.memberCount}</td>
-            <td className="px-5 py-3.5 text-[13px] text-[#64748B]">{org.clientCount}</td>
-            <td className="px-5 py-3.5 text-[12px] text-[#94A3B8]">
+            <td className="px-5 py-3.5 text-[12px] capitalize text-muted-foreground">{org.plan ?? '—'}</td>
+            <td className="px-5 py-3.5 text-[13px] text-muted-foreground">{org.memberCount}</td>
+            <td className="px-5 py-3.5 text-[13px] text-muted-foreground">{org.clientCount}</td>
+            <td className="px-5 py-3.5 text-[12px] text-muted-foreground">
               {new Date(org.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
             </td>
           </tr>

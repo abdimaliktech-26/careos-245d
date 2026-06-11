@@ -75,7 +75,7 @@ export function GoalForm({ clientId, goal, onClose, onSuccess }: GoalFormProps) 
       )}
 
       <div className="flex flex-col gap-1">
-        <label htmlFor="title" className="text-sm font-medium text-gray-700">
+        <label htmlFor="title" className="text-sm font-medium text-foreground">
           Title <span className="text-red-500">*</span>
         </label>
         <Input
@@ -88,7 +88,7 @@ export function GoalForm({ clientId, goal, onClose, onSuccess }: GoalFormProps) 
       </div>
 
       <div className="flex flex-col gap-1">
-        <label htmlFor="description" className="text-sm font-medium text-gray-700">
+        <label htmlFor="description" className="text-sm font-medium text-foreground">
           Description
         </label>
         <textarea
@@ -96,20 +96,20 @@ export function GoalForm({ clientId, goal, onClose, onSuccess }: GoalFormProps) 
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           rows={3}
-          className="w-full border border-[#e5d8cd] rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:border-[#f37d6d] focus:ring-[#f37d6d]/20 transition-colors bg-white resize-none"
+          className="w-full border border-[#e5d8cd] rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:border-[#f37d6d] focus:ring-[#f37d6d]/20 transition-colors bg-card resize-none"
           placeholder="Detailed description of the goal..."
         />
       </div>
 
       <div className="flex flex-col gap-1">
-        <label htmlFor="category" className="text-sm font-medium text-gray-700">
+        <label htmlFor="category" className="text-sm font-medium text-foreground">
           Category <span className="text-red-500">*</span>
         </label>
         <select
           id="category"
           value={category}
           onChange={(e) => setCategory(e.target.value as GoalCategory)}
-          className="w-full border border-[#e5d8cd] rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:border-[#f37d6d] focus:ring-[#f37d6d]/20 transition-colors bg-white"
+          className="w-full border border-[#e5d8cd] rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:border-[#f37d6d] focus:ring-[#f37d6d]/20 transition-colors bg-card"
         >
           {CATEGORIES.map((cat) => (
             <option key={cat.value} value={cat.value}>
@@ -121,7 +121,7 @@ export function GoalForm({ clientId, goal, onClose, onSuccess }: GoalFormProps) 
 
       <div className="grid grid-cols-2 gap-4">
         <div className="flex flex-col gap-1">
-          <label htmlFor="startDate" className="text-sm font-medium text-gray-700">
+          <label htmlFor="startDate" className="text-sm font-medium text-foreground">
             Start Date
           </label>
           <Input
@@ -132,7 +132,7 @@ export function GoalForm({ clientId, goal, onClose, onSuccess }: GoalFormProps) 
           />
         </div>
         <div className="flex flex-col gap-1">
-          <label htmlFor="targetDate" className="text-sm font-medium text-gray-700">
+          <label htmlFor="targetDate" className="text-sm font-medium text-foreground">
             Target Date
           </label>
           <Input

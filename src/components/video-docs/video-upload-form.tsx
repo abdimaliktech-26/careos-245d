@@ -72,10 +72,10 @@ export function VideoUploadForm({ clientId, onUploaded, onCancel }: Props) {
   }
 
   return (
-    <div className="rounded-2xl border border-gray-100 bg-white p-6" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
+    <div className="rounded-2xl border border-border bg-card p-6" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
       <div className="flex items-center justify-between mb-5">
-        <h2 className="text-base font-semibold text-[#3A2A4A]">Upload Video</h2>
-        <button onClick={onCancel} className="text-xs text-gray-500 hover:text-gray-700 transition-colors">
+        <h2 className="text-base font-semibold text-foreground">Upload Video</h2>
+        <button onClick={onCancel} className="text-xs text-muted-foreground hover:text-foreground transition-colors">
           Cancel
         </button>
       </div>
@@ -88,15 +88,15 @@ export function VideoUploadForm({ clientId, onUploaded, onCancel }: Props) {
             onDrop={(e) => { e.preventDefault(); handleFile(e) }}
             onClick={() => inputRef.current?.click()}
             className={`border-2 border-dashed rounded-xl p-8 text-center cursor-pointer transition-colors ${
-              dragOver ? 'border-[#E8799E] bg-blue-50' : 'border-gray-200 hover:border-gray-300'
+              dragOver ? 'border-primary bg-blue-50' : 'border-border hover:border-gray-300'
             }`}
           >
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke={dragOver ? '#E8799E' : '#94A3B8'} strokeWidth="1.5" className="mx-auto mb-3">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke={dragOver ? '#DB2777' : '#94A3B8'} strokeWidth="1.5" className="mx-auto mb-3">
               <polygon points="23 7 16 12 23 17 23 7" />
               <rect x="1" y="5" width="15" height="14" rx="2" ry="2" />
             </svg>
-            <p className="text-sm font-medium text-[#3A2A4A]">Drop a video file here</p>
-            <p className="text-xs text-gray-500 mt-1">or click to browse (max 200 MB)</p>
+            <p className="text-sm font-medium text-foreground">Drop a video file here</p>
+            <p className="text-xs text-muted-foreground mt-1">or click to browse (max 200 MB)</p>
             <input
               ref={inputRef}
               type="file"
@@ -106,16 +106,16 @@ export function VideoUploadForm({ clientId, onUploaded, onCancel }: Props) {
             />
           </div>
         ) : (
-          <div className="flex items-center gap-3 rounded-xl bg-gray-50 px-4 py-3">
-            <div className="w-10 h-10 rounded-lg bg-[#E8799E]/10 flex items-center justify-center shrink-0">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#E8799E" strokeWidth="1.5">
+          <div className="flex items-center gap-3 rounded-xl bg-muted px-4 py-3">
+            <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#DB2777" strokeWidth="1.5">
                 <polygon points="23 7 16 12 23 17 23 7" />
                 <rect x="1" y="5" width="15" height="14" rx="2" ry="2" />
               </svg>
             </div>
             <div className="min-w-0 flex-1">
-              <p className="text-sm font-medium text-[#3A2A4A] truncate">{file.name}</p>
-              <p className="text-xs text-gray-500">{(file.size / (1024 * 1024)).toFixed(1)} MB</p>
+              <p className="text-sm font-medium text-foreground truncate">{file.name}</p>
+              <p className="text-xs text-muted-foreground">{(file.size / (1024 * 1024)).toFixed(1)} MB</p>
             </div>
             <button type="button" onClick={() => setFile(null)} className="text-xs text-red-500 hover:text-red-700 shrink-0">
               Change
@@ -124,36 +124,36 @@ export function VideoUploadForm({ clientId, onUploaded, onCancel }: Props) {
         )}
 
         <div>
-          <label className="block text-xs font-semibold text-gray-700 mb-1">Title *</label>
+          <label className="block text-xs font-semibold text-foreground mb-1">Title *</label>
           <input
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder="e.g. Service delivery observation"
-            className="care-input w-full rounded-lg border px-3 py-2 text-sm text-[#3A2A4A]"
+            className="care-input w-full rounded-lg border px-3 py-2 text-sm text-foreground"
             required
             disabled={uploading}
           />
         </div>
 
         <div>
-          <label className="block text-xs font-semibold text-gray-700 mb-1">Description</label>
+          <label className="block text-xs font-semibold text-foreground mb-1">Description</label>
           <textarea
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             placeholder="Optional description of this recording"
             rows={2}
-            className="care-input w-full rounded-lg border px-3 py-2 text-sm text-[#3A2A4A] resize-none"
+            className="care-input w-full rounded-lg border px-3 py-2 text-sm text-foreground resize-none"
             disabled={uploading}
           />
         </div>
 
         <div>
-          <label className="block text-xs font-semibold text-gray-700 mb-1">Category</label>
+          <label className="block text-xs font-semibold text-foreground mb-1">Category</label>
           <select
             value={category}
             onChange={(e) => setCategory(e.target.value as VideoCategory)}
-            className="care-input w-full rounded-lg border px-3 py-2 text-sm text-[#3A2A4A]"
+            className="care-input w-full rounded-lg border px-3 py-2 text-sm text-foreground"
             disabled={uploading}
           >
             {VIDEO_CATEGORIES.map((c) => (
@@ -168,10 +168,10 @@ export function VideoUploadForm({ clientId, onUploaded, onCancel }: Props) {
 
         {uploading && (
           <div>
-            <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
-              <div className="h-full bg-[#E8799E] rounded-full transition-all duration-300" style={{ width: `${progress}%` }} />
+            <div className="h-2 bg-muted rounded-full overflow-hidden">
+              <div className="h-full bg-primary rounded-full transition-all duration-300" style={{ width: `${progress}%` }} />
             </div>
-            <p className="text-xs text-gray-500 mt-1 text-center">Uploading… {progress}%</p>
+            <p className="text-xs text-muted-foreground mt-1 text-center">Uploading… {progress}%</p>
           </div>
         )}
 
@@ -179,7 +179,7 @@ export function VideoUploadForm({ clientId, onUploaded, onCancel }: Props) {
           <button
             type="submit"
             disabled={!file || !title.trim() || uploading}
-            className="flex-1 text-sm font-semibold px-4 py-2.5 rounded-lg text-white bg-[#E8799E] hover:bg-[#D06085] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            className="flex-1 text-sm font-semibold px-4 py-2.5 rounded-lg text-white bg-primary hover:bg-[#D06085] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
           >
             {uploading ? 'Uploading…' : 'Upload Video'}
           </button>

@@ -76,8 +76,8 @@ export function BatchSigningForm({ packetForms }: { packetForms: PacketFormItem[
 
   return (
     <div className="space-y-4">
-      <div className="rounded-2xl border border-gray-100 bg-white p-5 space-y-4" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
-        <p className="text-[10px] font-bold uppercase tracking-widest text-[#E8799E]">
+      <div className="rounded-2xl border border-border bg-card p-5 space-y-4" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
+        <p className="text-[10px] font-bold uppercase tracking-widest text-primary">
           Batch Signing Links ({selected.size} selected)
         </p>
 
@@ -85,7 +85,7 @@ export function BatchSigningForm({ packetForms }: { packetForms: PacketFormItem[
           <select
             value={signerRole}
             onChange={e => setSignerRole(e.target.value as 'client' | 'guardian')}
-            className="rounded-lg border border-gray-200 px-3 py-2 text-xs bg-white"
+            className="rounded-lg border border-border px-3 py-2 text-xs bg-card"
           >
             <option value="guardian">Guardian</option>
             <option value="client">Client</option>
@@ -94,13 +94,13 @@ export function BatchSigningForm({ packetForms }: { packetForms: PacketFormItem[
             value={signerName}
             onChange={e => setSignerName(e.target.value)}
             required
-            className="rounded-lg border border-gray-200 px-3 py-2 text-xs"
+            className="rounded-lg border border-border px-3 py-2 text-xs"
             placeholder="Signer name"
           />
           <input
             value={signerEmail}
             onChange={e => setSignerEmail(e.target.value)}
-            className="rounded-lg border border-gray-200 px-3 py-2 text-xs"
+            className="rounded-lg border border-border px-3 py-2 text-xs"
             placeholder="Email (optional)"
           />
         </div>
@@ -110,36 +110,36 @@ export function BatchSigningForm({ packetForms }: { packetForms: PacketFormItem[
             type="checkbox"
             checked={sendEmail}
             onChange={e => setSendEmail(e.target.checked)}
-            className="h-3.5 w-3.5 rounded border-gray-300 text-[#E8799E]"
+            className="h-3.5 w-3.5 rounded border-gray-300 text-primary"
           />
-          <span className="text-xs text-gray-500">Send email notification</span>
+          <span className="text-xs text-muted-foreground">Send email notification</span>
         </label>
 
         <button
           onClick={handleGenerate}
           disabled={selected.size === 0 || !signerName || generating}
-          className="w-full rounded-lg bg-[#E8799E] py-2.5 text-xs font-bold text-white hover:opacity-90 disabled:opacity-40"
+          className="w-full rounded-lg bg-primary py-2.5 text-xs font-bold text-white hover:opacity-90 disabled:opacity-40"
         >
           {generating ? 'Generating...' : `Generate Links for ${selected.size} Form(s)`}
         </button>
       </div>
 
       {packetForms.length > 0 && (
-        <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
-          <div className="px-4 py-3 flex items-center gap-2 border-b border-gray-100">
+        <div className="bg-card rounded-2xl border border-border overflow-hidden" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
+          <div className="px-4 py-3 flex items-center gap-2 border-b border-border">
             <input
               type="checkbox"
               checked={selected.size === packetForms.length}
               onChange={toggleAll}
               className="rounded border-gray-300"
             />
-            <span className="text-[10px] font-semibold uppercase tracking-[0.08em] text-gray-400">
+            <span className="text-[10px] font-semibold uppercase tracking-[0.08em] text-muted-foreground">
               Select All ({packetForms.length})
             </span>
           </div>
-          <div className="divide-y divide-gray-50 max-h-96 overflow-y-auto">
+          <div className="divide-y divide-border/60 max-h-96 overflow-y-auto">
             {packetForms.map(pf => (
-              <label key={pf.id} className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50/60 cursor-pointer">
+              <label key={pf.id} className="flex items-center gap-3 px-4 py-3 hover:bg-muted/40 cursor-pointer">
                 <input
                   type="checkbox"
                   checked={selected.has(pf.id)}
@@ -147,10 +147,10 @@ export function BatchSigningForm({ packetForms }: { packetForms: PacketFormItem[
                   className="rounded border-gray-300"
                 />
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-[#3A2A4A] truncate">
+                  <p className="text-sm font-medium text-foreground truncate">
                     {pf.form_templates?.name ?? 'Unknown Form'}
                   </p>
-                  <p className="text-[10px] text-gray-400">
+                  <p className="text-[10px] text-muted-foreground">
                     {pf.form_templates?.code ?? ''} &middot; {pf.clients?.legal_name ?? '—'}
                   </p>
                 </div>
@@ -161,21 +161,21 @@ export function BatchSigningForm({ packetForms }: { packetForms: PacketFormItem[
       )}
 
       {links.length > 0 && (
-        <div className="rounded-2xl border border-gray-100 bg-white p-5" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
+        <div className="rounded-2xl border border-border bg-card p-5" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
           <p className="text-[10px] font-bold uppercase tracking-widest text-emerald-600 mb-3">Generated Links</p>
           <div className="space-y-2">
             {links.map(l => (
-              <div key={l.packetFormId} className="rounded-lg bg-gray-50 p-3">
+              <div key={l.packetFormId} className="rounded-lg bg-muted p-3">
                 {l.error ? (
                   <p className="text-xs text-red-600">Error: {l.error}</p>
                 ) : (
                   <div className="flex items-center justify-between gap-2">
-                    <code className="text-xs text-[#E8799E] break-all flex-1">{baseUrl}{l.link}</code>
+                    <code className="text-xs text-primary break-all flex-1">{baseUrl}{l.link}</code>
                     <button
                       onClick={() => {
                         navigator.clipboard.writeText(`${baseUrl}${l.link}`)
                       }}
-                      className="shrink-0 rounded-md bg-[#E8799E] px-2.5 py-1 text-[10px] font-semibold text-white hover:opacity-90"
+                      className="shrink-0 rounded-md bg-primary px-2.5 py-1 text-[10px] font-semibold text-white hover:opacity-90"
                     >
                       Copy
                     </button>

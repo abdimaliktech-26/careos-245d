@@ -46,50 +46,50 @@ export default async function ArticlePage({ params }: Props) {
   return (
     <div className="max-w-4xl mx-auto">
       {/* Breadcrumb */}
-      <nav className="flex items-center gap-1.5 text-xs text-gray-400 mb-6">
-        <Link href="/help" className="hover:text-[#E8799E] transition-colors">Help Center</Link>
+      <nav className="flex items-center gap-1.5 text-xs text-muted-foreground mb-6">
+        <Link href="/help" className="hover:text-primary transition-colors">Help Center</Link>
         <ChevronRight />
-        <Link href={`/help/category/${article.category}`} className="hover:text-[#E8799E] transition-colors capitalize">
+        <Link href={`/help/category/${article.category}`} className="hover:text-primary transition-colors capitalize">
           {article.category.replace('-', ' ')}
         </Link>
         <ChevronRight />
-        <span className="text-gray-600 truncate max-w-[200px]">{article.title}</span>
+        <span className="text-muted-foreground truncate max-w-[200px]">{article.title}</span>
       </nav>
 
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_280px] gap-8">
         {/* Main content */}
         <article>
-          <h1 className="text-2xl font-bold text-gray-900 mb-3">{article.title}</h1>
+          <h1 className="text-2xl font-bold text-foreground mb-3">{article.title}</h1>
 
           {article.excerpt && (
-            <p className="text-sm text-gray-500 mb-6">{article.excerpt}</p>
+            <p className="text-sm text-muted-foreground mb-6">{article.excerpt}</p>
           )}
 
           {/* Meta */}
-          <div className="flex items-center gap-3 text-xs text-gray-400 mb-8 pb-6 border-b border-gray-100">
+          <div className="flex items-center gap-3 text-xs text-muted-foreground mb-8 pb-6 border-b border-border">
             <span className="inline-flex items-center gap-1.5">
               <ClockIcon />
               Last updated {updated}
             </span>
-            <span className="inline-flex items-center rounded-full bg-[#EEF2FF] px-2.5 py-0.5 text-[10px] font-medium text-[#E8799E] capitalize">
+            <span className="inline-flex items-center rounded-full bg-accent px-2.5 py-0.5 text-[10px] font-medium text-primary capitalize">
               {article.category.replace('-', ' ')}
             </span>
           </div>
 
           {/* Content */}
           <div
-            className="prose prose-sm max-w-none prose-headings:text-gray-900 prose-p:text-gray-600 prose-a:text-[#E8799E] prose-code:text-gray-600 prose-code:bg-gray-100 prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-code:text-xs prose-strong:text-gray-900 prose-li:text-gray-600 prose-img:rounded-xl"
+            className="prose prose-sm max-w-none prose-headings:text-foreground prose-p:text-muted-foreground prose-a:text-primary prose-code:text-muted-foreground prose-code:bg-muted prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-code:text-xs prose-strong:text-foreground prose-li:text-muted-foreground prose-img:rounded-xl"
             dangerouslySetInnerHTML={{ __html: sanitizeArticleHtml(article.content) }}
           />
 
           {/* Tags */}
           {article.tags && article.tags.length > 0 && (
-            <div className="mt-8 pt-6 border-t border-gray-100">
+            <div className="mt-8 pt-6 border-t border-border">
               <div className="flex items-center gap-2 flex-wrap">
                 {article.tags.map((tag) => (
                   <span
                     key={tag}
-                    className="inline-flex items-center rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-600"
+                    className="inline-flex items-center rounded-full bg-muted px-3 py-1 text-xs font-medium text-muted-foreground"
                   >
                     {tag}
                   </span>
@@ -106,7 +106,7 @@ export default async function ArticlePage({ params }: Props) {
         <aside className="hidden lg:block">
           {relatedArticles.length > 0 && (
             <div className="sticky top-8">
-              <h3 className="text-xs font-semibold uppercase tracking-wider text-gray-400 mb-3">
+              <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3">
                 Related Articles
               </h3>
               <div className="space-y-2">
@@ -114,10 +114,10 @@ export default async function ArticlePage({ params }: Props) {
                   <Link
                     key={ra.id}
                     href={`/help/${ra.slug}`}
-                    className="block rounded-lg border border-gray-100 p-3 transition-colors hover:border-[#E8799E]/30 hover:bg-[#FAFBFF]"
+                    className="block rounded-lg border border-border p-3 transition-colors hover:border-brand-to/40 hover:bg-muted/40"
                   >
-                    <p className="text-xs font-medium text-gray-900 line-clamp-2">{ra.title}</p>
-                    <p className="text-[10px] text-gray-400 mt-1 capitalize">{ra.category.replace('-', ' ')}</p>
+                    <p className="text-xs font-medium text-foreground line-clamp-2">{ra.title}</p>
+                    <p className="text-[10px] text-muted-foreground mt-1 capitalize">{ra.category.replace('-', ' ')}</p>
                   </Link>
                 ))}
               </div>

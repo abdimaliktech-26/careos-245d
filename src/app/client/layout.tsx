@@ -14,9 +14,9 @@ export default async function ClientLayout({
   }
 
   return (
-    <div className="flex h-screen overflow-hidden bg-[#F0F4FF]">
+    <div className="flex h-screen overflow-hidden bg-background">
       <ClientSidebar user={user} />
-      <main className="flex-1 overflow-y-auto bg-[#F0F4FF]">
+      <main className="flex-1 overflow-y-auto bg-background">
         <div className="p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto">
           {children}
         </div>

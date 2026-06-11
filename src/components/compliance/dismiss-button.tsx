@@ -22,7 +22,7 @@ export function DismissButton({ alertId }: { alertId: string }) {
       type="button"
       onClick={handleDismiss}
       disabled={dismissing}
-      className="rounded-lg border border-gray-200 px-3 py-1.5 text-[11px] font-semibold text-gray-500 hover:bg-gray-50 transition-colors disabled:opacity-50"
+      className="rounded-lg border border-border px-3 py-1.5 text-[11px] font-semibold text-muted-foreground hover:bg-muted/40 transition-colors disabled:opacity-50"
     >
       {dismissing ? 'Dismissing…' : 'Dismiss'}
     </button>

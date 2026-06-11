@@ -109,14 +109,14 @@ function NavItem({ href, label, Icon, active }: { href: string; label: string; I
       href={href}
       className={`group relative flex items-center gap-2.5 rounded-lg px-3 py-2 text-[13px] transition-all duration-150 ${
         active
-          ? 'bg-[#EEF2FF] text-[#E8799E] font-semibold'
-          : 'text-[#64748B] hover:bg-gray-50 hover:text-[#334155]'
+          ? 'bg-accent text-primary font-semibold'
+          : 'text-muted-foreground hover:bg-muted/40 hover:text-foreground'
       }`}
     >
       {active && (
-        <span className="absolute left-0 inset-y-1.5 w-0.5 rounded-r-full bg-[#E8799E]" />
+        <span className="absolute left-0 inset-y-1.5 w-0.5 rounded-r-full bg-primary" />
       )}
-      <span className={`shrink-0 transition-colors ${active ? 'text-[#E8799E]' : 'text-[#94A3B8] group-hover:text-[#64748B]'}`}>
+      <span className={`shrink-0 transition-colors ${active ? 'text-primary' : 'text-muted-foreground group-hover:text-foreground'}`}>
         <Icon />
       </span>
       <span className="truncate">{label}</span>
@@ -140,24 +140,23 @@ export default function ClientSidebar({ user }: ClientSidebarProps) {
   const sidebarContent = (
     <div className="flex h-full flex-col">
       {/* Logo */}
-      <div className="flex items-center gap-3 px-5 py-4 border-b border-gray-100/80">
+      <div className="flex items-center gap-3 px-5 py-4 border-b border-border/80">
         <div
-          className="flex h-8 w-8 items-center justify-center rounded-[10px] shrink-0"
-          style={{ background: 'linear-gradient(135deg, #E8799E 0%, #C8A8E8 100%)' }}
+          className="flex h-8 w-8 items-center justify-center rounded-[10px] shrink-0 bg-gradient-to-br from-brand-from to-brand-to"
         >
           <svg width="15" height="15" viewBox="0 0 20 20" fill="white">
             <path fillRule="evenodd" d="M10 1.944A11.954 11.954 0 012.166 5C2.056 5.649 2 6.319 2 7c0 5.225 3.34 9.67 8 11.317C14.66 16.67 18 12.225 18 7c0-.682-.057-1.35-.166-2.001A11.954 11.954 0 0110 1.944z" clipRule="evenodd" />
           </svg>
         </div>
         <div>
-          <p className="text-[13px] font-bold leading-none tracking-tight text-[#3A2A4A]">CareIntake</p>
-          <p className="mt-0.5 text-[9px] font-semibold tracking-[0.14em] text-[#E8799E] uppercase">Client Portal</p>
+          <p className="text-[13px] font-bold leading-none tracking-tight text-foreground">CareIntake</p>
+          <p className="mt-0.5 text-[9px] font-semibold tracking-[0.14em] text-primary uppercase">Client Portal</p>
         </div>
       </div>
 
       {/* Nav */}
       <nav className="flex-1 overflow-y-auto px-3 py-4">
-        <p className="mb-1.5 px-3 text-[9px] font-semibold uppercase tracking-[0.12em] text-[#CBD5E1]">Menu</p>
+        <p className="mb-1.5 px-3 text-[9px] font-semibold uppercase tracking-[0.12em] text-muted-foreground">Menu</p>
         <div className="space-y-0.5">
           {NAV_ITEMS.map(({ href, label, icon: Icon }) => (
             <NavItem
@@ -172,23 +171,22 @@ export default function ClientSidebar({ user }: ClientSidebarProps) {
       </nav>
 
       {/* User */}
-      <div className="border-t border-gray-100 p-3">
-        <div className="flex items-center gap-2.5 rounded-xl bg-[#F8FAFC] px-3 py-2.5">
+      <div className="border-t border-border p-3">
+        <div className="flex items-center gap-2.5 rounded-xl bg-background px-3 py-2.5">
           <div
-            className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg text-[11px] font-bold text-white"
-            style={{ background: 'linear-gradient(135deg, #E8799E, #C8A8E8)' }}
+            className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-brand-from to-brand-to text-[11px] font-bold text-white"
           >
             {initials}
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-[12px] font-semibold text-[#3A2A4A] truncate leading-tight">{user.fullName}</p>
-            <p className="text-[10px] text-[#94A3B8] capitalize leading-tight mt-0.5">{roleLabel}</p>
+            <p className="text-[12px] font-semibold text-foreground truncate leading-tight">{user.fullName}</p>
+            <p className="text-[10px] text-muted-foreground capitalize leading-tight mt-0.5">{roleLabel}</p>
           </div>
           <form action="/auth/logout" method="POST">
             <button
               type="submit"
               title="Sign out"
-              className="flex h-6 w-6 items-center justify-center rounded-md text-[#CBD5E1] transition-colors hover:bg-gray-200 hover:text-[#64748B]"
+              className="flex h-6 w-6 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted/40 hover:text-foreground"
             >
               <LogoutIcon />
             </button>
@@ -201,28 +199,27 @@ export default function ClientSidebar({ user }: ClientSidebarProps) {
   return (
     <>
       {/* Mobile header */}
-      <div className="flex items-center justify-between border-b border-gray-100 bg-white px-4 py-3 lg:hidden">
+      <div className="flex items-center justify-between border-b border-border bg-card px-4 py-3 lg:hidden">
         <div className="flex items-center gap-2">
           <div
-            className="flex h-7 w-7 items-center justify-center rounded-[8px]"
-            style={{ background: 'linear-gradient(135deg, #E8799E 0%, #C8A8E8 100%)' }}
+            className="flex h-7 w-7 items-center justify-center rounded-[8px] bg-gradient-to-br from-brand-from to-brand-to"
           >
             <svg width="12" height="12" viewBox="0 0 20 20" fill="white">
               <path fillRule="evenodd" d="M10 1.944A11.954 11.954 0 012.166 5C2.056 5.649 2 6.319 2 7c0 5.225 3.34 9.67 8 11.317C14.66 16.67 18 12.225 18 7c0-.682-.057-1.35-.166-2.001A11.954 11.954 0 0110 1.944z" clipRule="evenodd" />
             </svg>
           </div>
-          <span className="text-[13px] font-bold text-[#3A2A4A]">CareIntake</span>
+          <span className="text-[13px] font-bold text-foreground">CareIntake</span>
         </div>
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
-          className="flex h-8 w-8 items-center justify-center rounded-lg text-[#64748B] hover:bg-gray-100"
+          className="flex h-8 w-8 items-center justify-center rounded-lg text-muted-foreground hover:bg-muted/40"
         >
           {mobileOpen ? <XIcon /> : <MenuIcon />}
         </button>
       </div>
 
       {/* Desktop sidebar */}
-      <div className="hidden lg:flex lg:flex-col lg:w-[232px] lg:shrink-0 h-screen border-r border-gray-100 bg-white overflow-hidden">
+      <div className="hidden lg:flex lg:flex-col lg:w-[232px] lg:shrink-0 h-screen border-r border-border bg-card overflow-hidden">
         {sidebarContent}
       </div>
 
@@ -230,7 +227,7 @@ export default function ClientSidebar({ user }: ClientSidebarProps) {
       {mobileOpen && (
         <div className="fixed inset-0 z-50 lg:hidden">
           <div className="absolute inset-0 bg-black/20" onClick={() => setMobileOpen(false)} />
-          <div className="absolute left-0 top-0 bottom-0 w-[260px] bg-white shadow-xl">
+          <div className="absolute left-0 top-0 bottom-0 w-[260px] bg-card shadow-xl">
             {sidebarContent}
           </div>
         </div>

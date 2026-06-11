@@ -48,7 +48,7 @@ export function ComplianceAlertBanner() {
             {topAlert.title}
           </p>
           {topAlert.description && (
-            <p className="mt-0.5 text-[11px] text-gray-600">{topAlert.description}</p>
+            <p className="mt-0.5 text-[11px] text-muted-foreground">{topAlert.description}</p>
           )}
         </div>
         <div className="flex shrink-0 items-center gap-2">
@@ -61,7 +61,7 @@ export function ComplianceAlertBanner() {
           <button
             type="button"
             onClick={() => handleDismiss(topAlert.id)}
-            className="rounded-lg px-3 py-1.5 text-[11px] font-semibold text-gray-400 hover:text-gray-600 hover:bg-white/50 transition-colors"
+            className="rounded-lg px-3 py-1.5 text-[11px] font-semibold text-muted-foreground hover:text-muted-foreground hover:bg-card/50 transition-colors"
           >
             Dismiss
           </button>

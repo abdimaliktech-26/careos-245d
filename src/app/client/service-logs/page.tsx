@@ -29,8 +29,8 @@ export default async function ClientServiceLogsPage() {
             <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
           </svg>
         </div>
-        <p className="text-sm font-semibold text-[#3A2A4A]">No client record linked</p>
-        <p className="mt-1 text-xs text-[#64748B]">Your account is not yet linked to a client record.</p>
+        <p className="text-sm font-semibold text-foreground">No client record linked</p>
+        <p className="mt-1 text-xs text-muted-foreground">Your account is not yet linked to a client record.</p>
       </div>
     )
   }
@@ -65,35 +65,35 @@ export default async function ClientServiceLogsPage() {
   return (
     <div className="max-w-2xl mx-auto space-y-6">
       <div>
-        <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#94A3B8]">
+        <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
           Client Portal · Service Logs
         </p>
-        <h1 className="mt-1.5 text-2xl font-bold tracking-tight text-[#3A2A4A]">
+        <h1 className="mt-1.5 text-2xl font-bold tracking-tight text-foreground">
           Service Logs
         </h1>
-        <p className="mt-1 text-[13px] text-[#64748B]">
+        <p className="mt-1 text-[13px] text-muted-foreground">
           View recent shift notes and EVV visit logs from the last 30 days.
         </p>
       </div>
 
       {!hasData ? (
         <div className="care-panel rounded-2xl flex flex-col items-center justify-center py-16 text-center">
-          <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-[#EEF2FF]">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#E8799E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-accent">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#DB2777" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
               <polyline points="14 2 14 8 20 8"/>
               <line x1="16" y1="13" x2="8" y2="13"/>
               <line x1="16" y1="17" x2="8" y2="17"/>
             </svg>
           </div>
-          <p className="text-sm font-semibold text-[#3A2A4A]">No service logs yet</p>
-          <p className="mt-1 text-xs text-[#94A3B8]">Shift notes and EVV visits from the last 30 days will appear here.</p>
+          <p className="text-sm font-semibold text-foreground">No service logs yet</p>
+          <p className="mt-1 text-xs text-muted-foreground">Shift notes and EVV visits from the last 30 days will appear here.</p>
         </div>
       ) : (
         <div className="space-y-6">
           {shiftNotes.length > 0 && (
             <div>
-              <h2 className="text-xs font-bold uppercase tracking-wider text-[#94A3B8] mb-3">
+              <h2 className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-3">
                 Shift Notes ({shiftNotes.length})
               </h2>
               <div className="space-y-3">
@@ -106,7 +106,7 @@ export default async function ClientServiceLogsPage() {
 
           {evvVisits.length > 0 && (
             <div>
-              <h2 className="text-xs font-bold uppercase tracking-wider text-[#94A3B8] mb-3">
+              <h2 className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-3">
                 EVV Visit Logs ({evvVisits.length})
               </h2>
               <div className="space-y-3">

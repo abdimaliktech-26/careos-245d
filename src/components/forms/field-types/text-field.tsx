@@ -11,11 +11,11 @@ const inputClass = 'w-full border border-gray-300 rounded-md px-3 py-2 text-sm f
 export function TextField({ field, value, onChange }: TextFieldProps) {
   return (
     <div className="flex flex-col gap-1">
-      <label htmlFor={field.id} className="text-sm font-medium text-gray-700">
+      <label htmlFor={field.id} className="text-sm font-medium text-foreground">
         {field.label}
         {field.required && <span className="text-red-500 ml-1">*</span>}
       </label>
-      {field.helpText && <p className="text-xs text-gray-500">{field.helpText}</p>}
+      {field.helpText && <p className="text-xs text-muted-foreground">{field.helpText}</p>}
       {field.type === 'textarea' ? (
         <textarea
           id={field.id}

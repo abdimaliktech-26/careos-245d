@@ -101,13 +101,13 @@ export function SubscriptionForm({
   }
 
   return (
-    <form onSubmit={handleSave} className="overflow-hidden rounded-2xl border border-gray-100 bg-white p-5" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
-      <p className="text-[10px] font-semibold uppercase tracking-[0.1em] text-[#94A3B8]">Billing</p>
-      <h2 className="mt-0.5 text-[13px] font-bold text-[#3A2A4A] mb-4">Subscription & Pricing</h2>
+    <form onSubmit={handleSave} className="overflow-hidden rounded-2xl border border-border bg-card p-5" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
+      <p className="text-[10px] font-semibold uppercase tracking-[0.1em] text-muted-foreground">Billing</p>
+      <h2 className="mt-0.5 text-[13px] font-bold text-foreground mb-4">Subscription & Pricing</h2>
 
       {message && (
         <p className={`mb-4 text-[11px] font-medium rounded-lg px-3 py-2 ${
-          message.type === 'success' ? 'text-green-700 bg-green-50' : 'text-red-700 bg-red-50'
+          message.type === 'success' ? 'text-status-ok bg-status-ok-bg' : 'text-status-error bg-status-error-bg'
         }`}>
           {message.text}
         </p>
@@ -115,11 +115,11 @@ export function SubscriptionForm({
 
       <div className="space-y-4">
         <div>
-          <label className="text-[11px] font-semibold uppercase tracking-[0.06em] text-[#94A3B8] block mb-1.5">Plan</label>
+          <label className="text-[11px] font-semibold uppercase tracking-[0.06em] text-muted-foreground block mb-1.5">Plan</label>
           <select
             value={plan}
             onChange={(e) => setPlan(e.target.value)}
-            className="w-full rounded-lg border border-gray-200 px-3 py-2 text-[12px] text-[#3A2A4A] outline-none focus:border-[#E8799E] focus:ring-2 focus:ring-[#E8799E]/10"
+            className="w-full rounded-lg border border-border px-3 py-2 text-[12px] text-foreground outline-none focus:border-ring focus:ring-2 focus:ring-ring/15"
           >
             {PLANS.map((p) => (
               <option key={p.value} value={p.value}>{p.label}</option>
@@ -128,17 +128,17 @@ export function SubscriptionForm({
         </div>
 
         <div>
-          <label className="text-[11px] font-semibold uppercase tracking-[0.06em] text-[#94A3B8] block mb-1.5">Expires</label>
+          <label className="text-[11px] font-semibold uppercase tracking-[0.06em] text-muted-foreground block mb-1.5">Expires</label>
           <input
             type="date"
             value={expiresAt}
             onChange={(e) => setExpiresAt(e.target.value)}
-            className="w-full rounded-lg border border-gray-200 px-3 py-2 text-[12px] text-[#3A2A4A] outline-none focus:border-[#E8799E] focus:ring-2 focus:ring-[#E8799E]/10"
+            className="w-full rounded-lg border border-border px-3 py-2 text-[12px] text-foreground outline-none focus:border-ring focus:ring-2 focus:ring-ring/15"
           />
         </div>
 
         <div>
-          <label className="text-[11px] font-semibold uppercase tracking-[0.06em] text-[#94A3B8] block mb-1.5">Monthly Price ($)</label>
+          <label className="text-[11px] font-semibold uppercase tracking-[0.06em] text-muted-foreground block mb-1.5">Monthly Price ($)</label>
           <input
             type="number"
             step="0.01"
@@ -146,12 +146,12 @@ export function SubscriptionForm({
             value={price}
             onChange={(e) => setPrice(e.target.value)}
             placeholder="0.00"
-            className="w-full rounded-lg border border-gray-200 px-3 py-2 text-[12px] text-[#3A2A4A] outline-none focus:border-[#E8799E] focus:ring-2 focus:ring-[#E8799E]/10"
+            className="w-full rounded-lg border border-border px-3 py-2 text-[12px] text-foreground outline-none focus:border-ring focus:ring-2 focus:ring-ring/15"
           />
         </div>
 
         {stripeCustomerId && (
-          <div className="rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-2 text-[11px] font-medium text-emerald-700">
+          <div className="rounded-lg border border-emerald-200 bg-status-ok-bg px-3 py-2 text-[11px] font-medium text-status-ok">
             Stripe customer connected
           </div>
         )}

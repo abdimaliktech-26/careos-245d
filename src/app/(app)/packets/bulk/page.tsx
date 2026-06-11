@@ -27,9 +27,9 @@ export default async function BulkPacketsPage() {
   return (
     <div className="space-y-6">
       <div>
-        <p className="text-xs font-semibold tracking-[0.16em] text-gray-400 uppercase mb-2">Packets</p>
-        <h1 className="text-3xl font-bold text-[#3A2A4A]">Bulk Actions</h1>
-        <p className="text-gray-500 mt-1">Select multiple packets to approve, mark complete, or update status.</p>
+        <p className="text-xs font-semibold tracking-[0.16em] text-muted-foreground uppercase mb-2">Packets</p>
+        <h1 className="text-3xl font-bold text-foreground">Bulk Actions</h1>
+        <p className="text-muted-foreground mt-1">Select multiple packets to approve, mark complete, or update status.</p>
       </div>
 
       <BulkPacketActions packets={items} />

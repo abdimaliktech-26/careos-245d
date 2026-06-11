@@ -12,7 +12,7 @@ export function TrainingStatusForm({ trainingId, status }: { trainingId: string;
   return (
     <form action={action} className="flex items-center gap-2">
       <input type="hidden" name="trainingId" value={trainingId} />
-      <select name="status" defaultValue={status} className="rounded-lg border border-[#eadfd6] bg-white px-2 py-1.5 text-xs font-semibold text-[#24343a]">
+      <select name="status" defaultValue={status} className="rounded-lg border border-[#eadfd6] bg-card px-2 py-1.5 text-xs font-semibold text-[#24343a]">
         <option value="current">Current</option>
         <option value="expiring_soon">Expiring Soon</option>
         <option value="expired">Expired</option>

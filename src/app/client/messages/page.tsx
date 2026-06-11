@@ -35,8 +35,8 @@ export default async function ClientMessagesPage() {
             <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
           </svg>
         </div>
-        <p className="text-sm font-semibold text-[#3A2A4A]">No client record linked</p>
-        <p className="mt-1 text-xs text-[#64748B]">Your account is not yet linked to a client record. Contact your provider.</p>
+        <p className="text-sm font-semibold text-foreground">No client record linked</p>
+        <p className="mt-1 text-xs text-muted-foreground">Your account is not yet linked to a client record. Contact your provider.</p>
       </div>
     )
   }
@@ -50,13 +50,13 @@ export default async function ClientMessagesPage() {
   return (
     <div className="max-w-2xl mx-auto space-y-6">
       <div>
-        <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#94A3B8]">
+        <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
           Client Portal · Messages
         </p>
-        <h1 className="mt-1.5 text-2xl font-bold tracking-tight text-[#3A2A4A]">
+        <h1 className="mt-1.5 text-2xl font-bold tracking-tight text-foreground">
           Messages
         </h1>
-        <p className="mt-1 text-[13px] text-[#64748B]">
+        <p className="mt-1 text-[13px] text-muted-foreground">
           Communicate with your care provider.
         </p>
       </div>
@@ -81,7 +81,7 @@ export default async function ClientMessagesPage() {
           </div>
           <button
             type="submit"
-            className="shrink-0 rounded-xl bg-[#E8799E] px-4 py-2.5 text-sm font-semibold text-white hover:opacity-90 transition-opacity flex items-center gap-2"
+            className="shrink-0 rounded-xl bg-primary px-4 py-2.5 text-sm font-semibold text-white hover:opacity-90 transition-opacity flex items-center gap-2"
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <line x1="22" y1="2" x2="11" y2="13" />
