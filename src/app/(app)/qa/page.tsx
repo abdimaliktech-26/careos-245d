@@ -50,21 +50,21 @@ function DollarIcon() {
 
 export default function QAPage() {
   return (
-    <div className="min-h-screen bg-[#F8FAFC]">
+    <div className="min-h-screen bg-background">
       {/* Hero */}
-      <section className="bg-gradient-to-br from-[#EEF2FF] via-white to-white border-b border-[#E5E7EB]">
+      <section className="bg-gradient-to-br from-accent via-background to-background border-b border-border">
         <div className="mx-auto max-w-4xl px-5 py-16 sm:px-8 sm:py-20 text-center">
-          <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-[#C7D2FE] bg-white px-3 py-1.5 text-xs font-bold uppercase tracking-widest text-[#E8799E]">
+          <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-[#C7D2FE] bg-card px-3 py-1.5 text-xs font-bold uppercase tracking-widest text-primary">
             <ClipboardCheckIcon />
             Quality Assurance
           </div>
-          <h1 className="text-4xl font-black leading-[1.1] tracking-tight text-[#111827] sm:text-5xl">
+          <h1 className="text-4xl font-black leading-[1.1] tracking-tight text-foreground sm:text-5xl">
             Quality Assurance Compliance<br />and Audit Solution
           </h1>
-          <p className="mx-auto mt-4 text-lg font-semibold text-[#E8799E]">
+          <p className="mx-auto mt-4 text-lg font-semibold text-primary">
             Meaningful, Measurable, Manageable.
           </p>
-          <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-[#6B7280]">
+          <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-muted-foreground">
             Configurable options to assess organizational performance and comply with
             accreditation and regulatory standards.
           </p>
@@ -72,7 +72,7 @@ export default function QAPage() {
             <Link
               href="/dashboard"
               className="inline-flex items-center justify-center rounded-xl px-6 py-3 text-sm font-bold text-white shadow-lg transition hover:opacity-90"
-              style={{ background: 'linear-gradient(135deg, #E8799E 0%, #C8A8E8 100%)', boxShadow: '0 4px 24px rgba(67,97,238,0.3)' }}
+              style={{ background: 'var(--gradient-primary)', boxShadow: '0 4px 24px rgba(67,97,238,0.3)' }}
             >
               Get Started
             </Link>
@@ -82,61 +82,61 @@ export default function QAPage() {
 
       {/* Features */}
       <section className="mx-auto max-w-5xl px-5 py-16 sm:px-8">
-        <h2 className="text-center text-xs font-bold uppercase tracking-widest text-[#E8799E]">
+        <h2 className="text-center text-xs font-bold uppercase tracking-widest text-primary">
           Streamline documentation review, reporting, and compliance activities via:
         </h2>
         <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          <div className="rounded-2xl border border-[#E5E7EB] bg-white p-5 shadow-sm">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#EEF2FF] text-[#E8799E]">
+          <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-accent text-primary">
               <BarChartIcon />
             </div>
-            <h3 className="mt-4 text-sm font-bold text-[#111827]">Outcome Assessment</h3>
-            <p className="mt-2 text-xs leading-5 text-[#6B7280]">
+            <h3 className="mt-4 text-sm font-bold text-foreground">Outcome Assessment</h3>
+            <p className="mt-2 text-xs leading-5 text-muted-foreground">
               Assessment of outcomes at the individual, program, and provider level.
             </p>
           </div>
-          <div className="rounded-2xl border border-[#E5E7EB] bg-white p-5 shadow-sm">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#EEF2FF] text-[#E8799E]">
+          <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-accent text-primary">
               <UsersIcon />
             </div>
-            <h3 className="mt-4 text-sm font-bold text-[#111827]">Real-Time Access</h3>
-            <p className="mt-2 text-xs leading-5 text-[#6B7280]">
+            <h3 className="mt-4 text-sm font-bold text-foreground">Real-Time Access</h3>
+            <p className="mt-2 text-xs leading-5 text-muted-foreground">
               Real-time access for managers, administrators, and agency-authorized third party reviewers.
             </p>
           </div>
-          <div className="rounded-2xl border border-[#E5E7EB] bg-white p-5 shadow-sm">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#EEF2FF] text-[#E8799E]">
+          <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-accent text-primary">
               <BarChartIcon />
             </div>
-            <h3 className="mt-4 text-sm font-bold text-[#111827]">Analytic Dashboards</h3>
-            <p className="mt-2 text-xs leading-5 text-[#6B7280]">
+            <h3 className="mt-4 text-sm font-bold text-foreground">Analytic Dashboards</h3>
+            <p className="mt-2 text-xs leading-5 text-muted-foreground">
               Analytic Dashboards for Demographics, Incident Reports, Data-Driven Outcomes, Billing, and more.
             </p>
           </div>
-          <div className="rounded-2xl border border-[#E5E7EB] bg-white p-5 shadow-sm">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#EEF2FF] text-[#E8799E]">
+          <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-accent text-primary">
               <ClockIcon />
             </div>
-            <h3 className="mt-4 text-sm font-bold text-[#111827]">Full Audit Trail</h3>
-            <p className="mt-2 text-xs leading-5 text-[#6B7280]">
+            <h3 className="mt-4 text-sm font-bold text-foreground">Full Audit Trail</h3>
+            <p className="mt-2 text-xs leading-5 text-muted-foreground">
               Full audit trail of all activity including date/time stamp and electronic signature.
             </p>
           </div>
-          <div className="rounded-2xl border border-[#E5E7EB] bg-white p-5 shadow-sm">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#EEF2FF] text-[#E8799E]">
+          <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-accent text-primary">
               <DollarIcon />
             </div>
-            <h3 className="mt-4 text-sm font-bold text-[#111827]">Billing Validation</h3>
-            <p className="mt-2 text-xs leading-5 text-[#6B7280]">
+            <h3 className="mt-4 text-sm font-bold text-foreground">Billing Validation</h3>
+            <p className="mt-2 text-xs leading-5 text-muted-foreground">
               Generation and validation of billing data directly from service documentation.
             </p>
           </div>
-          <div className="rounded-2xl border border-[#E5E7EB] bg-white p-5 shadow-sm">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#EEF2FF] text-[#E8799E]">
+          <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-accent text-primary">
               <CheckIcon />
             </div>
-            <h3 className="mt-4 text-sm font-bold text-[#111827]">Regulatory Compliance</h3>
-            <p className="mt-2 text-xs leading-5 text-[#6B7280]">
+            <h3 className="mt-4 text-sm font-bold text-foreground">Regulatory Compliance</h3>
+            <p className="mt-2 text-xs leading-5 text-muted-foreground">
               Configurable options to comply with accreditation and regulatory standards.
             </p>
           </div>
@@ -144,16 +144,16 @@ export default function QAPage() {
       </section>
 
       {/* CTA */}
-      <section className="border-t border-[#E5E7EB] bg-white">
+      <section className="border-t border-border bg-card">
         <div className="mx-auto max-w-3xl px-5 py-16 sm:px-8 text-center">
-          <p className="text-lg leading-8 text-[#6B7280]">
+          <p className="text-lg leading-8 text-muted-foreground">
             Comprehensive quality assurance tools that help your agency maintain compliance
             and deliver better outcomes for the individuals you serve.
           </p>
           <Link
             href="/analytics"
             className="mt-8 inline-flex items-center justify-center rounded-xl px-6 py-3 text-sm font-bold text-white shadow-lg transition hover:opacity-90"
-            style={{ background: 'linear-gradient(135deg, #E8799E 0%, #C8A8E8 100%)', boxShadow: '0 4px 24px rgba(67,97,238,0.3)' }}
+            style={{ background: 'var(--gradient-primary)', boxShadow: '0 4px 24px rgba(67,97,238,0.3)' }}
           >
             View Analytics
           </Link>

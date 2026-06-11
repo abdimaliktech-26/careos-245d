@@ -26,14 +26,14 @@ export function FieldPalette({
 }) {
   return (
     <div className="space-y-2">
-      <h3 className="text-xs font-semibold tracking-[0.08em] text-gray-400 uppercase">Field Types</h3>
+      <h3 className="text-xs font-semibold tracking-[0.08em] text-muted-foreground uppercase">Field Types</h3>
       <div className="grid grid-cols-2 gap-1.5">
         {FIELD_TYPES.filter((t) => t !== 'signature').map((type) => (
           <button
             key={type}
             type="button"
             onClick={() => onAddField(type)}
-            className="rounded-lg border border-gray-200 px-3 py-2 text-xs text-gray-700 hover:border-[#E8799E] hover:text-[#E8799E] hover:bg-[#E8799E]/5 transition-colors text-left"
+            className="rounded-lg border border-border px-3 py-2 text-xs text-foreground hover:border-brand-to/40 hover:text-primary hover:bg-primary/5 transition-colors text-left"
           >
             {FIELD_TYPE_LABELS[type]}
           </button>

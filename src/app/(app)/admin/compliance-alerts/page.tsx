@@ -21,19 +21,19 @@ export default async function AdminComplianceAlertsPage() {
   return (
     <div>
       <div className="mb-8">
-        <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#94A3B8]">
+        <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
           Admin
         </p>
-        <h1 className="mt-1.5 text-2xl font-bold tracking-tight text-[#3A2A4A]">Compliance Alerts</h1>
-        <p className="mt-1 text-[13px] text-[#64748B]">
+        <h1 className="mt-1.5 text-2xl font-bold tracking-tight text-foreground">Compliance Alerts</h1>
+        <p className="mt-1 text-[13px] text-muted-foreground">
           Monitor all compliance alerts across your organization and configure alert thresholds.
         </p>
       </div>
 
       <div className="mb-6 grid grid-cols-2 gap-3 lg:grid-cols-4">
-        <div className="rounded-2xl border border-gray-200 bg-white p-4">
-          <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-[#94A3B8]">Total</p>
-          <p className="mt-2 text-3xl font-black text-[#3A2A4A]">{summary.total}</p>
+        <div className="rounded-2xl border border-border bg-card p-4">
+          <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-muted-foreground">Total</p>
+          <p className="mt-2 text-3xl font-black text-foreground">{summary.total}</p>
         </div>
         <div className="rounded-2xl border border-red-200 bg-red-50 p-4">
           <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-red-700">Critical</p>
@@ -53,18 +53,18 @@ export default async function AdminComplianceAlertsPage() {
         <div>
           {/* Active alerts */}
           <section
-            className="mb-6 overflow-hidden rounded-2xl border border-gray-100 bg-white"
+            className="mb-6 overflow-hidden rounded-2xl border border-border bg-card"
             style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}
           >
-            <div className="border-b border-gray-100 px-6 py-4">
-              <h2 className="text-[14px] font-semibold text-[#3A2A4A]">Active Alerts</h2>
+            <div className="border-b border-border px-6 py-4">
+              <h2 className="text-[14px] font-semibold text-foreground">Active Alerts</h2>
             </div>
             {activeAlerts.length === 0 ? (
               <div className="px-6 py-10 text-center">
-                <p className="text-[13px] text-[#94A3B8]">No active alerts</p>
+                <p className="text-[13px] text-muted-foreground">No active alerts</p>
               </div>
             ) : (
-              <div className="divide-y divide-gray-50">
+              <div className="divide-y divide-border/60">
                 {activeAlerts.map((alert) => (
                   <div key={alert.id} className="px-6 py-4">
                     <AlertCard alert={alert} />
@@ -77,13 +77,13 @@ export default async function AdminComplianceAlertsPage() {
           {/* Dismissed alerts */}
           {dismissedAlerts.length > 0 && (
             <section
-              className="overflow-hidden rounded-2xl border border-gray-100 bg-white"
+              className="overflow-hidden rounded-2xl border border-border bg-card"
               style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}
             >
-              <div className="border-b border-gray-100 px-6 py-4">
-                <h2 className="text-[14px] font-semibold text-[#94A3B8]">Dismissed Alerts</h2>
+              <div className="border-b border-border px-6 py-4">
+                <h2 className="text-[14px] font-semibold text-muted-foreground">Dismissed Alerts</h2>
               </div>
-              <div className="divide-y divide-gray-50">
+              <div className="divide-y divide-border/60">
                 {dismissedAlerts.map((alert) => (
                   <div key={alert.id} className="px-6 py-4 opacity-60">
                     <AlertCard alert={alert} showActions={false} />
@@ -97,11 +97,11 @@ export default async function AdminComplianceAlertsPage() {
         {/* Settings panel */}
         <div>
           <section
-            className="rounded-2xl border border-gray-100 bg-white p-6"
+            className="rounded-2xl border border-border bg-card p-6"
             style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}
           >
-            <h2 className="text-[14px] font-semibold text-[#3A2A4A]">Alert Thresholds</h2>
-            <p className="mt-1 text-[12px] text-[#64748B]">
+            <h2 className="text-[14px] font-semibold text-foreground">Alert Thresholds</h2>
+            <p className="mt-1 text-[12px] text-muted-foreground">
               Configure when compliance alerts are triggered and how often we remind you.
             </p>
             <div className="mt-5">

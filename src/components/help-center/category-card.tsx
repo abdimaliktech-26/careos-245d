@@ -75,15 +75,15 @@ export function CategoryCard({ category, count }: CategoryCardProps) {
   return (
     <Link
       href={`/help/category/${category}`}
-      className="flex items-center gap-4 rounded-xl border border-gray-100 bg-white p-4 transition-all hover:border-[#E8799E]/30 hover:shadow-sm"
+      className="flex items-center gap-4 rounded-xl border border-border bg-card p-4 transition-all hover:border-brand-to/40 hover:shadow-sm"
       style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}
     >
-      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[#EEF2FF] text-[#E8799E]">
+      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-accent text-primary">
         {icon}
       </div>
       <div className="min-w-0">
-        <p className="text-sm font-semibold text-gray-900">{label}</p>
-        <p className="text-xs text-gray-500">{count} article{count !== 1 ? 's' : ''}</p>
+        <p className="text-sm font-semibold text-foreground">{label}</p>
+        <p className="text-xs text-muted-foreground">{count} article{count !== 1 ? 's' : ''}</p>
       </div>
     </Link>
   )

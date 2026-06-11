@@ -12,8 +12,8 @@ function Tab({ href, label, active }: { href: string; label: string; active: boo
       href={href}
       className={`px-4 py-2 text-[13px] font-semibold rounded-lg transition-colors ${
         active
-          ? 'bg-[#EEF2FF] text-[#E8799E]'
-          : 'text-[#64748B] hover:text-[#334155] hover:bg-gray-50'
+          ? 'bg-accent text-primary'
+          : 'text-muted-foreground hover:text-[#334155] hover:bg-muted/40'
       }`}
     >
       {label}
@@ -24,26 +24,26 @@ function Tab({ href, label, active }: { href: string; label: string; active: boo
 function EmptyState({ title, description }: { title: string; description: string }) {
   return (
     <div className="px-6 py-16 text-center">
-      <div className="mx-auto mb-3 flex h-11 w-11 items-center justify-center rounded-2xl bg-[#EEF2FF]">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#E8799E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <div className="mx-auto mb-3 flex h-11 w-11 items-center justify-center rounded-2xl bg-accent">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#DB2777" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
           <polyline points="14 2 14 8 20 8"/>
         </svg>
       </div>
-      <p className="text-[13px] font-semibold text-[#3A2A4A]">{title}</p>
-      <p className="mt-1 text-[12px] text-[#94A3B8]">{description}</p>
+      <p className="text-[13px] font-semibold text-foreground">{title}</p>
+      <p className="mt-1 text-[12px] text-muted-foreground">{description}</p>
     </div>
   )
 }
 
 function StatusBadge({ status }: { status: string }) {
   const map: Record<string, { bg: string; dot: string; label: string }> = {
-    pending:   { bg: 'bg-amber-50 text-amber-700',   dot: 'bg-amber-500', label: 'Pending' },
-    signed:    { bg: 'bg-emerald-50 text-emerald-700', dot: 'bg-emerald-500', label: 'Signed' },
-    expired:   { bg: 'bg-gray-100 text-gray-500',     dot: 'bg-gray-400', label: 'Expired' },
-    revoked:   { bg: 'bg-red-50 text-red-700',        dot: 'bg-red-500', label: 'Revoked' },
+    pending:   { bg: 'bg-status-warn-bg text-status-warn',   dot: 'bg-amber-500', label: 'Pending' },
+    signed:    { bg: 'bg-status-ok-bg text-status-ok', dot: 'bg-emerald-500', label: 'Signed' },
+    expired:   { bg: 'bg-muted text-muted-foreground',     dot: 'bg-gray-400', label: 'Expired' },
+    revoked:   { bg: 'bg-status-error-bg text-status-error',        dot: 'bg-red-500', label: 'Revoked' },
   }
-  const s = map[status] ?? { bg: 'bg-gray-100 text-gray-500', dot: 'bg-gray-400', label: status }
+  const s = map[status] ?? { bg: 'bg-muted text-muted-foreground', dot: 'bg-gray-400', label: status }
   return (
     <span className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[10px] font-semibold ${s.bg}`}>
       <span className={`h-1.5 w-1.5 rounded-full ${s.dot}`} />
@@ -147,14 +147,14 @@ export default async function ClientDocumentsPage({
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-bold tracking-tight text-[#3A2A4A]">Documents</h1>
-        <p className="mt-1 text-[13px] text-[#64748B]">
+        <h1 className="text-2xl font-bold tracking-tight text-foreground">Documents</h1>
+        <p className="mt-1 text-[13px] text-muted-foreground">
           {enriched.length} document{enriched.length !== 1 ? 's' : ''} associated with your account
         </p>
       </div>
 
       {/* Tabs */}
-      <div className="flex items-center gap-2 border-b border-gray-100 pb-3">
+      <div className="flex items-center gap-2 border-b border-border pb-3">
         {TABS.map(({ key, label }) => (
           <Tab
             key={key}
@@ -166,7 +166,7 @@ export default async function ClientDocumentsPage({
       </div>
 
       {/* Document count in tab */}
-      <p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-[#94A3B8]">
+      <p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
         {filtered.length} {activeTab === 'all' ? 'total' : activeTab} document{filtered.length !== 1 ? 's' : ''}
       </p>
 
@@ -188,16 +188,16 @@ export default async function ClientDocumentsPage({
         </div>
       ) : (
         <div className="care-panel rounded-2xl overflow-hidden">
-          <div className="divide-y divide-gray-50">
+          <div className="divide-y divide-border/60">
             {filtered.map((link) => {
               const template = link.packet_forms?.form_templates
               const docId = documentByPacketFormId[link.packet_form_id]?.id
 
               return (
-                <div key={link.id} className="flex items-center justify-between px-6 py-4 transition-colors hover:bg-gray-50/60">
+                <div key={link.id} className="flex items-center justify-between px-6 py-4 transition-colors hover:bg-muted/40">
                   <div className="flex items-center gap-3 min-w-0 flex-1">
-                    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#EEF2FF]">
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#E8799E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-accent">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#DB2777" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
                         <polyline points="14 2 14 8 20 8"/>
                         <line x1="16" y1="13" x2="8" y2="13"/>
@@ -207,14 +207,14 @@ export default async function ClientDocumentsPage({
                     <div className="min-w-0">
                       <Link
                         href={`/client/documents/${link.id}`}
-                        className="text-[13px] font-semibold text-[#3A2A4A] hover:text-[#E8799E] transition-colors truncate block"
+                        className="text-[13px] font-semibold text-foreground hover:text-primary transition-colors truncate block"
                       >
                         {template?.name ?? 'Document'}
                       </Link>
-                      <p className="text-[11px] text-[#64748B] mt-0.5">
+                      <p className="text-[11px] text-muted-foreground mt-0.5">
                         {template?.code ?? 'Form'} · Role: {link.signer_role.replaceAll('_', ' ')}
                       </p>
-                      <p className="text-[10px] text-[#94A3B8] mt-0.5">
+                      <p className="text-[10px] text-muted-foreground mt-0.5">
                         Sent {new Date(link.created_at).toLocaleDateString('en-US')}
                         {link._status === 'signed' && link.completed_at
                           ? ` · Signed ${new Date(link.completed_at).toLocaleDateString('en-US')}`
@@ -228,7 +228,7 @@ export default async function ClientDocumentsPage({
                     {link._status === 'pending' && (
                       <Link
                         href={`/sign/${link.token}`}
-                        className="rounded-lg bg-[#E8799E] px-4 py-2 text-xs font-semibold text-white hover:opacity-90 transition-opacity"
+                        className="rounded-lg bg-primary px-4 py-2 text-xs font-semibold text-white hover:opacity-90 transition-opacity"
                       >
                         Review & Sign
                       </Link>
@@ -237,14 +237,14 @@ export default async function ClientDocumentsPage({
                       <>
                         <Link
                           href={`/api/documents/${docId}/download`}
-                          className="rounded-lg border border-gray-200 bg-white px-4 py-2 text-xs font-semibold text-[#64748B] hover:bg-gray-50 hover:text-[#334155] transition-colors"
+                          className="rounded-lg border border-border bg-card px-4 py-2 text-xs font-semibold text-muted-foreground hover:bg-muted/40 hover:text-[#334155] transition-colors"
                         >
                           Download
                         </Link>
                         <Link
                           href={`/api/documents/${docId}/pdf`}
                           target="_blank"
-                          className="rounded-lg border border-gray-200 bg-white px-4 py-2 text-xs font-semibold text-[#64748B] hover:bg-amber-50 hover:text-amber-600 transition-colors"
+                          className="rounded-lg border border-border bg-card px-4 py-2 text-xs font-semibold text-muted-foreground hover:bg-amber-50 hover:text-amber-600 transition-colors"
                         >
                           PDF
                         </Link>
@@ -253,7 +253,7 @@ export default async function ClientDocumentsPage({
                     {link._status === 'signed' && !docId && (
                       <Link
                         href={`/sign/${link.token}`}
-                        className="rounded-lg border border-gray-200 bg-white px-4 py-2 text-xs font-semibold text-[#64748B] hover:bg-gray-50 hover:text-[#334155] transition-colors"
+                        className="rounded-lg border border-border bg-card px-4 py-2 text-xs font-semibold text-muted-foreground hover:bg-muted/40 hover:text-[#334155] transition-colors"
                       >
                         View
                       </Link>

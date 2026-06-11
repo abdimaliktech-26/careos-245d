@@ -40,11 +40,11 @@ export default async function ClientMessagesPage({ params }: Props) {
     <div className="p-8 max-w-4xl mx-auto space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-[#3A2A4A]">{client.legal_name}</h1>
-          <p className="text-sm text-[#64748B] mt-0.5">Client messaging</p>
+          <h1 className="text-2xl font-bold text-foreground">{client.legal_name}</h1>
+          <p className="text-sm text-muted-foreground mt-0.5">Client messaging</p>
         </div>
         {unreadCount > 0 && (
-          <span className="inline-flex items-center rounded-full bg-[#E8799E] px-2.5 py-1 text-[10px] font-bold text-white">
+          <span className="inline-flex items-center rounded-full bg-primary px-2.5 py-1 text-[10px] font-bold text-white">
             {unreadCount} unread
           </span>
         )}
@@ -73,7 +73,7 @@ export default async function ClientMessagesPage({ params }: Props) {
           </div>
           <button
             type="submit"
-            className="shrink-0 rounded-xl bg-[#E8799E] px-4 py-2.5 text-sm font-semibold text-white hover:opacity-90 transition-opacity flex items-center gap-2"
+            className="shrink-0 rounded-xl bg-primary px-4 py-2.5 text-sm font-semibold text-white hover:opacity-90 transition-opacity flex items-center gap-2"
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <line x1="22" y1="2" x2="11" y2="13" />

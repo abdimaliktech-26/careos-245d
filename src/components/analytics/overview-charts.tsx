@@ -18,9 +18,9 @@ interface PacketStatus {
 function BarTooltip({ active, payload, label }: { active?: boolean; payload?: Array<{ value: number }>; label?: string }) {
   if (!active || !payload?.length) return null
   return (
-    <div className="bg-white border border-gray-200 rounded-xl px-4 py-3 shadow-lg text-xs">
-      <p className="font-bold text-[#3A2A4A] mb-1">{label}</p>
-      <p className="text-[#E8799E]">{payload[0].value} forms completed</p>
+    <div className="bg-card border border-border rounded-xl px-4 py-3 shadow-lg text-xs">
+      <p className="font-bold text-foreground mb-1">{label}</p>
+      <p className="text-primary">{payload[0].value} forms completed</p>
     </div>
   )
 }
@@ -32,9 +32,9 @@ function PieTooltip({ active, payload }: { active?: boolean; payload?: Array<{ n
   const total = (payload as any).reduce?.((s: number, p: any) => s + p.value, 0) ?? 0
   const pct = total > 0 ? Math.round((entry.value / total) * 100) : 0
   return (
-    <div className="bg-white border border-gray-200 rounded-xl px-4 py-3 shadow-lg text-xs">
-      <p className="font-bold text-[#3A2A4A] mb-1">{entry.name}</p>
-      <p className="text-gray-600">{entry.value} packets ({pct}%)</p>
+    <div className="bg-card border border-border rounded-xl px-4 py-3 shadow-lg text-xs">
+      <p className="font-bold text-foreground mb-1">{entry.name}</p>
+      <p className="text-muted-foreground">{entry.value} packets ({pct}%)</p>
     </div>
   )
 }
@@ -69,11 +69,11 @@ export function OverviewCharts({ range = 30 }: { range?: number }) {
   if (loading) {
     return (
       <>
-        <div className="rounded-2xl border border-gray-100 bg-white p-6 h-[340px] flex items-center justify-center" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
-          <p className="text-sm text-gray-400">Loading...</p>
+        <div className="rounded-2xl border border-border bg-card p-6 h-[340px] flex items-center justify-center" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
+          <p className="text-sm text-muted-foreground">Loading...</p>
         </div>
-        <div className="rounded-2xl border border-gray-100 bg-white p-6 h-[340px] flex items-center justify-center" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
-          <p className="text-sm text-gray-400">Loading...</p>
+        <div className="rounded-2xl border border-border bg-card p-6 h-[340px] flex items-center justify-center" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
+          <p className="text-sm text-muted-foreground">Loading...</p>
         </div>
       </>
     )
@@ -83,8 +83,8 @@ export function OverviewCharts({ range = 30 }: { range?: number }) {
 
   return (
     <>
-      <div className="rounded-2xl border border-gray-100 bg-white p-6" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
-        <h3 className="text-sm font-bold text-[#3A2A4A] mb-4">Forms Completed by Month</h3>
+      <div className="rounded-2xl border border-border bg-card p-6" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
+        <h3 className="text-sm font-bold text-foreground mb-4">Forms Completed by Month</h3>
         <ResponsiveContainer width="100%" height={256}>
           <BarChart data={formsByMonth} margin={{ top: 5, right: 10, left: -10, bottom: 0 }} onClick={handleBarClick}>
             <CartesianGrid strokeDasharray="3 3" stroke="var(--care-line)" />
@@ -96,8 +96,8 @@ export function OverviewCharts({ range = 30 }: { range?: number }) {
         </ResponsiveContainer>
       </div>
 
-      <div className="rounded-2xl border border-gray-100 bg-white p-6" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
-        <h3 className="text-sm font-bold text-[#3A2A4A] mb-4">Packet Status Breakdown</h3>
+      <div className="rounded-2xl border border-border bg-card p-6" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
+        <h3 className="text-sm font-bold text-foreground mb-4">Packet Status Breakdown</h3>
         <div className="flex items-center justify-center">
           <ResponsiveContainer width="100%" height={220}>
             <PieChart onClick={handlePieClick}>
@@ -123,7 +123,7 @@ export function OverviewCharts({ range = 30 }: { range?: number }) {
           {nonZeroStatus.map(s => (
             <div key={s.name} className="flex items-center gap-1.5">
               <div className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: s.color }} />
-              <span className="text-[10px] text-gray-500">{s.name} ({s.value})</span>
+              <span className="text-[10px] text-muted-foreground">{s.name} ({s.value})</span>
             </div>
           ))}
         </div>

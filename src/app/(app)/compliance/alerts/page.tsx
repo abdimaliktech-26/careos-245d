@@ -31,13 +31,13 @@ export default async function ComplianceAlertsPage(props: { searchParams: Search
   return (
     <div>
       <div className="mb-8">
-        <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#94A3B8]">
+        <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
           Compliance
         </p>
         <div className="mt-1.5 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
           <div>
-            <h1 className="text-2xl font-bold tracking-tight text-[#3A2A4A]">Compliance Alerts</h1>
-            <p className="mt-1 text-[13px] text-[#64748B]">
+            <h1 className="text-2xl font-bold tracking-tight text-foreground">Compliance Alerts</h1>
+            <p className="mt-1 text-[13px] text-muted-foreground">
               Proactive alerts for upcoming deadlines, missing signatures, and overdue items.
             </p>
           </div>
@@ -46,18 +46,18 @@ export default async function ComplianceAlertsPage(props: { searchParams: Search
       </div>
 
       <div className="mb-6 grid grid-cols-2 gap-3 lg:grid-cols-4">
-        <StatsCard label="Total Active" count={summary.total} color="bg-gray-50 text-gray-700 border-gray-200" />
-        <StatsCard label="Critical" count={summary.critical} color="bg-red-50 text-red-700 border-red-200" />
-        <StatsCard label="Warning" count={summary.warning} color="bg-amber-50 text-amber-700 border-amber-200" />
-        <StatsCard label="Info" count={summary.info} color="bg-blue-50 text-blue-700 border-blue-200" />
+        <StatsCard label="Total Active" count={summary.total} color="bg-muted text-foreground border-border" />
+        <StatsCard label="Critical" count={summary.critical} color="bg-status-error-bg text-status-error border-red-200" />
+        <StatsCard label="Warning" count={summary.warning} color="bg-status-warn-bg text-status-warn border-amber-200" />
+        <StatsCard label="Info" count={summary.info} color="bg-blue-50 text-blue-700 dark:bg-blue-500/15 dark:text-blue-300 border-blue-200" />
       </div>
 
       <section
-        className="overflow-hidden rounded-2xl border border-gray-100 bg-white"
+        className="overflow-hidden rounded-2xl border border-border bg-card"
         style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}
       >
-        <div className="border-b border-gray-100 px-6 py-4">
-          <h2 className="text-[14px] font-semibold text-[#3A2A4A]">Active Alerts</h2>
+        <div className="border-b border-border px-6 py-4">
+          <h2 className="text-[14px] font-semibold text-foreground">Active Alerts</h2>
         </div>
         {alerts.length === 0 ? (
           <div className="px-6 py-14 text-center">
@@ -67,13 +67,13 @@ export default async function ComplianceAlertsPage(props: { searchParams: Search
                 <polyline points="22 4 12 14.01 9 11.01"/>
               </svg>
             </div>
-            <p className="text-[13px] font-semibold text-[#3A2A4A]">No active compliance alerts</p>
-            <p className="mt-1 text-[12px] text-[#94A3B8]">
+            <p className="text-[13px] font-semibold text-foreground">No active compliance alerts</p>
+            <p className="mt-1 text-[12px] text-muted-foreground">
               Your organization is on track based on the current check.
             </p>
           </div>
         ) : (
-          <div className="divide-y divide-gray-50">
+          <div className="divide-y divide-border/60">
             {alerts.map((alert) => (
               <div key={alert.id} className="px-6 py-4">
                 <AlertCard alert={alert} onDismiss={async () => {}} showActions={false} />

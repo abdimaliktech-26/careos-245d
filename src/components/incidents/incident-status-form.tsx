@@ -12,7 +12,7 @@ export function IncidentStatusForm({ incidentId, status }: { incidentId: string;
   return (
     <form action={action} className="flex items-center gap-2">
       <input type="hidden" name="incidentId" value={incidentId} />
-      <select name="status" defaultValue={status} className="rounded-lg border border-[#eadfd6] bg-white px-2 py-1.5 text-xs font-semibold text-[#24343a]">
+      <select name="status" defaultValue={status} className="rounded-lg border border-[#eadfd6] bg-card px-2 py-1.5 text-xs font-semibold text-[#24343a]">
         <option value="open">Open</option>
         <option value="under_review">Under Review</option>
         <option value="reported_to_state">Reported to State</option>

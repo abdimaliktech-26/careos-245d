@@ -41,17 +41,17 @@ export function StaffDirectoryClient({ members, roleColors }: Props) {
       {/* Header */}
       <div className="mb-8 flex items-start justify-between">
         <div>
-          <p className="text-xs font-semibold tracking-[0.16em] text-gray-400 uppercase mb-2">
+          <p className="text-xs font-semibold tracking-[0.16em] text-muted-foreground uppercase mb-2">
             Staff
           </p>
-          <h1 className="text-3xl font-bold text-gray-900">Staff Directory</h1>
-          <p className="text-gray-500 mt-1">
+          <h1 className="text-3xl font-bold text-foreground">Staff Directory</h1>
+          <p className="text-muted-foreground mt-1">
             View all staff and program managers across your organization.
           </p>
         </div>
         <Link
           href="/admin/team"
-          className="rounded-lg bg-[#E8799E] px-4 py-2 text-sm font-semibold text-white hover:opacity-90 transition-opacity shrink-0"
+          className="rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-white hover:opacity-90 transition-opacity shrink-0"
         >
           Invite Staff
         </Link>
@@ -61,7 +61,7 @@ export function StaffDirectoryClient({ members, roleColors }: Props) {
       <div className="flex items-center gap-3 mb-5">
         <div className="relative flex-1 max-w-sm">
           <svg
-            className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400"
+            className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground"
             fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}
           >
             <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-4.35-4.35M11 19a8 8 0 100-16 8 8 0 000 16z" />
@@ -71,13 +71,13 @@ export function StaffDirectoryClient({ members, roleColors }: Props) {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search by name or email…"
-            className="w-full rounded-xl border border-gray-200 bg-white pl-9 pr-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#E8799E]/20 focus:border-[#E8799E]"
+            className="w-full rounded-xl border border-border bg-card pl-9 pr-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-ring/15 focus:border-ring"
           />
         </div>
         <select
           value={roleFilter}
           onChange={(e) => setRoleFilter(e.target.value)}
-          className="rounded-xl border border-gray-200 bg-white px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#E8799E]/20 focus:border-[#E8799E]"
+          className="rounded-xl border border-border bg-card px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-ring/15 focus:border-ring"
         >
           <option value="all">All Roles</option>
           <option value="staff">Staff</option>
@@ -86,9 +86,9 @@ export function StaffDirectoryClient({ members, roleColors }: Props) {
       </div>
 
       {/* Table */}
-      <div className="rounded-2xl border border-gray-100 bg-white overflow-hidden" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
+      <div className="rounded-2xl border border-border bg-card overflow-hidden" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
         {filtered.length === 0 ? (
-          <div className="px-6 py-12 text-center text-sm text-gray-400">
+          <div className="px-6 py-12 text-center text-sm text-muted-foreground">
             {search || roleFilter !== 'all'
               ? 'No staff match your filters.'
               : 'No staff members yet.'}
@@ -96,9 +96,9 @@ export function StaffDirectoryClient({ members, roleColors }: Props) {
         ) : (
           <table className="w-full">
             <thead>
-              <tr className="border-b border-gray-100 bg-gray-50">
+              <tr className="border-b border-border bg-muted">
                 {['NAME', 'EMAIL', 'ROLE', 'STATUS', 'MEMBER SINCE'].map((h) => (
-                  <th key={h} className="px-6 py-3 text-left text-xs font-medium text-gray-400 tracking-wider">
+                  <th key={h} className="px-6 py-3 text-left text-xs font-medium text-muted-foreground tracking-wider">
                     {h}
                   </th>
                 ))}
@@ -108,15 +108,15 @@ export function StaffDirectoryClient({ members, roleColors }: Props) {
               {filtered.map((m) => (
                 <tr
                   key={m.id}
-                  className="border-b border-gray-50 hover:bg-gray-50 transition-colors cursor-pointer"
+                  className="border-b border-gray-50 hover:bg-muted/40 transition-colors cursor-pointer"
                   onClick={() => window.location.href = `/staff/directory/${m.id}`}
                 >
-                  <td className="px-6 py-4 text-sm font-medium text-gray-900">
+                  <td className="px-6 py-4 text-sm font-medium text-foreground">
                     {m.full_name || '—'}
                   </td>
-                  <td className="px-6 py-4 text-sm text-gray-600">{m.email}</td>
+                  <td className="px-6 py-4 text-sm text-muted-foreground">{m.email}</td>
                   <td className="px-6 py-4">
-                    <span className={`text-xs font-semibold px-2.5 py-1 rounded-full ${roleColors[m.role] ?? 'bg-gray-100 text-gray-600'}`}>
+                    <span className={`text-xs font-semibold px-2.5 py-1 rounded-full ${roleColors[m.role] ?? 'bg-muted text-muted-foreground'}`}>
                       {m.role.replace('_', ' ').toUpperCase()}
                     </span>
                   </td>
@@ -126,7 +126,7 @@ export function StaffDirectoryClient({ members, roleColors }: Props) {
                       {m.is_active ? 'Active' : 'Inactive'}
                     </span>
                   </td>
-                  <td className="px-6 py-4 text-sm text-gray-500">
+                  <td className="px-6 py-4 text-sm text-muted-foreground">
                     {formatDate(m.created_at)}
                   </td>
                 </tr>

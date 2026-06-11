@@ -115,19 +115,19 @@ function SignatureForm({ clientId, assignmentId }: { clientId: string; assignmen
   return (
     <form onSubmit={handleSubmit} className="space-y-5">
       {error && (
-        <p className="text-sm text-red-700 bg-red-50 border border-red-100 rounded-lg px-4 py-3">
+        <p className="text-sm text-status-error bg-status-error-bg border border-red-100 rounded-lg px-4 py-3">
           {error}
         </p>
       )}
 
       {notice && (
-        <p className="text-sm text-amber-800 bg-amber-50 border border-amber-200 rounded-lg px-4 py-3">
+        <p className="text-sm text-status-warn bg-status-warn-bg border border-amber-200 rounded-lg px-4 py-3">
           {notice}
         </p>
       )}
 
-      <div className="bg-white border border-gray-200 rounded-xl p-5">
-        <label htmlFor="submissionId" className="block text-xs font-medium text-gray-600 mb-1.5">
+      <div className="bg-card border border-border rounded-xl p-5">
+        <label htmlFor="submissionId" className="block text-xs font-medium text-muted-foreground mb-1.5">
           Submission ID <span className="text-red-500">*</span>
         </label>
         <input
@@ -137,18 +137,18 @@ function SignatureForm({ clientId, assignmentId }: { clientId: string; assignmen
           value={submissionId}
           onChange={(e) => setSubmissionId(e.target.value)}
           placeholder="Auto-filled when arriving from form fill page"
-          className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gray-200 font-mono"
+          className="w-full border border-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ring/15 font-mono"
         />
       </div>
 
-      <div className="bg-white border border-gray-200 rounded-xl p-5 space-y-4">
-        <h2 className="font-semibold text-gray-900 text-sm">Signer Information</h2>
-        <p className="text-xs text-gray-500">
+      <div className="bg-card border border-border rounded-xl p-5 space-y-4">
+        <h2 className="font-semibold text-foreground text-sm">Signer Information</h2>
+        <p className="text-xs text-muted-foreground">
           Only case managers can sign here. Client/guardian signatures are collected via their secure signing link.
         </p>
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label htmlFor="signerName" className="block text-xs font-medium text-gray-600 mb-1.5">
+            <label htmlFor="signerName" className="block text-xs font-medium text-muted-foreground mb-1.5">
               Full Name <span className="text-red-500">*</span>
             </label>
             <input
@@ -158,32 +158,32 @@ function SignatureForm({ clientId, assignmentId }: { clientId: string; assignmen
               value={signerName}
               onChange={(e) => setSignerName(e.target.value)}
               placeholder="Jane Doe"
-              className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gray-200"
+              className="w-full border border-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ring/15"
             />
           </div>
           <div>
-            <label className="block text-xs font-medium text-gray-600 mb-1.5">
+            <label className="block text-xs font-medium text-muted-foreground mb-1.5">
               Role
             </label>
-            <div className="flex h-[38px] items-center rounded-lg border border-gray-200 bg-gray-50 px-3 text-sm font-medium text-gray-700">
+            <div className="flex h-[38px] items-center rounded-lg border border-border bg-muted px-3 text-sm font-medium text-foreground">
               Case Manager
             </div>
           </div>
         </div>
       </div>
 
-      <div className="bg-white border border-gray-200 rounded-xl p-5">
+      <div className="bg-card border border-border rounded-xl p-5">
         <div className="flex items-center justify-between mb-3">
-          <h2 className="font-semibold text-gray-900 text-sm">Signature</h2>
+          <h2 className="font-semibold text-foreground text-sm">Signature</h2>
           <button
             type="button"
             onClick={clearCanvas}
-            className="text-xs text-gray-500 hover:text-gray-700 underline"
+            className="text-xs text-muted-foreground hover:text-foreground underline"
           >
             Clear
           </button>
         </div>
-        <div className="border-2 border-dashed border-gray-200 rounded-lg overflow-hidden touch-none bg-gray-50">
+        <div className="border-2 border-dashed border-border rounded-lg overflow-hidden touch-none bg-muted">
           <canvas
             ref={canvasRef}
             width={560}
@@ -199,7 +199,7 @@ function SignatureForm({ clientId, assignmentId }: { clientId: string; assignmen
           />
         </div>
         {!hasSignature && (
-          <p className="text-xs text-gray-400 mt-2 text-center">Draw your signature in the box above</p>
+          <p className="text-xs text-muted-foreground mt-2 text-center">Draw your signature in the box above</p>
         )}
       </div>
 
@@ -207,7 +207,7 @@ function SignatureForm({ clientId, assignmentId }: { clientId: string; assignmen
         <button
           type="button"
           onClick={() => router.back()}
-          className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
+          className="px-4 py-2 text-sm font-medium text-foreground bg-card border border-border rounded-lg hover:bg-muted/40 transition-colors"
         >
           Cancel
         </button>
@@ -229,21 +229,21 @@ export default function SignaturePage({ params }: Props) {
 
   return (
     <div className="max-w-2xl mx-auto">
-      <Link href={`/clients/${clientId}`} className="text-sm text-gray-500 hover:text-gray-700">
+      <Link href={`/clients/${clientId}`} className="text-sm text-muted-foreground hover:text-foreground">
         ← Back to client profile
       </Link>
 
       <div className="mt-4 mb-6">
-        <p className="text-xs font-semibold tracking-[0.16em] text-gray-400 uppercase mb-1">
+        <p className="text-xs font-semibold tracking-[0.16em] text-muted-foreground uppercase mb-1">
           Signature Capture
         </p>
-        <h1 className="text-2xl font-bold text-gray-900">Collect Signature</h1>
-        <p className="text-gray-500 mt-1 text-sm">
+        <h1 className="text-2xl font-bold text-foreground">Collect Signature</h1>
+        <p className="text-muted-foreground mt-1 text-sm">
           Sign as case manager. Client/guardian signatures are collected via their secure signing link.
         </p>
       </div>
 
-      <Suspense fallback={<div className="text-sm text-gray-400 py-4">Loading…</div>}>
+      <Suspense fallback={<div className="text-sm text-muted-foreground py-4">Loading…</div>}>
         <SignatureForm clientId={clientId} assignmentId={assignmentId} />
       </Suspense>
     </div>

@@ -44,13 +44,13 @@ export function ClaimForm({
   )
 
   return (
-    <div className="rounded-2xl border border-gray-100 bg-white p-5 space-y-4" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
+    <div className="rounded-2xl border border-border bg-card p-5 space-y-4" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
       <div className="flex items-center justify-between">
-        <p className="text-[10px] font-bold uppercase tracking-widest text-[#E8799E]">
+        <p className="text-[10px] font-bold uppercase tracking-widest text-primary">
           {isEdit ? 'Edit Claim' : 'New Claim'}
         </p>
         {isEdit && onClose && (
-          <button onClick={onClose} className="text-xs text-gray-400 hover:text-gray-600">Cancel</button>
+          <button onClick={onClose} className="text-xs text-muted-foreground hover:text-muted-foreground">Cancel</button>
         )}
       </div>
 
@@ -60,8 +60,8 @@ export function ClaimForm({
 
       <form action={action} className="space-y-4">
         <div>
-          <label className="text-xs font-medium text-gray-600">Client</label>
-          <select name="clientId" required defaultValue={initialData?.client_id as string ?? ''} className="mt-1 w-full rounded-lg border border-gray-200 px-3 py-2 text-sm">
+          <label className="text-xs font-medium text-muted-foreground">Client</label>
+          <select name="clientId" required defaultValue={initialData?.client_id as string ?? ''} className="mt-1 w-full rounded-lg border border-border px-3 py-2 text-sm">
             <option value="">Select...</option>
             {clients.map((c) => <option key={c.id} value={c.id}>{c.legal_name}</option>)}
           </select>
@@ -69,13 +69,13 @@ export function ClaimForm({
 
         <div className="grid grid-cols-2 gap-3">
           <div>
-            <label className="text-xs font-medium text-gray-600">Payer</label>
-            <input name="payer" required defaultValue={initialData?.payer as string ?? ''} className="mt-1 w-full rounded-lg border border-gray-200 px-3 py-2 text-sm" placeholder="Minnesota DHS" />
+            <label className="text-xs font-medium text-muted-foreground">Payer</label>
+            <input name="payer" required defaultValue={initialData?.payer as string ?? ''} className="mt-1 w-full rounded-lg border border-border px-3 py-2 text-sm" placeholder="Minnesota DHS" />
           </div>
           <div>
-            <label className="text-xs font-medium text-gray-600">Auth #</label>
+            <label className="text-xs font-medium text-muted-foreground">Auth #</label>
             {serviceAuths && serviceAuths.length > 0 ? (
-              <select name="authNumber" defaultValue={initialData?.auth_number as string ?? ''} className="mt-1 w-full rounded-lg border border-gray-200 px-3 py-2 text-sm">
+              <select name="authNumber" defaultValue={initialData?.auth_number as string ?? ''} className="mt-1 w-full rounded-lg border border-border px-3 py-2 text-sm">
                 <option value="">None</option>
                 {serviceAuths.map((a) => (
                   <option key={a.id} value={a.auth_number}>
@@ -84,20 +84,20 @@ export function ClaimForm({
                 ))}
               </select>
             ) : (
-              <input name="authNumber" defaultValue={initialData?.auth_number as string ?? ''} className="mt-1 w-full rounded-lg border border-gray-200 px-3 py-2 text-sm" placeholder="Auth number" />
+              <input name="authNumber" defaultValue={initialData?.auth_number as string ?? ''} className="mt-1 w-full rounded-lg border border-border px-3 py-2 text-sm" placeholder="Auth number" />
             )}
           </div>
         </div>
 
         <div className="grid grid-cols-3 gap-3">
           <div className="col-span-2">
-            <label className="text-xs font-medium text-gray-600">CPT/HCPCS</label>
+            <label className="text-xs font-medium text-muted-foreground">CPT/HCPCS</label>
             <input
               name="cptCode"
               required
               defaultValue={initialData?.cpt_code as string ?? ''}
               list="cpt-codes"
-              className="mt-1 w-full rounded-lg border border-gray-200 px-3 py-2 text-sm"
+              className="mt-1 w-full rounded-lg border border-border px-3 py-2 text-sm"
               placeholder="T1019"
             />
             <datalist id="cpt-codes">
@@ -105,33 +105,33 @@ export function ClaimForm({
             </datalist>
           </div>
           <div>
-            <label className="text-xs font-medium text-gray-600">Mod</label>
-            <input name="modifier" defaultValue={initialData?.modifier as string ?? ''} className="mt-1 w-full rounded-lg border border-gray-200 px-3 py-2 text-sm" placeholder="U4" />
+            <label className="text-xs font-medium text-muted-foreground">Mod</label>
+            <input name="modifier" defaultValue={initialData?.modifier as string ?? ''} className="mt-1 w-full rounded-lg border border-border px-3 py-2 text-sm" placeholder="U4" />
           </div>
         </div>
 
         <div className="grid grid-cols-2 gap-3">
           <div>
-            <label className="text-xs font-medium text-gray-600">Rate</label>
-            <input name="rate" type="number" step="0.01" defaultValue={initialData?.rate as string ?? ''} className="mt-1 w-full rounded-lg border border-gray-200 px-3 py-2 text-sm" />
+            <label className="text-xs font-medium text-muted-foreground">Rate</label>
+            <input name="rate" type="number" step="0.01" defaultValue={initialData?.rate as string ?? ''} className="mt-1 w-full rounded-lg border border-border px-3 py-2 text-sm" />
           </div>
           <div>
-            <label className="text-xs font-medium text-gray-600">Amount</label>
-            <input name="amount" type="number" step="0.01" defaultValue={initialData?.amount as string ?? ''} className="mt-1 w-full rounded-lg border border-gray-200 px-3 py-2 text-sm" />
+            <label className="text-xs font-medium text-muted-foreground">Amount</label>
+            <input name="amount" type="number" step="0.01" defaultValue={initialData?.amount as string ?? ''} className="mt-1 w-full rounded-lg border border-border px-3 py-2 text-sm" />
           </div>
         </div>
 
         <div>
-          <label className="text-xs font-medium text-gray-600">Service Date</label>
-          <input name="serviceDate" type="date" required defaultValue={initialData?.service_date as string ?? ''} className="mt-1 w-full rounded-lg border border-gray-200 px-3 py-2 text-sm" />
+          <label className="text-xs font-medium text-muted-foreground">Service Date</label>
+          <input name="serviceDate" type="date" required defaultValue={initialData?.service_date as string ?? ''} className="mt-1 w-full rounded-lg border border-border px-3 py-2 text-sm" />
         </div>
 
         <div>
-          <label className="text-xs font-medium text-gray-600">Notes</label>
-          <textarea name="notes" rows={2} defaultValue={initialData?.notes as string ?? ''} className="mt-1 w-full rounded-lg border border-gray-200 px-3 py-2 text-sm resize-none" />
+          <label className="text-xs font-medium text-muted-foreground">Notes</label>
+          <textarea name="notes" rows={2} defaultValue={initialData?.notes as string ?? ''} className="mt-1 w-full rounded-lg border border-border px-3 py-2 text-sm resize-none" />
         </div>
 
-        <button type="submit" disabled={isPending} className="w-full rounded-lg bg-[#E8799E] py-2.5 text-xs font-bold text-white hover:opacity-90 disabled:opacity-40">
+        <button type="submit" disabled={isPending} className="w-full rounded-lg bg-primary py-2.5 text-xs font-bold text-white hover:opacity-90 disabled:opacity-40">
           {isPending ? 'Saving...' : isEdit ? 'Update Claim' : 'Create Claim'}
         </button>
       </form>

@@ -10,9 +10,9 @@ export default async function NewFormTemplatePage() {
   return (
     <div>
       <div className="mb-8">
-        <p className="text-xs font-semibold tracking-[0.16em] text-gray-400 uppercase mb-2">Admin</p>
-        <h1 className="text-3xl font-bold text-gray-900">New Form Template</h1>
-        <p className="text-gray-500 mt-1">Design a custom form template by adding and configuring fields.</p>
+        <p className="text-xs font-semibold tracking-[0.16em] text-muted-foreground uppercase mb-2">Admin</p>
+        <h1 className="text-3xl font-bold text-foreground">New Form Template</h1>
+        <p className="text-muted-foreground mt-1">Design a custom form template by adding and configuring fields.</p>
       </div>
       <FormBuilder
         initial={{

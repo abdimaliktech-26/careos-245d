@@ -64,7 +64,7 @@ export function NewStaffForm({
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 bg-white border border-gray-200 rounded-lg p-6">
+    <form onSubmit={handleSubmit} className="space-y-4 bg-card border border-border rounded-lg p-6">
       {serverError && (
         <p className="text-red-600 bg-red-50 border border-red-200 rounded p-3 text-sm">{serverError}</p>
       )}
@@ -90,14 +90,14 @@ export function NewStaffForm({
 
       {isSuperAdmin && (
         <div>
-          <label htmlFor="organizationId" className="block text-sm font-medium text-gray-700 mb-1">
+          <label htmlFor="organizationId" className="block text-sm font-medium text-foreground mb-1">
             Business Organization <span className="text-red-500">*</span>
           </label>
           <select
             id="organizationId"
             name="organizationId"
             required
-            className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-200"
+            className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm bg-card focus:outline-none focus:ring-2 focus:ring-blue-200"
           >
             <option value="">Choose organization</option>
             {organizations.map((organization) => (
@@ -116,7 +116,7 @@ export function NewStaffForm({
       <FormField label="Email" name="email" type="email" required placeholder="alex@yourorg.com" />
       <FormField label="Phone" name="phone" type="tel" placeholder="612-555-0100" />
 
-      <p className="text-xs text-gray-500">
+      <p className="text-xs text-muted-foreground">
         Staff can access clients, packets, and the full Intake, 45-Day, Semi-Annual, and Annual form sets for their organization.
       </p>
 

@@ -134,17 +134,17 @@ export function FormBuilder({ initial }: Props) {
           />
         ) : (
           <div className="flex flex-col items-center justify-center py-16 text-center">
-            <p className="text-sm text-gray-400">Select a field to edit its properties</p>
+            <p className="text-sm text-muted-foreground">Select a field to edit its properties</p>
           </div>
         )}
       </div>
 
       {/* Floating save bar */}
-      <div className="fixed bottom-0 left-0 right-0 border-t border-gray-100 bg-white/80 backdrop-blur-sm">
+      <div className="fixed bottom-0 left-0 right-0 border-t border-border bg-card/80 backdrop-blur-sm">
         <div className="mx-auto max-w-7xl px-6 py-3 flex items-center justify-between">
           <div>
             {error && <p className="text-xs text-rose-500">{error}</p>}
-            <p className="text-xs text-gray-400">
+            <p className="text-xs text-muted-foreground">
               {fields.length} field{fields.length !== 1 ? 's' : ''}
             </p>
           </div>
@@ -152,7 +152,7 @@ export function FormBuilder({ initial }: Props) {
             <button
               type="button"
               onClick={() => router.push('/admin/forms')}
-              className="rounded-lg px-4 py-2 text-xs font-semibold text-gray-600 hover:bg-gray-100 transition-colors"
+              className="rounded-lg px-4 py-2 text-xs font-semibold text-muted-foreground hover:bg-muted/40 transition-colors"
             >
               Cancel
             </button>
@@ -160,7 +160,7 @@ export function FormBuilder({ initial }: Props) {
               type="button"
               onClick={handleSave}
               disabled={saving || !template.name || !template.code}
-              className="rounded-lg bg-[#E8799E] px-5 py-2 text-xs font-semibold text-white hover:opacity-90 transition-opacity disabled:opacity-40"
+              className="rounded-lg bg-primary px-5 py-2 text-xs font-semibold text-white hover:opacity-90 transition-opacity disabled:opacity-40"
             >
               {saving ? 'Saving...' : template.id ? 'Update Template' : 'Create Template'}
             </button>

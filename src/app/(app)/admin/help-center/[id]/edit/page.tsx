@@ -27,7 +27,7 @@ export default async function EditHelpArticlePage({ params }: Props) {
     return (
       <div className="text-center py-16">
         <p className="text-sm text-red-500">{articleError?.message ?? 'Article not found'}</p>
-        <Link href="/admin/help-center" className="text-sm text-[#E8799E] hover:underline mt-2 inline-block">
+        <Link href="/admin/help-center" className="text-sm text-primary hover:underline mt-2 inline-block">
           Back to help center
         </Link>
       </div>
@@ -37,22 +37,22 @@ export default async function EditHelpArticlePage({ params }: Props) {
   return (
     <div className="max-w-4xl">
       <div className="mb-8">
-        <p className="text-xs font-semibold tracking-[0.16em] text-gray-400 uppercase mb-2">Admin</p>
+        <p className="text-xs font-semibold tracking-[0.16em] text-muted-foreground uppercase mb-2">Admin</p>
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">Edit: {article.title}</h1>
-            <p className="text-gray-500 mt-1">Update the article content and settings.</p>
+            <h1 className="text-3xl font-bold text-foreground">Edit: {article.title}</h1>
+            <p className="text-muted-foreground mt-1">Update the article content and settings.</p>
           </div>
           <Link
             href="/admin/help-center"
-            className="text-sm text-[#E8799E] hover:underline"
+            className="text-sm text-primary hover:underline"
           >
             &larr; Back
           </Link>
         </div>
       </div>
 
-      <div className="rounded-2xl border border-gray-100 bg-white p-6" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
+      <div className="rounded-2xl border border-border bg-card p-6" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
         <ArticleEditor article={article as HelpArticle} />
       </div>
     </div>

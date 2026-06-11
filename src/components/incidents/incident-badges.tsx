@@ -4,21 +4,21 @@ import type { IncidentCategory, IncidentStatus } from '@/types/incidents'
 
 const CATEGORY_STYLES: Record<IncidentCategory, string> = {
   injury: 'bg-rose-50 text-rose-700',
-  medication_error: 'bg-amber-50 text-amber-700',
-  behavioral_incident: 'bg-violet-50 text-violet-700',
-  emergency_manual_restraint: 'bg-orange-50 text-orange-700',
-  maltreatment_concern: 'bg-red-50 text-red-700',
-  death: 'bg-gray-100 text-gray-700',
-  property_damage: 'bg-blue-50 text-blue-700',
-  elopement: 'bg-yellow-50 text-yellow-700',
-  other: 'bg-gray-50 text-gray-600',
+  medication_error: 'bg-status-warn-bg text-status-warn',
+  behavioral_incident: 'bg-violet-50 text-violet-700 dark:bg-violet-500/15 dark:text-violet-300',
+  emergency_manual_restraint: 'bg-status-warn-bg text-status-warn',
+  maltreatment_concern: 'bg-status-error-bg text-status-error',
+  death: 'bg-muted text-foreground',
+  property_damage: 'bg-blue-50 text-blue-700 dark:bg-blue-500/15 dark:text-blue-300',
+  elopement: 'bg-status-warn-bg text-status-warn',
+  other: 'bg-muted text-muted-foreground',
 }
 
 const STATUS_STYLES: Record<IncidentStatus, string> = {
-  open: 'bg-blue-50 text-blue-700',
-  under_review: 'bg-amber-50 text-amber-700',
-  reported_to_state: 'bg-red-50 text-red-700',
-  closed: 'bg-emerald-50 text-emerald-700',
+  open: 'bg-blue-50 text-blue-700 dark:bg-blue-500/15 dark:text-blue-300',
+  under_review: 'bg-status-warn-bg text-status-warn',
+  reported_to_state: 'bg-status-error-bg text-status-error',
+  closed: 'bg-status-ok-bg text-status-ok',
 }
 
 const CATEGORY_LABELS: Record<IncidentCategory, string> = {

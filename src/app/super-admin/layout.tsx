@@ -15,7 +15,7 @@ export default async function SuperAdminLayout({
   return (
     <div className="flex h-screen overflow-hidden">
       <SuperAdminSidebar user={user} />
-      <main className="flex-1 overflow-y-auto bg-gray-50">
+      <main className="flex-1 overflow-y-auto bg-background">
         <div className="p-6 sm:p-8 lg:p-10 max-w-7xl mx-auto">
           {children}
         </div>

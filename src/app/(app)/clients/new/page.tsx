@@ -54,24 +54,24 @@ export default function NewClientPage() {
   return (
     <div className="max-w-2xl mx-auto">
       <div className="mb-8">
-        <p className="text-xs font-semibold tracking-[0.16em] text-gray-400 uppercase mb-2">
+        <p className="text-xs font-semibold tracking-[0.16em] text-muted-foreground uppercase mb-2">
           Service Recipients
         </p>
-        <h1 className="text-3xl font-bold text-gray-900">New Client</h1>
-        <p className="text-gray-500 mt-1">
+        <h1 className="text-3xl font-bold text-foreground">New Client</h1>
+        <p className="text-muted-foreground mt-1">
           Creating a client will automatically schedule their 45-day, semi-annual, and annual review packets.
         </p>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-6">
         {serverError && (
-          <p className="text-red-600 bg-red-50 border border-red-200 rounded-lg p-3 text-sm">
+          <p className="text-status-error bg-status-error-bg border border-red-200 rounded-lg p-3 text-sm">
             {serverError}
           </p>
         )}
 
-        <section className="bg-white border border-gray-200 rounded-xl p-6 space-y-4">
-          <h2 className="font-semibold text-gray-900">Basic Information</h2>
+        <section className="bg-card border border-border rounded-xl p-6 space-y-4">
+          <h2 className="font-semibold text-foreground">Basic Information</h2>
           <div className="grid grid-cols-2 gap-4">
             <FormField label="First Name" name="firstName" required error={errors.firstName} placeholder="Jane" />
             <FormField label="Last Name" name="lastName" required error={errors.lastName} placeholder="Doe" />
@@ -83,8 +83,8 @@ export default function NewClientPage() {
           </div>
         </section>
 
-        <section className="bg-white border border-gray-200 rounded-xl p-6 space-y-4">
-          <h2 className="font-semibold text-gray-900">Address</h2>
+        <section className="bg-card border border-border rounded-xl p-6 space-y-4">
+          <h2 className="font-semibold text-foreground">Address</h2>
           <FormField label="Street Address" name="address" placeholder="123 Main St" />
           <div className="grid grid-cols-3 gap-4">
             <div className="col-span-2">
@@ -95,9 +95,9 @@ export default function NewClientPage() {
           <FormField label="ZIP Code" name="zip" placeholder="55401" />
         </section>
 
-        <section className="bg-white border border-gray-200 rounded-xl p-6 space-y-4">
-          <h2 className="font-semibold text-gray-900">Guardian / Legal Representative</h2>
-          <p className="text-xs text-gray-500">Leave blank if client has no legal guardian.</p>
+        <section className="bg-card border border-border rounded-xl p-6 space-y-4">
+          <h2 className="font-semibold text-foreground">Guardian / Legal Representative</h2>
+          <p className="text-xs text-muted-foreground">Leave blank if client has no legal guardian.</p>
           <div className="grid grid-cols-2 gap-4">
             <FormField label="Guardian Name" name="guardianName" placeholder="John Doe" />
             <FormField label="Relationship" name="guardianRelationship" placeholder="Parent" />
@@ -108,8 +108,8 @@ export default function NewClientPage() {
           </div>
         </section>
 
-        <section className="bg-white border border-gray-200 rounded-xl p-6 space-y-4">
-          <h2 className="font-semibold text-gray-900">Program &amp; Intake</h2>
+        <section className="bg-card border border-border rounded-xl p-6 space-y-4">
+          <h2 className="font-semibold text-foreground">Program &amp; Intake</h2>
           <FormField
             label="Intake Date"
             name="intakeDate"
@@ -118,14 +118,14 @@ export default function NewClientPage() {
             error={errors.intakeDate}
           />
           <div>
-            <label htmlFor="program" className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="program" className="block text-sm font-medium text-foreground mb-1">
               Program
             </label>
             <select
               id="program"
               name="program"
               required
-              className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
+              className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ring/15 bg-card"
             >
               <option value="">Select a program…</option>
               {PROGRAM_OPTIONS.map((program) => (

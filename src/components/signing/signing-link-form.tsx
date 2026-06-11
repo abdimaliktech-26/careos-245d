@@ -45,7 +45,7 @@ export function SigningLinkForm({ packetFormId, defaultName, defaultEmail }: { p
               type="button"
               disabled
               title="Email sending not yet available"
-              className="rounded-md border border-[#eadfd6] bg-white px-3 py-1.5 text-[11px] font-bold text-[#667085] disabled:opacity-50"
+              className="rounded-md border border-[#eadfd6] bg-card px-3 py-1.5 text-[11px] font-bold text-[#667085] disabled:opacity-50"
             >
               Resend
             </button>
@@ -58,7 +58,7 @@ export function SigningLinkForm({ packetFormId, defaultName, defaultEmail }: { p
       )}
 
       <div className="grid gap-2 sm:grid-cols-3">
-        <select name="signerRole" className="rounded-lg border border-[#eadfd6] bg-white px-2 py-2 text-xs">
+        <select name="signerRole" className="rounded-lg border border-[#eadfd6] bg-card px-2 py-2 text-xs">
           <option value="guardian">Guardian</option>
           <option value="client">Client</option>
         </select>
@@ -66,13 +66,13 @@ export function SigningLinkForm({ packetFormId, defaultName, defaultEmail }: { p
           name="signerName"
           defaultValue={defaultName ?? ''}
           required
-          className="rounded-lg border border-[#eadfd6] bg-white px-2 py-2 text-xs"
+          className="rounded-lg border border-[#eadfd6] bg-card px-2 py-2 text-xs"
           placeholder="Signer name"
         />
         <input
           name="signerEmail"
           defaultValue={defaultEmail ?? ''}
-          className="rounded-lg border border-[#eadfd6] bg-white px-2 py-2 text-xs"
+          className="rounded-lg border border-[#eadfd6] bg-card px-2 py-2 text-xs"
           placeholder="email optional"
         />
       </div>

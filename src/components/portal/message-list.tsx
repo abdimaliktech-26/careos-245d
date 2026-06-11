@@ -22,13 +22,13 @@ export function MessageList({
   if (messages.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center py-16 text-center">
-        <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-[#EEF2FF]">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#E8799E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-accent">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#DB2777" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
           </svg>
         </div>
-        <p className="text-sm font-semibold text-[#3A2A4A]">No messages yet</p>
-        <p className="mt-1 text-xs text-[#94A3B8]">Send a message to start the conversation.</p>
+        <p className="text-sm font-semibold text-foreground">No messages yet</p>
+        <p className="mt-1 text-xs text-muted-foreground">Send a message to start the conversation.</p>
       </div>
     )
   }
@@ -44,22 +44,22 @@ export function MessageList({
           <div
             className={`max-w-[80%] rounded-2xl px-4 py-3 ${
               msg.is_from_staff
-                ? 'bg-white border border-gray-100 rounded-tl-sm'
-                : 'bg-[#E8799E] text-white rounded-tr-sm'
+                ? 'bg-card border border-border rounded-tl-sm'
+                : 'bg-primary text-white rounded-tr-sm'
             }`}
           >
             <div className="flex items-center gap-2 mb-1">
-              <span className={`text-[10px] font-bold uppercase tracking-wider ${msg.is_from_staff ? 'text-[#E8799E]' : 'text-blue-200'}`}>
+              <span className={`text-[10px] font-bold uppercase tracking-wider ${msg.is_from_staff ? 'text-primary' : 'text-blue-200'}`}>
                 {msg.sender_name}
               </span>
               {!msg.is_read && msg.is_from_staff && (
-                <span className="inline-flex h-2 w-2 rounded-full bg-[#E8799E]" />
+                <span className="inline-flex h-2 w-2 rounded-full bg-primary" />
               )}
             </div>
             <p className={`text-[13px] leading-relaxed ${msg.is_from_staff ? 'text-[#334155]' : 'text-white/90'}`}>
               {msg.message}
             </p>
-            <p className={`text-[10px] mt-1 ${msg.is_from_staff ? 'text-[#94A3B8]' : 'text-blue-200'}`}>
+            <p className={`text-[10px] mt-1 ${msg.is_from_staff ? 'text-muted-foreground' : 'text-blue-200'}`}>
               {formatTime(msg.created_at)}
             </p>
           </div>

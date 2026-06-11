@@ -54,16 +54,16 @@ export default async function CategoryPage({ params }: Props) {
   return (
     <div className="max-w-4xl mx-auto">
       {/* Breadcrumb */}
-      <nav className="flex items-center gap-1.5 text-xs text-gray-400 mb-6">
-        <Link href="/help" className="hover:text-[#E8799E] transition-colors">Help Center</Link>
+      <nav className="flex items-center gap-1.5 text-xs text-muted-foreground mb-6">
+        <Link href="/help" className="hover:text-primary transition-colors">Help Center</Link>
         <ChevronRight />
-        <span className="text-gray-600 capitalize">{label}</span>
+        <span className="text-muted-foreground capitalize">{label}</span>
       </nav>
 
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-gray-900 capitalize">{label}</h1>
-        {description && <p className="text-sm text-gray-500 mt-1">{description}</p>}
+        <h1 className="text-2xl font-bold text-foreground capitalize">{label}</h1>
+        {description && <p className="text-sm text-muted-foreground mt-1">{description}</p>}
       </div>
 
       {/* Search within category */}
@@ -73,15 +73,15 @@ export default async function CategoryPage({ params }: Props) {
 
       {/* Articles */}
       {articles.length === 0 ? (
-        <div className="rounded-2xl border border-gray-100 bg-white p-12 text-center" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
-          <p className="text-sm text-gray-400">No articles in this category yet.</p>
-          <Link href="/help" className="text-sm text-[#E8799E] hover:underline mt-2 inline-block">
+        <div className="rounded-2xl border border-border bg-card p-12 text-center" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
+          <p className="text-sm text-muted-foreground">No articles in this category yet.</p>
+          <Link href="/help" className="text-sm text-primary hover:underline mt-2 inline-block">
             Browse all categories
           </Link>
         </div>
       ) : (
         <div className="space-y-3">
-          <p className="text-xs text-gray-400">{articles.length} article{articles.length !== 1 ? 's' : ''}</p>
+          <p className="text-xs text-muted-foreground">{articles.length} article{articles.length !== 1 ? 's' : ''}</p>
           {articles.map((article) => (
             <ArticleCard key={article.id} article={article} />
           ))}

@@ -1,17 +1,17 @@
 const moodColors: Record<string, string> = {
-  '1': 'bg-red-50 text-red-700',
-  '2': 'bg-orange-50 text-orange-700',
-  '3': 'bg-yellow-50 text-yellow-700',
-  '4': 'bg-green-50 text-green-700',
-  '5': 'bg-emerald-50 text-emerald-700',
+  '1': 'bg-status-error-bg text-status-error',
+  '2': 'bg-status-warn-bg text-status-warn',
+  '3': 'bg-status-warn-bg text-status-warn',
+  '4': 'bg-status-ok-bg text-status-ok',
+  '5': 'bg-status-ok-bg text-status-ok',
 }
 
 const statusColors: Record<string, string> = {
-  scheduled: 'bg-gray-100 text-gray-600',
-  in_progress: 'bg-blue-50 text-blue-700',
-  completed: 'bg-emerald-50 text-emerald-700',
-  missed: 'bg-red-50 text-red-700',
-  exception: 'bg-amber-50 text-amber-700',
+  scheduled: 'bg-muted text-muted-foreground',
+  in_progress: 'bg-blue-50 text-blue-700 dark:bg-blue-500/15 dark:text-blue-300',
+  completed: 'bg-status-ok-bg text-status-ok',
+  missed: 'bg-status-error-bg text-status-error',
+  exception: 'bg-status-warn-bg text-status-warn',
 }
 
 function formatTime(t: string) {
@@ -45,16 +45,16 @@ export function ShiftNoteCard({
     <div className="care-panel rounded-2xl p-4">
       <div className="flex items-start justify-between mb-2">
         <div>
-          <p className="text-[10px] font-bold uppercase tracking-wider text-[#E8799E]">Shift Note</p>
-          <p className="text-[13px] font-semibold text-[#3A2A4A] mt-0.5">{date}</p>
+          <p className="text-[10px] font-bold uppercase tracking-wider text-primary">Shift Note</p>
+          <p className="text-[13px] font-semibold text-foreground mt-0.5">{date}</p>
         </div>
         {note.mood_rating && (
-          <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-bold ${moodColors[String(note.mood_rating)] ?? 'bg-gray-100 text-gray-600'}`}>
+          <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-bold ${moodColors[String(note.mood_rating)] ?? 'bg-muted text-muted-foreground'}`}>
             Mood: {note.mood_rating}/5
           </span>
         )}
       </div>
-      <div className="flex items-center gap-3 text-[11px] text-[#64748B] mb-2">
+      <div className="flex items-center gap-3 text-[11px] text-muted-foreground mb-2">
         <span>{formatTime(note.start_time)} – {formatTime(note.end_time)}</span>
         <span className="w-1 h-1 rounded-full bg-[#CBD5E1]" />
         <span className="capitalize">{note.service_type.replaceAll('_', ' ')}</span>
@@ -98,29 +98,29 @@ export function EvvLogCard({
     >
       <div className="flex items-start justify-between mb-2">
         <div>
-          <p className="text-[10px] font-bold uppercase tracking-wider text-[#E8799E]">EVV Visit</p>
-          <p className="text-[13px] font-semibold text-[#3A2A4A] mt-0.5">{visit.service_name ?? 'Service Visit'}</p>
-          <p className="text-[11px] text-[#64748B]">{date}</p>
+          <p className="text-[10px] font-bold uppercase tracking-wider text-primary">EVV Visit</p>
+          <p className="text-[13px] font-semibold text-foreground mt-0.5">{visit.service_name ?? 'Service Visit'}</p>
+          <p className="text-[11px] text-muted-foreground">{date}</p>
         </div>
-        <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-bold ${statusColors[visit.status] ?? 'bg-gray-100 text-gray-600'}`}>
+        <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-bold ${statusColors[visit.status] ?? 'bg-muted text-muted-foreground'}`}>
           {visit.status.replaceAll('_', ' ')}
         </span>
       </div>
-      <div className="grid grid-cols-2 gap-2 text-[11px] text-[#64748B]">
+      <div className="grid grid-cols-2 gap-2 text-[11px] text-muted-foreground">
         <div>
-          <span className="block text-[9px] font-bold uppercase tracking-wider text-[#94A3B8]">Scheduled</span>
+          <span className="block text-[9px] font-bold uppercase tracking-wider text-muted-foreground">Scheduled</span>
           <span>{fmt(visit.scheduled_start)} – {fmt(visit.scheduled_end)}</span>
         </div>
         <div>
-          <span className="block text-[9px] font-bold uppercase tracking-wider text-[#94A3B8]">Actual</span>
+          <span className="block text-[9px] font-bold uppercase tracking-wider text-muted-foreground">Actual</span>
           <span>{fmt(visit.actual_start)} – {fmt(visit.actual_end)}</span>
         </div>
         <div>
-          <span className="block text-[9px] font-bold uppercase tracking-wider text-[#94A3B8]">Check-in</span>
+          <span className="block text-[9px] font-bold uppercase tracking-wider text-muted-foreground">Check-in</span>
           <span className="capitalize">{visit.check_in_method ?? '—'}</span>
         </div>
         <div>
-          <span className="block text-[9px] font-bold uppercase tracking-wider text-[#94A3B8]">Check-out</span>
+          <span className="block text-[9px] font-bold uppercase tracking-wider text-muted-foreground">Check-out</span>
           <span className="capitalize">{visit.check_out_method ?? '—'}</span>
         </div>
       </div>

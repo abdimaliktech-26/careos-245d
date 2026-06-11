@@ -109,13 +109,13 @@ export function EvvGpsCard({ visit }: EvvGpsCardProps) {
   }
 
   return (
-    <div className={`rounded-xl border border-gray-100 bg-white border-l-4 ${statusColors[visit.status] ?? 'border-l-gray-400'} p-4`} style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
+    <div className={`rounded-xl border border-border bg-card border-l-4 ${statusColors[visit.status] ?? 'border-l-gray-400'} p-4`} style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
       <div className="flex items-start justify-between gap-3">
         <div className="flex-1 min-w-0">
-          <p className="text-sm font-semibold text-[#3A2A4A]">{visit.clientName}</p>
-          <p className="text-xs text-[#64748B] mt-0.5">{visit.serviceName} · {visit.serviceDate}</p>
+          <p className="text-sm font-semibold text-foreground">{visit.clientName}</p>
+          <p className="text-xs text-muted-foreground mt-0.5">{visit.serviceName} · {visit.serviceDate}</p>
           <div className="flex flex-wrap gap-2 mt-2">
-            <span className="inline-flex items-center rounded-full bg-gray-100 px-2 py-0.5 text-[10px] font-semibold text-gray-600 uppercase tracking-wide">
+            <span className="inline-flex items-center rounded-full bg-muted px-2 py-0.5 text-[10px] font-semibold text-muted-foreground uppercase tracking-wide">
               {visit.status.replaceAll('_', ' ')}
             </span>
             {position && (
@@ -141,7 +141,7 @@ export function EvvGpsCard({ visit }: EvvGpsCardProps) {
             <button
               onClick={handleCheckIn}
               disabled={submitting || geoLoading}
-              className="rounded-lg bg-[#E8799E] px-3 py-1.5 text-xs font-semibold text-white hover:opacity-90 transition-opacity disabled:opacity-50"
+              className="rounded-lg bg-primary px-3 py-1.5 text-xs font-semibold text-white hover:opacity-90 transition-opacity disabled:opacity-50"
             >
               {geoLoading ? 'Getting GPS…' : submitting ? 'Checking in…' : 'GPS Check-in'}
             </button>
@@ -159,7 +159,7 @@ export function EvvGpsCard({ visit }: EvvGpsCardProps) {
             <button
               onClick={requestPosition}
               disabled={geoLoading}
-              className="rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-semibold text-gray-600 hover:bg-gray-50 transition-colors disabled:opacity-50"
+              className="rounded-lg border border-border px-3 py-1.5 text-xs font-semibold text-muted-foreground hover:bg-muted/40 transition-colors disabled:opacity-50"
             >
               {geoLoading ? 'Locating…' : 'Get GPS Fix'}
             </button>
@@ -176,7 +176,7 @@ export function EvvGpsCard({ visit }: EvvGpsCardProps) {
               type="button"
               onClick={() => setVoiceLang(l)}
               className={`text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded transition ${
-                voiceLang === l ? 'text-[#E8799E] bg-[#EEF2FF]' : 'text-[#94A3B8] hover:text-[#64748B]'
+                voiceLang === l ? 'text-primary bg-accent' : 'text-muted-foreground hover:text-muted-foreground'
               }`}
             >
               {l === 'en' ? 'EN' : 'SO'}
@@ -191,7 +191,7 @@ export function EvvGpsCard({ visit }: EvvGpsCardProps) {
           size="sm"
           disabled={submitting || isCompleted}
         />
-        <span className="text-[10px] text-[#94A3B8]">
+        <span className="text-[10px] text-muted-foreground">
           {isListening ? 'Say "Start" or "End"…' : 'Voice check-in'}
         </span>
       </div>

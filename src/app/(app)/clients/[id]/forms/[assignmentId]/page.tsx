@@ -88,14 +88,14 @@ export default function FormFillPage({ params }: Props) {
   }
 
   if (loading) {
-    return <div className="max-w-3xl mx-auto py-12 text-center text-gray-400 text-sm">Loading form…</div>
+    return <div className="max-w-3xl mx-auto py-12 text-center text-muted-foreground text-sm">Loading form…</div>
   }
 
   if (error) {
     return (
       <div className="max-w-3xl mx-auto space-y-4 p-8">
-        <p className="text-red-600 bg-red-50 border border-red-200 rounded-xl p-4 text-sm">{error}</p>
-        <Link href={`/clients/${clientId}`} className="text-sm text-gray-500 hover:text-gray-700">
+        <p className="text-status-error bg-status-error-bg border border-red-200 rounded-xl p-4 text-sm">{error}</p>
+        <Link href={`/clients/${clientId}`} className="text-sm text-muted-foreground hover:text-foreground">
           ← Back to client
         </Link>
       </div>
@@ -104,19 +104,19 @@ export default function FormFillPage({ params }: Props) {
 
   return (
     <div className="max-w-3xl mx-auto">
-      <Link href={`/clients/${clientId}`} className="text-sm text-gray-500 hover:text-gray-700">
+      <Link href={`/clients/${clientId}`} className="text-sm text-muted-foreground hover:text-foreground">
         ← Back to client profile
       </Link>
 
       <div className="flex items-center gap-2 mt-3 mb-1">
-        <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-blue-100 text-blue-700 uppercase tracking-wide">
+        <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-blue-100 text-blue-700 dark:bg-blue-500/15 dark:text-blue-300 uppercase tracking-wide">
           {SET_LABELS[assignment?.packet_type ?? ''] ?? assignment?.packet_type}
         </span>
-        <span className="text-xs text-gray-500 font-mono">
+        <span className="text-xs text-muted-foreground font-mono">
           {assignment?.form_templates?.code}
         </span>
         {assignment?.due_date && (
-          <span className="text-xs text-gray-400">
+          <span className="text-xs text-muted-foreground">
             · Due {new Date(assignment.due_date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
           </span>
         )}

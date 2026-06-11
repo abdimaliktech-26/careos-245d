@@ -4,12 +4,12 @@ import { createClient } from '@/lib/supabase/server'
 
 function statusColor(status: string) {
   const colors: Record<string, string> = {
-    scheduled: 'bg-blue-50 text-blue-700',
-    completed: 'bg-emerald-50 text-emerald-700',
-    cancelled: 'bg-red-50 text-red-700',
-    no_show: 'bg-amber-50 text-amber-700',
+    scheduled: 'bg-blue-50 text-blue-700 dark:bg-blue-500/15 dark:text-blue-300',
+    completed: 'bg-status-ok-bg text-status-ok',
+    cancelled: 'bg-status-error-bg text-status-error',
+    no_show: 'bg-status-warn-bg text-status-warn',
   }
-  return colors[status] ?? 'bg-gray-100 text-gray-600'
+  return colors[status] ?? 'bg-muted text-muted-foreground'
 }
 
 export default async function ClientSchedulePage() {
@@ -36,8 +36,8 @@ export default async function ClientSchedulePage() {
             <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
           </svg>
         </div>
-        <p className="text-sm font-semibold text-[#3A2A4A]">No client record linked</p>
-        <p className="mt-1 text-xs text-[#64748B]">Your account is not yet linked to a client record.</p>
+        <p className="text-sm font-semibold text-foreground">No client record linked</p>
+        <p className="mt-1 text-xs text-muted-foreground">Your account is not yet linked to a client record.</p>
       </div>
     )
   }
@@ -58,32 +58,32 @@ export default async function ClientSchedulePage() {
   return (
     <div className="max-w-2xl mx-auto space-y-6">
       <div>
-        <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#94A3B8]">
+        <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
           Client Portal · Schedule
         </p>
-        <h1 className="mt-1.5 text-2xl font-bold tracking-tight text-[#3A2A4A]">
+        <h1 className="mt-1.5 text-2xl font-bold tracking-tight text-foreground">
           Upcoming Schedule
         </h1>
-        <p className="mt-1 text-[13px] text-[#64748B]">
+        <p className="mt-1 text-[13px] text-muted-foreground">
           View your upcoming service appointments.
         </p>
       </div>
 
       {rows.length === 0 ? (
         <div className="care-panel rounded-2xl flex flex-col items-center justify-center py-16 text-center">
-          <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-[#EEF2FF]">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#E8799E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-accent">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#DB2777" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
             </svg>
           </div>
-          <p className="text-sm font-semibold text-[#3A2A4A]">No appointments scheduled</p>
-          <p className="mt-1 text-xs text-[#94A3B8]">Check back later for upcoming service appointments.</p>
+          <p className="text-sm font-semibold text-foreground">No appointments scheduled</p>
+          <p className="mt-1 text-xs text-muted-foreground">Check back later for upcoming service appointments.</p>
         </div>
       ) : (
         <div className="space-y-3">
           {upcoming.length > 0 && (
             <div>
-              <h2 className="text-xs font-bold uppercase tracking-wider text-[#94A3B8] mb-2">Upcoming</h2>
+              <h2 className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-2">Upcoming</h2>
               <div className="space-y-2">
                 {upcoming.map((s) => {
                   const sd = new Date(s.scheduled_date as string)
@@ -92,17 +92,17 @@ export default async function ClientSchedulePage() {
                   const svcType = (s.service_type as string) ?? ''
                   const staffName = (s.staff_name as string | null) ?? null
                   return (
-                    <div key={s.id as string} className="care-panel rounded-2xl p-4 border-l-4 border-l-[#E8799E]">
+                    <div key={s.id as string} className="care-panel rounded-2xl p-4 border-l-4 border-l-primary">
                       <div className="flex items-start justify-between gap-3">
                         <div>
-                          <p className="text-[13px] font-semibold text-[#3A2A4A]">
+                          <p className="text-[13px] font-semibold text-foreground">
                             {sd.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}
                           </p>
-                          <p className="text-[11px] text-[#64748B] mt-0.5">
+                          <p className="text-[11px] text-muted-foreground mt-0.5">
                             {start.slice(0, 5)} – {end.slice(0, 5)} · {svcType.replaceAll('_', ' ')}
                           </p>
                           {staffName && (
-                            <p className="text-[11px] text-[#64748B] mt-0.5">Staff: {staffName}</p>
+                            <p className="text-[11px] text-muted-foreground mt-0.5">Staff: {staffName}</p>
                           )}
                         </div>
                         <span className={`shrink-0 inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider ${statusColor(s.status as string)}`}>
@@ -118,7 +118,7 @@ export default async function ClientSchedulePage() {
 
           {past.length > 0 && (
             <div>
-              <h2 className="text-xs font-bold uppercase tracking-wider text-[#94A3B8] mb-2">Past</h2>
+              <h2 className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-2">Past</h2>
               <div className="space-y-2">
                 {past.map((s) => {
                   const sd = new Date(s.scheduled_date as string)
@@ -128,10 +128,10 @@ export default async function ClientSchedulePage() {
                     <div key={s.id as string} className="care-panel rounded-2xl p-4 opacity-70">
                       <div className="flex items-start justify-between gap-3">
                         <div>
-                          <p className="text-[13px] font-semibold text-[#3A2A4A]">
+                          <p className="text-[13px] font-semibold text-foreground">
                             {sd.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}
                           </p>
-                          <p className="text-[11px] text-[#64748B] mt-0.5">
+                          <p className="text-[11px] text-muted-foreground mt-0.5">
                             {start.slice(0, 5)} – {end.slice(0, 5)}
                           </p>
                         </div>

@@ -25,8 +25,8 @@ export default async function EditIncidentPage({ params }: Props) {
   if (!incident) {
     return (
       <div className="text-center py-16">
-        <p className="text-sm text-red-500">Incident not found</p>
-        <Link href="/incidents" className="text-sm text-[#E8799E] hover:underline mt-2 inline-block">Back</Link>
+        <p className="text-sm text-status-error">Incident not found</p>
+        <Link href="/incidents" className="text-sm text-primary hover:underline mt-2 inline-block">Back</Link>
       </div>
     )
   }
@@ -45,8 +45,8 @@ export default async function EditIncidentPage({ params }: Props) {
 
   return (
     <div className="max-w-2xl">
-      <Link href={`/incidents/${id}`} className="text-xs text-[#E8799E] hover:underline mb-4 inline-block">← Back to Incident</Link>
-      <h1 className="text-2xl font-bold text-[#3A2A4A] mb-6">Edit {incident.incident_number}</h1>
+      <Link href={`/incidents/${id}`} className="text-xs text-primary hover:underline mb-4 inline-block">← Back to Incident</Link>
+      <h1 className="text-2xl font-bold text-foreground mb-6">Edit {incident.incident_number}</h1>
       <EditIncidentForm incident={incident} staff={staff ?? []} clients={clients ?? []} />
     </div>
   )

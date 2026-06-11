@@ -39,11 +39,11 @@ export default async function HelpCenterPage() {
     <div className="max-w-4xl mx-auto">
       {/* Header */}
       <div className="text-center mb-10">
-        <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-[#EEF2FF] text-[#E8799E]">
+        <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-accent text-primary">
           <QuestionIcon />
         </div>
-        <h1 className="text-3xl font-bold text-gray-900">How can we help you?</h1>
-        <p className="text-gray-500 mt-2">Search the knowledge base or browse by category.</p>
+        <h1 className="text-3xl font-bold text-foreground">How can we help you?</h1>
+        <p className="text-muted-foreground mt-2">Search the knowledge base or browse by category.</p>
       </div>
 
       {/* Search */}
@@ -54,7 +54,7 @@ export default async function HelpCenterPage() {
       {/* Category Grid */}
       {categories.length > 0 && (
         <section className="mb-10">
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">Browse by Category</h2>
+          <h2 className="text-lg font-semibold text-foreground mb-4">Browse by Category</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
             {categories.map((cat) => (
               <CategoryCard key={cat.category} category={cat.category} count={cat.count} />
@@ -66,7 +66,7 @@ export default async function HelpCenterPage() {
       {/* Recent Articles */}
       {recentArticles.length > 0 && (
         <section className="mb-10">
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">Recent Articles</h2>
+          <h2 className="text-lg font-semibold text-foreground mb-4">Recent Articles</h2>
           <div className="space-y-3">
             {recentArticles.map((article) => (
               <ArticleCard key={article.id} article={article} />
@@ -76,15 +76,15 @@ export default async function HelpCenterPage() {
       )}
 
       {/* Contact Support */}
-      <section className="rounded-2xl border border-gray-100 bg-white p-6 text-center" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
-        <h2 className="text-base font-semibold text-gray-900 mb-2">Still need help?</h2>
-        <p className="text-sm text-gray-500 mb-4">
+      <section className="rounded-2xl border border-border bg-card p-6 text-center" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
+        <h2 className="text-base font-semibold text-foreground mb-2">Still need help?</h2>
+        <p className="text-sm text-muted-foreground mb-4">
           Contact our support team for assistance.
         </p>
         <div className="flex items-center justify-center gap-3">
           <a
             href="mailto:support@careintake.com"
-            className="inline-flex items-center gap-2 rounded-lg bg-[#E8799E] px-4 py-2 text-sm font-semibold text-white hover:opacity-90 transition-opacity"
+            className="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-white hover:opacity-90 transition-opacity"
           >
             <MailIcon />
             Email Support

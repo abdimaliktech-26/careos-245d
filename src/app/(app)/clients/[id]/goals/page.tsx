@@ -34,28 +34,28 @@ export default async function GoalsPage({ params }: Props) {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <Link href={`/clients/${id}`} className="text-sm text-gray-500 hover:text-gray-700">
+          <Link href={`/clients/${id}`} className="text-sm text-muted-foreground hover:text-foreground">
             ← Back to {client.legal_name}
           </Link>
-          <h1 className="text-2xl font-semibold text-gray-900 mt-1">Service Goals</h1>
-          <p className="text-sm text-gray-500">Person-centered planning goals tracked for 245D compliance</p>
+          <h1 className="text-2xl font-semibold text-foreground mt-1">Service Goals</h1>
+          <p className="text-sm text-muted-foreground">Person-centered planning goals tracked for 245D compliance</p>
         </div>
         <GoalFormModal clientId={id} />
       </div>
 
       {stats && (
         <div className="grid grid-cols-3 gap-4">
-          <div className="bg-white border border-gray-200 rounded-xl p-5">
-            <p className="text-3xl font-bold text-[#3A2A4A]">{stats.active + stats.in_progress}</p>
-            <p className="text-sm text-[#64748B] mt-1">Active</p>
+          <div className="bg-card border border-border rounded-xl p-5">
+            <p className="text-3xl font-bold text-foreground">{stats.active + stats.in_progress}</p>
+            <p className="text-sm text-muted-foreground mt-1">Active</p>
           </div>
-          <div className="bg-white border border-gray-200 rounded-xl p-5">
-            <p className="text-3xl font-bold text-emerald-600">{stats.achieved}</p>
-            <p className="text-sm text-[#64748B] mt-1">Achieved</p>
+          <div className="bg-card border border-border rounded-xl p-5">
+            <p className="text-3xl font-bold text-status-ok">{stats.achieved}</p>
+            <p className="text-sm text-muted-foreground mt-1">Achieved</p>
           </div>
-          <div className="bg-white border border-gray-200 rounded-xl p-5">
-            <p className="text-3xl font-bold text-[#3A2A4A]">{stats.total}</p>
-            <p className="text-sm text-[#64748B] mt-1">Total Goals</p>
+          <div className="bg-card border border-border rounded-xl p-5">
+            <p className="text-3xl font-bold text-foreground">{stats.total}</p>
+            <p className="text-sm text-muted-foreground mt-1">Total Goals</p>
           </div>
         </div>
       )}
@@ -69,7 +69,7 @@ export default async function GoalsPage({ params }: Props) {
           <div className="space-y-6">
             {activeGoals.length > 0 && (
               <section>
-                <h2 className="text-sm font-semibold text-[#64748B] uppercase tracking-wider mb-3">Active Goals</h2>
+                <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-3">Active Goals</h2>
                 <div className="space-y-3">
                   {activeGoals.map((goal) => (
                     <GoalCard
@@ -84,7 +84,7 @@ export default async function GoalsPage({ params }: Props) {
 
             {achievedGoals.length > 0 && (
               <section>
-                <h2 className="text-sm font-semibold text-[#64748B] uppercase tracking-wider mb-3">Achieved</h2>
+                <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-3">Achieved</h2>
                 <div className="space-y-3">
                   {achievedGoals.map((goal) => (
                     <GoalCard
@@ -99,7 +99,7 @@ export default async function GoalsPage({ params }: Props) {
 
             {otherGoals.length > 0 && (
               <section>
-                <h2 className="text-sm font-semibold text-[#64748B] uppercase tracking-wider mb-3">Other</h2>
+                <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-3">Other</h2>
                 <div className="space-y-3">
                   {otherGoals.map((goal) => (
                     <GoalCard
@@ -113,12 +113,12 @@ export default async function GoalsPage({ params }: Props) {
             )}
           </div>
         ) : (
-          <div className="bg-white border border-gray-200 rounded-xl p-12 text-center">
-            <div className="flex justify-center mb-3 text-[#CBD5E1]">
+          <div className="bg-card border border-border rounded-xl p-12 text-center">
+            <div className="flex justify-center mb-3 text-muted-foreground">
               <TargetIcon />
             </div>
-            <p className="text-[#3A2A4A] font-semibold">No goals yet</p>
-            <p className="text-sm text-[#64748B] mt-1">
+            <p className="text-foreground font-semibold">No goals yet</p>
+            <p className="text-sm text-muted-foreground mt-1">
               Create your first service goal to start tracking person-centered progress.
             </p>
           </div>

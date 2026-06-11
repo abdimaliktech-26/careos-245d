@@ -46,7 +46,7 @@ export function CertificateUpload({ trainingId, onUploaded }: { trainingId: stri
 
   return (
     <label className="cursor-pointer">
-      <span className="text-xs text-[#E8799E] hover:underline">
+      <span className="text-xs text-primary hover:underline">
         {uploading ? 'Uploading...' : 'Upload Certificate'}
       </span>
       <input type="file" accept=".pdf,.png,.jpg,.jpeg" onChange={handleUpload} className="hidden" disabled={uploading} />

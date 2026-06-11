@@ -24,7 +24,7 @@ export default async function StaffListPage() {
   return (
     <div className="max-w-4xl mx-auto">
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">Staff</h1>
+        <h1 className="text-2xl font-bold text-foreground">Staff</h1>
         <Link
           href="/admin/staff/new"
           className="bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-4 py-2 rounded-md"
@@ -37,9 +37,9 @@ export default async function StaffListPage() {
         <p className="text-red-600 bg-red-50 border border-red-200 rounded p-3 mb-4 text-sm">{error}</p>
       )}
 
-      <div className="bg-white border border-gray-200 rounded-lg divide-y divide-gray-100">
+      <div className="bg-card border border-border rounded-lg divide-y divide-border/60">
         {!staff || staff.length === 0 ? (
-          <p className="p-6 text-center text-gray-500 text-sm">
+          <p className="p-6 text-center text-muted-foreground text-sm">
             No staff yet.{' '}
             <Link href="/admin/staff/new" className="text-blue-600 hover:underline">
               Add your first staff member →
@@ -49,12 +49,12 @@ export default async function StaffListPage() {
           staff.map((s) => (
             <div key={s.id} className="flex items-center justify-between px-5 py-4">
               <div>
-                <p className="font-medium text-gray-900">{s.full_name}</p>
-                <p className="text-sm text-gray-500">{s.email}</p>
-                {s.phone && <p className="text-xs text-gray-400">{s.phone}</p>}
+                <p className="font-medium text-foreground">{s.full_name}</p>
+                <p className="text-sm text-muted-foreground">{s.email}</p>
+                {s.phone && <p className="text-xs text-muted-foreground">{s.phone}</p>}
               </div>
               <div className="flex items-center gap-3">
-                <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${s.is_active ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-500'}`}>
+                <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${s.is_active ? 'bg-green-100 text-green-700' : 'bg-muted text-muted-foreground'}`}>
                   {s.is_active ? 'Active' : 'Inactive'}
                 </span>
                 {s.is_active ? (

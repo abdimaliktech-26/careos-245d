@@ -54,7 +54,7 @@ export function HelpSearchBar() {
   return (
     <div ref={wrapperRef} className="relative w-full max-w-2xl mx-auto">
       <div className="relative">
-        <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
+        <span className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground">
           <SearchIcon />
         </span>
         <input
@@ -63,23 +63,23 @@ export function HelpSearchBar() {
           onChange={(e) => handleChange(e.target.value)}
           onFocus={() => { if (results.length > 0) setIsOpen(true) }}
           placeholder="Search articles..."
-          className="w-full rounded-xl border border-gray-200 bg-white py-3.5 pl-11 pr-4 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-[#E8799E]/20 focus:border-[#E8799E] transition-colors"
+          className="w-full rounded-xl border border-border bg-card py-3.5 pl-11 pr-4 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-ring/15 focus:border-ring transition-colors"
         />
         {loading && (
           <span className="absolute right-4 top-1/2 -translate-y-1/2">
-            <span className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-gray-200 border-t-[#E8799E]" />
+            <span className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-border border-t-[#DB2777]" />
           </span>
         )}
       </div>
 
       {isOpen && (
-        <div className="absolute top-full left-0 right-0 mt-2 rounded-xl border border-gray-200 bg-white shadow-lg z-50 max-h-80 overflow-y-auto">
+        <div className="absolute top-full left-0 right-0 mt-2 rounded-xl border border-border bg-card shadow-lg z-50 max-h-80 overflow-y-auto">
           {results.length === 0 ? (
-            <p className="px-4 py-6 text-center text-sm text-gray-400">
+            <p className="px-4 py-6 text-center text-sm text-muted-foreground">
               {query.trim() ? 'No articles found.' : 'Start typing to search...'}
             </p>
           ) : (
-            <div className="divide-y divide-gray-50">
+            <div className="divide-y divide-border/60">
               {results.map((article) => (
                 <button
                   key={article.id}
@@ -89,14 +89,14 @@ export function HelpSearchBar() {
                     setQuery('')
                     router.push(`/help/${article.slug}`)
                   }}
-                  className="w-full text-left px-4 py-3 hover:bg-gray-50 transition-colors"
+                  className="w-full text-left px-4 py-3 hover:bg-muted/40 transition-colors"
                 >
-                  <p className="text-sm font-medium text-gray-900">{article.title}</p>
+                  <p className="text-sm font-medium text-foreground">{article.title}</p>
                   {article.excerpt && (
-                    <p className="text-xs text-gray-500 mt-0.5 line-clamp-1">{article.excerpt}</p>
+                    <p className="text-xs text-muted-foreground mt-0.5 line-clamp-1">{article.excerpt}</p>
                   )}
                   <div className="flex items-center gap-2 mt-1">
-                    <span className="inline-flex items-center rounded-full bg-[#EEF2FF] px-2 py-0.5 text-[10px] font-medium text-[#E8799E] capitalize">
+                    <span className="inline-flex items-center rounded-full bg-accent px-2 py-0.5 text-[10px] font-medium text-primary capitalize">
                       {article.category}
                     </span>
                   </div>

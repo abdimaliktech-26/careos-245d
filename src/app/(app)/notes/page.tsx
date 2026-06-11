@@ -44,9 +44,9 @@ export default async function NotesPage({
     <div>
       <div className="mb-8 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
         <div>
-          <p className="text-[10px] font-bold uppercase tracking-widest text-[#E8799E]">Daily Documentation</p>
-          <h1 className="mt-2 text-3xl font-black text-[#3A2A4A]">T-Log / Shift Notes</h1>
-          <p className="mt-2 text-sm text-gray-500">
+          <p className="text-[10px] font-bold uppercase tracking-widest text-primary">Daily Documentation</p>
+          <h1 className="mt-2 text-3xl font-black text-foreground">T-Log / Shift Notes</h1>
+          <p className="mt-2 text-sm text-muted-foreground">
             DSPs document every visit — what was done, client mood, goals addressed, activities.
           </p>
         </div>
@@ -68,9 +68,9 @@ export default async function NotesPage({
 
 function Stat({ label, value }: { label: string; value: number }) {
   return (
-    <div className="rounded-2xl bg-white border border-gray-100 shadow-sm px-5 py-3 text-center min-w-[80px]">
-      <p className="text-2xl font-black text-[#3A2A4A]">{value}</p>
-      <p className="text-[10px] font-semibold uppercase tracking-widest text-gray-400">{label}</p>
+    <div className="rounded-2xl bg-card border border-border shadow-sm px-5 py-3 text-center min-w-[80px]">
+      <p className="text-2xl font-black text-foreground">{value}</p>
+      <p className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">{label}</p>
     </div>
   )
 }

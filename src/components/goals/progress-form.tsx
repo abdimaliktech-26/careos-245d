@@ -47,7 +47,7 @@ export function ProgressForm({ goalId, onClose, onSuccess }: ProgressFormProps) 
       )}
 
       <div className="flex flex-col gap-1">
-        <label htmlFor="progressNote" className="text-sm font-medium text-gray-700">
+        <label htmlFor="progressNote" className="text-sm font-medium text-foreground">
           Progress Note <span className="text-red-500">*</span>
         </label>
         <textarea
@@ -56,13 +56,13 @@ export function ProgressForm({ goalId, onClose, onSuccess }: ProgressFormProps) 
           onChange={(e) => setProgressNote(e.target.value)}
           rows={4}
           required
-          className="w-full border border-[#e5d8cd] rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:border-[#f37d6d] focus:ring-[#f37d6d]/20 transition-colors bg-white resize-none"
+          className="w-full border border-[#e5d8cd] rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:border-[#f37d6d] focus:ring-[#f37d6d]/20 transition-colors bg-card resize-none"
           placeholder="Describe the progress made toward this goal..."
         />
       </div>
 
       <div className="flex flex-col gap-1">
-        <label htmlFor="progressScore" className="text-sm font-medium text-gray-700">
+        <label htmlFor="progressScore" className="text-sm font-medium text-foreground">
           Progress Score (0-100)
         </label>
         <input
@@ -72,11 +72,11 @@ export function ProgressForm({ goalId, onClose, onSuccess }: ProgressFormProps) 
           max="100"
           value={progressScore || '0'}
           onChange={(e) => setProgressScore(e.target.value)}
-          className="w-full accent-[#E8799E]"
+          className="w-full accent-[#DB2777]"
         />
-        <div className="flex justify-between text-xs text-gray-500">
+        <div className="flex justify-between text-xs text-muted-foreground">
           <span>0</span>
-          <span className="font-semibold text-[#E8799E]">{progressScore || '0'}%</span>
+          <span className="font-semibold text-primary">{progressScore || '0'}%</span>
           <span>100</span>
         </div>
       </div>

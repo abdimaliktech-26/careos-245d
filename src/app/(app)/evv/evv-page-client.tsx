@@ -18,7 +18,7 @@ export function EvvPageClient({ startDate: initialStart, endDate: initialEnd }: 
   return (
     <div className="mb-4 flex items-center gap-3">
       <div className="flex items-center gap-2">
-        <span className="text-[10px] font-semibold uppercase tracking-[0.14em] text-gray-400">From</span>
+        <span className="text-[10px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">From</span>
         <input
           type="date"
           value={startDate}
@@ -27,7 +27,7 @@ export function EvvPageClient({ startDate: initialStart, endDate: initialEnd }: 
         />
       </div>
       <div className="flex items-center gap-2">
-        <span className="text-[10px] font-semibold uppercase tracking-[0.14em] text-gray-400">To</span>
+        <span className="text-[10px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">To</span>
         <input
           type="date"
           value={endDate}
@@ -37,7 +37,7 @@ export function EvvPageClient({ startDate: initialStart, endDate: initialEnd }: 
       </div>
       <button
         onClick={handleFilter}
-        className="rounded-xl bg-[#E8799E] px-4 py-1.5 text-xs font-semibold text-white hover:opacity-90 transition"
+        className="rounded-xl bg-primary px-4 py-1.5 text-xs font-semibold text-white hover:opacity-90 transition"
       >
         Apply
       </button>

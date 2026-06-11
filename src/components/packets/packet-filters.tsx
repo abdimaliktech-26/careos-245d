@@ -13,7 +13,7 @@ export function PacketFilters({
         <select
           key={name}
           name={name}
-          className="care-input rounded-xl border px-3 py-2 text-[12px] text-[#374151] bg-white cursor-pointer"
+          className="care-input rounded-xl border px-3 py-2 text-[12px] text-foreground bg-card cursor-pointer"
           defaultValue=""
           onChange={(e) => { (e.target as HTMLSelectElement).form?.submit() }}
         >

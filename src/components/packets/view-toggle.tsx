@@ -33,8 +33,8 @@ export function PacketsViewToggle({ tableView, packetRows }: PacketsViewTogglePr
           onClick={() => setView('table')}
           className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition-colors ${
             view === 'table'
-              ? 'bg-[#E8799E] text-white'
-              : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+              ? 'bg-primary text-white'
+              : 'bg-muted text-muted-foreground hover:bg-muted'
           }`}
         >
           Table
@@ -43,8 +43,8 @@ export function PacketsViewToggle({ tableView, packetRows }: PacketsViewTogglePr
           onClick={() => setView('kanban')}
           className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition-colors ${
             view === 'kanban'
-              ? 'bg-[#E8799E] text-white'
-              : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+              ? 'bg-primary text-white'
+              : 'bg-muted text-muted-foreground hover:bg-muted'
           }`}
         >
           Kanban

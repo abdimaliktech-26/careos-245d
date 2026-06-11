@@ -39,7 +39,7 @@ export function ExportButton({ filename = 'export', data, headers }: { filename?
     <div className="relative" ref={ref}>
       <button
         onClick={() => setOpen(!open)}
-        className="rounded-lg border border-gray-200 bg-white px-3 py-1.5 text-xs font-semibold text-gray-600 hover:bg-gray-50 flex items-center gap-1.5"
+        className="rounded-lg border border-border bg-card px-3 py-1.5 text-xs font-semibold text-muted-foreground hover:bg-muted/40 flex items-center gap-1.5"
       >
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
@@ -51,16 +51,16 @@ export function ExportButton({ filename = 'export', data, headers }: { filename?
       {open && (
         <>
           <div className="fixed inset-0 z-10" onClick={() => setOpen(false)} />
-          <div className="absolute right-0 mt-1 w-40 bg-white rounded-xl border border-gray-200 shadow-lg z-20 py-1">
+          <div className="absolute right-0 mt-1 w-40 bg-card rounded-xl border border-border shadow-lg z-20 py-1">
             <button
               onClick={handleCsv}
-              className="w-full text-left px-4 py-2 text-xs font-medium text-gray-700 hover:bg-gray-50"
+              className="w-full text-left px-4 py-2 text-xs font-medium text-foreground hover:bg-muted/40"
             >
               Export as CSV
             </button>
             <button
               onClick={handlePdf}
-              className="w-full text-left px-4 py-2 text-xs font-medium text-gray-700 hover:bg-gray-50"
+              className="w-full text-left px-4 py-2 text-xs font-medium text-foreground hover:bg-muted/40"
             >
               Export as PDF
             </button>

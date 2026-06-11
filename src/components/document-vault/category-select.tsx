@@ -17,7 +17,7 @@ export function CategorySelect({
       {searchQuery && <input type="hidden" name="search" value={searchQuery} />}
       <select
         name="category"
-        className="rounded-lg px-2 py-1.5 text-xs font-semibold bg-transparent text-gray-500 hover:text-gray-700 border-0 cursor-pointer"
+        className="rounded-lg px-2 py-1.5 text-xs font-semibold bg-transparent text-muted-foreground hover:text-foreground border-0 cursor-pointer"
         defaultValue=""
         onChange={(e) => { (e.target as HTMLSelectElement).form?.submit() }}
       >

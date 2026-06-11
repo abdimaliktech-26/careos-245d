@@ -17,7 +17,7 @@ export function ClientSubNav({
   activeTab: typeof TABS[number]['key']
 }) {
   return (
-    <nav className="flex gap-6 border-b border-gray-200 mb-6 overflow-x-auto scrollbar-thin">
+    <nav className="flex gap-6 border-b border-border mb-6 overflow-x-auto scrollbar-thin">
       {TABS.map((tab) => {
         const href = tab.key === 'profile' ? `/clients/${clientId}` : `/clients/${clientId}/${tab.key}`
         const isActive = activeTab === tab.key
@@ -28,8 +28,8 @@ export function ClientSubNav({
             href={href}
             className={`whitespace-nowrap text-sm font-semibold px-1 pb-3 border-b-2 transition-colors ${
               isActive
-                ? 'text-[#E8799E] border-[#E8799E]'
-                : 'text-[#64748B] border-transparent hover:text-[#334155]'
+                ? 'text-primary border-primary'
+                : 'text-muted-foreground border-transparent hover:text-[#334155]'
             }`}
           >
             {tab.label}

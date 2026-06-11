@@ -16,8 +16,8 @@ export function FormSection({ section, values, onChange, carryForwardMap, onAppl
   return (
     <section className="care-panel rounded-2xl p-5 space-y-4">
       <div>
-        <h3 className="font-semibold text-gray-800">{section.title}</h3>
-        {section.description && <p className="text-xs text-gray-500 mt-1">{section.description}</p>}
+        <h3 className="font-semibold text-foreground">{section.title}</h3>
+        {section.description && <p className="text-xs text-muted-foreground mt-1">{section.description}</p>}
       </div>
 
       {section.fields.map((field) => {

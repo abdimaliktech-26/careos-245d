@@ -57,31 +57,31 @@ export default function InstallPrompt() {
 
   return (
     <div className="fixed bottom-0 left-0 right-0 z-50 p-4 pb-6 lg:pb-4">
-      <div className="mx-auto max-w-md rounded-2xl border border-[#E5E7EB] bg-white p-4 shadow-lg shadow-black/5">
+      <div className="mx-auto max-w-md rounded-2xl border border-border bg-card p-4 shadow-lg shadow-black/5">
         <div className="flex items-start gap-3">
           <div
             className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl"
-            style={{ background: 'linear-gradient(135deg, #E8799E, #C8A8E8)' }}
+            style={{ background: 'var(--gradient-primary)' }}
           >
             <svg width="18" height="18" viewBox="0 0 20 20" fill="white">
               <path fillRule="evenodd" d="M10 1.944A11.954 11.954 0 012.166 5C2.056 5.649 2 6.319 2 7c0 5.225 3.34 9.67 8 11.317C14.66 16.67 18 12.225 18 7c0-.682-.057-1.35-.166-2.001A11.954 11.954 0 0110 1.944z" clipRule="evenodd" />
             </svg>
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-[13px] font-semibold text-[#3A2A4A]">Install CareIntake</p>
-            <p className="mt-0.5 text-[12px] text-[#64748B]">Install for the best experience</p>
+            <p className="text-[13px] font-semibold text-foreground">Install CareIntake</p>
+            <p className="mt-0.5 text-[12px] text-muted-foreground">Install for the best experience</p>
           </div>
           <div className="flex items-center gap-2 shrink-0">
             <button
               onClick={handleDismiss}
-              className="rounded-lg px-3 py-1.5 text-[12px] font-medium text-[#64748B] transition-colors hover:bg-gray-100"
+              className="rounded-lg px-3 py-1.5 text-[12px] font-medium text-muted-foreground transition-colors hover:bg-muted/40"
             >
               Dismiss
             </button>
             <button
               onClick={handleInstall}
               className="rounded-lg px-3 py-1.5 text-[12px] font-semibold text-white transition-opacity hover:opacity-90"
-              style={{ background: 'linear-gradient(135deg, #E8799E, #C8A8E8)' }}
+              style={{ background: 'var(--gradient-primary)' }}
             >
               Install
             </button>

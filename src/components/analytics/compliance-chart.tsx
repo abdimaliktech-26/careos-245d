@@ -8,10 +8,10 @@ function CustomTooltip({ active, payload, label }: { active?: boolean; payload?:
   if (!active || !payload?.length) return null
   const p = payload[0]
   return (
-    <div className="bg-white border border-gray-200 rounded-xl px-4 py-3 shadow-lg text-xs space-y-1">
-      <p className="font-bold text-[#3A2A4A]">{label}</p>
-      <p className="text-[#E8799E]">Score: <span className="font-bold">{p.value}%</span></p>
-      <p className="text-gray-500">Completed: {p.payload.completed} / {p.payload.total}</p>
+    <div className="bg-card border border-border rounded-xl px-4 py-3 shadow-lg text-xs space-y-1">
+      <p className="font-bold text-foreground">{label}</p>
+      <p className="text-primary">Score: <span className="font-bold">{p.value}%</span></p>
+      <p className="text-muted-foreground">Completed: {p.payload.completed} / {p.payload.total}</p>
     </div>
   )
 }
@@ -35,7 +35,7 @@ export function ComplianceTrendChart({ range = 30 }: { range?: number }) {
   }, [router, range])
 
   if (data.length === 0) {
-    return <div className="h-64 flex items-center justify-center"><p className="text-sm text-gray-400">Loading...</p></div>
+    return <div className="h-64 flex items-center justify-center"><p className="text-sm text-muted-foreground">Loading...</p></div>
   }
 
   return (

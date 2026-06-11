@@ -12,12 +12,12 @@ export function CheckboxField({ field, value, checked: checkedProp, onChange }: 
     const selected = Array.isArray(value) ? value : []
     return (
       <fieldset className="space-y-2">
-        <legend className="text-sm font-medium text-gray-700">
+        <legend className="text-sm font-medium text-foreground">
           {field.label}
           {field.required && <span className="text-red-500 ml-1">*</span>}
         </legend>
         {field.options.map((option) => (
-          <label key={option} className="flex items-start gap-2 cursor-pointer text-sm text-gray-700">
+          <label key={option} className="flex items-start gap-2 cursor-pointer text-sm text-foreground">
             <input
               type="checkbox"
               name={field.id}
@@ -49,7 +49,7 @@ export function CheckboxField({ field, value, checked: checkedProp, onChange }: 
         onChange={(e) => onChange(e.target.checked)}
         className="mt-0.5 accent-blue-600"
       />
-      <span className="text-sm text-gray-700">{field.label}</span>
+      <span className="text-sm text-foreground">{field.label}</span>
     </label>
   )
 }

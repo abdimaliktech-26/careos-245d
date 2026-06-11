@@ -84,7 +84,7 @@ export function CreateOrgForm() {
         <button
           onClick={() => router.push(`/super-admin/organizations/${result.orgId}`)}
           className="w-full rounded-xl px-4 py-2.5 text-[13px] font-semibold text-white transition-opacity hover:opacity-90"
-          style={{ background: 'linear-gradient(135deg, #E8799E 0%, #C8A8E8 100%)' }}
+          style={{ background: 'var(--gradient-primary)' }}
         >
           View Organization
         </button>
@@ -95,7 +95,7 @@ export function CreateOrgForm() {
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
-        <label className="block text-[12px] font-semibold text-[#3A2A4A] mb-1">Organization Name *</label>
+        <label className="block text-[12px] font-semibold text-foreground mb-1">Organization Name *</label>
         <Input
           value={form.name}
           onChange={(e) => setForm({ ...form, name: e.target.value })}
@@ -105,49 +105,49 @@ export function CreateOrgForm() {
       </div>
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <label className="block text-[12px] font-semibold text-[#3A2A4A] mb-1">Org Email</label>
+          <label className="block text-[12px] font-semibold text-foreground mb-1">Org Email</label>
           <Input type="email" value={form.email} onChange={(e) => { setForm({ ...form, email: e.target.value }); if (!adminEmail) setAdminEmail(e.target.value) }} placeholder="admin@org.com" />
         </div>
         <div>
-          <label className="block text-[12px] font-semibold text-[#3A2A4A] mb-1">Phone</label>
+          <label className="block text-[12px] font-semibold text-foreground mb-1">Phone</label>
           <Input value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} placeholder="(612) 555-0100" />
         </div>
       </div>
       <div>
-        <label className="block text-[12px] font-semibold text-[#3A2A4A] mb-1">Address</label>
+        <label className="block text-[12px] font-semibold text-foreground mb-1">Address</label>
         <Input value={form.address} onChange={(e) => setForm({ ...form, address: e.target.value })} placeholder="123 Main St" />
       </div>
       <div className="grid grid-cols-3 gap-4">
         <div>
-          <label className="block text-[12px] font-semibold text-[#3A2A4A] mb-1">City</label>
+          <label className="block text-[12px] font-semibold text-foreground mb-1">City</label>
           <Input value={form.city} onChange={(e) => setForm({ ...form, city: e.target.value })} placeholder="Minneapolis" />
         </div>
         <div>
-          <label className="block text-[12px] font-semibold text-[#3A2A4A] mb-1">State</label>
+          <label className="block text-[12px] font-semibold text-foreground mb-1">State</label>
           <Input value={form.state} onChange={(e) => setForm({ ...form, state: e.target.value })} placeholder="MN" />
         </div>
         <div>
-          <label className="block text-[12px] font-semibold text-[#3A2A4A] mb-1">ZIP</label>
+          <label className="block text-[12px] font-semibold text-foreground mb-1">ZIP</label>
           <Input value={form.zip} onChange={(e) => setForm({ ...form, zip: e.target.value })} placeholder="55401" />
         </div>
       </div>
 
       {/* Admin user creation */}
-      <div className="rounded-xl border border-gray-200 bg-gray-50/50 p-4">
+      <div className="rounded-xl border border-border bg-muted/40 p-4">
         <label className="flex items-center gap-2 cursor-pointer">
           <input
             type="checkbox"
             checked={createAdmin}
             onChange={(e) => setCreateAdmin(e.target.checked)}
-            className="h-4 w-4 rounded border-gray-300 text-[#E8799E] focus:ring-[#E8799E]"
+            className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-ring"
           />
-          <span className="text-[12px] font-semibold text-[#3A2A4A]">Create admin account for this organization</span>
+          <span className="text-[12px] font-semibold text-foreground">Create admin account for this organization</span>
         </label>
 
         {showAdminFields && (
           <div className="mt-3 grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-[11px] font-semibold uppercase tracking-[0.06em] text-[#64748B] mb-1">Admin Name</label>
+              <label className="block text-[11px] font-semibold uppercase tracking-[0.06em] text-muted-foreground mb-1">Admin Name</label>
               <Input
                 value={adminName}
                 onChange={(e) => setAdminName(e.target.value)}
@@ -155,7 +155,7 @@ export function CreateOrgForm() {
               />
             </div>
             <div>
-              <label className="block text-[11px] font-semibold uppercase tracking-[0.06em] text-[#64748B] mb-1">Admin Email</label>
+              <label className="block text-[11px] font-semibold uppercase tracking-[0.06em] text-muted-foreground mb-1">Admin Email</label>
               <Input
                 type="email"
                 value={adminEmail}

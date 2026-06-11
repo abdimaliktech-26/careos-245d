@@ -115,7 +115,7 @@ export default function CareAssistChat() {
             style={{ background: 'var(--gradient-primary)' }}
           >
             <div className="flex items-center gap-2.5">
-              <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white/15">
+              <div className="flex h-8 w-8 items-center justify-center rounded-full bg-card/15">
                 <svg width="16" height="16" viewBox="0 0 20 20" fill="white" aria-hidden="true">
                   <path fillRule="evenodd" d="M10 1.944A11.954 11.954 0 012.166 5C2.056 5.649 2 6.319 2 7c0 5.225 3.34 9.67 8 11.317C14.66 16.67 18 12.225 18 7c0-.682-.057-1.35-.166-2.001A11.954 11.954 0 0110 1.944z" clipRule="evenodd" />
                 </svg>
@@ -131,7 +131,7 @@ export default function CareAssistChat() {
               <button
                 onClick={() => { setTtsEnabled((v) => !v); if (ttsEnabled) stopSpeaking() }}
                 title={ttsEnabled ? 'Mute voice' : 'Enable voice replies'}
-                className={`flex h-7 w-7 items-center justify-center rounded-full transition ${ttsEnabled ? 'bg-white/25' : 'hover:bg-white/10'}`}
+                className={`flex h-7 w-7 items-center justify-center rounded-full transition ${ttsEnabled ? 'bg-card/25' : 'hover:bg-card/10'}`}
                 aria-pressed={ttsEnabled}
               >
                 {ttsEnabled ? (
@@ -153,7 +153,7 @@ export default function CareAssistChat() {
                   <button
                     key={l}
                     onClick={() => switchLang(l)}
-                    className={`px-3 py-1 transition ${lang === l ? 'bg-white text-primary' : 'text-white/70 hover:text-white'}`}
+                    className={`px-3 py-1 transition ${lang === l ? 'bg-card text-primary' : 'text-white/70 hover:text-white'}`}
                   >
                     {l === 'en' ? 'EN' : 'SO'}
                   </button>

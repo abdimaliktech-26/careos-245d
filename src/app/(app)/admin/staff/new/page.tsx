@@ -22,7 +22,7 @@ export default async function NewStaffPage() {
 
   return (
     <div className="max-w-lg mx-auto">
-      <h1 className="text-2xl font-bold text-gray-900 mb-6">Add Staff Member</h1>
+      <h1 className="text-2xl font-bold text-foreground mb-6">Add Staff Member</h1>
       <NewStaffForm
         isSuperAdmin={user.role === 'super_admin'}
         organizations={(organizations ?? []) as OrganizationOption[]}

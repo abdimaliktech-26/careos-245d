@@ -11,7 +11,7 @@ import { ExportButton } from '@/components/analytics/export-button'
 function DeltaBadge({ current, previous }: { current: number; previous: number }) {
   if (previous === 0) return null
   const pct = Math.round(((current - previous) / previous) * 100)
-  if (pct === 0) return <span className="text-xs text-gray-400 ml-1">(same)</span>
+  if (pct === 0) return <span className="text-xs text-muted-foreground ml-1">(same)</span>
   return (
     <span className={`text-xs ml-1 ${pct > 0 ? 'text-emerald-500' : 'text-red-500'}`}>
       {pct > 0 ? '↑' : '↓'} {Math.abs(pct)}%
@@ -205,8 +205,8 @@ export default async function AnalyticsPage({
         <AnalyticsStatCard label="Forms This Month" value={formsThisMonth} />
       </div>
 
-      <div className="rounded-2xl border border-gray-100 bg-white p-6" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
-        <h2 className="text-sm font-bold text-[#3A2A4A] mb-4">Compliance Score Trends</h2>
+      <div className="rounded-2xl border border-border bg-card p-6" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
+        <h2 className="text-sm font-bold text-foreground mb-4">Compliance Score Trends</h2>
         <ComplianceTrendChart range={days} />
       </div>
 
@@ -215,28 +215,28 @@ export default async function AnalyticsPage({
       </div>
 
       <div className="grid grid-cols-2 gap-6">
-        <div className="rounded-2xl border border-gray-100 bg-white p-6" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
+        <div className="rounded-2xl border border-border bg-card p-6" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-sm font-bold text-[#3A2A4A]">Upcoming Reviews (30 days)</h2>
+            <h2 className="text-sm font-bold text-foreground">Upcoming Reviews (30 days)</h2>
             <ExportButton filename="upcoming-reviews" data={exportData} headers={exportHeaders} />
           </div>
           {upcomingReviewsWithNames.length === 0 ? (
-            <p className="text-sm text-gray-400 py-6 text-center">No upcoming reviews</p>
+            <p className="text-sm text-muted-foreground py-6 text-center">No upcoming reviews</p>
           ) : (
-            <div className="divide-y divide-gray-50">
+            <div className="divide-y divide-border/60">
               {upcomingReviewsWithNames.map(r => (
                 <div key={r.id} className="flex items-center justify-between py-3">
                   <div>
-                    <p className="text-sm font-medium text-[#3A2A4A]">{r.client_name}</p>
-                    <p className="text-[10px] text-gray-400 uppercase tracking-wide">
+                    <p className="text-sm font-medium text-foreground">{r.client_name}</p>
+                    <p className="text-[10px] text-muted-foreground uppercase tracking-wide">
                       {r.packet_type.replace(/_/g, ' ')}
                     </p>
                   </div>
                   <div className="text-right">
-                    <p className="text-xs font-medium text-[#E8799E]">
+                    <p className="text-xs font-medium text-primary">
                       {new Date(r.due_date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
                     </p>
-                    <p className="text-[10px] text-gray-400 capitalize">{r.status.replace(/_/g, ' ')}</p>
+                    <p className="text-[10px] text-muted-foreground capitalize">{r.status.replace(/_/g, ' ')}</p>
                   </div>
                 </div>
               ))}
@@ -244,21 +244,21 @@ export default async function AnalyticsPage({
           )}
         </div>
 
-        <div className="rounded-2xl border border-gray-100 bg-white p-6" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
-          <h2 className="text-sm font-bold text-[#3A2A4A] mb-4">Recent Activity</h2>
+        <div className="rounded-2xl border border-border bg-card p-6" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
+          <h2 className="text-sm font-bold text-foreground mb-4">Recent Activity</h2>
           {recentActivity.length === 0 ? (
-            <p className="text-sm text-gray-400 py-6 text-center">No recent activity</p>
+            <p className="text-sm text-muted-foreground py-6 text-center">No recent activity</p>
           ) : (
-            <div className="divide-y divide-gray-50">
+            <div className="divide-y divide-border/60">
               {recentActivity.map(a => (
                 <div key={a.id} className="flex items-center justify-between py-3">
                   <div>
-                    <p className="text-sm font-medium text-[#3A2A4A]">{a.client_name}</p>
-                    <p className="text-[10px] text-gray-400 uppercase tracking-wide">
+                    <p className="text-sm font-medium text-foreground">{a.client_name}</p>
+                    <p className="text-[10px] text-muted-foreground uppercase tracking-wide">
                       {a.form_status.replace(/_/g, ' ')}
                     </p>
                   </div>
-                  <p className="text-xs text-gray-400">
+                  <p className="text-xs text-muted-foreground">
                     {new Date(a.submitted_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
                   </p>
                 </div>

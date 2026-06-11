@@ -26,11 +26,11 @@ export function VideoPageClient({ clientId, initialVideos }: Props) {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <p className="text-sm text-gray-500">{videos.length} video{videos.length !== 1 ? 's' : ''}</p>
+        <p className="text-sm text-muted-foreground">{videos.length} video{videos.length !== 1 ? 's' : ''}</p>
         {!showUpload && (
           <button
             onClick={() => setShowUpload(true)}
-            className="text-sm font-semibold px-4 py-2 rounded-lg text-white bg-[#E8799E] hover:bg-[#D06085] transition-colors"
+            className="text-sm font-semibold px-4 py-2 rounded-lg text-white bg-primary hover:bg-[#D06085] transition-colors"
           >
             Upload Video
           </button>

@@ -23,17 +23,17 @@ export default async function ClientVideosPage({ params }: Props) {
     .eq('organization_id', user.organizationId)
     .single()
 
-  if (!client) return <p className="p-8 text-sm text-gray-500">Client not found.</p>
+  if (!client) return <p className="p-8 text-sm text-muted-foreground">Client not found.</p>
 
   const videos = await getClientVideos(id)
 
   return (
     <div className="max-w-4xl mx-auto p-8 space-y-6">
       <div>
-        <Link href={`/clients/${id}`} className="text-xs text-[#E8799E] hover:underline mb-1 inline-block">
+        <Link href={`/clients/${id}`} className="text-xs text-primary hover:underline mb-1 inline-block">
           ← Back to {client.legal_name}
         </Link>
-        <h1 className="text-2xl font-bold text-[#3A2A4A]">Videos — {client.legal_name}</h1>
+        <h1 className="text-2xl font-bold text-foreground">Videos — {client.legal_name}</h1>
       </div>
 
       <VideoPageClient clientId={id} initialVideos={videos} />

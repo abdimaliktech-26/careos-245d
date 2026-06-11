@@ -22,7 +22,7 @@ const FREQ_LABELS: Record<string, string> = {
 
 export default async function MedicationsPage({ params }: Props) {
   const { user, error } = await getSession()
-  if (error || !user) return <p className="p-8 text-sm text-gray-500">Not authenticated.</p>
+  if (error || !user) return <p className="p-8 text-sm text-muted-foreground">Not authenticated.</p>
 
   const { id } = await params
   const supabase = await createClient()
@@ -44,36 +44,36 @@ export default async function MedicationsPage({ params }: Props) {
   return (
     <div className="max-w-4xl mx-auto p-8 space-y-6">
       <div>
-        <Link href={`/clients/${id}/health`} className="text-xs text-[#E8799E] hover:underline mb-1 inline-block">← Back to Health</Link>
-        <h1 className="text-2xl font-bold text-[#3A2A4A]">Medications — {client.legal_name}</h1>
+        <Link href={`/clients/${id}/health`} className="text-xs text-primary hover:underline mb-1 inline-block">← Back to Health</Link>
+        <h1 className="text-2xl font-bold text-foreground">Medications — {client.legal_name}</h1>
       </div>
 
       <ClientSubNav clientId={id} activeTab="health" />
 
       <MedicationForm clientId={id} onClose={() => {}} />
 
-      <section className="rounded-2xl border border-gray-100 bg-white" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
-        <div className="px-6 py-4 border-b border-gray-100">
-          <h2 className="text-sm font-semibold text-[#3A2A4A]">Active Medications ({activeMeds.length})</h2>
+      <section className="rounded-2xl border border-border bg-card" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
+        <div className="px-6 py-4 border-b border-border">
+          <h2 className="text-sm font-semibold text-foreground">Active Medications ({activeMeds.length})</h2>
         </div>
         {activeMeds.length === 0 ? (
-          <p className="text-sm text-[#64748B] px-6 py-4">No active medications.</p>
+          <p className="text-sm text-muted-foreground px-6 py-4">No active medications.</p>
         ) : (
-          <div className="divide-y divide-gray-50">
+          <div className="divide-y divide-border/60">
             {activeMeds.map((med) => (
               <div key={med.id} className="px-6 py-3">
                 <div className="flex items-start justify-between">
                   <div>
-                    <p className="text-sm font-semibold text-[#3A2A4A]">{med.medication_name}</p>
-                    <p className="text-xs text-[#64748B] mt-0.5">
+                    <p className="text-sm font-semibold text-foreground">{med.medication_name}</p>
+                    <p className="text-xs text-muted-foreground mt-0.5">
                       {med.dosage} · {ROUTE_LABELS[med.route] ?? med.route} · {FREQ_LABELS[med.frequency] ?? med.frequency}
                     </p>
-                    <p className="text-xs text-[#64748B] mt-0.5">
+                    <p className="text-xs text-muted-foreground mt-0.5">
                       Started {new Date(med.start_date).toLocaleDateString('en-US')}
                       {med.end_date && ` · Ended ${new Date(med.end_date).toLocaleDateString('en-US')}`}
                       {med.prescribing_physician && ` · Dr. ${med.prescribing_physician}`}
                     </p>
-                    {med.notes && <p className="text-xs text-[#64748B] mt-1 italic">{med.notes}</p>}
+                    {med.notes && <p className="text-xs text-muted-foreground mt-1 italic">{med.notes}</p>}
                   </div>
                   <form action={async () => {
                     'use server'
@@ -94,15 +94,15 @@ export default async function MedicationsPage({ params }: Props) {
       </section>
 
       {discontinuedMeds.length > 0 && (
-        <section className="rounded-2xl border border-gray-100 bg-white opacity-60" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
-          <div className="px-6 py-4 border-b border-gray-100">
-            <h2 className="text-sm font-semibold text-[#64748B]">Discontinued ({discontinuedMeds.length})</h2>
+        <section className="rounded-2xl border border-border bg-card opacity-60" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
+          <div className="px-6 py-4 border-b border-border">
+            <h2 className="text-sm font-semibold text-muted-foreground">Discontinued ({discontinuedMeds.length})</h2>
           </div>
-          <div className="divide-y divide-gray-50">
+          <div className="divide-y divide-border/60">
             {discontinuedMeds.map((med) => (
               <div key={med.id} className="px-6 py-3">
-                <p className="text-sm font-medium text-[#64748B]">{med.medication_name}</p>
-                <p className="text-xs text-[#94A3B8] mt-0.5">
+                <p className="text-sm font-medium text-muted-foreground">{med.medication_name}</p>
+                <p className="text-xs text-muted-foreground mt-0.5">
                   {med.dosage} · {ROUTE_LABELS[med.route] ?? med.route} · {FREQ_LABELS[med.frequency] ?? med.frequency}
                   {med.end_date && ` · Ended ${new Date(med.end_date).toLocaleDateString('en-US')}`}
                 </p>

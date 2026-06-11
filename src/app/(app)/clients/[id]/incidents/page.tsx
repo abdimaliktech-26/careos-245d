@@ -21,7 +21,7 @@ export default async function ClientIncidentsPage({ params }: Props) {
     .eq('organization_id', user.organizationId)
     .single()
 
-  if (!client) return <p className="p-8 text-sm text-gray-500">Client not found.</p>
+  if (!client) return <p className="p-8 text-sm text-muted-foreground">Client not found.</p>
 
   const { data: incidents } = await supabase
     .from('incidents')
@@ -32,32 +32,32 @@ export default async function ClientIncidentsPage({ params }: Props) {
   return (
     <div className="max-w-4xl mx-auto p-8 space-y-6">
       <div>
-        <Link href={`/clients/${id}`} className="text-xs text-[#E8799E] hover:underline mb-1 inline-block">← Back to {client.legal_name}</Link>
-        <h1 className="text-2xl font-bold text-[#3A2A4A]">Incidents — {client.legal_name}</h1>
+        <Link href={`/clients/${id}`} className="text-xs text-primary hover:underline mb-1 inline-block">← Back to {client.legal_name}</Link>
+        <h1 className="text-2xl font-bold text-foreground">Incidents — {client.legal_name}</h1>
       </div>
 
       {(incidents ?? []).length === 0 ? (
-        <div className="rounded-2xl border border-gray-100 bg-white p-8 text-center" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
-          <p className="text-sm text-gray-400">No incidents for this client.</p>
+        <div className="rounded-2xl border border-border bg-card p-8 text-center" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
+          <p className="text-sm text-muted-foreground">No incidents for this client.</p>
         </div>
       ) : (
-        <div className="rounded-2xl border border-gray-100 bg-white" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
-          <div className="divide-y divide-gray-50">
+        <div className="rounded-2xl border border-border bg-card" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
+          <div className="divide-y divide-border/60">
             {(incidents ?? []).map((inc) => (
-              <Link key={inc.id} href={`/incidents/${inc.id}`} className="flex items-center justify-between px-6 py-4 hover:bg-gray-50/50 transition-colors">
+              <Link key={inc.id} href={`/incidents/${inc.id}`} className="flex items-center justify-between px-6 py-4 hover:bg-muted/40 transition-colors">
                 <div>
                   <div className="flex items-center gap-2">
-                    <p className="text-sm font-semibold text-[#3A2A4A]">{inc.incident_number}</p>
+                    <p className="text-sm font-semibold text-foreground">{inc.incident_number}</p>
                     <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-semibold ${
-                      inc.status === 'open' ? 'bg-blue-50 text-blue-700' :
-                      inc.status === 'under_review' ? 'bg-amber-50 text-amber-700' :
-                      inc.status === 'reported_to_state' ? 'bg-red-50 text-red-700' :
-                      'bg-emerald-50 text-emerald-700'
+                      inc.status === 'open' ? 'bg-blue-50 text-blue-700 dark:bg-blue-500/15 dark:text-blue-300' :
+                      inc.status === 'under_review' ? 'bg-status-warn-bg text-status-warn' :
+                      inc.status === 'reported_to_state' ? 'bg-status-error-bg text-status-error' :
+                      'bg-status-ok-bg text-status-ok'
                     }`}>
                       {inc.status.replace(/_/g, ' ')}
                     </span>
                   </div>
-                  <p className="text-xs text-gray-500 mt-0.5">
+                  <p className="text-xs text-muted-foreground mt-0.5">
                     {inc.category.replace(/_/g, ' ')} · {new Date(inc.occurred_at).toLocaleDateString('en-US')}
                     {inc.location && ` · ${inc.location}`}
                   </p>

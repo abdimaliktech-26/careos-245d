@@ -30,15 +30,15 @@ export function VideoList({ videos, onDeleted }: Props) {
 
   if (videos.length === 0) {
     return (
-      <div className="rounded-2xl border border-gray-100 bg-white p-12 text-center" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
-        <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gray-50 flex items-center justify-center">
+      <div className="rounded-2xl border border-border bg-card p-12 text-center" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
+        <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-muted flex items-center justify-center">
           <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" strokeWidth="1.5">
             <polygon points="23 7 16 12 23 17 23 7" />
             <rect x="1" y="5" width="15" height="14" rx="2" ry="2" />
           </svg>
         </div>
-        <h3 className="text-sm font-semibold text-[#3A2A4A] mb-1">No videos yet</h3>
-        <p className="text-xs text-gray-500">Upload a video recording to get started.</p>
+        <h3 className="text-sm font-semibold text-foreground mb-1">No videos yet</h3>
+        <p className="text-xs text-muted-foreground">Upload a video recording to get started.</p>
       </div>
     )
   }
