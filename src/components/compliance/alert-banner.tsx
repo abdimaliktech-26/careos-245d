@@ -54,8 +54,7 @@ export function ComplianceAlertBanner() {
         <div className="flex shrink-0 items-center gap-2">
           <Link
             href="/compliance/alerts"
-            className="rounded-lg px-3 py-1.5 text-[11px] font-semibold text-white transition-opacity hover:opacity-90"
-            style={{ background: 'linear-gradient(135deg, #E8799E, #C8A8E8)' }}
+            className="rounded-lg bg-gradient-to-br from-brand-from to-brand-to px-3 py-1.5 text-[11px] font-semibold text-white transition-opacity hover:opacity-90"
           >
             {visibleAlerts.length > 1 ? `View all (${visibleAlerts.length})` : 'Details'}
           </Link>

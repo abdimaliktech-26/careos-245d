@@ -96,8 +96,7 @@ export function AlertSettingsForm({ initial }: { initial: Settings }) {
         type="button"
         onClick={handleSave}
         disabled={saving}
-        className="w-full rounded-xl py-2.5 text-[13px] font-bold text-white transition-opacity hover:opacity-90 disabled:opacity-50"
-        style={{ background: 'linear-gradient(135deg, #E8799E, #C8A8E8)' }}
+        className="w-full rounded-xl bg-gradient-to-br from-brand-from to-brand-to py-2.5 text-[13px] font-bold text-white transition-opacity hover:opacity-90 disabled:opacity-50"
       >
         {saving ? 'Saving…' : saved ? 'Saved ✓' : 'Save Settings'}
       </button>
