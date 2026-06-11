@@ -80,7 +80,7 @@ export default function CareAssistChat() {
       <button
         onClick={() => setOpen((v) => !v)}
         className="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full shadow-lg transition hover:opacity-90"
-        style={{ background: 'linear-gradient(135deg, #E8799E 0%, #C8A8E8 100%)' }}
+        style={{ background: 'var(--gradient-primary)' }}
         aria-label="Open CareAssist chat"
       >
         {open ? (
@@ -95,12 +95,12 @@ export default function CareAssistChat() {
       </button>
 
       {open && (
-        <div className="fixed bottom-24 right-6 z-50 flex w-[370px] flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-2xl">
+        <div className="fixed bottom-24 right-6 z-50 flex w-[370px] flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-2xl">
 
           {/* Header */}
           <div
             className="flex items-center justify-between px-4 py-3"
-            style={{ background: 'linear-gradient(135deg, #E8799E 0%, #C8A8E8 100%)' }}
+            style={{ background: 'var(--gradient-primary)' }}
           >
             <div className="flex items-center gap-2.5">
               <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white/15">
@@ -141,7 +141,7 @@ export default function CareAssistChat() {
                   <button
                     key={l}
                     onClick={() => switchLang(l)}
-                    className={`px-3 py-1 transition ${lang === l ? 'bg-white text-[#E8799E]' : 'text-white/70 hover:text-white'}`}
+                    className={`px-3 py-1 transition ${lang === l ? 'bg-white text-primary' : 'text-white/70 hover:text-white'}`}
                   >
                     {l === 'en' ? 'EN' : 'SO'}
                   </button>
@@ -187,10 +187,10 @@ export default function CareAssistChat() {
             {/* Greeting */}
             <div className="flex gap-2">
               <div className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-[10px] font-bold text-white"
-                style={{ background: 'linear-gradient(135deg, #E8799E, #C8A8E8)' }}>
+                style={{ background: 'var(--gradient-primary)' }}>
                 AI
               </div>
-              <div className="max-w-[80%] rounded-2xl rounded-tl-sm bg-gray-100 px-3 py-2 text-sm text-gray-800">
+              <div className="max-w-[80%] rounded-2xl rounded-tl-sm bg-muted px-3 py-2 text-sm text-foreground">
                 {greeting}
               </div>
             </div>
@@ -204,7 +204,7 @@ export default function CareAssistChat() {
                 <div key={m.id} className={`flex gap-2 ${m.role === 'user' ? 'flex-row-reverse' : ''}`}>
                   {m.role === 'assistant' && (
                     <div className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-[10px] font-bold text-white"
-                      style={{ background: 'linear-gradient(135deg, #E8799E, #C8A8E8)' }}>
+                      style={{ background: 'var(--gradient-primary)' }}>
                       AI
                     </div>
                   )}
@@ -212,9 +212,9 @@ export default function CareAssistChat() {
                     className={`max-w-[80%] rounded-2xl px-3 py-2 text-sm whitespace-pre-wrap ${
                       m.role === 'user'
                         ? 'rounded-tr-sm text-white'
-                        : 'rounded-tl-sm bg-gray-100 text-gray-800'
+                        : 'rounded-tl-sm bg-muted text-foreground'
                     }`}
-                    style={m.role === 'user' ? { background: 'linear-gradient(135deg, #E8799E, #C8A8E8)' } : undefined}
+                    style={m.role === 'user' ? { background: 'var(--gradient-primary)' } : undefined}
                   >
                     {text}
                   </div>
@@ -225,12 +225,12 @@ export default function CareAssistChat() {
             {isLoading && (
               <div className="flex gap-2">
                 <div className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-[10px] font-bold text-white"
-                  style={{ background: 'linear-gradient(135deg, #E8799E, #C8A8E8)' }}>
+                  style={{ background: 'var(--gradient-primary)' }}>
                   AI
                 </div>
-                <div className="flex items-center gap-1 rounded-2xl rounded-tl-sm bg-gray-100 px-4 py-3">
+                <div className="flex items-center gap-1 rounded-2xl rounded-tl-sm bg-muted px-4 py-3">
                   {[0, 150, 300].map((d) => (
-                    <span key={d} className="h-1.5 w-1.5 animate-bounce rounded-full bg-gray-400" style={{ animationDelay: `${d}ms` }} />
+                    <span key={d} className="h-1.5 w-1.5 animate-bounce rounded-full bg-muted-foreground/50" style={{ animationDelay: `${d}ms` }} />
                   ))}
                 </div>
               </div>
@@ -244,12 +244,12 @@ export default function CareAssistChat() {
           </div>
 
           {/* Input row */}
-          <form onSubmit={handleSend} className="flex items-center gap-2 border-t border-gray-100 p-3">
+          <form onSubmit={handleSend} className="flex items-center gap-2 border-t border-border p-3">
             <input
               value={draft}
               onChange={(e) => setDraft(e.target.value)}
               placeholder={isListening ? (lang === 'so' ? 'Dhageysanaya…' : 'Listening…') : placeholder}
-              className="flex-1 rounded-xl border border-gray-200 px-3 py-2 text-sm outline-none focus:border-[#E8799E] focus:ring-2 focus:ring-[#E8799E]/10 transition"
+              className="flex-1 rounded-xl border border-input bg-card px-3 py-2 text-sm outline-none focus:border-ring focus:ring-2 focus:ring-ring/15 transition"
               disabled={isLoading}
             />
 
@@ -266,7 +266,7 @@ export default function CareAssistChat() {
               type="submit"
               disabled={isLoading || !draft.trim()}
               className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-white transition disabled:opacity-40"
-              style={{ background: 'linear-gradient(135deg, #E8799E, #C8A8E8)' }}
+              style={{ background: 'var(--gradient-primary)' }}
             >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" />
