@@ -1,11 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { generateText } from 'ai'
-import { createOpenAI as createDeepSeek } from '@ai-sdk/openai'
-
-const deepseek = createDeepSeek({
-  baseURL: 'https://api.deepseek.com/v1',
-  apiKey: process.env.DEEPSEEK_API_KEY ?? '',
-})
+import { aiModel } from '@/lib/ai/provider'
 
 export async function POST(req: NextRequest) {
   try {
@@ -47,7 +42,7 @@ Respond with a JSON object containing:
 Return ONLY valid JSON, no markdown formatting.`
 
     const { text } = await generateText({
-      model: deepseek('deepseek-chat'),
+      model: aiModel,
       prompt,
       maxOutputTokens: 4096,
       temperature: 0.3,

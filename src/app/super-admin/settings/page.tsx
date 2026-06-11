@@ -55,7 +55,7 @@ export default async function SystemSettingsPage() {
   const platformSettings = await getPlatformSettings()
 
   const envVars = [
-    { label: 'DeepSeek AI', key: 'DEEPSEEK_API_KEY', ok: !!process.env.DEEPSEEK_API_KEY },
+    { label: 'Claude AI', key: 'ANTHROPIC_API_KEY', ok: !!process.env.ANTHROPIC_API_KEY },
     { label: 'Resend (Email)', key: 'RESEND_API_KEY', ok: !!process.env.RESEND_API_KEY },
     { label: 'Twilio (SMS)', key: 'TWILIO_ACCOUNT_SID', ok: !!process.env.TWILIO_ACCOUNT_SID },
     { label: 'Cron Secret', key: 'CRON_SECRET', ok: !!process.env.CRON_SECRET },
@@ -218,17 +218,17 @@ export default async function SystemSettingsPage() {
               </div>
               <div>
                 <h3 className="text-[14px] font-bold text-foreground">AI Integration</h3>
-                <p className="text-[11px] text-muted-foreground">DeepSeek AI configuration</p>
+                <p className="text-[11px] text-muted-foreground">Anthropic Claude configuration</p>
               </div>
             </div>
 
             <div className="space-y-2">
               <div className="rounded-xl border border-border bg-muted/50 px-4 py-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-[12px] font-semibold text-foreground">DeepSeek API</span>
-                  <span className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-semibold ${process.env.DEEPSEEK_API_KEY ? 'bg-status-ok-bg text-status-ok' : 'bg-muted text-muted-foreground'}`}>
-                    <span className={`h-1.5 w-1.5 rounded-full ${process.env.DEEPSEEK_API_KEY ? 'bg-status-ok' : 'bg-gray-400'}`} />
-                    {process.env.DEEPSEEK_API_KEY ? 'Configured' : 'Not Set'}
+                  <span className="text-[12px] font-semibold text-foreground">Anthropic API</span>
+                  <span className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-semibold ${process.env.ANTHROPIC_API_KEY ? 'bg-status-ok-bg text-status-ok' : 'bg-muted text-muted-foreground'}`}>
+                    <span className={`h-1.5 w-1.5 rounded-full ${process.env.ANTHROPIC_API_KEY ? 'bg-status-ok' : 'bg-gray-400'}`} />
+                    {process.env.ANTHROPIC_API_KEY ? 'Configured' : 'Not Set'}
                   </span>
                 </div>
               </div>

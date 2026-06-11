@@ -200,7 +200,7 @@ export default function AIToolsPage() {
           </div>
           <h2 className="text-2xl font-black text-foreground">AI Translation</h2>
           <p className="mt-4 text-[15px] leading-7 text-muted-foreground">
-            The AI Translation tool, powered by DeepSeek AI, quickly converts PDF documentation into over
+            The AI Translation tool, powered by Anthropic Claude, quickly converts PDF documentation into over
             100 languages. Specifically trained for the I/DD and HCBS fields, the tool interprets industry-specific
             language that standard translators often miss. It provides seamless, integrated translation to ensure
             each individual&rsquo;s circle of support understands their case notes, person-centered plans, and other

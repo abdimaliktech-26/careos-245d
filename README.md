@@ -12,7 +12,7 @@ HIPAA-compliant Minnesota 245D HCBS compliance platform for home and community-b
 | Runtime | Node.js 22 |
 | Language | TypeScript (strict) |
 | Database | PostgreSQL via Supabase (Auth, RLS, Realtime, Storage) |
-| AI/LLM | DeepSeek via Vercel AI SDK |
+| AI/LLM | Anthropic Claude (Haiku 4.5) via Vercel AI SDK |
 | Payments | Stripe (checkout, webhooks, subscription sync) |
 | Email | Resend (SMTP + REST API) |
 | Styling | Tailwind CSS v4 with CSS custom properties |
@@ -25,7 +25,7 @@ HIPAA-compliant Minnesota 245D HCBS compliance platform for home and community-b
 git clone <repo>
 cd careintake
 cp .env.example .env.local
-# Fill in Supabase, DeepSeek, Stripe, and Resend keys in .env.local
+# Fill in Supabase, Anthropic, Stripe, and Resend keys in .env.local
 npm install
 npm run dev        # → http://localhost:3000
 ```
@@ -37,7 +37,7 @@ npm run dev        # → http://localhost:3000
 | `NEXT_PUBLIC_SUPABASE_URL` | Yes | Supabase project URL |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Yes | Supabase anon key |
 | `SUPABASE_SERVICE_ROLE_KEY` | Yes | Supabase service role (bypasses RLS) |
-| `DEEPSEEK_API_KEY` | Yes | DeepSeek AI (chatbot, auto-fill, narrative) |
+| `ANTHROPIC_API_KEY` | Yes | Anthropic Claude (chatbot, auto-fill, narrative, AI features) |
 | `STRIPE_SECRET_KEY` | For billing | Stripe secret key |
 | `STRIPE_WEBHOOK_SECRET` | For billing | Stripe webhook signing secret |
 | `STRIPE_STARTER_PRICE_ID` | For billing | Stripe price IDs (also Pro/Enterprise) |
