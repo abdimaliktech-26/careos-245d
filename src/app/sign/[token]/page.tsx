@@ -1,4 +1,3 @@
-import { notFound } from 'next/navigation'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { ExternalSignatureForm } from '@/components/signing/external-signature-form'
 
@@ -30,7 +29,19 @@ export default async function ExternalSignPage({ params }: Props) {
     .eq('token', token)
     .single()
 
-  if (error || !link || link.is_revoked) notFound()
+  if (error || !link || link.is_revoked) {
+    return (
+      <main className="flex min-h-screen items-center justify-center bg-background px-5">
+        <div className="w-full max-w-md rounded-xl border border-border bg-card p-8 text-center shadow-xs">
+          <h1 className="text-xl font-bold text-foreground">Signing link not found</h1>
+          <p className="mt-3 text-sm leading-6 text-muted-foreground">
+            This link is invalid, expired, or has been revoked. Please contact the care
+            provider who sent it to request a new signing link.
+          </p>
+        </div>
+      </main>
+    )
+  }
 
   const expired = new Date(link.expires_at as string) < new Date()
   const packet = Array.isArray(link.packets) ? link.packets[0] : link.packets
