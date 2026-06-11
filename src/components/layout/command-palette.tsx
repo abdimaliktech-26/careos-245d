@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { CirclePlus, ClipboardPlus, FilePen, UserPlus } from 'lucide-react'
+import { CirclePlus, ClipboardPlus, FilePen, Sparkles, UserPlus } from 'lucide-react'
 import {
   Command,
   CommandDialog,
@@ -51,6 +51,7 @@ function labelFromKey(translationKey: string): string {
 
 export function CommandPalette({ role }: CommandPaletteProps) {
   const [open, setOpen] = useState(false)
+  const [query, setQuery] = useState('')
   const router = useRouter()
   const groups = visibleNavGroups(role)
 
@@ -67,15 +68,36 @@ export function CommandPalette({ role }: CommandPaletteProps) {
 
   function go(href: string) {
     setOpen(false)
+    setQuery('')
     router.push(href)
+  }
+
+  function askCareAssist() {
+    const question = query.trim()
+    if (!question) return
+    setOpen(false)
+    setQuery('')
+    window.dispatchEvent(new CustomEvent('careassist:ask', { detail: { question } }))
   }
 
   return (
     <CommandDialog open={open} onOpenChange={setOpen}>
       <Command>
-        <CommandInput placeholder="Search pages and actions…" />
+        <CommandInput
+          placeholder="Search pages and actions…"
+          value={query}
+          onValueChange={setQuery}
+        />
         <CommandList>
         <CommandEmpty>No results found.</CommandEmpty>
+        {query.trim().length > 2 && (
+          <CommandGroup heading="AI">
+            <CommandItem onSelect={askCareAssist} value={`ask-careassist ${query}`}>
+              <Sparkles className="h-4 w-4" />
+              Ask CareAssist: “{query.trim()}”
+            </CommandItem>
+          </CommandGroup>
+        )}
         <CommandGroup heading="Quick actions">
           {QUICK_ACTIONS.map(({ label, href, icon: Icon }) => (
             <CommandItem key={href + label} onSelect={() => go(href)}>

@@ -4,6 +4,7 @@ import { getClientById, getClientFormStatus } from '@/lib/clients/actions'
 import { getSession } from '@/lib/auth/get-session'
 import { createClient } from '@/lib/supabase/server'
 import { ClientSubNav } from '@/components/clients/client-subnav'
+import { AiSummaryCard } from '@/components/clients/ai-summary-card'
 import { validateRequiredSignatures } from '@/lib/forms/signature-validation'
 import { SigningLinkForm } from '@/components/signing/signing-link-form'
 import { getClientScorecardDetail } from '@/lib/audit/scorecards'
@@ -98,6 +99,8 @@ export default async function ClientProfilePage({ params }: Props) {
       </div>
 
       <ClientSubNav clientId={id} activeTab="profile" />
+
+      <AiSummaryCard clientId={id} />
 
       <section className="bg-white border border-gray-200 rounded-xl p-5">
         <h2 className="font-semibold text-gray-800 mb-4">Demographics</h2>

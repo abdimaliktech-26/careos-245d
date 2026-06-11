@@ -53,6 +53,18 @@ export default function CareAssistChat() {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages])
 
+  // Command palette "Ask CareAssist" integration
+  useEffect(() => {
+    function onAsk(event: Event) {
+      const question = (event as CustomEvent<{ question?: string }>).detail?.question
+      if (!question?.trim()) return
+      setOpen(true)
+      sendMessage({ text: question.trim() })
+    }
+    window.addEventListener('careassist:ask', onAsk)
+    return () => window.removeEventListener('careassist:ask', onAsk)
+  }, [sendMessage])
+
   function handleSend(e: React.FormEvent) {
     e.preventDefault()
     if (!draft.trim() || isLoading) return
