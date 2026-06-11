@@ -1,10 +1,5 @@
-import { createOpenAI } from '@ai-sdk/openai'
 import { streamText, convertToModelMessages } from 'ai'
-
-const deepseek = createOpenAI({
-  baseURL: 'https://api.deepseek.com/v1',
-  apiKey: process.env.DEEPSEEK_API_KEY ?? '',
-})
+import { aiModel } from '@/lib/ai/provider'
 
 const SYSTEM_PROMPT = `You are CareAssist, a bilingual compliance assistant for Minnesota 245D home and community-based services providers. You speak both English and Somali (Af Soomaali). Always reply in the same language the user writes in. If the user mixes languages, respond in the language they used most.
 
@@ -53,7 +48,7 @@ export async function POST(req: Request) {
   const messages = await convertToModelMessages(uiMessages)
 
   const result = streamText({
-    model: deepseek.chat('deepseek-chat'),
+    model: aiModel,
     system: SYSTEM_PROMPT,
     messages,
     maxOutputTokens: 1024,

@@ -1,16 +1,11 @@
-import { createOpenAI } from '@ai-sdk/openai'
 import { generateText } from 'ai'
 import { getSession } from '@/lib/auth/get-session'
+import { aiModel } from '@/lib/ai/provider'
 import {
   buildNoteQualityPrompt,
   parseNoteQualityResponse,
   NOTE_QUALITY_SYSTEM_PROMPT,
 } from '@/lib/ai/note-quality'
-
-const deepseek = createOpenAI({
-  baseURL: 'https://api.deepseek.com/v1',
-  apiKey: process.env.DEEPSEEK_API_KEY ?? '',
-})
 
 const MIN_NOTE_LENGTH = 20
 
@@ -33,7 +28,7 @@ export async function POST(req: Request) {
 
   try {
     const { text } = await generateText({
-      model: deepseek.chat('deepseek-chat'),
+      model: aiModel,
       system: NOTE_QUALITY_SYSTEM_PROMPT,
       prompt: buildNoteQualityPrompt({ noteText, serviceType: body?.serviceType ?? null }),
       temperature: 0.2,

@@ -1,16 +1,11 @@
-import { createOpenAI } from '@ai-sdk/openai'
 import { generateText } from 'ai'
 import { getSession } from '@/lib/auth/get-session'
 import { createClient } from '@/lib/supabase/server'
+import { aiModel } from '@/lib/ai/provider'
 import {
   buildClientSummaryPrompt,
   CLIENT_SUMMARY_SYSTEM_PROMPT,
 } from '@/lib/ai/client-summary'
-
-const deepseek = createOpenAI({
-  baseURL: 'https://api.deepseek.com/v1',
-  apiKey: process.env.DEEPSEEK_API_KEY ?? '',
-})
 
 export async function POST(req: Request) {
   const { user, error: sessionError } = await getSession()
@@ -69,7 +64,7 @@ export async function POST(req: Request) {
 
   try {
     const { text } = await generateText({
-      model: deepseek.chat('deepseek-chat'),
+      model: aiModel,
       system: CLIENT_SUMMARY_SYSTEM_PROMPT,
       prompt,
       temperature: 0.3,

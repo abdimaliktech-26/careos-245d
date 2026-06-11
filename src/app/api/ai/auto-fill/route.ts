@@ -1,11 +1,6 @@
-import { createOpenAI } from '@ai-sdk/openai'
 import { generateText } from 'ai'
 import type { FormSchema } from '@/types/forms'
-
-const deepseek = createOpenAI({
-  baseURL: 'https://api.deepseek.com/v1',
-  apiKey: process.env.DEEPSEEK_API_KEY ?? '',
-})
+import { aiModel } from '@/lib/ai/provider'
 
 const SYSTEM_PROMPT = `You are a form-filling assistant for home care providers. Given a description of a client visit or shift, you fill in form fields with appropriate values.
 
@@ -44,7 +39,7 @@ ${description}
 Fill the form fields based on this description. Return JSON only.`
 
   const { text } = await generateText({
-    model: deepseek.chat('deepseek-chat'),
+    model: aiModel,
     system: SYSTEM_PROMPT,
     prompt,
     temperature: 0.3,

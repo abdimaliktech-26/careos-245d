@@ -1,16 +1,11 @@
-import { createOpenAI } from '@ai-sdk/openai'
 import { generateText } from 'ai'
 import { getSession } from '@/lib/auth/get-session'
+import { aiModel } from '@/lib/ai/provider'
 import {
   buildIncidentClassifyPrompt,
   parseIncidentClassifyResponse,
   INCIDENT_CLASSIFY_SYSTEM_PROMPT,
 } from '@/lib/ai/incident-classify'
-
-const deepseek = createOpenAI({
-  baseURL: 'https://api.deepseek.com/v1',
-  apiKey: process.env.DEEPSEEK_API_KEY ?? '',
-})
 
 const MIN_DESCRIPTION_LENGTH = 20
 
@@ -33,7 +28,7 @@ export async function POST(req: Request) {
 
   try {
     const { text } = await generateText({
-      model: deepseek.chat('deepseek-chat'),
+      model: aiModel,
       system: INCIDENT_CLASSIFY_SYSTEM_PROMPT,
       prompt: buildIncidentClassifyPrompt({ description, category: body?.category ?? null }),
       temperature: 0.1,

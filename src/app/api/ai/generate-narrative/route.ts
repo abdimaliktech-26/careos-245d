@@ -1,10 +1,5 @@
-import { createOpenAI } from '@ai-sdk/openai'
 import { generateText } from 'ai'
-
-const deepseek = createOpenAI({
-  baseURL: 'https://api.deepseek.com/v1',
-  apiKey: process.env.DEEPSEEK_API_KEY ?? '',
-})
+import { aiModel } from '@/lib/ai/provider'
 
 const SYSTEM_PROMPT = `You are a clinical documentation specialist for home care. Given completed form field labels and values, generate a professional clinical narrative summary.
 
@@ -37,7 +32,7 @@ export async function POST(req: Request) {
   const prompt = `Generate a clinical narrative summary for${clientName ? ` ${clientName}` : ' the client'} from this ${formTitle || 'completed form'}:\n\n${data}`
 
   const { text } = await generateText({
-    model: deepseek.chat('deepseek-chat'),
+    model: aiModel,
     system: SYSTEM_PROMPT,
     prompt,
     temperature: 0.4,
