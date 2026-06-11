@@ -36,7 +36,11 @@
     "workspace": "Workspace",
     "staff_directory": "Staff Directory",
     "ai_tools": "AI Tools",
-    "quality_assurance": "Quality Assurance"
+    "quality_assurance": "Quality Assurance",
+    "group_care": "Care",
+    "group_compliance": "Compliance",
+    "group_business": "Business",
+    "group_workspace": "Workspace"
   },
   "admin": {
     "settings": "Business Settings",

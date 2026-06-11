@@ -36,7 +36,11 @@
     "workspace": "Goobta Shaqada",
     "staff_directory": "Diiwaanka Shaqaalaha",
     "ai_tools": "Qalabka AI",
-    "quality_assurance": "Hubinta Tayada"
+    "quality_assurance": "Hubinta Tayada",
+    "group_care": "Daryeelka",
+    "group_compliance": "U-hoggaansanaanta",
+    "group_business": "Ganacsiga",
+    "group_workspace": "Goobta Shaqada"
   },
   "admin": {
     "settings": "Dejinta Ganacsiga",
