@@ -22,6 +22,8 @@ export async function GET(request: NextRequest) {
   try {
     const admin = createAdminClient()
     const summary = await processTransmissionQueue(admin)
+    // Purge stale live-location breadcrumbs (kept 7 days after a visit ends).
+    await admin.rpc('purge_stale_location_pings').then(() => null, () => null)
     return NextResponse.json({ ok: true, ...summary })
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Aggregator queue run failed'

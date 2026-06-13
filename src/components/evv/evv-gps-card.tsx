@@ -1,12 +1,21 @@
 'use client'
 
 import { useState, useCallback } from 'react'
+import dynamic from 'next/dynamic'
 import { useRouter } from 'next/navigation'
 import { useGeolocation, isWithinGeofence, haversineDistance } from '@/hooks/use-geolocation'
 import { useVoiceInput, speakText, type VoiceLang } from '@/hooks/use-voice-input'
+import { useLiveLocationTracking } from '@/hooks/use-live-location-tracking'
 import { VoiceMicButton } from '@/components/ui/voice-mic-button'
 import { EvvFaceCapture } from '@/components/evv/evv-face-capture'
 import { gpsCheckIn, gpsCheckOut } from '@/lib/evv/actions'
+import { grantLocationConsent } from '@/lib/evv/consent'
+
+// Leaflet is browser-only — load the per-visit map client-side.
+const EvvVisitMap = dynamic(
+  () => import('@/components/evv/evv-visit-map').then((m) => m.EvvVisitMap),
+  { ssr: false }
+)
 
 type EvvVisit = {
   id: string
@@ -20,15 +29,20 @@ type EvvVisit = {
   clientAddress?: string
   clientLat?: number
   clientLng?: number
+  checkInLat?: number
+  checkInLng?: number
+  checkOutLat?: number
+  checkOutLng?: number
 }
 
 const GEOFENCE_RADIUS = 100
 
 type EvvGpsCardProps = {
   visit: EvvVisit
+  locationConsented?: boolean
 }
 
-export function EvvGpsCard({ visit }: EvvGpsCardProps) {
+export function EvvGpsCard({ visit, locationConsented = false }: EvvGpsCardProps) {
   const router = useRouter()
   const { position, error: geoError, loading: geoLoading, requestPosition } = useGeolocation()
   const [actionMsg, setActionMsg] = useState<string | null>(null)
@@ -37,6 +51,21 @@ export function EvvGpsCard({ visit }: EvvGpsCardProps) {
   const [voiceLang, setVoiceLang] = useState<VoiceLang>('en')
   const [useFace, setUseFace] = useState(false)
   const [showFaceCapture, setShowFaceCapture] = useState(false)
+  const [consented, setConsented] = useState(locationConsented)
+  const [consentPending, setConsentPending] = useState(false)
+  const [showMap, setShowMap] = useState(false)
+
+  // Live tracking runs ONLY while the visit is active AND the caregiver has
+  // consented. The hook stops watching the moment either flips false.
+  const isActiveVisit = visit.status === 'in_progress'
+  const liveTracking = useLiveLocationTracking(visit.id, isActiveVisit && consented)
+
+  const handleConsent = useCallback(async () => {
+    setConsentPending(true)
+    const res = await grantLocationConsent()
+    setConsentPending(false)
+    if (!res.error) setConsented(true)
+  }, [])
 
   const { isListening, isSupported, start, stop } = useVoiceInput({
     lang: voiceLang,
@@ -226,6 +255,64 @@ export function EvvGpsCard({ visit }: EvvGpsCardProps) {
           }}
           onCancel={() => setShowFaceCapture(false)}
         />
+      )}
+
+      {/* Live location tracking — active visits only */}
+      {isActiveVisit && (
+        <div className="mt-3 pt-3 border-t border-gray-50">
+          {!consented ? (
+            <div className="rounded-lg bg-blue-50 px-3 py-2">
+              <p className="text-[11px] font-semibold text-blue-800">Share live location during this visit?</p>
+              <p className="mt-0.5 text-[10px] text-blue-700/80 leading-snug">
+                Your location is shared with your supervisor only while this visit is active. It stops automatically when you check out.
+              </p>
+              <button
+                onClick={handleConsent}
+                disabled={consentPending}
+                className="mt-1.5 rounded-md bg-blue-600 px-2.5 py-1 text-[10px] font-bold text-white hover:opacity-90 disabled:opacity-50"
+              >
+                {consentPending ? 'Enabling…' : 'Enable live location'}
+              </button>
+            </div>
+          ) : (
+            <div className="flex items-center gap-2 text-[10px]">
+              <span className="relative flex h-2 w-2">
+                <span className={`absolute inline-flex h-full w-full rounded-full ${liveTracking.tracking ? 'animate-ping bg-emerald-400 opacity-70' : ''}`} />
+                <span className={`relative inline-flex h-2 w-2 rounded-full ${liveTracking.tracking ? 'bg-emerald-500' : 'bg-gray-400'}`} />
+              </span>
+              <span className="font-semibold text-emerald-700">
+                {liveTracking.tracking ? 'Sharing live location' : 'Live location paused'}
+              </span>
+              {liveTracking.lastPingAt && (
+                <span className="text-muted-foreground">· updated {new Date(liveTracking.lastPingAt).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })}</span>
+              )}
+              {liveTracking.error && <span className="text-amber-600">· {liveTracking.error}</span>}
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Per-visit map: exactly where check-in / check-out happened */}
+      {(visit.checkInLat != null || visit.clientLat != null) && (
+        <div className="mt-3">
+          <button
+            onClick={() => setShowMap((v) => !v)}
+            className="text-[10px] font-semibold text-primary hover:underline"
+          >
+            {showMap ? 'Hide map' : 'Show check-in map'}
+          </button>
+          {showMap && (
+            <div className="mt-2">
+              <EvvVisitMap
+                height={200}
+                geofenceRadiusM={GEOFENCE_RADIUS}
+                checkIn={visit.checkInLat != null && visit.checkInLng != null ? { lat: visit.checkInLat, lng: visit.checkInLng } : null}
+                checkOut={visit.checkOutLat != null && visit.checkOutLng != null ? { lat: visit.checkOutLat, lng: visit.checkOutLng } : null}
+                clientHome={visit.clientLat != null && visit.clientLng != null ? { lat: visit.clientLat, lng: visit.clientLng } : null}
+              />
+            </div>
+          )}
+        </div>
       )}
 
       {geoError && <p className="mt-2 text-xs text-red-600">{geoError}</p>}

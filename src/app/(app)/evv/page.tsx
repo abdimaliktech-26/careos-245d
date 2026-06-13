@@ -1,5 +1,5 @@
 import { redirect } from 'next/navigation'
-import { Download, Settings } from 'lucide-react'
+import { Download, Settings, MapPin } from 'lucide-react'
 import { getSession } from '@/lib/auth/get-session'
 import { createClient } from '@/lib/supabase/server'
 import { checkUpcomingDeadlines } from '@/lib/audit/compliance-alerts'
@@ -145,6 +145,15 @@ export default async function EvvPage({
   const isAdmin = ADMIN_ROLES.includes(user.role)
   const upcomingReviews = (deadlines ?? []).slice(0, 5)
 
+  // Has this caregiver consented to active-visit live location sharing?
+  const { data: member } = await supabase
+    .from('organization_members')
+    .select('location_consent_at')
+    .eq('user_id', user.id)
+    .eq('organization_id', user.organizationId)
+    .maybeSingle()
+  const locationConsented = Boolean((member as { location_consent_at?: string | null } | null)?.location_consent_at)
+
   // Aggregator transmission status (tolerant of the migration not being applied yet).
   const txSummary: TransmissionSummaryView = { queued: 0, sending: 0, accepted: 0, rejected: 0, failed: 0 }
   const txRows: TransmissionRowView[] = []
@@ -188,6 +197,13 @@ export default async function EvvPage({
         </div>
         {canSupervise && (
           <div className="flex flex-wrap items-start gap-2">
+            <a
+              href="/evv/live"
+              className="inline-flex items-center gap-1.5 rounded-xl border border-border px-3 py-2 text-xs font-semibold text-foreground hover:bg-muted transition-colors"
+            >
+              <MapPin className="h-3.5 w-3.5" />
+              Live Map
+            </a>
             {!migrationNeeded && !tableMissing && (
               <EvvSyncButton startDate={startDate} endDate={endDate} />
             )}
@@ -276,9 +292,12 @@ export default async function EvvPage({
             {gpsVisits.map((row) => {
               const client = row.clients as { legal_name?: string; geo_lat?: number | null; geo_lng?: number | null } | null
               const staffProfile = row.staff_profiles as { full_name?: string } | null
+              const checkIn = row.check_in_location as { lat?: number; lng?: number } | null
+              const checkOut = row.check_out_location as { lat?: number; lng?: number } | null
               return (
                 <EvvGpsCard
                   key={row.id as string}
+                  locationConsented={locationConsented}
                   visit={{
                     id: row.id as string,
                     clientName: client?.legal_name ?? '—',
@@ -288,6 +307,10 @@ export default async function EvvPage({
                     status: row.status as string,
                     clientLat: client?.geo_lat ?? undefined,
                     clientLng: client?.geo_lng ?? undefined,
+                    checkInLat: checkIn?.lat,
+                    checkInLng: checkIn?.lng,
+                    checkOutLat: checkOut?.lat,
+                    checkOutLng: checkOut?.lng,
                   }}
                 />
               )
