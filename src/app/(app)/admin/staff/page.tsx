@@ -2,6 +2,7 @@ import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import { getSession } from '@/lib/auth/get-session'
 import { listStaff, deactivateStaff, reactivateStaff } from '@/lib/staff-admin/actions'
+import { StaffCaregiverIdField } from '@/components/admin/staff-caregiver-id-field'
 
 async function handleDeactivate(staffId: string): Promise<void> {
   'use server'
@@ -52,6 +53,9 @@ export default async function StaffListPage() {
                 <p className="font-medium text-foreground">{s.full_name}</p>
                 <p className="text-sm text-muted-foreground">{s.email}</p>
                 {s.phone && <p className="text-xs text-muted-foreground">{s.phone}</p>}
+                <div className="mt-1.5">
+                  <StaffCaregiverIdField staffId={s.id} initial={s.caregiver_id} />
+                </div>
               </div>
               <div className="flex items-center gap-3">
                 <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${s.is_active ? 'bg-green-100 text-green-700' : 'bg-muted text-muted-foreground'}`}>

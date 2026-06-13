@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { useGeolocation, isWithinGeofence, haversineDistance } from '@/hooks/use-geolocation'
 import { useVoiceInput, speakText, type VoiceLang } from '@/hooks/use-voice-input'
 import { VoiceMicButton } from '@/components/ui/voice-mic-button'
+import { EvvFaceCapture } from '@/components/evv/evv-face-capture'
 import { gpsCheckIn, gpsCheckOut } from '@/lib/evv/actions'
 
 type EvvVisit = {
@@ -34,6 +35,8 @@ export function EvvGpsCard({ visit }: EvvGpsCardProps) {
   const [actionError, setActionError] = useState<string | null>(null)
   const [submitting, setSubmitting] = useState(false)
   const [voiceLang, setVoiceLang] = useState<VoiceLang>('en')
+  const [useFace, setUseFace] = useState(false)
+  const [showFaceCapture, setShowFaceCapture] = useState(false)
 
   const { isListening, isSupported, start, stop } = useVoiceInput({
     lang: voiceLang,
@@ -57,7 +60,7 @@ export function EvvGpsCard({ visit }: EvvGpsCardProps) {
     ? isWithinGeofence(position, { lat: visit.clientLat, lng: visit.clientLng }, GEOFENCE_RADIUS)
     : null
 
-  const handleCheckIn = useCallback(async () => {
+  const performCheckIn = useCallback(async (faceVerified: boolean) => {
     if (!position) { requestPosition(); return }
     setSubmitting(true)
     setActionMsg(null)
@@ -72,16 +75,23 @@ export function EvvGpsCard({ visit }: EvvGpsCardProps) {
       }
     }
 
-    const result = await gpsCheckIn(visit.id, position.lat, position.lng, position.accuracy)
+    const result = await gpsCheckIn(visit.id, position.lat, position.lng, position.accuracy, { faceVerified })
     if (result.error) setActionError(result.error)
     else {
-      const msg = `Checked in via GPS at ${new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })}`
+      const verified = faceVerified ? ' (face verified)' : ''
+      const msg = `Checked in via GPS at ${new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })}${verified}`
       setActionMsg(msg)
       speakText(`Visit started for ${visit.clientName}. ${msg}`, voiceLang)
       router.refresh()
     }
     setSubmitting(false)
   }, [position, requestPosition, visit, router, voiceLang])
+
+  const handleCheckIn = useCallback(async () => {
+    if (!position) { requestPosition(); return }
+    if (useFace) { setShowFaceCapture(true); return }
+    await performCheckIn(false)
+  }, [position, requestPosition, useFace, performCheckIn])
 
   const handleCheckOut = useCallback(async () => {
     if (!position) { requestPosition(); return }
@@ -194,7 +204,29 @@ export function EvvGpsCard({ visit }: EvvGpsCardProps) {
         <span className="text-[10px] text-muted-foreground">
           {isListening ? 'Say "Start" or "End"…' : 'Voice check-in'}
         </span>
+        {isScheduled && (
+          <label className="ml-auto flex items-center gap-1.5 text-[10px] font-semibold text-muted-foreground">
+            <input
+              type="checkbox"
+              checked={useFace}
+              onChange={(e) => setUseFace(e.target.checked)}
+              disabled={submitting}
+            />
+            Face verify
+          </label>
+        )}
       </div>
+
+      {showFaceCapture && (
+        <EvvFaceCapture
+          clientName={visit.clientName}
+          onVerified={() => {
+            setShowFaceCapture(false)
+            performCheckIn(true)
+          }}
+          onCancel={() => setShowFaceCapture(false)}
+        />
+      )}
 
       {geoError && <p className="mt-2 text-xs text-red-600">{geoError}</p>}
       {actionMsg && <p className="mt-2 text-xs text-emerald-600">{actionMsg}</p>}

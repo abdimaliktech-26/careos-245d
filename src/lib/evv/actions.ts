@@ -5,6 +5,7 @@ import { z } from 'zod'
 import { getSession } from '@/lib/auth/get-session'
 import { logAuditEvent } from '@/lib/audit/log'
 import { createClient } from '@/lib/supabase/server'
+import { haversineDistance } from '@/lib/evv/geo'
 
 type ActionState = { error: string | null; success?: string | null }
 
@@ -91,23 +92,67 @@ export async function createEvvVisit(_previousState: ActionState, formData: Form
   return { error: null, success: 'EVV visit saved.' }
 }
 
-export async function gpsCheckIn(visitId: string, lat: number, lng: number, accuracy: number): Promise<ActionState> {
+/**
+ * Distance (meters) from the client's geocoded service address, when known.
+ * Returns null when the client has no geofence anchor or the lookup fails
+ * (e.g. migration not yet applied) — verification is best-effort, never blocking.
+ */
+async function distanceFromClientAddress(
+  supabase: Awaited<ReturnType<typeof createClient>>,
+  visitId: string,
+  organizationId: string,
+  lat: number,
+  lng: number
+): Promise<number | null> {
+  const { data, error } = await supabase
+    .from('evv_visits')
+    .select('clients(geo_lat, geo_lng)')
+    .eq('id', visitId)
+    .eq('organization_id', organizationId)
+    .single()
+  if (error) return null
+
+  const client = data?.clients as unknown as { geo_lat: number | null; geo_lng: number | null } | null
+  if (client?.geo_lat == null || client?.geo_lng == null) return null
+  return Math.round(haversineDistance({ lat, lng }, { lat: client.geo_lat, lng: client.geo_lng }))
+}
+
+export async function gpsCheckIn(
+  visitId: string,
+  lat: number,
+  lng: number,
+  accuracy: number,
+  options: { faceVerified?: boolean } = {}
+): Promise<ActionState> {
   const { user, error: sessionError } = await getSession()
   if (sessionError || !user || !user.organizationId) return { error: 'Unauthorized' }
 
   const supabase = await createClient()
+  const distance = await distanceFromClientAddress(supabase, visitId, user.organizationId, lat, lng)
+
   const { error } = await supabase
     .from('evv_visits')
     .update({
       actual_start: new Date().toISOString(),
       check_in_method: 'gps',
       check_in_location: { source: 'gps', lat, lng, accuracy, timestamp: new Date().toISOString() },
+      ...(distance != null ? { check_in_distance_m: distance } : {}),
+      ...(options.faceVerified ? { face_verified: true } : {}),
       status: 'in_progress',
     })
     .eq('id', visitId)
     .eq('organization_id', user.organizationId)
 
   if (error) return { error: error.message }
+
+  await logAuditEvent({
+    user,
+    action: 'packet_updated',
+    entityType: 'evv_visit',
+    entityLabel: 'GPS check-in',
+    details: { visitId, accuracy, distanceM: distance, faceVerified: options.faceVerified ?? false },
+  }).catch(() => null)
+
   revalidatePath('/evv')
   return { error: null, success: 'GPS check-in recorded.' }
 }
@@ -117,18 +162,43 @@ export async function gpsCheckOut(visitId: string, lat: number, lng: number, acc
   if (sessionError || !user || !user.organizationId) return { error: 'Unauthorized' }
 
   const supabase = await createClient()
+  const distance = await distanceFromClientAddress(supabase, visitId, user.organizationId, lat, lng)
+
+  // Billable minutes from the actual clock-in to now
+  const { data: existing } = await supabase
+    .from('evv_visits')
+    .select('actual_start')
+    .eq('id', visitId)
+    .eq('organization_id', user.organizationId)
+    .single()
+  const checkOutAt = new Date()
+  const billableMinutes = existing?.actual_start
+    ? Math.max(0, Math.round((checkOutAt.getTime() - new Date(existing.actual_start).getTime()) / 60000))
+    : null
+
   const { error } = await supabase
     .from('evv_visits')
     .update({
-      actual_end: new Date().toISOString(),
+      actual_end: checkOutAt.toISOString(),
       check_out_method: 'gps',
-      check_out_location: { source: 'gps', lat, lng, accuracy, timestamp: new Date().toISOString() },
+      check_out_location: { source: 'gps', lat, lng, accuracy, timestamp: checkOutAt.toISOString() },
+      ...(distance != null ? { check_out_distance_m: distance } : {}),
+      ...(billableMinutes != null ? { billable_minutes: billableMinutes } : {}),
       status: 'completed',
     })
     .eq('id', visitId)
     .eq('organization_id', user.organizationId)
 
   if (error) return { error: error.message }
+
+  await logAuditEvent({
+    user,
+    action: 'packet_updated',
+    entityType: 'evv_visit',
+    entityLabel: 'GPS check-out',
+    details: { visitId, accuracy, distanceM: distance, billableMinutes },
+  }).catch(() => null)
+
   revalidatePath('/evv')
   return { error: null, success: 'GPS check-out recorded.' }
 }

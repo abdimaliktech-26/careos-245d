@@ -10,6 +10,7 @@ import { validateRequiredSignatures } from '@/lib/forms/signature-validation'
 import { getClientScorecards } from '@/lib/audit/scorecards'
 import { ScorecardBadge } from '@/components/audit/scorecard-badge'
 import { MorningBriefingCard } from '@/components/dashboard/morning-briefing-card'
+import { EvvComplianceWidget } from '@/components/evv/evv-compliance-widget'
 
 // Status badge for packet rows
 function StatusBadge({ status }: { status: string }) {
@@ -173,6 +174,12 @@ export default async function DashboardPage() {
       </div>
 
       <MorningBriefingCard />
+
+      {organizationId && (
+        <div className="mb-8">
+          <EvvComplianceWidget organizationId={organizationId} />
+        </div>
+      )}
 
       {/* Stat cards */}
       <div className="mb-8 grid grid-cols-2 gap-4 lg:grid-cols-6">

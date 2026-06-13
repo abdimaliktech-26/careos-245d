@@ -9,6 +9,7 @@ import { validateRequiredSignatures } from '@/lib/forms/signature-validation'
 import { SigningLinkForm } from '@/components/signing/signing-link-form'
 import { getClientScorecardDetail } from '@/lib/audit/scorecards'
 import { ScorecardBadge, ScoreGauge } from '@/components/audit/scorecard-badge'
+import { EvvComplianceWidget } from '@/components/evv/evv-compliance-widget'
 
 type Props = { params: Promise<{ id: string }> }
 
@@ -101,6 +102,14 @@ export default async function ClientProfilePage({ params }: Props) {
       <ClientSubNav clientId={id} activeTab="profile" />
 
       <AiSummaryCard clientId={id} />
+
+      {user?.organizationId && (
+        <EvvComplianceWidget
+          organizationId={user.organizationId}
+          clientId={id}
+          title="EVV Visits (30 days)"
+        />
+      )}
 
       <section className="bg-card border border-border rounded-xl p-5">
         <h2 className="font-semibold text-foreground mb-4">Demographics</h2>

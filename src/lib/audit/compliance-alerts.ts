@@ -1,6 +1,22 @@
 import { createClient } from '@/lib/supabase/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { validateRequiredSignatures } from '@/lib/forms/signature-validation'
+import {
+  buildComplianceSummary,
+  toComplianceVisit,
+  type EvvException,
+  type ExceptionSeverity,
+} from '@/lib/evv/compliance'
+import { flagMissedVisits } from '@/lib/evv/missed-visits'
+
+export type EvvAlertType =
+  | 'evv_missed_visit'
+  | 'evv_geofence_violation'
+  | 'evv_missing_check_out'
+  | 'evv_incomplete_documentation'
+  | 'evv_missing_progress_note'
+  | 'evv_overlapping_visits'
+  | 'evv_impossible_travel'
 
 export type AlertType =
   | 'deadline_upcoming'
@@ -8,6 +24,7 @@ export type AlertType =
   | 'missing_signatures'
   | 'missing_forms'
   | 'incomplete_packet'
+  | EvvAlertType
 
 export type AlertSeverity = 'critical' | 'warning' | 'info'
 
@@ -20,6 +37,7 @@ export type ComplianceAlert = {
   description: string | null
   relatedPacketId: string | null
   relatedPacketFormId: string | null
+  relatedEvvVisitId: string | null
   dueDate: string | null
   daysUntilDue: number | null
   isDismissed: boolean
@@ -33,6 +51,7 @@ export type AlertInput = {
   description?: string
   relatedPacketId?: string
   relatedPacketFormId?: string
+  relatedEvvVisitId?: string
   dueDate?: string
   daysUntilDue?: number
 }
@@ -199,8 +218,68 @@ export async function checkOverdueItems(
   return alerts
 }
 
+const EVV_ALERT_SELECT =
+  'id, client_id, staff_id, service_name, service_date, scheduled_start, scheduled_end, actual_start, actual_end, status, check_in_location, check_out_location, check_in_distance_m, check_out_distance_m, progress_note, review_status, billing_status, billable_minutes, resolved_at, clients(legal_name), staff_profiles(full_name)'
+
+const EVV_ALERT_TITLES: Record<string, string> = {
+  missed_visit: 'Missed visit',
+  geofence_violation: 'GPS geofence violation',
+  missing_check_out: 'Missing check-out',
+  incomplete_documentation: 'Incomplete EVV documentation',
+  missing_progress_note: 'Missing progress note',
+  overlapping_visits: 'Overlapping visits',
+  impossible_travel: 'Impossible travel between visits',
+}
+
+// Only the genuinely actionable exceptions become alerts; medium-severity
+// timing nudges (slightly late/early) stay on the EVV board, not the alert feed.
+const EVV_SEVERITY_TO_ALERT: Partial<Record<ExceptionSeverity, AlertSeverity>> = {
+  critical: 'critical',
+  high: 'warning',
+}
+
+/** Turns unresolved EVV compliance exceptions into alert inputs. */
+export async function checkEvvExceptions(
+  organizationId: string,
+  supabaseClient?: SupabaseReader,
+  options: { now?: Date; lookbackDays?: number } = {}
+): Promise<AlertInput[]> {
+  const supabase = supabaseClient ?? await createClient()
+  const now = options.now ?? new Date()
+  const lookbackDays = options.lookbackDays ?? 30
+  const startDate = new Date(now.getTime() - lookbackDays * 86400000).toISOString().slice(0, 10)
+
+  const { data, error } = await supabase
+    .from('evv_visits')
+    .select(EVV_ALERT_SELECT)
+    .eq('organization_id', organizationId)
+    .gte('service_date', startDate)
+    .limit(500)
+
+  // New workflow columns may not exist yet — fail soft, never break the cron.
+  if (error || !data) return []
+
+  const visits = (data as Array<Record<string, unknown>>).map(toComplianceVisit)
+  const { exceptions } = buildComplianceSummary(visits, { now })
+
+  return exceptions.flatMap((exception: EvvException) => {
+    const severity = EVV_SEVERITY_TO_ALERT[exception.severity]
+    if (!severity) return []
+    const who = [exception.clientName, exception.staffName].filter(Boolean).join(' · ')
+    return [
+      {
+        type: `evv_${exception.type}` as AlertType,
+        severity,
+        title: `${EVV_ALERT_TITLES[exception.type] ?? 'EVV exception'} — ${exception.clientName ?? 'visit'}`,
+        description: `${exception.message}${who ? ` (${who}, ${exception.serviceDate})` : ''}`,
+        relatedEvvVisitId: exception.visitId,
+      } satisfies AlertInput,
+    ]
+  })
+}
+
 function alertKey(input: AlertInput): string {
-  return `${input.type}:${input.relatedPacketId ?? ''}:${input.relatedPacketFormId ?? ''}`
+  return `${input.type}:${input.relatedPacketId ?? ''}:${input.relatedPacketFormId ?? ''}:${input.relatedEvvVisitId ?? ''}`
 }
 
 export async function generateComplianceAlerts(
@@ -210,13 +289,14 @@ export async function generateComplianceAlerts(
   const supabase = supabaseClient ?? await createClient()
   const admin = createAdminClient()
 
-  const [deadlines, signatures, overdue] = await Promise.all([
+  const [deadlines, signatures, overdue, evvExceptions] = await Promise.all([
     checkUpcomingDeadlines(organizationId, supabase),
     checkMissingSignatures(organizationId, supabase),
     checkOverdueItems(organizationId, supabase),
+    checkEvvExceptions(organizationId, supabase),
   ])
 
-  const alerts: AlertInput[] = [...signatures, ...overdue]
+  const alerts: AlertInput[] = [...signatures, ...overdue, ...evvExceptions]
 
   for (const d of deadlines) {
     if (d.daysRemaining <= 3) {
@@ -258,12 +338,12 @@ export async function generateComplianceAlerts(
 
   const { data: existing } = await admin
     .from('compliance_alerts')
-    .select('id, type, related_packet_id, related_packet_form_id, is_dismissed')
+    .select('id, type, related_packet_id, related_packet_form_id, related_evv_visit_id, is_dismissed')
     .eq('organization_id', organizationId)
 
   const existingKeys = new Set(
     (existing ?? []).map(
-      (e: Record<string, unknown>) => `${String(e.type)}:${String(e.related_packet_id ?? '')}:${String(e.related_packet_form_id ?? '')}`
+      (e: Record<string, unknown>) => `${String(e.type)}:${String(e.related_packet_id ?? '')}:${String(e.related_packet_form_id ?? '')}:${String(e.related_evv_visit_id ?? '')}`
     )
   )
 
@@ -288,6 +368,7 @@ export async function generateComplianceAlerts(
     description: a.description ?? null,
     related_packet_id: a.relatedPacketId ?? null,
     related_packet_form_id: a.relatedPacketFormId ?? null,
+    related_evv_visit_id: a.relatedEvvVisitId ?? null,
     due_date: a.dueDate ?? null,
     days_until_due: a.daysUntilDue ?? null,
   }))
@@ -315,6 +396,7 @@ function mapRow(row: Record<string, unknown>): ComplianceAlert {
     description: row.description ? String(row.description) : null,
     relatedPacketId: row.related_packet_id ? String(row.related_packet_id) : null,
     relatedPacketFormId: row.related_packet_form_id ? String(row.related_packet_form_id) : null,
+    relatedEvvVisitId: row.related_evv_visit_id ? String(row.related_evv_visit_id) : null,
     dueDate: row.due_date ? String(row.due_date) : null,
     daysUntilDue: row.days_until_due !== null && row.days_until_due !== undefined ? Number(row.days_until_due) : null,
     isDismissed: Boolean(row.is_dismissed),
@@ -453,6 +535,8 @@ export async function runComplianceAlertsForAllOrganizations() {
   for (const org of organizations ?? []) {
     const orgRow = org as Record<string, unknown>
     const orgId = String(orgRow.id)
+    // Persist missed visits first so they surface as alerts this run.
+    await flagMissedVisits(orgId, admin).catch(() => ({ flagged: [] }))
     const alerts = await generateComplianceAlerts(orgId, admin)
     const criticalAlerts = alerts.filter((a) => a.severity === 'critical' && !a.isDismissed)
     const warningAlerts = alerts.filter((a) => a.severity === 'warning' && !a.isDismissed)

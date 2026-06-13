@@ -48,4 +48,5 @@ export type StaffSummary = {
   phone: string | null
   is_active: boolean
   created_at: string
+  caregiver_id: string | null
 }

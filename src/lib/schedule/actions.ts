@@ -57,6 +57,7 @@ export async function createScheduleEntry(_prev: ActionResult, formData: FormDat
     service_type: serviceType,
     status: 'scheduled' as const,
     notes: notes || null,
+    create_evv: createEvv,
   }))
 
   const { error } = await supabase.from('schedules').insert(inserts)

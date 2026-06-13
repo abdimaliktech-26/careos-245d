@@ -120,7 +120,7 @@ export async function listStaff(): Promise<ActionResult<StaffSummary[]>> {
   const supabase = await createServerClient()
   const query = supabase
     .from('staff_profiles')
-    .select('id, full_name, email, phone, is_active, created_at')
+    .select('id, full_name, email, phone, is_active, created_at, caregiver_id')
     .order('full_name')
 
   if (user.organizationId) query.eq('organization_id', user.organizationId)
@@ -153,6 +153,43 @@ export async function deactivateStaff(staffId: string): Promise<ActionResult<voi
   }).catch(() => null)
   revalidatePath('/admin/staff')
   revalidatePath('/admin/team')
+  return { data: undefined, error: null }
+}
+
+/**
+ * Sets the EVV aggregator caregiver identifier (UMPI / registry id) on a staff
+ * profile. Required to transmit a staffed visit to the state aggregator.
+ */
+export async function updateStaffCaregiverId(
+  staffId: string,
+  caregiverId: string
+): Promise<ActionResult<void>> {
+  const { user, error: sessionError } = await getSession()
+  if (sessionError || !user || !['org_admin', 'super_admin'].includes(user.role)) {
+    return { data: null, error: 'Unauthorized' }
+  }
+
+  const trimmed = caregiverId.trim()
+  if (trimmed.length > 80) return { data: null, error: 'Caregiver ID is too long.' }
+
+  const supabase = await createServerClient()
+  const update = supabase
+    .from('staff_profiles')
+    .update({ caregiver_id: trimmed || null })
+    .eq('id', staffId)
+  if (user.organizationId) update.eq('organization_id', user.organizationId)
+
+  const { error } = await update
+  if (error) return { data: null, error: error.message }
+
+  await logAuditEvent({
+    user,
+    action: 'staff_record_updated',
+    entityType: 'staff_profile',
+    entityId: staffId,
+    details: { caregiverIdSet: Boolean(trimmed) },
+  }).catch(() => null)
+  revalidatePath('/admin/staff')
   return { data: undefined, error: null }
 }
 

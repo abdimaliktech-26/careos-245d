@@ -32,11 +32,13 @@ type AlertCardProps = {
 
 export function AlertCard({ alert, onDismiss, showActions = true }: AlertCardProps) {
   const config = SEVERITY_CONFIG[alert.severity]
-  const href = alert.relatedPacketId
-    ? `/clients?packetId=${alert.relatedPacketId}`
-    : alert.relatedPacketFormId
-      ? `/clients?formId=${alert.relatedPacketFormId}`
-      : undefined
+  const href = alert.relatedEvvVisitId
+    ? '/evv'
+    : alert.relatedPacketId
+      ? `/clients?packetId=${alert.relatedPacketId}`
+      : alert.relatedPacketFormId
+        ? `/clients?formId=${alert.relatedPacketFormId}`
+        : undefined
 
   return (
     <div className={`rounded-xl border ${config.border} ${config.bg} p-4`}>
