@@ -24,8 +24,12 @@ if (!url || !key) {
 }
 
 const DEMO_EMAIL = process.env.DEMO_EMAIL ?? 'demo@careintake.app'
+const DEMO_SUPER_EMAIL = process.env.DEMO_SUPER_EMAIL ?? 'superadmin@careintake.app'
+const DEMO_STAFF_EMAIL = process.env.DEMO_STAFF_EMAIL ?? 'staff@careintake.app'
 const DEMO_PASSWORD = process.env.DEMO_PASSWORD ?? 'Demo2026!'
 const DEMO_ORG_NAME = process.env.DEMO_ORG_NAME ?? 'Demo Organization'
+
+const DEMO_EMAILS = [DEMO_EMAIL, DEMO_SUPER_EMAIL, DEMO_STAFF_EMAIL]
 
 const admin = createClient(url, key, {
   auth: { autoRefreshToken: false, persistSession: false },
@@ -41,13 +45,14 @@ async function deleteExistingDemo() {
     await admin.from('organizations').delete().eq('id', org.id)
   }
 
+  const targets = DEMO_EMAILS.map((e) => e.toLowerCase())
   let page = 1
-   
+
   while (true) {
     const { data } = await admin.auth.admin.listUsers({ page, perPage: 200 })
     const users = data?.users ?? []
     for (const u of users) {
-      if (u.email?.toLowerCase() === DEMO_EMAIL.toLowerCase()) {
+      if (u.email && targets.includes(u.email.toLowerCase())) {
         await admin.auth.admin.deleteUser(u.id)
       }
     }
@@ -76,29 +81,29 @@ async function createOrg() {
   return data.id
 }
 
-async function createAdmin(orgId) {
+async function createMember(orgId, { email, role, fullName }) {
   // NOTE: do not put role in user_metadata — a DB trigger on auth.users
   // chokes on it. Role lives on organization_members instead.
   const { data, error } = await admin.auth.admin.createUser({
-    email: DEMO_EMAIL,
+    email,
     password: DEMO_PASSWORD,
     email_confirm: true,
     user_metadata: { organization_id: orgId },
   })
-  if (error) throw new Error(`user create failed: ${error.message}`)
+  if (error) throw new Error(`user create failed (${email}): ${error.message}`)
 
   const { error: memberError } = await admin
     .from('organization_members')
     .insert({
       organization_id: orgId,
       user_id: data.user.id,
-      role: 'org_admin',
-      full_name: 'Demo Admin',
-      email: DEMO_EMAIL,
+      role,
+      full_name: fullName,
+      email,
       is_active: true,
       joined_at: new Date().toISOString(),
     })
-  if (memberError) throw new Error(`member create failed: ${memberError.message}`)
+  if (memberError) throw new Error(`member create failed (${email}): ${memberError.message}`)
   return data.user.id
 }
 
@@ -169,18 +174,32 @@ async function main() {
   const orgId = await createOrg()
   console.log(`  org_id = ${orgId}`)
 
-  console.log('Creating admin user…')
-  const userId = await createAdmin(orgId)
-  console.log(`  user_id = ${userId}`)
+  console.log('Creating org_admin user…')
+  const adminId = await createMember(orgId, {
+    email: DEMO_EMAIL, role: 'org_admin', fullName: 'Demo Admin',
+  })
+  console.log(`  user_id = ${adminId}`)
+
+  console.log('Creating super_admin user…')
+  const superId = await createMember(orgId, {
+    email: DEMO_SUPER_EMAIL, role: 'super_admin', fullName: 'Demo Super Admin',
+  })
+  console.log(`  user_id = ${superId}`)
+
+  console.log('Creating staff user…')
+  const staffId = await createMember(orgId, {
+    email: DEMO_STAFF_EMAIL, role: 'staff', fullName: 'Demo Staff',
+  })
+  console.log(`  user_id = ${staffId}`)
 
   console.log('Creating sample clients…')
   await createClients(orgId)
 
   console.log('')
-  console.log('Demo account ready:')
-  console.log(`  URL:      https://careintake-five.vercel.app/auth/login`)
-  console.log(`  Email:    ${DEMO_EMAIL}`)
-  console.log(`  Password: ${DEMO_PASSWORD}`)
+  console.log('Demo accounts ready (password for all: ' + DEMO_PASSWORD + '):')
+  console.log(`  org_admin:   ${DEMO_EMAIL}`)
+  console.log(`  super_admin: ${DEMO_SUPER_EMAIL}`)
+  console.log(`  staff:       ${DEMO_STAFF_EMAIL}`)
 }
 
 main().catch((err) => {
