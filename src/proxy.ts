@@ -63,6 +63,13 @@ export async function proxy(request: NextRequest) {
     request: { headers: request.headers },
   })
 
+  // Always let the logout handler run. It clears the session and 303-redirects
+  // to /auth/login. Routing it through the auth checks below would 307-redirect
+  // the POST when the session is already gone, replaying POST /auth/login → 405.
+  if (pathname === '/auth/logout') {
+    return response
+  }
+
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
