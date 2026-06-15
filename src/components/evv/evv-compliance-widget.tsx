@@ -24,7 +24,7 @@ export async function EvvComplianceWidget({
   title = 'EVV Compliance (30 days)',
 }: EvvComplianceWidgetProps) {
   const supabase = await createClient()
-  const since = new Date(Date.now() - LOOKBACK_DAYS * 86400000).toISOString().slice(0, 10)
+  const since = new Date(new Date().getTime() - LOOKBACK_DAYS * 86400000).toISOString().slice(0, 10)
 
   let query = supabase
     .from('evv_visits')

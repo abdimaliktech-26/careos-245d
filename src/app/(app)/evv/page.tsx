@@ -47,7 +47,7 @@ export default async function EvvPage({
 
   const params = await searchParams
   const today = new Date().toISOString().slice(0, 10)
-  const thirtyDaysAgo = new Date(Date.now() - 30 * 86400000).toISOString().slice(0, 10)
+  const thirtyDaysAgo = new Date(new Date().getTime() - 30 * 86400000).toISOString().slice(0, 10)
   const startDate = params.startDate ?? thirtyDaysAgo
   const endDate = params.endDate ?? today
 
