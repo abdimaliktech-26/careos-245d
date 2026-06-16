@@ -18,7 +18,8 @@ async function login(page: Page, email: string) {
   await page.fill('#email', email)
   await page.fill('#password', PASSWORD)
   await page.click('button[type="submit"]')
-  await page.waitForURL(/\/dashboard/, { timeout: 45000 })
+  // Proxy routes to each role's home; just wait until we leave the login page.
+  await page.waitForURL((url) => !url.pathname.startsWith('/auth/login'), { timeout: 45000 })
 }
 
 async function expectBlocked(page: Page, path: string) {
@@ -27,6 +28,19 @@ async function expectBlocked(page: Page, path: string) {
   await page.waitForLoadState('networkidle')
   expect(page.url()).not.toContain(path)
 }
+
+test.describe('post-login role routing', () => {
+  test('super_admin lands on /super-admin, not the admin dashboard', async ({ page }) => {
+    await login(page, ACCOUNTS.superAdmin)
+    expect(page.url()).toContain('/super-admin')
+    expect(page.url()).not.toContain('/dashboard')
+  })
+
+  test('org_admin lands on /dashboard', async ({ page }) => {
+    await login(page, ACCOUNTS.orgAdmin)
+    expect(page.url()).toContain('/dashboard')
+  })
+})
 
 test.describe('super admin portal', () => {
   test('super_admin can access /super-admin', async ({ page }) => {

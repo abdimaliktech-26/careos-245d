@@ -35,7 +35,9 @@ export default function LoginPage() {
         return
       }
 
-      router.push('/dashboard')
+      // Route through '/'; the proxy redirects to each role's home
+      // (super_admin → /super-admin, admins/staff → /dashboard, signer → /client).
+      router.push('/')
       router.refresh()
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An unexpected error occurred.')

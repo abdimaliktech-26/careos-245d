@@ -22,7 +22,7 @@ export default function MfaChallengePage() {
       const { data } = await supabase.auth.mfa.listFactors()
       const totp = data?.totp?.find((f) => f.status === 'verified')
       if (!totp) {
-        router.replace('/dashboard')
+        router.replace('/')
         return
       }
       setFactorId(totp.id)
@@ -52,7 +52,7 @@ export default function MfaChallengePage() {
       setError('Invalid code. Try again.')
       return
     }
-    router.push('/dashboard')
+    router.push('/')
     router.refresh()
   }
 

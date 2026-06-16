@@ -47,7 +47,7 @@ export default function ResetPasswordPage() {
         return
       }
 
-      router.push('/dashboard')
+      router.push('/')
       router.refresh()
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Network error. Please try again.')
