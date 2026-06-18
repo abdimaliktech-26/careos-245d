@@ -23,6 +23,8 @@ type AuditAction =
   | 'invite_sent'
   | 'member_role_changed'
   | 'agent_validation_run'
+  | 'impersonation_started'
+  | 'impersonation_ended'
 
 type AuditLogInput = {
   user: UserProfile

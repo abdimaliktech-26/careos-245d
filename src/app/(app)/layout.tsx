@@ -7,6 +7,7 @@ import { AppHeader } from '@/components/layout/app-header'
 import { CommandPalette } from '@/components/layout/command-palette'
 import CareAssistChat from '@/components/chat/CareAssistChat'
 import { SessionGuard } from '@/components/session-guard'
+import { ImpersonationBanner } from '@/components/super-admin/impersonation-banner'
 import { RealtimeProvider } from '@/components/layout/realtime-provider'
 import { ComplianceAlertBanner } from '@/components/compliance/alert-banner'
 import { SubscriptionBanner } from '@/components/compliance/subscription-banner'
@@ -40,12 +41,16 @@ export default async function AppLayout({ children }: { children: React.ReactNod
   return (
     <RealtimeProvider user={user}>
       <div
-        className="flex h-screen overflow-hidden bg-background"
+        className="flex h-screen flex-col overflow-hidden bg-background"
         style={{
           '--brand-primary': brandPrimary,
           '--brand-accent': brandAccent,
         } as React.CSSProperties}
       >
+        {user.impersonating && (
+          <ImpersonationBanner orgName={user.impersonating.orgName} expiresAt={user.impersonating.expiresAt} />
+        )}
+        <div className="flex flex-1 overflow-hidden">
         <MobileSidebar branding={branding}>
           <Sidebar user={user} branding={branding} />
         </MobileSidebar>
@@ -62,6 +67,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
         <SessionGuard />
         <CommandPalette role={user.role} />
         <CareAssistChat />
+        </div>
       </div>
     </RealtimeProvider>
   )

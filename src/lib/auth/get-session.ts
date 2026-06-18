@@ -1,11 +1,21 @@
+import { cache } from 'react'
 import { createClient } from '@/lib/supabase/server'
 import type { UserProfile } from '@/types/app'
+import { getActiveImpersonation, type ActiveImpersonation } from '@/lib/super-admin/impersonation-read'
+
+/** Pure: apply an active impersonation onto a profile (super_admin only path). */
+export function applyImpersonation(profile: UserProfile, active: ActiveImpersonation | null): UserProfile {
+  if (!active) return profile
+  return { ...profile, organizationId: active.orgId, impersonating: active }
+}
 
 type SessionResult =
   | { user: UserProfile; error: null }
   | { user: null; error: string }
 
-export async function getSession(): Promise<SessionResult> {
+// Wrapped in React cache(): within a single server render, layout + page +
+// nested components share ONE getUser + membership query instead of re-fetching.
+export const getSession = cache(async (): Promise<SessionResult> => {
   const supabase = await createClient()
   const { data: { user }, error: authError } = await supabase.auth.getUser()
 
@@ -21,17 +31,18 @@ export async function getSession(): Promise<SessionResult> {
     .maybeSingle()
 
   if (profile) {
-    return {
-      user: {
-        id: profile.user_id,
-        organizationId: profile.organization_id,
-        role: profile.role,
-        fullName: profile.full_name ?? user.email ?? 'User',
-        email: profile.email ?? user.email ?? '',
-        isActive: profile.is_active,
-      },
-      error: null,
+    const baseProfile: UserProfile = {
+      id: profile.user_id,
+      organizationId: profile.organization_id,
+      role: profile.role,
+      fullName: profile.full_name ?? user.email ?? 'User',
+      email: profile.email ?? user.email ?? '',
+      isActive: profile.is_active,
     }
+    const active = baseProfile.role === 'super_admin'
+      ? await getActiveImpersonation(baseProfile.id)
+      : null
+    return { user: applyImpersonation(baseProfile, active), error: null }
   }
 
   // Fallback for external signers without an organization_members row.
@@ -58,4 +69,4 @@ export async function getSession(): Promise<SessionResult> {
   }
 
   return { user: null, error: 'Profile not found' }
-}
+})

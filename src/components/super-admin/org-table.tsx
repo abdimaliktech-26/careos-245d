@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import type { OrgListItem } from '@/lib/super-admin/actions'
 import { StatusBadge } from '@/components/super-admin/stat-card'
+import { enterOrg } from '@/lib/super-admin/impersonation'
 
 export function OrgTable({ orgs }: { orgs: OrgListItem[] }) {
   if (orgs.length === 0) {
@@ -16,7 +17,7 @@ export function OrgTable({ orgs }: { orgs: OrgListItem[] }) {
     <table className="w-full">
       <thead>
         <tr className="border-b border-border bg-muted/40">
-          {['Name', 'Status', 'Plan', 'Members', 'Clients', 'Created'].map((h) => (
+          {['Name', 'Status', 'Plan', 'Members', 'Clients', 'Created', 'Actions'].map((h) => (
             <th key={h} className="px-5 py-3 text-left text-[10px] font-semibold uppercase tracking-[0.08em] text-muted-foreground">{h}</th>
           ))}
         </tr>
@@ -35,6 +36,13 @@ export function OrgTable({ orgs }: { orgs: OrgListItem[] }) {
             <td className="px-5 py-3.5 text-[13px] text-muted-foreground">{org.clientCount}</td>
             <td className="px-5 py-3.5 text-[12px] text-muted-foreground">
               {new Date(org.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+            </td>
+            <td className="px-5 py-3.5">
+              <form action={async () => { 'use server'; await enterOrg(org.id) }}>
+                <button type="submit" className="rounded-lg border border-border px-2.5 py-1 text-[12px] font-semibold text-foreground hover:bg-muted">
+                  Enter as admin
+                </button>
+              </form>
             </td>
           </tr>
         ))}

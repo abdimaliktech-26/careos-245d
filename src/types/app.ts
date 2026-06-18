@@ -15,6 +15,7 @@ export type UserProfile = {
   fullName: string
   email: string
   isActive: boolean
+  impersonating?: { orgId: string; orgName: string; expiresAt: string } | null
 }
 
 export type OrgBranding = {
