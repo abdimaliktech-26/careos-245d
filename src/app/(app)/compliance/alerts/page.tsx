@@ -1,6 +1,7 @@
 import { redirect } from 'next/navigation'
 import { getSession } from '@/lib/auth/get-session'
 import { getActiveAlerts, getAlertSummary } from '@/lib/audit/compliance-alerts'
+import { getRecentFlaggedRuns } from '@/lib/agent/queries'
 import { AlertCard } from '@/components/compliance/alert-card'
 import { AlertFilters } from '@/components/compliance/alert-filters'
 import { DismissButton } from '@/components/compliance/dismiss-button'
@@ -27,6 +28,12 @@ export default async function ComplianceAlertsPage(props: { searchParams: Search
     severity: searchParams.severity,
   })
   const summary = await getAlertSummary(user.organizationId)
+  const agentRuns = await getRecentFlaggedRuns()
+
+  const verdictColor = (v: string) =>
+    v === 'fail'
+      ? 'bg-status-error-bg text-status-error border-red-200'
+      : 'bg-status-warn-bg text-status-warn border-amber-200'
 
   return (
     <div>
@@ -80,6 +87,66 @@ export default async function ComplianceAlertsPage(props: { searchParams: Search
                 <div className="mt-2 flex justify-end">
                   <DismissButton alertId={alert.id} />
                 </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </section>
+
+      <section
+        className="mt-8 overflow-hidden rounded-2xl border border-border bg-card"
+        style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}
+      >
+        <div className="border-b border-border px-6 py-4">
+          <h2 className="text-[14px] font-semibold text-foreground">Agent Validation Flags</h2>
+          <p className="mt-0.5 text-[12px] text-muted-foreground">
+            Recent intake &amp; EVV validation runs that need attention. Program recommendations require human confirmation.
+          </p>
+        </div>
+        {agentRuns.length === 0 ? (
+          <div className="px-6 py-10 text-center text-[13px] text-muted-foreground">
+            No flagged validation runs.
+          </div>
+        ) : (
+          <div className="divide-y divide-border/60">
+            {agentRuns.map((run) => (
+              <div key={run.id} className="px-6 py-4">
+                <div className="flex items-center justify-between gap-3">
+                  <div className="flex items-center gap-2">
+                    <span className={`rounded-full border px-2 py-0.5 text-[10px] font-bold uppercase ${verdictColor(run.verdict)}`}>
+                      {run.verdict}
+                    </span>
+                    <span className="text-[13px] font-semibold text-foreground">
+                      {run.subject_type === 'intake_form' ? 'Intake form' : 'EVV visit'}
+                    </span>
+                    <span className="text-[11px] text-muted-foreground">{run.trigger}</span>
+                  </div>
+                  <span className="text-[11px] text-muted-foreground">
+                    {new Date(run.created_at).toLocaleString()}
+                  </span>
+                </div>
+                {run.flags.length > 0 && (
+                  <ul className="mt-2 list-disc space-y-0.5 pl-5 text-[12px] text-muted-foreground">
+                    {run.flags.map((f, i) => (
+                      <li key={`${run.id}-${i}`}>{f.message}</li>
+                    ))}
+                  </ul>
+                )}
+                {run.program_recommendation && (
+                  <p className="mt-2 text-[12px] text-foreground">
+                    Suggested program: <span className="font-semibold">{run.program_recommendation.program}</span>{' '}
+                    <span className="text-muted-foreground">
+                      ({Math.round(run.program_recommendation.confidence * 100)}% — {run.program_recommendation.reason}) — confirm manually.
+                    </span>
+                  </p>
+                )}
+                <p className="mt-2 text-[12px] text-muted-foreground">
+                  {run.ai_status === 'done' && run.ai_summary
+                    ? run.ai_summary
+                    : run.ai_status === 'error'
+                      ? 'AI explanation unavailable.'
+                      : 'AI explanation pending…'}
+                </p>
               </div>
             ))}
           </div>
