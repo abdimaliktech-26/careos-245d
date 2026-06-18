@@ -1,3 +1,4 @@
+import { cache } from 'react'
 import { createClient } from '@/lib/supabase/server'
 import type { UserProfile } from '@/types/app'
 import { getActiveImpersonation, type ActiveImpersonation } from '@/lib/super-admin/impersonation-read'
@@ -12,7 +13,9 @@ type SessionResult =
   | { user: UserProfile; error: null }
   | { user: null; error: string }
 
-export async function getSession(): Promise<SessionResult> {
+// Wrapped in React cache(): within a single server render, layout + page +
+// nested components share ONE getUser + membership query instead of re-fetching.
+export const getSession = cache(async (): Promise<SessionResult> => {
   const supabase = await createClient()
   const { data: { user }, error: authError } = await supabase.auth.getUser()
 
@@ -66,4 +69,4 @@ export async function getSession(): Promise<SessionResult> {
   }
 
   return { user: null, error: 'Profile not found' }
-}
+})
