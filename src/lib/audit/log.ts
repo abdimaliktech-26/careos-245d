@@ -22,6 +22,7 @@ type AuditAction =
   | 'incident_updated'
   | 'invite_sent'
   | 'member_role_changed'
+  | 'agent_validation_run'
 
 type AuditLogInput = {
   user: UserProfile
