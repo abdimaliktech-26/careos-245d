@@ -6,6 +6,8 @@ import { getSession } from '@/lib/auth/get-session'
 import { logAuditEvent } from '@/lib/audit/log'
 import { createClient } from '@/lib/supabase/server'
 import { haversineDistance } from '@/lib/evv/geo'
+import { toComplianceVisit } from '@/lib/evv/compliance'
+import { runEvvValidation } from '@/lib/agent/pipeline'
 
 type ActionState = { error: string | null; success?: string | null }
 
@@ -198,6 +200,21 @@ export async function gpsCheckOut(visitId: string, lat: number, lng: number, acc
     entityLabel: 'GPS check-out',
     details: { visitId, accuracy, distanceM: distance, billableMinutes },
   }).catch(() => null)
+
+  // Agent EVV validation on completion (non-blocking — never fails the clock-out).
+  const { data: visitRow } = await supabase
+    .from('evv_visits')
+    .select('*, clients(legal_name), staff_profiles(full_name)')
+    .eq('id', visitId)
+    .eq('organization_id', user.organizationId)
+    .single()
+  if (visitRow) {
+    await runEvvValidation(
+      toComplianceVisit(visitRow as Record<string, unknown>),
+      'visit_clock_out',
+      { organizationId: user.organizationId, userId: user.id, user },
+    ).catch(() => null)
+  }
 
   revalidatePath('/evv')
   return { error: null, success: 'GPS check-out recorded.' }
