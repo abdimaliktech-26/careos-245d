@@ -1,5 +1,12 @@
 import { createClient } from '@/lib/supabase/server'
 import type { UserProfile } from '@/types/app'
+import { getActiveImpersonation, type ActiveImpersonation } from '@/lib/super-admin/impersonation-read'
+
+/** Pure: apply an active impersonation onto a profile (super_admin only path). */
+export function applyImpersonation(profile: UserProfile, active: ActiveImpersonation | null): UserProfile {
+  if (!active) return profile
+  return { ...profile, organizationId: active.orgId, impersonating: active }
+}
 
 type SessionResult =
   | { user: UserProfile; error: null }
@@ -21,17 +28,18 @@ export async function getSession(): Promise<SessionResult> {
     .maybeSingle()
 
   if (profile) {
-    return {
-      user: {
-        id: profile.user_id,
-        organizationId: profile.organization_id,
-        role: profile.role,
-        fullName: profile.full_name ?? user.email ?? 'User',
-        email: profile.email ?? user.email ?? '',
-        isActive: profile.is_active,
-      },
-      error: null,
+    const baseProfile: UserProfile = {
+      id: profile.user_id,
+      organizationId: profile.organization_id,
+      role: profile.role,
+      fullName: profile.full_name ?? user.email ?? 'User',
+      email: profile.email ?? user.email ?? '',
+      isActive: profile.is_active,
     }
+    const active = baseProfile.role === 'super_admin'
+      ? await getActiveImpersonation(baseProfile.id)
+      : null
+    return { user: applyImpersonation(baseProfile, active), error: null }
   }
 
   // Fallback for external signers without an organization_members row.
