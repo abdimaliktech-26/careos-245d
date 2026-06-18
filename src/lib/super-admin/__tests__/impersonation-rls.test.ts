@@ -24,7 +24,7 @@ describe.runIf(hasEnv)('get_my_org_id with impersonation (integration)', () => {
     return uid
   }
 
-  test('active impersonation row inserts and is the latest active for the super admin', async () => {
+  test('active impersonation row inserts and is the latest active for the super admin', { timeout: 30000 }, async () => {
     const o1 = await makeOrg('__imp_o1__')
     const o2 = await makeOrg('__imp_o2__')
     const uid = await makeSuper(o1)
@@ -41,7 +41,7 @@ describe.runIf(hasEnv)('get_my_org_id with impersonation (integration)', () => {
     expect(rows?.[0]?.organization_id).toBe(o2)
   })
 
-  test('unique partial index blocks a second active row for the same super admin', async () => {
+  test('unique partial index blocks a second active row for the same super admin', { timeout: 30000 }, async () => {
     const org = await makeOrg('__imp_uniq__')
     const uid = await makeSuper(org)
     const exp = new Date(Date.now() + 60000).toISOString()
