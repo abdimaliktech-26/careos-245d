@@ -56,11 +56,14 @@ export async function createUser(
   const fullName = `${firstName.trim()} ${lastName.trim()}`.trim()
   const temporaryPassword = `Care-${randomBytes(9).toString('base64url')}!`
 
+  // NOTE: do not put `role` in user_metadata — a DB trigger on auth.users
+  // rejects it ("Database error creating new user"). Role lives on
+  // organization_members instead.
   const { data: authData, error: authError } = await admin.auth.admin.createUser({
     email: email.trim(),
     email_confirm: true,
     password: temporaryPassword,
-    user_metadata: { role, organization_id: organizationId },
+    user_metadata: { organization_id: organizationId },
   })
 
   if (authError || !authData.user) {

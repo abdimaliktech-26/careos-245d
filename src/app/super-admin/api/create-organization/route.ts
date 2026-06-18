@@ -44,19 +44,25 @@ export async function POST(request: Request) {
     }
 
     let adminPassword: string | null = null
+    let adminError: string | null = null
 
     if (createAdmin && adminEmail && adminEmail.includes('@')) {
       const fullName = adminName?.trim() || adminEmail.split('@')[0]
       const temporaryPassword = `Org-${randomBytes(9).toString('base64url')}!`
 
-      const { data: authData } = await admin.auth.admin.createUser({
+      // NOTE: do not put `role` in user_metadata — a DB trigger on auth.users
+      // rejects it ("Database error creating new user"). Role lives on
+      // organization_members instead.
+      const { data: authData, error: authError } = await admin.auth.admin.createUser({
         email: adminEmail.trim(),
         email_confirm: true,
         password: temporaryPassword,
-        user_metadata: { role: 'org_admin', organization_id: org.id },
+        user_metadata: { organization_id: org.id },
       })
 
-      if (authData?.user) {
+      if (authError || !authData?.user) {
+        adminError = authError?.message ?? 'Failed to create admin user'
+      } else {
         await admin.from('organization_members').insert({
           organization_id: org.id,
           user_id: authData.user.id,
@@ -101,7 +107,7 @@ export async function POST(request: Request) {
       }
     }
 
-    return NextResponse.json({ id: org.id, adminPassword })
+    return NextResponse.json({ id: org.id, adminPassword, adminError })
   } catch {
     return NextResponse.json({ error: 'Invalid request' }, { status: 400 })
   }

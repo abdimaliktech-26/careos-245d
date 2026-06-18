@@ -52,6 +52,9 @@ export function CreateOrgForm() {
       }
       if (createAdmin && data.adminPassword) {
         setResult({ orgId: data.id, adminEmail: adminEmail.trim(), adminPassword: data.adminPassword })
+      } else if (createAdmin && data.adminError) {
+        // Org was created but the admin account failed — don't navigate away silently.
+        setError(`Organization created, but the admin login failed: ${data.adminError}. Create the admin from the Users page.`)
       } else {
         router.push(`/super-admin/organizations/${data.id}`)
         router.refresh()
