@@ -8,6 +8,7 @@ import { getPacketCompliance } from '@/lib/packets/compliance'
 import { validateRequiredSignatures } from '@/lib/forms/signature-validation'
 import { logAuditEvent } from '@/lib/audit/log'
 import { autoGenerateClaim } from '@/lib/billing/auto-billing'
+import { runIntakeValidation } from '@/lib/agent/pipeline'
 import type { FieldType, FormSchema } from '@/types/forms'
 
 type ActionResult<T> =
@@ -200,6 +201,56 @@ export async function submitFormForSignatures(
   const supabase = await createServerClient()
   const { error: responseError } = await upsertResponses(packetFormId, formData, user.id)
   if (responseError) return { data: null, error: responseError.message }
+
+  // Agent validation: deterministic checks + audit log run before advancing to
+  // signatures. Fail-closed — a hard-fail or an audit-write failure blocks submit.
+  if (user.organizationId) {
+    const [{ data: fieldRows }, { data: client }] = await Promise.all([
+      supabase
+        .from('form_fields')
+        .select('field_key, label, is_required, conditional_on, conditional_value')
+        .eq('template_id', _templateId),
+      supabase
+        .from('clients')
+        .select('id, program, waiver_type, county_of_service, service_start_date, guardianship_status, guardian_name')
+        .eq('id', clientId)
+        .maybeSingle(),
+    ])
+
+    const today = new Date().toISOString().slice(0, 10)
+    let validation
+    try {
+      validation = await runIntakeValidation(
+        {
+          subjectId: packetFormId,
+          clientId: client?.id ?? clientId ?? null,
+          fields: fieldRows ?? [],
+          formData,
+          eligibility: {
+            program: client?.program ?? null,
+            waiver_type: client?.waiver_type ?? null,
+            county_of_service: client?.county_of_service ?? null,
+            service_start_date: client?.service_start_date ?? null,
+            guardianship_status: client?.guardianship_status ?? null,
+            guardian_name: client?.guardian_name ?? null,
+            today,
+          },
+          router: {
+            waiver_type: client?.waiver_type ?? null,
+            requested_service: (formData['requested_service'] as string) ?? null,
+            current_program: client?.program ?? null,
+          },
+        },
+        { organizationId: user.organizationId, userId: user.id, user },
+      )
+    } catch {
+      return { data: null, error: 'Validation/audit failed; submission not recorded. Please retry.' }
+    }
+
+    if (validation.verdict === 'fail') {
+      return { data: null, error: `Submission blocked by validation: ${validation.run.flags.map((f) => f.message).join(' ')}` }
+    }
+  }
 
   const { data: packetForm, error } = await supabase
     .from('packet_forms')
