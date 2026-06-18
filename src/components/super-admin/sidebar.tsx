@@ -16,6 +16,7 @@ const NAV_ITEMS: NavItem[] = [
   { href: '/super-admin/users', label: 'Users', icon: UsersIcon },
   { href: '/super-admin/audit-log', label: 'Audit Log', icon: AuditIcon },
   { href: '/super-admin/settings', label: 'System Settings', icon: SettingsIcon },
+  { href: '/dashboard', label: 'Admin Dashboard', icon: DashboardIcon },
 ]
 
 function NavItem({ href, label, Icon, active }: { href: string; label: string; Icon: React.FC; active: boolean }) {
