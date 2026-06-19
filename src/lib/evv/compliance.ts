@@ -88,6 +88,27 @@ export const MISSED_VISIT_GRACE_MINUTES = 15
 export const GEOFENCE_RADIUS_M = 100
 export const IMPOSSIBLE_TRAVEL_SPEED_KMH = 120
 
+// Rule parameters; defaults preserve the historical Minnesota constants so any
+// caller that passes no params gets identical behavior. State-aware callers pass
+// params derived from the org's StateProfile (see src/lib/evv/states).
+export type RuleParams = {
+  geofenceRadiusM: number
+  lateCheckInGraceMin: number
+  earlyCheckOutGraceMin: number
+  missedVisitGraceMin: number
+  impossibleTravelSpeedKmh: number
+  requiredElements: CuresActElementKey[]
+}
+
+const DEFAULT_RULE_PARAMS: RuleParams = {
+  geofenceRadiusM: GEOFENCE_RADIUS_M,
+  lateCheckInGraceMin: LATE_CHECK_IN_GRACE_MINUTES,
+  earlyCheckOutGraceMin: EARLY_CHECK_OUT_GRACE_MINUTES,
+  missedVisitGraceMin: MISSED_VISIT_GRACE_MINUTES,
+  impossibleTravelSpeedKmh: IMPOSSIBLE_TRAVEL_SPEED_KMH,
+  requiredElements: CURES_ACT_ELEMENTS.map((e) => e.key),
+}
+
 const MS_PER_MINUTE = 60000
 
 export type WorkflowStageKey =
@@ -115,12 +136,18 @@ export type CuresActCheck = {
   isComplete: boolean
 }
 
-export function checkCuresActElements(visit: EvvComplianceVisit): CuresActCheck {
+export function checkCuresActElements(
+  visit: EvvComplianceVisit,
+  params: RuleParams = DEFAULT_RULE_PARAMS,
+): CuresActCheck {
   const captured: CuresActElementKey[] = []
   const missing: CuresActElementKey[] = []
+  const required = new Set(params.requiredElements)
 
-  const mark = (key: CuresActElementKey, isCaptured: boolean) =>
+  const mark = (key: CuresActElementKey, isCaptured: boolean) => {
+    if (!required.has(key)) return // not required in this state → don't evaluate
     (isCaptured ? captured : missing).push(key)
+  }
 
   mark('service_type', Boolean(visit.serviceName?.trim()))
   mark('individual_receiving', Boolean(visit.clientId))
@@ -141,21 +168,26 @@ function minutesBetween(earlier: string, later: string): number {
  * period) and no one ever clocked in. Derived live so the dashboard reflects
  * reality before the nightly job persists `status = 'missed'`.
  */
-export function isMissedVisit(visit: EvvComplianceVisit, now: Date = new Date()): boolean {
+export function isMissedVisit(
+  visit: EvvComplianceVisit,
+  now: Date = new Date(),
+  params: RuleParams = DEFAULT_RULE_PARAMS,
+): boolean {
   if (visit.actualStart) return false
   if (visit.status === 'completed' || visit.status === 'cancelled') return false
   if (visit.status === 'missed') return true
   if (!visit.scheduledEnd) return false
-  return now.getTime() > new Date(visit.scheduledEnd).getTime() + MISSED_VISIT_GRACE_MINUTES * MS_PER_MINUTE
+  return now.getTime() > new Date(visit.scheduledEnd).getTime() + params.missedVisitGraceMin * MS_PER_MINUTE
 }
 
 export function detectVisitExceptions(
   visit: EvvComplianceVisit,
-  options: { now?: Date } = {}
+  options: { now?: Date; params?: RuleParams } = {}
 ): EvvException[] {
   if (visit.resolvedAt) return []
 
   const now = options.now ?? new Date()
+  const params = options.params ?? DEFAULT_RULE_PARAMS
   const exceptions: EvvException[] = []
   const base = {
     visitId: visit.id,
@@ -166,7 +198,7 @@ export function detectVisitExceptions(
 
   if (visit.scheduledStart && visit.actualStart) {
     const lateBy = minutesBetween(visit.scheduledStart, visit.actualStart)
-    if (lateBy > LATE_CHECK_IN_GRACE_MINUTES) {
+    if (lateBy > params.lateCheckInGraceMin) {
       exceptions.push({
         ...base,
         type: 'late_check_in',
@@ -178,7 +210,7 @@ export function detectVisitExceptions(
 
   if (visit.scheduledEnd && visit.actualEnd) {
     const earlyBy = minutesBetween(visit.actualEnd, visit.scheduledEnd)
-    if (earlyBy > EARLY_CHECK_OUT_GRACE_MINUTES) {
+    if (earlyBy > params.earlyCheckOutGraceMin) {
       exceptions.push({
         ...base,
         type: 'early_check_out',
@@ -200,7 +232,7 @@ export function detectVisitExceptions(
     }
   }
 
-  if (isMissedVisit(visit, now)) {
+  if (isMissedVisit(visit, now, params)) {
     exceptions.push({
       ...base,
       type: 'missed_visit',
@@ -210,17 +242,17 @@ export function detectVisitExceptions(
   }
 
   const worstDistance = Math.max(visit.checkInDistanceM ?? 0, visit.checkOutDistanceM ?? 0)
-  if (worstDistance > GEOFENCE_RADIUS_M) {
+  if (worstDistance > params.geofenceRadiusM) {
     exceptions.push({
       ...base,
       type: 'geofence_violation',
       severity: 'high',
-      message: `GPS captured ${Math.round(worstDistance)}m from the client's service address (limit ${GEOFENCE_RADIUS_M}m).`,
+      message: `GPS captured ${Math.round(worstDistance)}m from the client's service address (limit ${params.geofenceRadiusM}m).`,
     })
   }
 
   if (visit.status === 'completed') {
-    const elements = checkCuresActElements(visit)
+    const elements = checkCuresActElements(visit, params)
     if (!elements.isComplete) {
       const labels = CURES_ACT_ELEMENTS.filter((e) => elements.missing.includes(e.key))
         .map((e) => e.label.toLowerCase())
