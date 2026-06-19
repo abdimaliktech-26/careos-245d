@@ -4,6 +4,8 @@ import { checkRequiredFields, type FormFieldDef } from './intake/required-fields
 import { checkEligibility, type EligibilityInput } from './intake/eligibility'
 import { recommendProgram, type RouterInput } from './intake/program-router'
 import { validateEvvVisit } from './evv/validate'
+import { getOrgStateProfile } from '@/lib/evv/states/resolve'
+import { ruleParamsFor } from '@/lib/evv/states/to-rule-params'
 import { recordValidationRun, patchRunAi } from './audit/record'
 import { enrichRun } from './ai/enrich'
 import { rollupVerdict, type ValidationRun, type Verdict, type CheckResult, type Flag } from './types'
@@ -72,7 +74,16 @@ export async function runEvvValidation(
   trigger: 'visit_clock_out' | 'daily_sweep',
   actor: Actor,
 ): Promise<EvvResult> {
-  const res = validateEvvVisit(visit)
+  // State-aware rules: resolve the org's profile; fall back to defaults on any
+  // config hiccup so validation is never blocked.
+  let params
+  try {
+    const profile = await getOrgStateProfile(actor.organizationId)
+    params = ruleParamsFor(profile)
+  } catch {
+    params = undefined
+  }
+  const res = validateEvvVisit(visit, params)
   const run: ValidationRun = {
     subjectType: 'evv_visit',
     subjectId: visit.id,

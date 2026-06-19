@@ -4,6 +4,8 @@ import { ArrowLeft } from 'lucide-react'
 import { getSession } from '@/lib/auth/get-session'
 import { createClient } from '@/lib/supabase/server'
 import { EvvAggregatorSettingsForm } from '@/components/evv/evv-aggregator-settings-form'
+import { EvvStateSelector } from '@/components/evv/evv-state-selector'
+import { listStateProfiles, DEFAULT_STATE } from '@/lib/evv/states/registry'
 
 type Vendor = 'none' | 'hhaexchange' | 'sandata'
 
@@ -35,6 +37,14 @@ export default async function EvvSettingsPage() {
     enabled: row?.enabled ?? false,
   }
 
+  const { data: stateRow } = await supabase
+    .from('evv_state_config')
+    .select('state_code')
+    .eq('organization_id', user.organizationId)
+    .maybeSingle()
+  const currentState = (stateRow as { state_code: string } | null)?.state_code ?? DEFAULT_STATE
+  const stateOptions = listStateProfiles().map((p) => ({ code: p.code, name: p.name, defaultVendor: p.defaultVendor }))
+
   return (
     <div className="max-w-2xl">
       <Link href="/evv" className="inline-flex items-center gap-1.5 text-[12px] font-semibold text-muted-foreground hover:text-foreground">
@@ -52,6 +62,7 @@ export default async function EvvSettingsPage() {
         </p>
       </div>
 
+      <EvvStateSelector options={stateOptions} current={currentState} />
       <EvvAggregatorSettingsForm initial={initial} />
     </div>
   )

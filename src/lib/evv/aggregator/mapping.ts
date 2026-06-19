@@ -88,7 +88,7 @@ function toGpsStamp(location: EvvComplianceVisit['checkInLocation'], timestamp: 
  */
 export function buildAggregatorPayload(
   visit: EvvComplianceVisit,
-  opts: { providerId: string; clientExternalId: string; caregiverExternalId: string | null }
+  opts: { providerId: string; clientExternalId: string; caregiverExternalId: string | null; serviceType?: string }
 ): AggregatorVisitPayload {
   return {
     // Stable per visit → the aggregator dedupes resubmissions instead of
@@ -96,7 +96,9 @@ export function buildAggregatorPayload(
     idempotencyKey: visit.id,
     providerId: opts.providerId,
     visitId: visit.id,
-    serviceType: visit.serviceName ?? '',
+    // State service-code mapping (procedure/aggregator code) when resolved;
+    // falls back to the internal service name only if no mapping exists.
+    serviceType: opts.serviceType ?? visit.serviceName ?? '',
     clientExternalId: opts.clientExternalId,
     caregiverExternalId: opts.caregiverExternalId,
     serviceDate: visit.serviceDate,

@@ -4,6 +4,7 @@ import {
   CURES_ACT_ELEMENTS,
   type EvvComplianceVisit,
   type ExceptionSeverity,
+  type RuleParams,
 } from '@/lib/evv/compliance'
 import type { CheckResult, Flag, FlagSeverity, Verdict } from '../types'
 import { rollupVerdict } from '../types'
@@ -15,9 +16,10 @@ function mapSeverity(s: ExceptionSeverity): FlagSeverity {
 
 export function validateEvvVisit(
   visit: EvvComplianceVisit,
+  params?: RuleParams,
 ): { verdict: Verdict; checks: CheckResult[]; flags: Flag[] } {
-  const cures = checkCuresActElements(visit)
-  const exceptions = detectVisitExceptions(visit)
+  const cures = checkCuresActElements(visit, params)
+  const exceptions = detectVisitExceptions(visit, params ? { params } : {})
 
   const flags: Flag[] = []
 
