@@ -25,6 +25,9 @@ type AuditAction =
   | 'agent_validation_run'
   | 'impersonation_started'
   | 'impersonation_ended'
+  | 'isp_created'
+  | 'isp_activated'
+  | 'isp_signed'
 
 type AuditLogInput = {
   user: UserProfile

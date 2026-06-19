@@ -352,6 +352,19 @@ export default async function ClientProfilePage({ params }: Props) {
         )}
       </section>
 
+      {/* Service Plans (ISP) */}
+      <section className="bg-card border border-border rounded-xl p-5">
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="font-semibold text-foreground">Service Plans</h2>
+          <Link href={`/clients/${id}/isp`} className="text-xs font-semibold text-primary hover:underline">
+            View All
+          </Link>
+        </div>
+        <p className="text-sm text-muted-foreground">
+          The 245D coordinated service &amp; support plan: services, outcomes, risk management, and signatures.
+        </p>
+      </section>
+
       {/* Service Goals */}
       <section className="bg-card border border-border rounded-xl p-5">
         <div className="flex items-center justify-between mb-4">
