@@ -59,10 +59,10 @@ html {
   --color-border-strong:   #D4D4D8;
   --color-pink:            #F0ABFC;
   --color-pink-light:      #FAF5FF;
-  --color-pink-mid:        #DB2777;
+  --color-pink-mid:        #10B99A;
   --color-blue:            #A5B4FC;
   --color-blue-light:      #EEF2FF;
-  --color-blue-mid:        #7C3AED;
+  --color-blue-mid:        #3B82F6;
   --color-purple:          #C4B5FD;
   --color-purple-light:    #F5F3FF;
   --gradient-primary:      linear-gradient(135deg, var(--brand-from), var(--brand-to));
@@ -89,22 +89,22 @@ html {
   --card-foreground:       #FAFAFA;
   --popover:               #0F0F12;
   --popover-foreground:    #FAFAFA;
-  --primary:               #A78BFA;
-  --primary-foreground:    #18181B;
+  --primary:               #2DD4BF;
+  --primary-foreground:    #06251F;
   --secondary:             #1C1C20;
   --secondary-foreground:  #FAFAFA;
   --muted:                 #1C1C20;
   --muted-foreground:      #A1A1AA;
-  --accent:                #1C1528;
-  --accent-foreground:     #C4B5FD;
+  --accent:                #0F2A24;
+  --accent-foreground:     #5EEAD4;
   --destructive:           #F87171;
   --destructive-foreground:#18181B;
   --border:                #27272A;
   --input:                 #27272A;
-  --ring:                  #A78BFA;
+  --ring:                  #2DD4BF;
 
-  --brand-from:            #F472B6;
-  --brand-to:              #A78BFA;
+  --brand-from:            #2DD4BF;
+  --brand-to:              #0E9E86;
 
   --status-warn-fg:        #FBBF24;
   --status-warn-bg:        rgba(245, 158, 11, 0.14);

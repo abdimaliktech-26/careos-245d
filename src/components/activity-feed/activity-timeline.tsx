@@ -76,7 +76,7 @@ export function ActivityTimeline({ entries, filter }: { entries: ActivityEntry[]
     return (
       <div className="flex flex-col items-center justify-center py-16 text-center">
         <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-accent">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#DB2777" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10B99A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
           </svg>
         </div>

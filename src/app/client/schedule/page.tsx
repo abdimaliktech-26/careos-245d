@@ -72,7 +72,7 @@ export default async function ClientSchedulePage() {
       {rows.length === 0 ? (
         <div className="care-panel rounded-2xl flex flex-col items-center justify-center py-16 text-center">
           <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-accent">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#DB2777" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10B99A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
             </svg>
           </div>

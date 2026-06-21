@@ -43,22 +43,23 @@ function StatCard({ label, value, iconClass, Icon, variant = 'default' }: StatCa
   const isAlert = variant !== 'default' && value > 0
   return (
     <div
-      className={`relative overflow-hidden rounded-xl border bg-card p-5 shadow-xs ${
+      className={`relative overflow-hidden rounded-2xl border bg-card p-5 ${
         isAlert
           ? variant === 'danger' ? 'border-status-error/30' : 'border-status-warn/30'
           : 'border-border'
       }`}
+      style={{ boxShadow: '0 1px 3px rgba(15,23,42,0.06)' }}
     >
       {isAlert && (
         <div
-          className={`absolute inset-y-0 left-0 w-[3px] rounded-l-xl ${
+          className={`absolute inset-y-0 left-0 w-[3px] rounded-l-2xl ${
             variant === 'danger' ? 'bg-status-error' : 'bg-status-warn'
           }`}
         />
       )}
       <div className="mb-3 flex items-start justify-between">
-        <div className={`flex h-9 w-9 items-center justify-center rounded-lg ${iconClass}`}>
-          <Icon className="h-[15px] w-[15px]" />
+        <div className={`flex h-11 w-11 items-center justify-center rounded-full ${iconClass}`}>
+          <Icon className="h-[18px] w-[18px]" />
         </div>
         {isAlert && (
           <span

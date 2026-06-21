@@ -23,7 +23,7 @@ const STATUS_STYLES: Record<string, { bg: string; text: string; label: string }>
 }
 
 const CATEGORY_COLORS: Record<string, string> = {
-  clinical: '#DB2777',
+  clinical: '#10B99A',
   behavioral: '#F59E0B',
   developmental: '#10B981',
   social: '#8B5CF6',
@@ -89,7 +89,7 @@ export function GoalCard({ goal, href, latestProgress }: GoalCardProps) {
           <div className="w-full h-2 rounded-full bg-muted overflow-hidden">
             <div
               className="h-full rounded-full transition-all duration-500"
-              style={{ width: `${score}%`, backgroundColor: '#DB2777' }}
+              style={{ width: `${score}%`, backgroundColor: '#10B99A' }}
             />
           </div>
         </div>

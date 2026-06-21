@@ -51,14 +51,14 @@ export default async function SuperAdminDashboard() {
 
       {/* Stats grid */}
       <div className="mb-8 grid grid-cols-2 gap-4 lg:grid-cols-4">
-        <StatCard label="Total Organizations" value={stats.totalOrganizations} iconBg="#EEF2FF" iconColor="#DB2777">
-          <IconBuilding color="#DB2777" />
+        <StatCard label="Total Organizations" value={stats.totalOrganizations} iconBg="#EEF2FF" iconColor="#10B99A">
+          <IconBuilding color="#10B99A" />
         </StatCard>
         <StatCard label="Active Organizations" value={stats.activeOrganizations} iconBg="#ECFDF5" iconColor="#10B981">
           <IconBuilding color="#10B981" />
         </StatCard>
-        <StatCard label="Total Users" value={stats.totalUsers} iconBg="#EEF2FF" iconColor="#DB2777">
-          <IconUsers color="#DB2777" />
+        <StatCard label="Total Users" value={stats.totalUsers} iconBg="#EEF2FF" iconColor="#10B99A">
+          <IconUsers color="#10B99A" />
         </StatCard>
         <StatCard label="Total Clients" value={stats.totalClients} iconBg="#FEF3C7" iconColor="#D97706">
           <IconClipboard color="#D97706" />

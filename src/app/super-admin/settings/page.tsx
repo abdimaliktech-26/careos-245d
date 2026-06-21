@@ -127,7 +127,7 @@ export default async function SystemSettingsPage() {
 
           <div className="grid grid-cols-2 gap-3">
             {[
-              { label: 'Total Orgs', value: stats.totalOrganizations, color: '#DB2777' },
+              { label: 'Total Orgs', value: stats.totalOrganizations, color: '#10B99A' },
               { label: 'Active Orgs', value: stats.activeOrganizations, color: '#10B981' },
               { label: 'Pending Orgs', value: stats.pendingOrganizations, color: '#F59E0B' },
               { label: 'Suspended', value: stats.suspendedOrganizations, color: '#EF4444' },

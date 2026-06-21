@@ -22,8 +22,8 @@ export function pinIcon(color: string, pulse = false): L.DivIcon {
 
 export const MARKER_COLORS = {
   checkIn: '#10B981', // emerald — clocked in
-  checkOut: '#DB2777', // brand pink — clocked out
-  clientHome: '#7C3AED', // violet — service address
+  checkOut: '#10B99A', // brand pink — clocked out
+  clientHome: '#001F5B', // violet — service address
   liveOk: '#2563EB', // blue — live, within geofence
   liveOut: '#DC2626', // red — live, outside geofence
 } as const

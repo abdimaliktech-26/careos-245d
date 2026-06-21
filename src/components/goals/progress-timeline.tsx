@@ -118,7 +118,7 @@ export function ProgressChart({ progress }: { progress: GoalProgress[] }) {
         })}
 
         {pathD && (
-          <path d={pathD} fill="none" stroke="#DB2777" strokeWidth={2} strokeLinejoin="round" strokeLinecap="round" />
+          <path d={pathD} fill="none" stroke="#10B99A" strokeWidth={2} strokeLinejoin="round" strokeLinecap="round" />
         )}
 
         {scored.map((s, i) => {
