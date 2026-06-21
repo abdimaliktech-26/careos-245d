@@ -1,6 +1,5 @@
-import { generateText, type LanguageModel } from 'ai'
 import { z } from 'zod'
-import { aiModel } from '@/lib/ai/provider'
+import { runAiText } from '@/lib/ai/gateway'
 import type { ValidationRun } from '../types'
 
 const enrichSchema = z.object({
@@ -26,16 +25,17 @@ const SYSTEM =
   'Respond with ONLY a JSON object: {"summary": string, "anomalies": [{"code": string, "message": string}]}.'
 
 /**
- * Best-effort AI enrichment. Follows the repo's generateText + parse pattern.
- * Sends only minimum-necessary structured fields (no raw PHI free-text). The
- * model never changes the verdict. Throws on bad output; the pipeline swallows.
+ * Best-effort AI enrichment through the governed gateway. Returns `{ disabled: true }`
+ * when AI is off/limited/unconfigured/errored — callers degrade gracefully.
  */
 export async function enrichRun(
   run: ValidationRun,
-  opts: { model?: LanguageModel } = {},
-): Promise<EnrichResult> {
-  const { text, response } = await generateText({
-    model: opts.model ?? aiModel,
+  ctx: { organizationId: string; userId: string | null },
+): Promise<EnrichResult | { disabled: true }> {
+  const res = await runAiText({
+    organizationId: ctx.organizationId,
+    userId: ctx.userId,
+    feature: 'agent_enrich',
     system: SYSTEM,
     prompt: JSON.stringify({
       subjectType: run.subjectType,
@@ -45,7 +45,10 @@ export async function enrichRun(
       programRecommendation: run.programRecommendation,
     }),
   })
-
-  const parsed = parseEnrichResponse(text)
-  return { ...parsed, modelId: response?.modelId ?? null }
+  if (!res.ok) return { disabled: true }
+  try {
+    return { ...parseEnrichResponse(res.text), modelId: res.model }
+  } catch {
+    return { disabled: true }
+  }
 }

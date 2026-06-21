@@ -1,7 +1,6 @@
-import { generateText } from 'ai'
 import { getSession } from '@/lib/auth/get-session'
 import { createClient } from '@/lib/supabase/server'
-import { aiModel } from '@/lib/ai/provider'
+import { runAiText } from '@/lib/ai/gateway'
 import {
   buildClientSummaryPrompt,
   CLIENT_SUMMARY_SYSTEM_PROMPT,
@@ -62,20 +61,14 @@ export async function POST(req: Request) {
     goals: goals ?? [],
   })
 
-  try {
-    const { text } = await generateText({
-      model: aiModel,
-      system: CLIENT_SUMMARY_SYSTEM_PROMPT,
-      prompt,
-      temperature: 0.3,
-    })
-    return Response.json({ summary: text.trim() })
-  } catch (error: unknown) {
-    console.error('client-summary generation failed', {
-      clientId,
-      organizationId: user.organizationId,
-      error: error instanceof Error ? error.message : String(error),
-    })
+  const ai = await runAiText({
+    organizationId: user.organizationId, userId: user.id, feature: 'client_summary',
+    system: CLIENT_SUMMARY_SYSTEM_PROMPT, prompt,
+  })
+  if (ai.ok) {
+    return Response.json({ summary: ai.text.trim(), isDraft: true })
+  }
+  {
     return Response.json(
       { error: 'AI summary is temporarily unavailable. Try again later.' },
       { status: 503 }
