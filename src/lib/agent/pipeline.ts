@@ -12,14 +12,18 @@ import { rollupVerdict, type ValidationRun, type Verdict, type CheckResult, type
 
 type Actor = { organizationId: string; userId: string | null; user?: UserProfile }
 
-/** Run best-effort AI enrichment and patch the run. Never throws. */
-async function enrichAndPatch(runId: string, run: ValidationRun): Promise<void> {
+/** Run best-effort AI enrichment (via the governed gateway) and patch the run. Never throws. */
+async function enrichAndPatch(runId: string, run: ValidationRun, actor: Actor): Promise<void> {
   try {
-    const result = await enrichRun(run)
+    const result = await enrichRun(run, { organizationId: actor.organizationId, userId: actor.userId })
+    if ('disabled' in result) {
+      await patchRunAi(runId, { ai_status: 'skipped' }).catch(() => {})
+      return
+    }
     await patchRunAi(runId, {
       ai_status: 'done',
       ai_summary: result.summary,
-      ai_model: result.modelId, // actual model id from the AI SDK result, not hardcoded
+      ai_model: result.modelId,
       flags: [...run.flags, ...result.anomalies.map((a) => ({ code: a.code, severity: 'low' as const, message: a.message }))],
     })
   } catch {
@@ -63,7 +67,7 @@ export async function runIntakeValidation(input: IntakeInput, actor: Actor): Pro
   }
 
   const { id } = await recordValidationRun(run, actor)
-  void enrichAndPatch(id, run) // background; AI never blocks the verdict
+  void enrichAndPatch(id, run, actor) // background; AI never blocks the verdict
   return { runId: id, verdict: run.verdict, run }
 }
 
@@ -95,6 +99,6 @@ export async function runEvvValidation(
     programRecommendation: null,
   }
   const { id } = await recordValidationRun(run, actor)
-  void enrichAndPatch(id, run)
+  void enrichAndPatch(id, run, actor)
   return { runId: id, verdict: run.verdict, run }
 }

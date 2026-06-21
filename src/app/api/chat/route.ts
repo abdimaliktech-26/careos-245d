@@ -1,5 +1,7 @@
 import { streamText, convertToModelMessages } from 'ai'
-import { aiModel } from '@/lib/ai/provider'
+import { getSession } from '@/lib/auth/get-session'
+import { getModel, getPrimaryProvider, isAiConfigured } from '@/lib/ai/provider'
+import { getOrgAiSettings, isFeatureEnabled } from '@/lib/ai/settings'
 
 const SYSTEM_PROMPT = `You are CareAssist, a bilingual compliance assistant for Minnesota 245D home and community-based services providers. You speak both English and Somali (Af Soomaali). Always reply in the same language the user writes in. If the user mixes languages, respond in the language they used most.
 
@@ -43,12 +45,29 @@ Example Somali phrases you know:
 - "Ogeysiis" = Notification/report`
 
 export async function POST(req: Request) {
+  // Governance for streaming chat: config check always; per-org enable check when
+  // the request is authenticated (the public landing assistant has no org).
+  if (!isAiConfigured()) {
+    return Response.json({ error: 'AI is not configured.' }, { status: 409 })
+  }
+  const { user } = await getSession()
+  if (user?.organizationId) {
+    const settings = await getOrgAiSettings(user.organizationId)
+    if (!isFeatureEnabled(settings, 'chat')) {
+      return Response.json({ error: 'AI is disabled for this organization.' }, { status: 409 })
+    }
+  }
+  const model = getModel(getPrimaryProvider())
+  if (!model) {
+    return Response.json({ error: 'AI is not configured.' }, { status: 409 })
+  }
+
   const body = await req.json()
   const uiMessages = Array.isArray(body) ? body : (body.messages ?? [])
   const messages = await convertToModelMessages(uiMessages)
 
   const result = streamText({
-    model: aiModel,
+    model,
     system: SYSTEM_PROMPT,
     messages,
     maxOutputTokens: 1024,

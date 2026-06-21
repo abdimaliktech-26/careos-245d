@@ -1,6 +1,5 @@
-import { generateText } from 'ai'
 import { getSession } from '@/lib/auth/get-session'
-import { aiModel } from '@/lib/ai/provider'
+import { runAiText } from '@/lib/ai/gateway'
 import {
   buildIncidentClassifyPrompt,
   parseIncidentClassifyResponse,
@@ -11,7 +10,7 @@ const MIN_DESCRIPTION_LENGTH = 20
 
 export async function POST(req: Request) {
   const { user, error: sessionError } = await getSession()
-  if (sessionError || !user) {
+  if (sessionError || !user || !user.organizationId) {
     return Response.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
@@ -26,22 +25,17 @@ export async function POST(req: Request) {
     )
   }
 
-  try {
-    const { text } = await generateText({
-      model: aiModel,
-      system: INCIDENT_CLASSIFY_SYSTEM_PROMPT,
-      prompt: buildIncidentClassifyPrompt({ description, category: body?.category ?? null }),
-      temperature: 0.1,
-    })
-    const result = parseIncidentClassifyResponse(text)
-    if (!result) {
-      return Response.json({ error: 'Could not classify. Try again.' }, { status: 502 })
-    }
-    return Response.json(result)
-  } catch (error: unknown) {
-    console.error('incident-classify failed', {
-      error: error instanceof Error ? error.message : String(error),
-    })
-    return Response.json({ error: 'AI triage is temporarily unavailable.' }, { status: 503 })
+  const ai = await runAiText({
+    organizationId: user.organizationId, userId: user.id, feature: 'incident_classify',
+    system: INCIDENT_CLASSIFY_SYSTEM_PROMPT,
+    prompt: buildIncidentClassifyPrompt({ description, category: body?.category ?? null }),
+  })
+  if (!ai.ok) {
+    return Response.json({ error: ai.message, reason: ai.reason }, { status: ai.reason === 'ai_error' ? 502 : 409 })
   }
+  const result = parseIncidentClassifyResponse(ai.text)
+  if (!result) {
+    return Response.json({ error: 'Could not classify. Try again.' }, { status: 502 })
+  }
+  return Response.json({ ...result, isDraft: true })
 }
