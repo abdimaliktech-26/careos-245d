@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
+import { appName } from '@/lib/app-config'
 import { usePathname } from 'next/navigation'
 import { KeyRound, LogOut } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
@@ -80,20 +81,14 @@ export default function Sidebar({ user, branding }: SidebarProps) {
                 className="h-8 w-8 rounded-lg border border-border object-contain"
               />
             ) : (
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-brand-from to-brand-to">
-                <svg width="15" height="15" viewBox="0 0 20 20" fill="white">
-                  <path
-                    fillRule="evenodd"
-                    d="M10 1.944A11.954 11.954 0 012.166 5C2.056 5.649 2 6.319 2 7c0 5.225 3.34 9.67 8 11.317C14.66 16.67 18 12.225 18 7c0-.682-.057-1.35-.166-2.001A11.954 11.954 0 0110 1.944z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              </div>
+              <Image src="/higsi-logo.png" alt={appName()} width={96} height={32} className="h-7 w-auto" />
             )}
             <div>
-              <p className="text-[13px] font-bold leading-none tracking-tight text-foreground">
-                {branding?.name ?? 'CareIntake'}
-              </p>
+              {(branding?.name || branding?.logo_url) && (
+                <p className="text-[13px] font-bold leading-none tracking-tight text-foreground">
+                  {branding?.name ?? appName()}
+                </p>
+              )}
               <p className="mt-0.5 bg-gradient-to-r from-brand-from to-brand-to bg-clip-text text-[9px] font-semibold uppercase tracking-[0.14em] text-transparent">
                 245D Suite
               </p>
