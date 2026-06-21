@@ -50,8 +50,3 @@ export function getModel(p: AiProvider): LanguageModel | null {
 export function isAiConfigured(): boolean {
   return getPrimaryProvider() !== 'none'
 }
-
-// Back-compat: existing imports of `aiModel` keep working until the gateway
-// refactor (Task 6) removes them. Cast keeps callers' types valid; if no provider
-// is configured the call fails at runtime exactly as it did before (key absent).
-export const aiModel = getModel(getPrimaryProvider()) as LanguageModel

@@ -1,7 +1,6 @@
-import { generateText } from 'ai'
+import { runAiText } from '@/lib/ai/gateway'
 import { getSession } from '@/lib/auth/get-session'
 import { createClient } from '@/lib/supabase/server'
-import { aiModel } from '@/lib/ai/provider'
 import {
   buildMorningBriefingPrompt,
   MORNING_BRIEFING_SYSTEM_PROMPT,
@@ -60,22 +59,12 @@ export async function POST() {
     }),
   })
 
-  try {
-    const { text } = await generateText({
-      model: aiModel,
-      system: MORNING_BRIEFING_SYSTEM_PROMPT,
-      prompt,
-      temperature: 0.3,
-    })
-    return Response.json({ briefing: text.trim() })
-  } catch (error: unknown) {
-    console.error('morning-briefing generation failed', {
-      organizationId,
-      error: error instanceof Error ? error.message : String(error),
-    })
-    return Response.json(
-      { error: 'AI briefing is temporarily unavailable.' },
-      { status: 503 }
-    )
+  const ai = await runAiText({
+    organizationId, userId: user.id, feature: 'morning_briefing',
+    system: MORNING_BRIEFING_SYSTEM_PROMPT, prompt,
+  })
+  if (!ai.ok) {
+    return Response.json({ error: ai.message, reason: ai.reason }, { status: ai.reason === 'ai_error' ? 502 : 409 })
   }
+  return Response.json({ briefing: ai.text.trim(), isDraft: true })
 }

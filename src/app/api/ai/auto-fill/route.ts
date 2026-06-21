@@ -1,6 +1,6 @@
-import { generateText } from 'ai'
 import type { FormSchema } from '@/types/forms'
-import { aiModel } from '@/lib/ai/provider'
+import { getSession } from '@/lib/auth/get-session'
+import { runAiText } from '@/lib/ai/gateway'
 
 const SYSTEM_PROMPT = `You are a form-filling assistant for home care providers. Given a description of a client visit or shift, you fill in form fields with appropriate values.
 
@@ -16,6 +16,11 @@ Rules:
 - Never include explanations or markdown`
 
 export async function POST(req: Request) {
+  const { user, error: sessionError } = await getSession()
+  if (sessionError || !user || !user.organizationId) {
+    return Response.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+
   const body = await req.json()
   const { schema, description } = body as { schema: FormSchema; description: string }
 
@@ -38,18 +43,19 @@ ${description}
 
 Fill the form fields based on this description. Return JSON only.`
 
-  const { text } = await generateText({
-    model: aiModel,
-    system: SYSTEM_PROMPT,
-    prompt,
-    temperature: 0.3,
+  const ai = await runAiText({
+    organizationId: user.organizationId, userId: user.id, feature: 'auto_fill',
+    system: SYSTEM_PROMPT, prompt,
   })
+  if (!ai.ok) {
+    return Response.json({ error: ai.message, reason: ai.reason }, { status: ai.reason === 'ai_error' ? 502 : 409 })
+  }
 
   try {
-    const cleaned = text.replace(/```(?:json)?\s*([\s\S]*?)```/g, '$1').trim()
+    const cleaned = ai.text.replace(/```(?:json)?\s*([\s\S]*?)```/g, '$1').trim()
     const values = JSON.parse(cleaned)
-    return Response.json({ values })
+    return Response.json({ values, isDraft: true })
   } catch {
-    return Response.json({ error: 'Failed to parse AI response', raw: text }, { status: 500 })
+    return Response.json({ error: 'Failed to parse AI response', raw: ai.text }, { status: 500 })
   }
 }

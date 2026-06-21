@@ -1,6 +1,5 @@
-import { generateText } from 'ai'
 import { getSession } from '@/lib/auth/get-session'
-import { aiModel } from '@/lib/ai/provider'
+import { runAiText } from '@/lib/ai/gateway'
 import { createClient } from '@/lib/supabase/server'
 import { buildComplianceSummary, toComplianceVisit } from '@/lib/evv/compliance'
 import { EVV_INSIGHTS_SYSTEM_PROMPT, buildEvvInsightsPrompt } from '@/lib/ai/evv-insights'
@@ -32,23 +31,18 @@ export async function POST() {
 
   const summary = buildComplianceSummary((visits ?? []).map(toComplianceVisit))
 
-  try {
-    const { text } = await generateText({
-      model: aiModel,
-      system: EVV_INSIGHTS_SYSTEM_PROMPT,
-      prompt: buildEvvInsightsPrompt(summary, `last ${LOOKBACK_DAYS} days`),
-      temperature: 0.2,
-    })
-
-    return Response.json({
-      insights: text.trim(),
-      complianceRate: summary.complianceRate,
-      exceptionCount: summary.exceptions.length,
-    })
-  } catch (error: unknown) {
-    console.error('evv insights generation failed', {
-      error: error instanceof Error ? error.message : String(error),
-    })
-    return Response.json({ error: 'AI insights are temporarily unavailable.' }, { status: 503 })
+  const ai = await runAiText({
+    organizationId: user.organizationId, userId: user.id, feature: 'evv_insights',
+    system: EVV_INSIGHTS_SYSTEM_PROMPT,
+    prompt: buildEvvInsightsPrompt(summary, `last ${LOOKBACK_DAYS} days`),
+  })
+  if (!ai.ok) {
+    return Response.json({ error: ai.message, reason: ai.reason }, { status: ai.reason === 'ai_error' ? 502 : 409 })
   }
+  return Response.json({
+    insights: ai.text.trim(),
+    isDraft: true,
+    complianceRate: summary.complianceRate,
+    exceptionCount: summary.exceptions.length,
+  })
 }
