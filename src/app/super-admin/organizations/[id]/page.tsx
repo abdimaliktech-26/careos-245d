@@ -6,6 +6,10 @@ import { getOrganizationDetail } from '@/lib/super-admin/actions'
 import { StatusBadge, RoleBadge } from '@/components/super-admin/stat-card'
 import { OrgActions } from './org-actions'
 import { SubscriptionForm } from './subscription-form'
+import { AiControls } from './ai-controls'
+import { createAdminClient } from '@/lib/supabase/admin'
+import { getOrgAiSettings } from '@/lib/ai/settings'
+import { currentPeriod } from '@/lib/ai/usage'
 
 export default async function OrganizationDetailPage({
   params,
@@ -17,6 +21,11 @@ export default async function OrganizationDetailPage({
 
   const { id } = await params
   const org = await getOrganizationDetail(id)
+
+  const aiSettings = await getOrgAiSettings(id)
+  const { data: aiCounter } = await createAdminClient()
+    .from('ai_usage_counters').select('count').eq('organization_id', id).eq('period', currentPeriod()).maybeSingle()
+  const aiUsed = (aiCounter as { count: number } | null)?.count ?? 0
 
   if (!org) {
     return (
@@ -148,6 +157,8 @@ export default async function OrganizationDetailPage({
           currentPrice={org.subscriptionPrice}
           stripeCustomerId={org.stripeCustomerId}
         />
+
+        <AiControls orgId={org.id} enabled={aiSettings.aiEnabled} monthlyLimit={aiSettings.monthlyLimit} usedThisMonth={aiUsed} />
 
         {/* Branding info */}
         <div className="overflow-hidden rounded-2xl border border-border bg-card p-5" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
