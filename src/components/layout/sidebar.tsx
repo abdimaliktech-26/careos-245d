@@ -30,21 +30,12 @@ function NavLink({ href, translationKey, Icon, active }: NavLinkProps) {
     <Link
       href={href}
       className={cn(
-        'group relative flex items-center gap-2.5 rounded-md px-3 py-2 text-[13px] transition-colors',
-        active
-          ? 'bg-accent font-semibold text-accent-foreground'
-          : 'text-muted-foreground hover:bg-muted hover:text-foreground'
+        'group relative flex items-center gap-2.5 rounded-xl px-3.5 py-2.5 text-[13px] font-medium transition-colors',
+        active ? 'text-white' : 'text-[#A9B4CC] hover:bg-white/5 hover:text-white'
       )}
+      style={active ? { background: 'linear-gradient(135deg, var(--brand-from), var(--brand-to))', boxShadow: '0 6px 16px rgba(16,185,154,0.30)' } : undefined}
     >
-      {active && (
-        <span className="absolute inset-y-1.5 left-0 w-0.5 rounded-r-full bg-gradient-to-b from-brand-from to-brand-to" />
-      )}
-      <Icon
-        className={cn(
-          'h-[15px] w-[15px] shrink-0 transition-colors',
-          active ? 'text-accent-foreground' : 'text-muted-foreground group-hover:text-foreground'
-        )}
-      />
+      <Icon className="h-[16px] w-[16px] shrink-0" />
       <span className="truncate">{t(translationKey)}</span>
     </Link>
   )
@@ -66,46 +57,34 @@ export default function Sidebar({ user, branding }: SidebarProps) {
     pathname === href || (href !== '/dashboard' && pathname.startsWith(`${href}/`))
 
   return (
-    <div className="scrollbar-thin flex h-screen w-[232px] shrink-0 flex-col overflow-hidden border-r border-border bg-card">
+    <div className="scrollbar-thin flex h-screen w-[248px] shrink-0 flex-col overflow-hidden bg-navy">
       {/* Logo */}
-      <div className="border-b border-border px-5 py-4">
+      <div className="px-5 py-5">
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            {branding?.logo_url ? (
-              <Image
-                src={branding.logo_url}
-                alt=""
-                width={32}
-                height={32}
-                unoptimized
-                className="h-8 w-8 rounded-lg border border-border object-contain"
-              />
-            ) : (
-              <Image src="/higsi-logo.png" alt={appName()} width={96} height={32} className="h-7 w-auto" />
-            )}
-            <div>
-              {(branding?.name || branding?.logo_url) && (
-                <p className="text-[13px] font-bold leading-none tracking-tight text-foreground">
-                  {branding?.name ?? appName()}
-                </p>
-              )}
-              <p className="mt-0.5 bg-gradient-to-r from-brand-from to-brand-to bg-clip-text text-[9px] font-semibold uppercase tracking-[0.14em] text-transparent">
-                245D Suite
-              </p>
-            </div>
-          </div>
+          {branding?.logo_url ? (
+            <span className="inline-flex items-center rounded-xl bg-white px-2.5 py-1.5">
+              <Image src={branding.logo_url} alt="" width={28} height={28} unoptimized className="h-7 w-auto object-contain" />
+            </span>
+          ) : (
+            <span className="inline-flex items-center rounded-xl bg-white px-3 py-2">
+              <Image src="/higsi-logo.png" alt={appName()} width={100} height={32} className="h-7 w-auto" />
+            </span>
+          )}
           <LocaleSwitcher />
         </div>
+        {(branding?.name || branding?.logo_url) && (
+          <p className="mt-3 text-[12px] font-semibold text-white">{branding?.name ?? appName()}</p>
+        )}
       </div>
 
       {/* Nav */}
-      <nav className="scrollbar-thin flex-1 overflow-y-auto px-3 py-3">
+      <nav className="scrollbar-thin flex-1 overflow-y-auto px-3 py-2">
         {groups.map((group, index) => (
-          <div key={group.id} className={index > 0 ? 'mt-4' : undefined}>
-            <p className="mb-1.5 px-3 text-[9px] font-semibold uppercase tracking-[0.12em] text-muted-foreground/60">
+          <div key={group.id} className={index > 0 ? 'mt-5' : undefined}>
+            <p className="mb-1.5 px-3 text-[9px] font-semibold uppercase tracking-[0.14em] text-white/35">
               {t(group.labelKey)}
             </p>
-            <div className="space-y-0.5">
+            <div className="space-y-1">
               {group.items.map(({ href, translationKey, icon }) => (
                 <NavLink
                   key={href}
@@ -121,23 +100,23 @@ export default function Sidebar({ user, branding }: SidebarProps) {
       </nav>
 
       {/* User */}
-      <div className="border-t border-border p-3">
-        <div className="flex items-center gap-2.5 rounded-lg bg-muted px-3 py-2.5">
-          <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-gradient-to-br from-brand-from to-brand-to text-[11px] font-bold text-white">
+      <div className="p-3">
+        <div className="flex items-center gap-2.5 rounded-2xl bg-white/[0.06] px-3 py-2.5">
+          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-[11px] font-bold text-white" style={{ background: 'linear-gradient(135deg, var(--brand-from), #3B82F6)' }}>
             {initials}
           </div>
           <div className="min-w-0 flex-1">
-            <p className="truncate text-[12px] font-semibold leading-tight text-foreground">
+            <p className="truncate text-[12px] font-semibold leading-tight text-white">
               {user.fullName}
             </p>
-            <p className="mt-0.5 text-[10px] capitalize leading-tight text-muted-foreground">
+            <p className="mt-0.5 text-[10px] capitalize leading-tight text-[#8E9AB5]">
               {roleLabel}
             </p>
           </div>
           <Link
             href="/auth/reset-password"
             title="Change password"
-            className="flex h-6 w-6 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
+            className="flex h-6 w-6 items-center justify-center rounded-md text-[#A9B4CC] transition-colors hover:bg-white/10 hover:text-white"
           >
             <KeyRound className="h-3.5 w-3.5" />
           </Link>
@@ -145,7 +124,7 @@ export default function Sidebar({ user, branding }: SidebarProps) {
             <button
               type="submit"
               title="Sign out"
-              className="flex h-6 w-6 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
+              className="flex h-6 w-6 items-center justify-center rounded-md text-[#A9B4CC] transition-colors hover:bg-white/10 hover:text-white"
             >
               <LogOut className="h-3.5 w-3.5" />
             </button>
