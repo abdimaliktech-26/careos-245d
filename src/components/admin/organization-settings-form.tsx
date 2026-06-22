@@ -118,15 +118,15 @@ export function OrganizationSettingsForm({ organization }: OrganizationSettingsF
               <input
                 type="color"
                 name="brandPrimary"
-                defaultValue={organization.brand_primary ?? '#DB2777'}
+                defaultValue={organization.brand_primary ?? '#10B99A'}
                 className="h-9 w-9 cursor-pointer rounded border border-border bg-transparent p-0.5"
               />
               <input
                 type="text"
                 name="brandPrimary"
-                defaultValue={organization.brand_primary ?? '#DB2777'}
+                defaultValue={organization.brand_primary ?? '#10B99A'}
                 className="flex-1 rounded-lg border border-border px-3 py-1.5 text-xs font-mono outline-none focus:border-ring focus:ring-2 focus:ring-ring/15"
-                placeholder="#DB2777"
+                placeholder="#10B99A"
                 pattern="^#[0-9A-Fa-f]{6}$"
               />
             </div>

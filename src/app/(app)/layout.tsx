@@ -29,13 +29,13 @@ export default async function AppLayout({ children }: { children: React.ReactNod
       branding = {
         name: org.name,
         logo_url: org.logo_url,
-        brand_primary: org.brand_primary ?? '#DB2777',
+        brand_primary: org.brand_primary ?? '#10B99A',
         brand_accent: org.brand_accent ?? '#A78BFA',
       }
     }
   }
 
-  const brandPrimary = branding?.brand_primary ?? '#DB2777'
+  const brandPrimary = branding?.brand_primary ?? '#10B99A'
   const brandAccent = branding?.brand_accent ?? '#A78BFA'
 
   return (

@@ -12,7 +12,7 @@ const STATUS_STYLES: Record<string, { bg: string; text: string; label: string }>
   in_progress: { bg: 'bg-status-warn-bg', text: 'text-status-warn', label: 'In Progress' },
   achieved: { bg: 'bg-status-ok-bg', text: 'text-status-ok', label: 'Achieved' },
   discontinued: { bg: 'bg-muted', text: 'text-muted-foreground', label: 'Discontinued' },
-  revised: { bg: 'bg-purple-50 dark:bg-purple-500/15', text: 'text-purple-700 dark:text-purple-300', label: 'Revised' },
+  revised: { bg: 'bg-blue-50 dark:bg-blue-500/15', text: 'text-blue-700 dark:text-blue-300', label: 'Revised' },
 }
 
 export default async function GoalDetailPage({ params }: Props) {

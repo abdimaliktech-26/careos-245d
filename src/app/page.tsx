@@ -364,7 +364,7 @@ export default function LandingPage() {
             <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
               <Link
                 href="/auth/login"
-                className="inline-flex items-center gap-2 rounded-lg bg-card px-7 py-3.5 text-sm font-bold text-fuchsia-700 shadow-lg transition-all hover:scale-[1.02] hover:shadow-xl"
+                className="inline-flex items-center gap-2 rounded-lg bg-card px-7 py-3.5 text-sm font-bold text-blue-700 shadow-lg transition-all hover:scale-[1.02] hover:shadow-xl"
               >
                 Start free trial <ArrowRightIcon />
               </Link>

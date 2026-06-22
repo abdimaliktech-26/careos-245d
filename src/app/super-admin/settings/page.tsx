@@ -127,7 +127,7 @@ export default async function SystemSettingsPage() {
 
           <div className="grid grid-cols-2 gap-3">
             {[
-              { label: 'Total Orgs', value: stats.totalOrganizations, color: '#DB2777' },
+              { label: 'Total Orgs', value: stats.totalOrganizations, color: '#10B99A' },
               { label: 'Active Orgs', value: stats.activeOrganizations, color: '#10B981' },
               { label: 'Pending Orgs', value: stats.pendingOrganizations, color: '#F59E0B' },
               { label: 'Suspended', value: stats.suspendedOrganizations, color: '#EF4444' },
@@ -213,7 +213,7 @@ export default async function SystemSettingsPage() {
 
           <div className="rounded-2xl border border-border bg-card p-6" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
             <div className="mb-4 flex items-center gap-2.5">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-purple-50 text-purple-600 dark:bg-purple-500/15 dark:text-purple-300">
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-50 text-blue-600 dark:bg-blue-500/15 dark:text-blue-300">
                 <BotIcon />
               </div>
               <div>

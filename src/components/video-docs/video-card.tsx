@@ -3,7 +3,7 @@ import type { VideoDocument } from '@/types/video-docs'
 const CATEGORY_COLORS: Record<string, string> = {
   service_delivery: 'bg-blue-50 text-blue-700 dark:bg-blue-500/15 dark:text-blue-300',
   incident_evidence: 'bg-status-error-bg text-status-error',
-  training: 'bg-violet-50 text-violet-700 dark:bg-violet-500/15 dark:text-violet-300',
+  training: 'bg-blue-50 text-blue-700 dark:bg-blue-500/15 dark:text-blue-300',
   consent: 'bg-status-ok-bg text-status-ok',
   other: 'bg-muted text-muted-foreground',
 }

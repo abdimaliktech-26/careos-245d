@@ -67,7 +67,7 @@ export function HelpSearchBar() {
         />
         {loading && (
           <span className="absolute right-4 top-1/2 -translate-y-1/2">
-            <span className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-border border-t-[#DB2777]" />
+            <span className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-border border-t-[#10B99A]" />
           </span>
         )}
       </div>

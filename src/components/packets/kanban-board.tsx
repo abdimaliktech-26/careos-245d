@@ -18,7 +18,7 @@ type Packet = {
 const COLUMNS = [
   { key: 'not_started', label: 'Not Started', color: 'border-t-gray-400', bg: 'bg-muted' },
   { key: 'in_progress', label: 'In Progress', color: 'border-t-blue-500', bg: 'bg-blue-50/30' },
-  { key: 'needs_signature', label: 'Needs Signature', color: 'border-t-violet-500', bg: 'bg-violet-50/30' },
+  { key: 'needs_signature', label: 'Needs Signature', color: 'border-t-blue-500', bg: 'bg-blue-50/30' },
   { key: 'completed', label: 'Completed', color: 'border-t-emerald-500', bg: 'bg-emerald-50/30' },
 ]
 

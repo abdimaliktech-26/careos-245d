@@ -1,6 +1,6 @@
 import type { Vital } from '@/types/health'
 
-export function VitalTrend({ vitals, color = '#DB2777' }: { vitals: Vital[]; color?: string }) {
+export function VitalTrend({ vitals, color = '#10B99A' }: { vitals: Vital[]; color?: string }) {
   if (vitals.length < 2) return null
 
   const sorted = [...vitals].sort(

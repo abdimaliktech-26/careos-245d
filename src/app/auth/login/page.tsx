@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
+import { appName } from '@/lib/app-config'
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
@@ -59,7 +60,7 @@ export default function LoginPage() {
         />
         <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(124,58,237,0.85) 0%, rgba(124,58,237,0.2) 50%, transparent 100%)' }} />
         <div className="absolute bottom-10 left-10 right-10 rounded-3xl bg-card/95 p-6 shadow-2xl backdrop-blur">
-          <p className="text-xs font-bold uppercase tracking-widest text-primary">CareIntake 245D</p>
+          <p className="text-xs font-bold uppercase tracking-widest text-primary">{appName()} 245D</p>
           <h1 className="mt-2 text-2xl font-black text-foreground">Audit-ready client packets without paper chasing.</h1>
           <p className="mt-3 text-sm leading-6 text-muted-foreground">
             Track review deadlines, required signatures, branded documents, and staff activity from one secure workspace.
@@ -71,15 +72,8 @@ export default function LoginPage() {
       <section className="flex items-center justify-center px-5 py-10">
         <div className="w-full max-w-md">
           <Link href="/" className="mb-10 flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-brand-from to-brand-to text-white">
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                <path fillRule="evenodd" d="M10 1.944A11.954 11.954 0 012.166 5C2.056 5.649 2 6.319 2 7c0 5.225 3.34 9.67 8 11.317C14.66 16.67 18 12.225 18 7c0-.682-.057-1.35-.166-2.001A11.954 11.954 0 0110 1.944z" clipRule="evenodd" />
-              </svg>
-            </div>
-            <div>
-              <p className="text-lg font-black leading-none text-foreground">CareIntake</p>
-              <p className="mt-1 text-[11px] font-bold uppercase tracking-widest text-primary">245D Suite</p>
-            </div>
+            <Image src="/higsi-logo.png" alt={appName()} width={132} height={44} priority className="h-11 w-auto" />
+            <span className="text-[11px] font-bold uppercase tracking-widest text-primary">245D Suite</span>
           </Link>
 
           <div className="rounded-3xl bg-card p-8 shadow-sm border border-border">

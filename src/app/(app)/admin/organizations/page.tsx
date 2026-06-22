@@ -33,7 +33,7 @@ export default async function OrganizationsPage() {
     trial: 'bg-yellow-50 text-yellow-700',
     starter: 'bg-muted text-muted-foreground',
     pro: 'bg-blue-50 text-blue-700',
-    enterprise: 'bg-purple-50 text-purple-700',
+    enterprise: 'bg-blue-50 text-blue-700',
   }
 
   return (

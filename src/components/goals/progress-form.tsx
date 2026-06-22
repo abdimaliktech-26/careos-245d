@@ -72,7 +72,7 @@ export function ProgressForm({ goalId, onClose, onSuccess }: ProgressFormProps) 
           max="100"
           value={progressScore || '0'}
           onChange={(e) => setProgressScore(e.target.value)}
-          className="w-full accent-[#DB2777]"
+          className="w-full accent-[#10B99A]"
         />
         <div className="flex justify-between text-xs text-muted-foreground">
           <span>0</span>

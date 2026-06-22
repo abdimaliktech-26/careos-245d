@@ -15,7 +15,7 @@ type Props = { params: Promise<{ id: string }> }
 
 const FORM_SET_COLORS: Record<string, string> = {
   intake: 'bg-blue-50 border-blue-200',
-  '45_day_review': 'bg-purple-50 border-purple-200',
+  '45_day_review': 'bg-blue-50 border-blue-200',
   semi_annual_review: 'bg-amber-50 border-amber-200',
   annual_review: 'bg-green-50 border-green-200',
 }

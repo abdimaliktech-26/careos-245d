@@ -70,7 +70,7 @@ export function OnboardingWizard() {
           {step === 0 && (
             <div className="text-center space-y-4">
               <div className="flex justify-center">
-                <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-[#DB2777] to-[#A78BFA]">
+                <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-[#10B99A] to-[#A78BFA]">
                   <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
                 </div>
               </div>

@@ -14,36 +14,38 @@ html {
    ================================================================ */
 
 :root {
-  --background:            #FAFAFB;
-  --foreground:            #18181B;
+  /* Higsi design system — clinical navy + emerald */
+  --navy:                  #001F5B;
+  --background:            #F8FAFC;
+  --foreground:            #0F172A;
   --card:                  #FFFFFF;
-  --card-foreground:       #18181B;
+  --card-foreground:       #0F172A;
   --popover:               #FFFFFF;
-  --popover-foreground:    #18181B;
-  --primary:               #A21CAF;
+  --popover-foreground:    #0F172A;
+  --primary:               #10B99A;
   --primary-foreground:    #FFFFFF;
-  --secondary:             #F4F4F5;
-  --secondary-foreground:  #18181B;
-  --muted:                 #F4F4F5;
-  --muted-foreground:      #71717A;
-  --accent:                #FAF5FF;
-  --accent-foreground:     #7C3AED;
-  --destructive:           #DC2626;
+  --secondary:             #F1F5F9;
+  --secondary-foreground:  #0F172A;
+  --muted:                 #F1F5F9;
+  --muted-foreground:      #64748B;
+  --accent:                #ECFDF7;
+  --accent-foreground:     #0E9E86;
+  --destructive:           #EF4444;
   --destructive-foreground:#FFFFFF;
-  --border:                #E8E8EC;
-  --input:                 #E8E8EC;
-  --ring:                  #A21CAF;
-  --radius:                0.625rem;
+  --border:                #E2E8F0;
+  --input:                 #E2E8F0;
+  --ring:                  #10B99A;
+  --radius:                0.75rem;
 
   /* Brand gradient (logo, primary CTAs, active nav, key metrics ONLY) */
-  --brand-from:            #DB2777;
-  --brand-to:              #7C3AED;
+  --brand-from:            #10B99A;
+  --brand-to:              #0E9E86;
 
   /* Semantic status (badges) */
   --status-warn-fg:        #B45309;
   --status-warn-bg:        #FEF3C7;
-  --status-ok-fg:          #15803D;
-  --status-ok-bg:          #DCFCE7;
+  --status-ok-fg:          #0E9E86;
+  --status-ok-bg:          #D1FAE5;
   --status-error-fg:       #B91C1C;
   --status-error-bg:       #FEE2E2;
 
@@ -57,10 +59,10 @@ html {
   --color-border-strong:   #D4D4D8;
   --color-pink:            #F0ABFC;
   --color-pink-light:      #FAF5FF;
-  --color-pink-mid:        #DB2777;
+  --color-pink-mid:        #10B99A;
   --color-blue:            #A5B4FC;
   --color-blue-light:      #EEF2FF;
-  --color-blue-mid:        #7C3AED;
+  --color-blue-mid:        #3B82F6;
   --color-purple:          #C4B5FD;
   --color-purple-light:    #F5F3FF;
   --gradient-primary:      linear-gradient(135deg, var(--brand-from), var(--brand-to));
@@ -87,22 +89,22 @@ html {
   --card-foreground:       #FAFAFA;
   --popover:               #0F0F12;
   --popover-foreground:    #FAFAFA;
-  --primary:               #A78BFA;
-  --primary-foreground:    #18181B;
+  --primary:               #2DD4BF;
+  --primary-foreground:    #06251F;
   --secondary:             #1C1C20;
   --secondary-foreground:  #FAFAFA;
   --muted:                 #1C1C20;
   --muted-foreground:      #A1A1AA;
-  --accent:                #1C1528;
-  --accent-foreground:     #C4B5FD;
+  --accent:                #0F2A24;
+  --accent-foreground:     #5EEAD4;
   --destructive:           #F87171;
   --destructive-foreground:#18181B;
   --border:                #27272A;
   --input:                 #27272A;
-  --ring:                  #A78BFA;
+  --ring:                  #2DD4BF;
 
-  --brand-from:            #F472B6;
-  --brand-to:              #A78BFA;
+  --brand-from:            #2DD4BF;
+  --brand-to:              #0E9E86;
 
   --status-warn-fg:        #FBBF24;
   --status-warn-bg:        rgba(245, 158, 11, 0.14);
@@ -120,6 +122,7 @@ html {
 }
 
 @theme inline {
+  --color-navy:                 var(--navy);
   --color-background:           var(--background);
   --color-foreground:           var(--foreground);
   --color-card:                 var(--card);

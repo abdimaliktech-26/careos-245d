@@ -19,11 +19,11 @@ const STATUS_STYLES: Record<string, { bg: string; text: string; label: string }>
   in_progress: { bg: 'bg-amber-50', text: 'text-amber-700', label: 'In Progress' },
   achieved: { bg: 'bg-emerald-50', text: 'text-emerald-700', label: 'Achieved' },
   discontinued: { bg: 'bg-muted', text: 'text-muted-foreground', label: 'Discontinued' },
-  revised: { bg: 'bg-purple-50', text: 'text-purple-700', label: 'Revised' },
+  revised: { bg: 'bg-blue-50', text: 'text-blue-700', label: 'Revised' },
 }
 
 const CATEGORY_COLORS: Record<string, string> = {
-  clinical: '#DB2777',
+  clinical: '#10B99A',
   behavioral: '#F59E0B',
   developmental: '#10B981',
   social: '#8B5CF6',
@@ -89,7 +89,7 @@ export function GoalCard({ goal, href, latestProgress }: GoalCardProps) {
           <div className="w-full h-2 rounded-full bg-muted overflow-hidden">
             <div
               className="h-full rounded-full transition-all duration-500"
-              style={{ width: `${score}%`, backgroundColor: '#DB2777' }}
+              style={{ width: `${score}%`, backgroundColor: '#10B99A' }}
             />
           </div>
         </div>

@@ -16,7 +16,7 @@ export function ProgressFormModal({ goalId }: ProgressFormModalProps) {
         type="button"
         onClick={() => setOpen(true)}
         className="text-xs font-semibold px-3 py-1.5 rounded-full text-white transition-opacity hover:opacity-90"
-        style={{ backgroundColor: '#DB2777' }}
+        style={{ backgroundColor: '#10B99A' }}
       >
         + Record Progress
       </button>

@@ -9,7 +9,7 @@ type Document = Record<string, unknown>
 
 function getFileIcon(mimeType: string | null): { icon: string; bg: string; color: string } {
   if (!mimeType) return { icon: '📄', bg: 'bg-muted', color: 'text-muted-foreground' }
-  if (mimeType.startsWith('image/')) return { icon: '🖼', bg: 'bg-purple-50', color: 'text-purple-600' }
+  if (mimeType.startsWith('image/')) return { icon: '🖼', bg: 'bg-blue-50', color: 'text-blue-600' }
   if (mimeType === 'application/pdf') return { icon: '📕', bg: 'bg-red-50', color: 'text-red-600' }
   if (mimeType.includes('spreadsheet') || mimeType.includes('excel') || mimeType.includes('csv'))
     return { icon: '📊', bg: 'bg-green-50', color: 'text-green-600' }

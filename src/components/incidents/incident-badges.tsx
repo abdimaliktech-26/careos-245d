@@ -5,7 +5,7 @@ import type { IncidentCategory, IncidentStatus } from '@/types/incidents'
 const CATEGORY_STYLES: Record<IncidentCategory, string> = {
   injury: 'bg-rose-50 text-rose-700',
   medication_error: 'bg-status-warn-bg text-status-warn',
-  behavioral_incident: 'bg-violet-50 text-violet-700 dark:bg-violet-500/15 dark:text-violet-300',
+  behavioral_incident: 'bg-blue-50 text-blue-700 dark:bg-blue-500/15 dark:text-blue-300',
   emergency_manual_restraint: 'bg-status-warn-bg text-status-warn',
   maltreatment_concern: 'bg-status-error-bg text-status-error',
   death: 'bg-muted text-foreground',

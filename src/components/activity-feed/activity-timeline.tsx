@@ -4,7 +4,7 @@ const TYPE_COLORS: Record<string, { dot: string; line: string; bg: string }> = {
   signature:     { dot: 'bg-emerald-500', line: 'border-emerald-300', bg: 'bg-emerald-50' },
   form:          { dot: 'bg-blue-500',    line: 'border-blue-300',    bg: 'bg-blue-50' },
   incident:      { dot: 'bg-red-500',     line: 'border-red-300',     bg: 'bg-red-50' },
-  evv:           { dot: 'bg-purple-500',  line: 'border-purple-300',  bg: 'bg-purple-50' },
+  evv:           { dot: 'bg-blue-500',  line: 'border-blue-300',  bg: 'bg-blue-50' },
   note:          { dot: 'bg-amber-500',   line: 'border-amber-300',   bg: 'bg-amber-50' },
   document:      { dot: 'bg-cyan-500',    line: 'border-cyan-300',    bg: 'bg-cyan-50' },
   message:       { dot: 'bg-indigo-500',  line: 'border-indigo-300',  bg: 'bg-indigo-50' },
@@ -76,7 +76,7 @@ export function ActivityTimeline({ entries, filter }: { entries: ActivityEntry[]
     return (
       <div className="flex flex-col items-center justify-center py-16 text-center">
         <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-accent">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#DB2777" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10B99A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
           </svg>
         </div>
@@ -107,7 +107,7 @@ export function ActivityTimeline({ entries, filter }: { entries: ActivityEntry[]
                   <div key={entry.id} className="flex gap-3">
                     <div className="relative flex flex-col items-center">
                       <div className={`relative z-10 flex h-6 w-6 shrink-0 items-center justify-center rounded-full ${colors.bg} ${colors.dot} text-white ring-2 ring-white`}
-                        style={{ backgroundColor: colors.dot.replace('bg-', '') === 'emerald-500' ? '#10B981' : colors.dot.replace('bg-', '') === 'blue-500' ? '#3B82F6' : colors.dot.replace('bg-', '') === 'red-500' ? '#EF4444' : colors.dot.replace('bg-', '') === 'purple-500' ? '#A855F7' : colors.dot.replace('bg-', '') === 'amber-500' ? '#F59E0B' : colors.dot.replace('bg-', '') === 'cyan-500' ? '#06B6D4' : colors.dot.replace('bg-', '') === 'indigo-500' ? '#6366F1' : '#14B8A6' }}
+                        style={{ backgroundColor: colors.dot.replace('bg-', '') === 'emerald-500' ? '#10B981' : colors.dot.replace('bg-', '') === 'blue-500' ? '#3B82F6' : colors.dot.replace('bg-', '') === 'red-500' ? '#EF4444' : colors.dot.replace('bg-', '') === 'blue-500' ? '#A855F7' : colors.dot.replace('bg-', '') === 'amber-500' ? '#F59E0B' : colors.dot.replace('bg-', '') === 'cyan-500' ? '#06B6D4' : colors.dot.replace('bg-', '') === 'indigo-500' ? '#6366F1' : '#14B8A6' }}
                       >
                         {ACTION_ICONS[entry.action] ?? (
                           <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round">

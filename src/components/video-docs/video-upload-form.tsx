@@ -91,7 +91,7 @@ export function VideoUploadForm({ clientId, onUploaded, onCancel }: Props) {
               dragOver ? 'border-primary bg-blue-50' : 'border-border hover:border-gray-300'
             }`}
           >
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke={dragOver ? '#DB2777' : '#94A3B8'} strokeWidth="1.5" className="mx-auto mb-3">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke={dragOver ? '#10B99A' : '#94A3B8'} strokeWidth="1.5" className="mx-auto mb-3">
               <polygon points="23 7 16 12 23 17 23 7" />
               <rect x="1" y="5" width="15" height="14" rx="2" ry="2" />
             </svg>
@@ -108,7 +108,7 @@ export function VideoUploadForm({ clientId, onUploaded, onCancel }: Props) {
         ) : (
           <div className="flex items-center gap-3 rounded-xl bg-muted px-4 py-3">
             <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#DB2777" strokeWidth="1.5">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#10B99A" strokeWidth="1.5">
                 <polygon points="23 7 16 12 23 17 23 7" />
                 <rect x="1" y="5" width="15" height="14" rx="2" ry="2" />
               </svg>
