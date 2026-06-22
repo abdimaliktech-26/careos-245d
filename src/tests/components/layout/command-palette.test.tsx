@@ -35,7 +35,7 @@ describe('CommandPalette', () => {
   })
 
   test('typed query shows Ask CareAssist item that dispatches careassist:ask', async () => {
-    const user = userEvent.setup()
+    const user = userEvent.setup({ delay: null })
     const askListener = vi.fn()
     window.addEventListener('careassist:ask', askListener)
     render(<CommandPalette role="staff" />)
