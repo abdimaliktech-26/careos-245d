@@ -19,7 +19,7 @@ const STATUS_STYLES: Record<string, { bg: string; text: string; label: string }>
   in_progress: { bg: 'bg-amber-50', text: 'text-amber-700', label: 'In Progress' },
   achieved: { bg: 'bg-emerald-50', text: 'text-emerald-700', label: 'Achieved' },
   discontinued: { bg: 'bg-muted', text: 'text-muted-foreground', label: 'Discontinued' },
-  revised: { bg: 'bg-purple-50', text: 'text-purple-700', label: 'Revised' },
+  revised: { bg: 'bg-blue-50', text: 'text-blue-700', label: 'Revised' },
 }
 
 const CATEGORY_COLORS: Record<string, string> = {

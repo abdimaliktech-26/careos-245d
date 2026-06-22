@@ -38,7 +38,7 @@ export function StatusBadge({ status }: { status: string }) {
 
 export function RoleBadge({ role }: { role: string }) {
   const map: Record<string, string> = {
-    super_admin:     'bg-violet-50 text-violet-700 dark:bg-violet-500/15 dark:text-violet-300',
+    super_admin:     'bg-blue-50 text-blue-700 dark:bg-blue-500/15 dark:text-blue-300',
     org_admin:       'bg-blue-50 text-blue-700 dark:bg-blue-500/15 dark:text-blue-300',
     program_manager: 'bg-teal-50 text-teal-700',
     staff:           'bg-muted text-muted-foreground',
@@ -57,8 +57,8 @@ export function ActionBadge({ action }: { action: string }) {
     logout: 'bg-muted text-muted-foreground',
     client_created: 'bg-status-ok-bg text-status-ok',
     client_updated: 'bg-status-warn-bg text-status-warn',
-    form_saved: 'bg-violet-50 text-violet-700 dark:bg-violet-500/15 dark:text-violet-300',
-    form_submitted: 'bg-purple-100 text-purple-800',
+    form_saved: 'bg-blue-50 text-blue-700 dark:bg-blue-500/15 dark:text-blue-300',
+    form_submitted: 'bg-blue-100 text-blue-800',
     signature_completed: 'bg-teal-50 text-teal-700',
     pdf_downloaded: 'bg-status-warn-bg text-status-warn',
     file_uploaded: 'bg-blue-50 text-blue-700 dark:bg-blue-500/15 dark:text-blue-300',

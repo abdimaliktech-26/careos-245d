@@ -11,6 +11,8 @@ import { getClientScorecards } from '@/lib/audit/scorecards'
 import { ScorecardBadge } from '@/components/audit/scorecard-badge'
 import { MorningBriefingCard } from '@/components/dashboard/morning-briefing-card'
 import { EvvComplianceWidget } from '@/components/evv/evv-compliance-widget'
+import { ComplianceChart, type CompliancePoint } from '@/components/dashboard/compliance-chart'
+import { Activity } from 'lucide-react'
 
 // Status badge for packet rows
 function StatusBadge({ status }: { status: string }) {
@@ -18,7 +20,7 @@ function StatusBadge({ status }: { status: string }) {
     pending:          { bg: 'bg-muted text-muted-foreground',                                          dot: 'bg-muted-foreground/60', label: 'Not Started' },
     not_started:      { bg: 'bg-muted text-muted-foreground',                                          dot: 'bg-muted-foreground/60', label: 'Not Started' },
     in_progress:      { bg: 'bg-blue-50 text-blue-700 dark:bg-blue-500/15 dark:text-blue-300',         dot: 'bg-blue-500',            label: 'In Progress' },
-    needs_signature:  { bg: 'bg-violet-50 text-violet-700 dark:bg-violet-500/15 dark:text-violet-300', dot: 'bg-violet-500',          label: 'Needs Signature' },
+    needs_signature:  { bg: 'bg-blue-50 text-blue-700 dark:bg-blue-500/15 dark:text-blue-300', dot: 'bg-blue-500',          label: 'Needs Signature' },
     completed:        { bg: 'bg-status-ok-bg text-status-ok',                                          dot: 'bg-status-ok',           label: 'Completed' },
     overdue:          { bg: 'bg-status-error-bg text-status-error',                                    dot: 'bg-status-error',        label: 'Overdue' },
   }
@@ -118,6 +120,36 @@ export default async function DashboardPage() {
   const scorecards = user.organizationId ? await getClientScorecards(user.organizationId) : []
 
   const today = new Date()
+
+  // Real 6-month compliance trend (% of packets completed, bucketed by due month).
+  const trendStart = new Date(today.getFullYear(), today.getMonth() - 5, 1)
+  const [{ data: trendPackets }, { data: recentActivity }] = await Promise.all([
+    organizationId
+      ? supabase.from('packets').select('status, due_date').eq('organization_id', organizationId).gte('due_date', trendStart.toISOString().slice(0, 10))
+      : { data: [] },
+    organizationId
+      ? supabase.from('audit_logs').select('action, entity_label, user_email, created_at').eq('organization_id', organizationId).order('created_at', { ascending: false }).limit(6)
+      : { data: [] },
+  ])
+
+  const monthKeys: string[] = Array.from({ length: 6 }, (_, i) => {
+    const d = new Date(today.getFullYear(), today.getMonth() - 5 + i, 1)
+    return d.toISOString().slice(0, 7)
+  })
+  const totals: Record<string, { total: number; done: number }> = {}
+  for (const key of monthKeys) totals[key] = { total: 0, done: 0 }
+  for (const p of (trendPackets ?? []) as Array<{ status: string; due_date: string | null }>) {
+    const key = (p.due_date ?? '').slice(0, 7)
+    if (!totals[key]) continue
+    totals[key].total += 1
+    if (p.status === 'completed') totals[key].done += 1
+  }
+  const complianceSeries: CompliancePoint[] = monthKeys.map((key) => {
+    const t = totals[key]
+    const label = new Date(`${key}-01`).toLocaleDateString('en-US', { month: 'short' })
+    return { m: label, score: t.total > 0 ? Math.round((t.done / t.total) * 100) : 100 }
+  })
+  const latestCompliance = complianceSeries[complianceSeries.length - 1]?.score ?? 100
   const headerDate = today.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })
   const openPacketRows = (openPackets ?? []) as Array<Record<string, unknown>>
 
@@ -206,7 +238,7 @@ export default async function DashboardPage() {
         <StatCard
           label="Signature Alerts"
           value={signatureIssues}
-          iconClass="bg-violet-50 text-violet-600 dark:bg-violet-500/15 dark:text-violet-300"
+          iconClass="bg-blue-50 text-blue-600 dark:bg-blue-500/15 dark:text-blue-300"
           Icon={FilePen}
           variant={signatureIssues > 0 ? 'warning' : 'default'}
         />
@@ -226,8 +258,52 @@ export default async function DashboardPage() {
         />
       </div>
 
+      {/* Compliance trend + recent activity */}
+      <div className="mb-6 grid grid-cols-1 gap-6 xl:grid-cols-3">
+        <div className="rounded-2xl border border-border bg-card p-6 xl:col-span-2" style={{ boxShadow: '0 1px 3px rgba(15,23,42,0.06)' }}>
+          <div className="mb-4 flex items-center justify-between">
+            <div>
+              <h2 className="text-[15px] font-semibold text-foreground">Compliance Overview</h2>
+              <p className="text-[12.5px] text-muted-foreground">Packet completion · last 6 months</p>
+            </div>
+            <span className="inline-flex items-center gap-1 rounded-full bg-accent px-2.5 py-1 text-[12px] font-semibold text-accent-foreground">
+              {latestCompliance}% this month
+            </span>
+          </div>
+          <ComplianceChart data={complianceSeries} />
+        </div>
+
+        <div className="rounded-2xl border border-border bg-card p-6" style={{ boxShadow: '0 1px 3px rgba(15,23,42,0.06)' }}>
+          <div className="mb-4 flex items-center gap-2">
+            <Activity className="h-4 w-4 text-primary" />
+            <h2 className="text-[15px] font-semibold text-foreground">Recent Activity</h2>
+          </div>
+          {!recentActivity || recentActivity.length === 0 ? (
+            <p className="text-[13px] text-muted-foreground">No recent activity.</p>
+          ) : (
+            <ol className="space-y-4">
+              {(recentActivity as Array<{ action: string; entity_label: string | null; user_email: string | null; created_at: string }>).map((a, i) => (
+                <li key={i} className="flex gap-3">
+                  <span className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-primary" />
+                  <div className="min-w-0">
+                    <p className="text-[13px] leading-snug text-foreground">
+                      <span className="font-semibold">{(a.user_email ?? 'System').split('@')[0]}</span>{' '}
+                      {a.action.replaceAll('_', ' ')}
+                      {a.entity_label ? ` · ${a.entity_label}` : ''}
+                    </p>
+                    <p className="flex items-center gap-1 text-[11.5px] text-muted-foreground">
+                      <Clock className="h-3 w-3" /> {new Date(a.created_at).toLocaleString()}
+                    </p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+          )}
+        </div>
+      </div>
+
       {/* Main grid */}
-      <div className="mb-6 overflow-hidden rounded-xl border border-border bg-card shadow-xs">
+      <div className="mb-6 overflow-hidden rounded-2xl border border-border bg-card" style={{ boxShadow: '0 1px 3px rgba(15,23,42,0.06)' }}>
         <div className="flex items-center justify-between border-b border-border px-6 py-4">
           <div>
             <p className="text-[10px] font-semibold uppercase tracking-[0.1em] text-muted-foreground">Compliance Scorecards</p>

@@ -11,7 +11,7 @@ function StatusBadge({ status }: { status: string }) {
     pending:          { bg: 'bg-muted text-muted-foreground',      dot: 'bg-gray-400',   label: 'Not Started' },
     not_started:      { bg: 'bg-muted text-muted-foreground',      dot: 'bg-gray-400',   label: 'Not Started' },
     in_progress:      { bg: 'bg-blue-50 text-blue-700 dark:bg-blue-500/15 dark:text-blue-300', dot: 'bg-blue-500',   label: 'In Progress' },
-    needs_signature:  { bg: 'bg-violet-50 text-violet-700 dark:bg-violet-500/15 dark:text-violet-300', dot: 'bg-violet-500', label: 'Needs Signature' },
+    needs_signature:  { bg: 'bg-blue-50 text-blue-700 dark:bg-blue-500/15 dark:text-blue-300', dot: 'bg-blue-500', label: 'Needs Signature' },
     completed:        { bg: 'bg-status-ok-bg text-status-ok', dot: 'bg-status-ok',label: 'Completed' },
     overdue:          { bg: 'bg-status-error-bg text-status-error', dot: 'bg-status-error',    label: 'Overdue' },
   }

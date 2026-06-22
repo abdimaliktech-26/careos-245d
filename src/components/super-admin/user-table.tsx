@@ -74,8 +74,8 @@ export function UserTable({ users }: { users: UserListItem[] }) {
               <td className="px-5 py-3.5 text-[12px] text-muted-foreground">{u.organizationName ?? '—'}</td>
               <td className="px-5 py-3.5">
                 {u.role === 'super_admin' ? (
-                  <span className="inline-flex items-center gap-1.5 rounded-full bg-purple-50 px-2.5 py-0.5 text-[10px] font-semibold text-purple-700">
-                    <span className="h-1.5 w-1.5 rounded-full bg-purple-500" />
+                  <span className="inline-flex items-center gap-1.5 rounded-full bg-blue-50 px-2.5 py-0.5 text-[10px] font-semibold text-blue-700">
+                    <span className="h-1.5 w-1.5 rounded-full bg-blue-500" />
                     Active
                   </span>
                 ) : (

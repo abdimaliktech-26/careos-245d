@@ -58,7 +58,7 @@ export default async function ConditionsPage({ params }: Props) {
                   <div className="flex items-center gap-2 flex-wrap">
                     <p className="text-sm font-semibold text-foreground">{cond.condition_name}</p>
                     {cond.is_chronic && (
-                      <span className="inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-semibold bg-purple-50 text-purple-700 dark:bg-purple-500/15 dark:text-purple-300">Chronic</span>
+                      <span className="inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-semibold bg-blue-50 text-blue-700 dark:bg-blue-500/15 dark:text-blue-300">Chronic</span>
                     )}
                     {cond.severity && (
                       <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-semibold ${SEVERITY_COLORS[cond.severity] ?? 'bg-muted text-muted-foreground'}`}>

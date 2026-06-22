@@ -5,7 +5,7 @@ import { createClient } from '@/lib/supabase/server'
 import { StaffDetailClient } from './staff-detail-client'
 
 const ROLE_COLORS: Record<string, string> = {
-  super_admin:     'bg-purple-100 text-purple-700',
+  super_admin:     'bg-blue-100 text-blue-700',
   org_admin:       'bg-blue-100 text-blue-700',
   program_manager: 'bg-indigo-100 text-indigo-700',
   staff:           'bg-muted text-foreground',
