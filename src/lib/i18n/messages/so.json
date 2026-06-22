@@ -40,7 +40,16 @@
     "group_care": "Daryeelka",
     "group_compliance": "U-hoggaansanaanta",
     "group_business": "Ganacsiga",
-    "group_workspace": "Goobta Shaqada"
+    "group_workspace": "Goobta Shaqada",
+    "group_audit_readiness": "Diyaarinta Hubinta",
+    "audit_dashboard": "Dashboorka",
+    "audit_wizard": "Hagaha Dib-u-eegista Hubinta",
+    "audit_risk": "Qiyaasta Khatarta U-hoggaansanaanta",
+    "audit_missing_docs": "Dukumeentiyada Maqan",
+    "audit_staff": "U-hoggaansanaanta Shaqaalaha",
+    "audit_caps": "Qorshayaasha Saxitaanka",
+    "audit_reports": "Warbixinada Hubinta",
+    "audit_history": "Dib-u-eegisyada Hore"
   },
   "admin": {
     "settings": "Dejinta Ganacsiga",

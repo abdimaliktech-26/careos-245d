@@ -4,7 +4,7 @@ import { createAdminClient } from '@/lib/supabase/admin'
 const hasEnv = Boolean(process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY)
 
 describe.runIf(hasEnv)('ai governance tables (integration)', () => {
-  const admin = createAdminClient()
+  const admin = hasEnv ? createAdminClient() : (null as unknown as ReturnType<typeof createAdminClient>)
   const cleanup: Array<() => Promise<void>> = []
   afterAll(async () => { for (const fn of cleanup) await fn() })
 

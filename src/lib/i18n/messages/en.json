@@ -40,7 +40,16 @@
     "group_care": "Care",
     "group_compliance": "Compliance",
     "group_business": "Business",
-    "group_workspace": "Workspace"
+    "group_workspace": "Workspace",
+    "group_audit_readiness": "Audit Readiness",
+    "audit_dashboard": "Dashboard",
+    "audit_wizard": "Audit Review Wizard",
+    "audit_risk": "Compliance Risk Score",
+    "audit_missing_docs": "Missing Documentation",
+    "audit_staff": "Staff Compliance",
+    "audit_caps": "Corrective Action Plans",
+    "audit_reports": "Audit Reports",
+    "audit_history": "Historical Reviews"
   },
   "admin": {
     "settings": "Business Settings",

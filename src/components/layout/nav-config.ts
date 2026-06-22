@@ -4,6 +4,7 @@ import {
   AlertTriangle, Receipt, FileCheck2, BadgeDollarSign, BarChart3, Folder,
   Library, ShieldCheck, Sparkles, HelpCircle, Building2, UserCog,
   GraduationCap, FileText, Upload, Webhook, ScrollText, Settings2, BookOpen,
+  Gauge, Gavel, FileWarning, ClipboardCheck, FileBarChart2, History,
 } from 'lucide-react'
 import { isAdmin, isSuperAdmin } from '@/lib/auth/role-guards'
 import type { Role } from '@/types/app'
@@ -43,6 +44,20 @@ export const NAV_GROUPS: NavGroup[] = [
       { href: '/incidents',    translationKey: 'nav.incidents',         icon: AlertTriangle },
       { href: '/qa',           translationKey: 'nav.quality_assurance', icon: ShieldCheck },
       { href: '/form-library', translationKey: 'nav.form_library',      icon: Library },
+    ],
+  },
+  {
+    id: 'audit-readiness',
+    labelKey: 'nav.group_audit_readiness',
+    items: [
+      { href: '/audit-readiness',              translationKey: 'nav.audit_dashboard',     icon: Gauge },
+      { href: '/audit-readiness/wizard',       translationKey: 'nav.audit_wizard',        icon: Gavel },
+      { href: '/audit-readiness/risk',         translationKey: 'nav.audit_risk',          icon: ShieldCheck },
+      { href: '/audit-readiness/missing-docs', translationKey: 'nav.audit_missing_docs',  icon: FileWarning },
+      { href: '/audit-readiness/staff',        translationKey: 'nav.audit_staff',         icon: UserCog },
+      { href: '/audit-readiness/caps',         translationKey: 'nav.audit_caps',          icon: ClipboardCheck },
+      { href: '/audit-readiness/reports',      translationKey: 'nav.audit_reports',       icon: FileBarChart2 },
+      { href: '/audit-readiness/history',      translationKey: 'nav.audit_history',       icon: History },
     ],
   },
   {
