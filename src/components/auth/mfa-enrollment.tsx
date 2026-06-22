@@ -23,12 +23,11 @@ export function MfaEnrollment() {
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
 
-  const supabase = createClient()
-
   const refreshFactors = useCallback(async () => {
+    const supabase = createClient()
     const { data } = await supabase.auth.mfa.listFactors()
     setFactors((data?.totp ?? []) as TotpFactor[])
-  }, [supabase])
+  }, [])
 
   useEffect(() => {
     // async — state update happens after the await, not synchronously in the effect
@@ -38,6 +37,7 @@ export function MfaEnrollment() {
   async function startEnrollment() {
     setLoading(true)
     setError(null)
+    const supabase = createClient()
     const { data, error: enrollError } = await supabase.auth.mfa.enroll({
       factorType: 'totp',
       friendlyName: `Authenticator ${new Date().toISOString().slice(0, 10)}`,
@@ -56,6 +56,7 @@ export function MfaEnrollment() {
     if (!factorId || code.length !== 6) return
     setLoading(true)
     setError(null)
+    const supabase = createClient()
     const { data: challenge, error: challengeError } = await supabase.auth.mfa.challenge({ factorId })
     if (challengeError || !challenge) {
       setLoading(false)
@@ -81,6 +82,7 @@ export function MfaEnrollment() {
 
   async function removeFactor(id: string) {
     setError(null)
+    const supabase = createClient()
     const { error: unenrollError } = await supabase.auth.mfa.unenroll({ factorId: id })
     if (unenrollError) {
       setError(unenrollError.message)
