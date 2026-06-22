@@ -29,6 +29,8 @@ type AuditAction =
   | 'isp_activated'
   | 'isp_signed'
   | 'ai_generation'
+  | 'audit_review_created'
+  | 'audit_review_completed'
 
 type AuditLogInput = {
   user: UserProfile
