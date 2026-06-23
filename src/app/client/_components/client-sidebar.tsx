@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { useState } from 'react'
 import type { UserProfile } from '@/types/app'
@@ -141,17 +142,8 @@ export default function ClientSidebar({ user }: ClientSidebarProps) {
     <div className="flex h-full flex-col">
       {/* Logo */}
       <div className="flex items-center gap-3 px-5 py-4 border-b border-border/80">
-        <div
-          className="flex h-8 w-8 items-center justify-center rounded-[10px] shrink-0 bg-gradient-to-br from-brand-from to-brand-to"
-        >
-          <svg width="15" height="15" viewBox="0 0 20 20" fill="white">
-            <path fillRule="evenodd" d="M10 1.944A11.954 11.954 0 012.166 5C2.056 5.649 2 6.319 2 7c0 5.225 3.34 9.67 8 11.317C14.66 16.67 18 12.225 18 7c0-.682-.057-1.35-.166-2.001A11.954 11.954 0 0110 1.944z" clipRule="evenodd" />
-          </svg>
-        </div>
-        <div>
-          <p className="text-[13px] font-bold leading-none tracking-tight text-foreground">Higsi</p>
-          <p className="mt-0.5 text-[9px] font-semibold tracking-[0.14em] text-primary uppercase">Client Portal</p>
-        </div>
+        <Image src="/higsi-logo.png" alt="Higsi" width={84} height={28} className="h-6 w-auto shrink-0" />
+        <p className="text-[9px] font-semibold tracking-[0.14em] text-primary uppercase">Client Portal</p>
       </div>
 
       {/* Nav */}
@@ -201,14 +193,7 @@ export default function ClientSidebar({ user }: ClientSidebarProps) {
       {/* Mobile header */}
       <div className="flex items-center justify-between border-b border-border bg-card px-4 py-3 lg:hidden">
         <div className="flex items-center gap-2">
-          <div
-            className="flex h-7 w-7 items-center justify-center rounded-[8px] bg-gradient-to-br from-brand-from to-brand-to"
-          >
-            <svg width="12" height="12" viewBox="0 0 20 20" fill="white">
-              <path fillRule="evenodd" d="M10 1.944A11.954 11.954 0 012.166 5C2.056 5.649 2 6.319 2 7c0 5.225 3.34 9.67 8 11.317C14.66 16.67 18 12.225 18 7c0-.682-.057-1.35-.166-2.001A11.954 11.954 0 0110 1.944z" clipRule="evenodd" />
-            </svg>
-          </div>
-          <span className="text-[13px] font-bold text-foreground">Higsi</span>
+          <Image src="/higsi-logo.png" alt="Higsi" width={72} height={24} className="h-6 w-auto" />
         </div>
         <button
           onClick={() => setMobileOpen(!mobileOpen)}

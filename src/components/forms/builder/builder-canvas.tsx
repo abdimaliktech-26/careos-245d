@@ -52,7 +52,7 @@ export function BuilderCanvasField({
             <p className="text-[11px] text-muted-foreground">
               {field.sectionLabel !== 'General' && <span className="text-primary">{field.sectionLabel} · </span>}
               {FIELD_TYPE_PREVIEW[field.type] ?? field.type}
-              {field.isRequired && <span className="text-rose-500"> · Required</span>}
+              {field.isRequired && <span className="text-red-500"> · Required</span>}
             </p>
           </div>
         </div>

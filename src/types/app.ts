@@ -16,6 +16,10 @@ export type UserProfile = {
   email: string
   isActive: boolean
   impersonating?: { orgId: string; orgName: string; expiresAt: string } | null
+  /** Branding for the user's own org, joined in getSession to avoid a second
+   *  query in the app layout. Null for users without an org. During super_admin
+   *  impersonation the layout re-resolves branding for the impersonated org. */
+  branding?: OrgBranding | null
 }
 
 export type OrgBranding = {

@@ -10,7 +10,7 @@ html {
 
 /* ================================================================
    Higsi Modern tokens
-   Light = default. Dark = "Void Violet".
+   Light = default. Dark = "Ink".
    ================================================================ */
 
 :root {
@@ -57,18 +57,18 @@ html {
   --color-text-muted:      var(--muted-foreground);
   --color-border:          var(--border);
   --color-border-strong:   #D4D4D8;
-  --color-pink:            #F0ABFC;
-  --color-pink-light:      #FAF5FF;
+  --color-pink:            #10B99A;
+  --color-pink-light:      #ECFDF7;
   --color-pink-mid:        #10B99A;
-  --color-blue:            #A5B4FC;
-  --color-blue-light:      #EEF2FF;
-  --color-blue-mid:        #3B82F6;
-  --color-purple:          #C4B5FD;
-  --color-purple-light:    #F5F3FF;
+  --color-blue:            #34D399;
+  --color-blue-light:      #ECFDF7;
+  --color-blue-mid:        #0E9E86;
+  --color-purple:          #10B99A;
+  --color-purple-light:    #ECFDF7;
   --gradient-primary:      linear-gradient(135deg, var(--brand-from), var(--brand-to));
   --gradient-hero:         linear-gradient(135deg, var(--brand-from) 0%, var(--brand-to) 100%);
-  --gradient-soft:         linear-gradient(135deg, #FDF2F8, #F5F3FF);
-  --gradient-blue:         linear-gradient(135deg, #EEF2FF, #FAFAFB);
+  --gradient-soft:         linear-gradient(135deg, #ECFDF7, #D1FAE5);
+  --gradient-blue:         linear-gradient(135deg, #ECFDF7, #FAFAFB);
   --shadow-card:           0 1px 2px rgba(24, 24, 27, 0.05);
   --shadow-button:         0 1px 2px rgba(24, 24, 27, 0.1);
   --shadow-modal:          0 16px 48px rgba(24, 24, 27, 0.18);
@@ -114,9 +114,9 @@ html {
   --status-error-bg:       rgba(239, 68, 68, 0.14);
 
   --color-border-strong:   #3F3F46;
-  --color-pink-light:      #1C1528;
-  --color-blue-light:      #16162A;
-  --color-purple-light:    #1C1528;
+  --color-pink-light:      #0F2A24;
+  --color-blue-light:      #0F2A24;
+  --color-purple-light:    #0F2A24;
   --shadow-card:           0 1px 2px rgba(0, 0, 0, 0.4);
   --shadow-modal:          0 16px 48px rgba(0, 0, 0, 0.6);
 }
@@ -173,9 +173,9 @@ body {
 /* Auth/marketing surfaces (retinted to new brand) */
 .dot-grid {
   background:
-    radial-gradient(circle at 20% 10%, rgba(219, 39, 119, 0.06), transparent 28%),
-    radial-gradient(circle at 85% 0%, rgba(124, 58, 237, 0.06), transparent 26%),
-    radial-gradient(circle, rgba(124, 58, 237, 0.05) 1px, transparent 1px);
+    radial-gradient(circle at 20% 10%, rgba(16, 185, 154, 0.07), transparent 28%),
+    radial-gradient(circle at 85% 0%, rgba(0, 31, 91, 0.06), transparent 26%),
+    radial-gradient(circle, rgba(16, 185, 154, 0.05) 1px, transparent 1px);
   background-size: auto, auto, 28px 28px;
 }
 
@@ -275,7 +275,7 @@ body {
   left: 0;
   right: 0;
   height: 2px;
-  background: linear-gradient(90deg, transparent, rgba(219, 39, 119, 0.4), transparent);
+  background: linear-gradient(90deg, transparent, rgba(16, 185, 154, 0.4), transparent);
   animation: scan 3s ease-in-out infinite;
   pointer-events: none;
   border-radius: 1px;

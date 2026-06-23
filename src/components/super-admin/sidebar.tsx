@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import type { UserProfile } from '@/types/app'
 
@@ -26,11 +27,11 @@ function NavItem({ href, label, Icon, active }: { href: string; label: string; I
       className={`group relative flex items-center gap-2.5 rounded-lg px-3 py-2 text-[13px] transition-all duration-150 ${
         active
           ? 'bg-card/10 text-white font-semibold'
-          : 'text-blue-200/70 hover:bg-card/5 hover:text-white'
+          : 'text-white/55 hover:bg-card/5 hover:text-white'
       }`}
     >
-      {active && <span className="absolute left-0 inset-y-1.5 w-0.5 rounded-r-full bg-card" />}
-      <span className={`shrink-0 transition-colors ${active ? 'text-white' : 'text-blue-300/60 group-hover:text-blue-200/80'}`}>
+      {active && <span className="absolute left-0 inset-y-1.5 w-0.5 rounded-r-full bg-primary" />}
+      <span className={`shrink-0 transition-colors ${active ? 'text-primary' : 'text-white/45 group-hover:text-white/80'}`}>
         <Icon />
       </span>
       <span className="truncate">{label}</span>
@@ -106,15 +107,10 @@ export function SuperAdminSidebar({ user }: { user: UserProfile }) {
     <div className="flex h-screen w-[240px] shrink-0 flex-col bg-foreground">
       {/* Brand */}
       <div className="flex items-center gap-3 px-5 py-5 border-b border-white/10">
-        <div className="flex h-8 w-8 items-center justify-center rounded-[10px] bg-card/10">
-          <svg width="15" height="15" viewBox="0 0 20 20" fill="white">
-            <path fillRule="evenodd" d="M10 1.944A11.954 11.954 0 012.166 5C2.056 5.649 2 6.319 2 7c0 5.225 3.34 9.67 8 11.317C14.66 16.67 18 12.225 18 7c0-.682-.057-1.35-.166-2.001A11.954 11.954 0 0110 1.944z" clipRule="evenodd" />
-          </svg>
-        </div>
-        <div>
-          <p className="text-[13px] font-bold leading-none tracking-tight text-white">Higsi</p>
-          <p className="mt-0.5 text-[9px] font-semibold tracking-[0.14em] text-blue-300/70 uppercase">Super Admin</p>
-        </div>
+        <span className="inline-flex items-center rounded-[10px] bg-white px-2 py-1.5">
+          <Image src="/higsi-logo.png" alt="Higsi" width={84} height={28} className="h-6 w-auto" />
+        </span>
+        <p className="text-[9px] font-semibold tracking-[0.14em] text-white/50 uppercase">Super Admin</p>
       </div>
 
       {/* Navigation */}

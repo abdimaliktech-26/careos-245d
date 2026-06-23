@@ -22,7 +22,7 @@ const ACTION_COLORS: Record<string, string> = {
   form_submitted: 'bg-blue-100 text-blue-800',
   signature_completed: 'bg-teal-50 text-teal-700',
   pdf_downloaded: 'bg-orange-50 text-orange-700',
-  file_uploaded: 'bg-indigo-50 text-indigo-700',
+  file_uploaded: 'bg-emerald-50 text-emerald-700',
   incident_submitted: 'bg-red-50 text-red-700',
 }
 

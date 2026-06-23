@@ -6,6 +6,8 @@ import { appName } from '@/lib/app-config'
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
+import { getRoleRedirectPath } from '@/lib/auth/role-guards'
+import type { Role } from '@/types/app'
 
 export default function LoginPage() {
   const [email, setEmail] = useState('')
@@ -21,7 +23,7 @@ export default function LoginPage() {
 
     try {
       const supabase = createClient()
-      const { error } = await supabase.auth.signInWithPassword({ email, password })
+      const { data: signInData, error } = await supabase.auth.signInWithPassword({ email, password })
 
       if (error) {
         setError(error.message)
@@ -36,9 +38,22 @@ export default function LoginPage() {
         return
       }
 
-      // Route through '/'; the proxy redirects to each role's home
-      // (super_admin → /super-admin, admins/staff → /dashboard, signer → /client).
-      router.push('/')
+      // Resolve role from the sign-in response and go straight to the role's
+      // home, skipping the '/' bounce (which would cost an extra proxy pass:
+      // getUser + role query + redirect). The proxy still guards the target.
+      const signedInUser = signInData.user
+      let role: string | undefined
+      if (signedInUser) {
+        const { data: member } = await supabase
+          .from('organization_members')
+          .select('role')
+          .eq('user_id', signedInUser.id)
+          .eq('is_active', true)
+          .maybeSingle()
+        role = member?.role ?? (signedInUser.user_metadata?.role as string | undefined)
+      }
+
+      router.push(role ? getRoleRedirectPath(role as Role) : '/')
       router.refresh()
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An unexpected error occurred.')
@@ -58,7 +73,7 @@ export default function LoginPage() {
           sizes="(min-width: 1024px) 48vw, 100vw"
           className="object-cover"
         />
-        <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(124,58,237,0.85) 0%, rgba(124,58,237,0.2) 50%, transparent 100%)' }} />
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(0, 31, 91,0.85) 0%, rgba(0, 31, 91,0.2) 50%, transparent 100%)' }} />
         <div className="absolute bottom-10 left-10 right-10 rounded-3xl bg-card/95 p-6 shadow-2xl backdrop-blur">
           <p className="text-xs font-bold uppercase tracking-widest text-primary">{appName()} 245D</p>
           <h1 className="mt-2 text-2xl font-black text-foreground">Audit-ready client packets without paper chasing.</h1>

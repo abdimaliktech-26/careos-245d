@@ -143,7 +143,7 @@ export function FormBuilder({ initial }: Props) {
       <div className="fixed bottom-0 left-0 right-0 border-t border-border bg-card/80 backdrop-blur-sm">
         <div className="mx-auto max-w-7xl px-6 py-3 flex items-center justify-between">
           <div>
-            {error && <p className="text-xs text-rose-500">{error}</p>}
+            {error && <p className="text-xs text-red-500">{error}</p>}
             <p className="text-xs text-muted-foreground">
               {fields.length} field{fields.length !== 1 ? 's' : ''}
             </p>

@@ -137,15 +137,15 @@ export function OrganizationSettingsForm({ organization }: OrganizationSettingsF
               <input
                 type="color"
                 name="brandAccent"
-                defaultValue={organization.brand_accent ?? '#A78BFA'}
+                defaultValue={organization.brand_accent ?? '#001F5B'}
                 className="h-9 w-9 cursor-pointer rounded border border-border bg-transparent p-0.5"
               />
               <input
                 type="text"
                 name="brandAccent"
-                defaultValue={organization.brand_accent ?? '#A78BFA'}
+                defaultValue={organization.brand_accent ?? '#001F5B'}
                 className="flex-1 rounded-lg border border-border px-3 py-1.5 text-xs font-mono outline-none focus:border-ring focus:ring-2 focus:ring-ring/15"
-                placeholder="#A78BFA"
+                placeholder="#001F5B"
                 pattern="^#[0-9A-Fa-f]{6}$"
               />
             </div>

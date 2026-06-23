@@ -17,8 +17,11 @@ export default async function AppLayout({ children }: { children: React.ReactNod
   const { user, error } = await getSession()
   if (error || !user) redirect('/auth/login')
 
-  let branding: OrgBranding | null = null
-  if (user.organizationId) {
+  // Branding for the user's own org is joined in getSession (no extra query).
+  // Only when a super_admin is impersonating do we resolve the impersonated
+  // org's branding, which getSession can't know about.
+  let branding: OrgBranding | null = user.branding ?? null
+  if (user.impersonating && user.organizationId) {
     const supabase = await createServerClient()
     const { data: org } = await supabase
       .from('organizations')
@@ -30,13 +33,13 @@ export default async function AppLayout({ children }: { children: React.ReactNod
         name: org.name,
         logo_url: org.logo_url,
         brand_primary: org.brand_primary ?? '#10B99A',
-        brand_accent: org.brand_accent ?? '#A78BFA',
+        brand_accent: org.brand_accent ?? '#001F5B',
       }
     }
   }
 
   const brandPrimary = branding?.brand_primary ?? '#10B99A'
-  const brandAccent = branding?.brand_accent ?? '#A78BFA'
+  const brandAccent = branding?.brand_accent ?? '#001F5B'
 
   return (
     <RealtimeProvider user={user}>

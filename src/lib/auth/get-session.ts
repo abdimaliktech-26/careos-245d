@@ -25,12 +25,26 @@ export const getSession = cache(async (): Promise<SessionResult> => {
 
   const { data: profile, error: profileError } = await supabase
     .from('organization_members')
-    .select('id, organization_id, user_id, role, full_name, email, is_active')
+    .select('id, organization_id, user_id, role, full_name, email, is_active, organizations(name, logo_url, brand_primary, brand_accent)')
     .eq('user_id', user.id)
     .eq('is_active', true)
     .maybeSingle()
 
   if (profile) {
+    // Branding is joined here so the app layout doesn't fire a second query.
+    // The embedded org comes back as an object (or array under some configs).
+    const orgRow = Array.isArray(profile.organizations)
+      ? profile.organizations[0]
+      : profile.organizations
+    const branding = orgRow
+      ? {
+          name: orgRow.name,
+          logo_url: orgRow.logo_url,
+          brand_primary: orgRow.brand_primary ?? '#10B99A',
+          brand_accent: orgRow.brand_accent ?? '#001F5B',
+        }
+      : null
+
     const baseProfile: UserProfile = {
       id: profile.user_id,
       organizationId: profile.organization_id,
@@ -38,6 +52,7 @@ export const getSession = cache(async (): Promise<SessionResult> => {
       fullName: profile.full_name ?? user.email ?? 'User',
       email: profile.email ?? user.email ?? '',
       isActive: profile.is_active,
+      branding,
     }
     const active = baseProfile.role === 'super_admin'
       ? await getActiveImpersonation(baseProfile.id)

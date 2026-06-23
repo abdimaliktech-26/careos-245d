@@ -77,7 +77,7 @@ export default async function SystemSettingsPage() {
         {/* Environment Variables */}
         <div className="rounded-2xl border border-border bg-card p-6" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
           <div className="mb-4 flex items-center gap-2.5">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-50 text-indigo-600 dark:bg-indigo-500/15 dark:text-indigo-300">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-50 text-emerald-600 dark:bg-emerald-500/15 dark:text-emerald-300">
               <KeyIcon />
             </div>
             <div>
@@ -131,8 +131,8 @@ export default async function SystemSettingsPage() {
               { label: 'Active Orgs', value: stats.activeOrganizations, color: '#10B981' },
               { label: 'Pending Orgs', value: stats.pendingOrganizations, color: '#F59E0B' },
               { label: 'Suspended', value: stats.suspendedOrganizations, color: '#EF4444' },
-              { label: 'Total Users', value: stats.totalUsers, color: '#8B5CF6' },
-              { label: 'Total Clients', value: stats.totalClients, color: '#EC4899' },
+              { label: 'Total Users', value: stats.totalUsers, color: '#001F5B' },
+              { label: 'Total Clients', value: stats.totalClients, color: '#0E9E86' },
               { label: 'Total Packets', value: stats.totalPackets, color: '#F97316' },
               { label: 'Total Incidents', value: stats.totalIncidents, color: '#14B8A6' },
             ].map((s) => (

@@ -7,7 +7,7 @@ const TYPE_COLORS: Record<string, { dot: string; line: string; bg: string }> = {
   evv:           { dot: 'bg-blue-500',  line: 'border-blue-300',  bg: 'bg-blue-50' },
   note:          { dot: 'bg-amber-500',   line: 'border-amber-300',   bg: 'bg-amber-50' },
   document:      { dot: 'bg-cyan-500',    line: 'border-cyan-300',    bg: 'bg-cyan-50' },
-  message:       { dot: 'bg-indigo-500',  line: 'border-indigo-300',  bg: 'bg-indigo-50' },
+  message:       { dot: 'bg-emerald-500',  line: 'border-emerald-300',  bg: 'bg-emerald-50' },
   goal:          { dot: 'bg-teal-500',    line: 'border-teal-300',    bg: 'bg-teal-50' },
   goal_progress: { dot: 'bg-teal-500',    line: 'border-teal-300',    bg: 'bg-teal-50' },
 }

@@ -3,7 +3,7 @@
 import type { IncidentCategory, IncidentStatus } from '@/types/incidents'
 
 const CATEGORY_STYLES: Record<IncidentCategory, string> = {
-  injury: 'bg-rose-50 text-rose-700',
+  injury: 'bg-red-50 text-red-700',
   medication_error: 'bg-status-warn-bg text-status-warn',
   behavioral_incident: 'bg-blue-50 text-blue-700 dark:bg-blue-500/15 dark:text-blue-300',
   emergency_manual_restraint: 'bg-status-warn-bg text-status-warn',
