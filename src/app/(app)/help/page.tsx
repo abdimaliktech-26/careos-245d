@@ -83,7 +83,7 @@ export default async function HelpCenterPage() {
         </p>
         <div className="flex items-center justify-center gap-3">
           <a
-            href="mailto:support@careintake.com"
+            href="mailto:support@higsi.com"
             className="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-white hover:opacity-90 transition-opacity"
           >
             <MailIcon />

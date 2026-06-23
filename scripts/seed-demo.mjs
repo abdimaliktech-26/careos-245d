@@ -8,7 +8,7 @@
  *   node scripts/seed-demo.mjs
  *
  * Optional:
- *   DEMO_EMAIL=demo@careintake.app  (default)
+ *   DEMO_EMAIL=demo@higsi.app  (default)
  *   DEMO_PASSWORD=Demo2026!         (default)
  *   DEMO_ORG_NAME='Demo Organization' (default)
  */
@@ -23,9 +23,9 @@ if (!url || !key) {
   process.exit(1)
 }
 
-const DEMO_EMAIL = process.env.DEMO_EMAIL ?? 'demo@careintake.app'
-const DEMO_SUPER_EMAIL = process.env.DEMO_SUPER_EMAIL ?? 'superadmin@careintake.app'
-const DEMO_STAFF_EMAIL = process.env.DEMO_STAFF_EMAIL ?? 'staff@careintake.app'
+const DEMO_EMAIL = process.env.DEMO_EMAIL ?? 'demo@higsi.app'
+const DEMO_SUPER_EMAIL = process.env.DEMO_SUPER_EMAIL ?? 'superadmin@higsi.app'
+const DEMO_STAFF_EMAIL = process.env.DEMO_STAFF_EMAIL ?? 'staff@higsi.app'
 const DEMO_PASSWORD = process.env.DEMO_PASSWORD ?? 'Demo2026!'
 const DEMO_ORG_NAME = process.env.DEMO_ORG_NAME ?? 'Demo Organization'
 

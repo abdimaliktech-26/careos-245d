@@ -1,6 +1,6 @@
-const STATIC_CACHE = 'careintake-static-v4'
-const NAV_CACHE = 'careintake-nav-v4'
-const API_CACHE = 'careintake-api-v4'
+const STATIC_CACHE = 'higsi-static-v4'
+const NAV_CACHE = 'higsi-nav-v4'
+const API_CACHE = 'higsi-api-v4'
 
 const PRECACHE_URLS = [
   '/',
@@ -11,7 +11,7 @@ const PRECACHE_URLS = [
   '/icons/icon-512.png',
 ]
 
-const DB_NAME = 'careintake-offline'
+const DB_NAME = 'higsi-offline'
 const DB_VERSION = 1
 const STORE_NAME = 'mutations'
 

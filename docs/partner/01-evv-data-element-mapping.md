@@ -1,13 +1,13 @@
-# EVV Data-Element Mapping — CareIntake → 21st Century Cures Act
+# EVV Data-Element Mapping — Higsi → 21st Century Cures Act
 
 **Audience:** Minnesota providers, MN DHS, and future EVV aggregator integration teams (HHAeXchange, Sandata).
-**Purpose:** Show that CareIntake captures all six federally required EVV data elements and how each maps to our internal model and to the normalized aggregator payload.
+**Purpose:** Show that Higsi captures all six federally required EVV data elements and how each maps to our internal model and to the normalized aggregator payload.
 
 ## The six required Cures Act elements
 
 Section 12006 of the 21st Century Cures Act requires every EVV record to capture:
 
-| # | Cures Act element | CareIntake source field | Internal key | Aggregator payload field | Capture method |
+| # | Cures Act element | Higsi source field | Internal key | Aggregator payload field | Capture method |
 |---|---|---|---|---|---|
 | 1 | Type of service performed | `evv_visits.service_name` → mapped to procedure code via `evv_service_codes` | `service_type` | `serviceType` | Scheduled service + state service-code catalog |
 | 2 | Individual receiving the service | `evv_visits.client_id` → client Medicaid/recipient ID | `individual_receiving` | `clientExternalId` | Client record (`clients.medicaid_id`) |
@@ -22,7 +22,7 @@ eligible for transmission** to a state aggregator.
 
 ## Normalized aggregator payload
 
-CareIntake builds a vendor-agnostic payload (`AggregatorVisitPayload`,
+Higsi builds a vendor-agnostic payload (`AggregatorVisitPayload`,
 `src/lib/evv/aggregator/types.ts`) that every aggregator adapter (HHAeXchange,
 Sandata, …) translates to its own wire format:
 
@@ -41,7 +41,7 @@ billableMinutes     Derived from check-in → check-out (element 6)
 
 ## Identifier mapping (provider-supplied)
 
-| Aggregator needs | CareIntake field | Where set |
+| Aggregator needs | Higsi field | Where set |
 |---|---|---|
 | Provider ID | `evv_aggregator_config.provider_id` | Org EVV settings |
 | Recipient/Member ID | `clients.medicaid_id` | Client record |

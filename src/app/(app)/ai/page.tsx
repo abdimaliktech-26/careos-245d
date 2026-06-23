@@ -47,7 +47,7 @@ export default function AIToolsPage() {
             for Human Services Providers
           </h1>
           <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-muted-foreground">
-            CareIntake&rsquo;s HIPAA-compliant AI tools are tailored to think like human services professionals, helping users
+            Higsi&rsquo;s HIPAA-compliant AI tools are tailored to think like human services professionals, helping users
             provide more effective supports. As compliance and documentation needs grow, these tools
             improve documentation efficiency while complementing the invaluable work of your agency.
           </p>
@@ -211,7 +211,7 @@ export default function AIToolsPage() {
             {[
               'Field-Specific Intelligence: Understands I/DD context, including industry-specific abbreviations and clinical terminology.',
               'Integrated Workflow: Operates directly within the browser interface, allowing teams to read and share translated documents with ease.',
-              'HIPAA-Secure Translation: Built directly into the CareIntake system to ensure document translations meet HIPAA security and data privacy standards.',
+              'HIPAA-Secure Translation: Built directly into the Higsi system to ensure document translations meet HIPAA security and data privacy standards.',
             ].map((item) => (
               <li key={item} className="flex items-start gap-2.5 text-sm leading-6 text-muted-foreground">
                 <span className="mt-0.5 shrink-0 text-primary"><CheckIcon /></span>

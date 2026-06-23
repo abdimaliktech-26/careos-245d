@@ -93,7 +93,7 @@ export async function GET() {
 
   const packetStatusBreakdown = [
     { name: 'Completed', value: packets?.filter(p => p.status === 'completed').length ?? 0, color: '#10B981' },
-    { name: 'In Progress', value: packets?.filter(p => p.status === 'in_progress').length ?? 0, color: '#E8799E' },
+    { name: 'In Progress', value: packets?.filter(p => p.status === 'in_progress').length ?? 0, color: '#10B99A' },
     { name: 'Needs Signature', value: packets?.filter(p => p.status === 'needs_signature').length ?? 0, color: '#F59E0B' },
     { name: 'Overdue', value: packets?.filter(p => p.status === 'overdue').length ?? 0, color: '#EF4444' },
     { name: 'Not Started', value: packets?.filter(p => p.status === 'not_started').length ?? 0, color: '#94A3B8' },

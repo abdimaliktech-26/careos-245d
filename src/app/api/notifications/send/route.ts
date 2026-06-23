@@ -24,7 +24,7 @@ export async function POST(req: NextRequest) {
       const res = await fetch('https://api.resend.com/emails', {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${resendKey}`, 'Content-Type': 'application/json' },
-        body: JSON.stringify({ from: 'CareIntake <notifications@careintake.app>', to: [recipient], subject: subject ?? 'CareIntake Notification', html: message }),
+        body: JSON.stringify({ from: 'Higsi <notifications@higsi.app>', to: [recipient], subject: subject ?? 'Higsi Notification', html: message }),
       })
       if (!res.ok) result.sent = false
     } catch { result.sent = false; result.error = 'Email delivery failed' }

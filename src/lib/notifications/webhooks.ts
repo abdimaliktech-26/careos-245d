@@ -27,7 +27,7 @@ function slackMessage(text: string) {
     blocks: [
       {
         type: 'header',
-        text: { type: 'plain_text', text: 'CareIntake Alert', emoji: true },
+        text: { type: 'plain_text', text: 'Higsi Alert', emoji: true },
       },
       { type: 'divider' },
       {
@@ -37,7 +37,7 @@ function slackMessage(text: string) {
       {
         type: 'context',
         elements: [
-          { type: 'mrkdwn', text: `CareIntake 245D Suite · ${new Date().toLocaleDateString('en-US')}` },
+          { type: 'mrkdwn', text: `Higsi 245D Suite · ${new Date().toLocaleDateString('en-US')}` },
         ],
       },
     ],

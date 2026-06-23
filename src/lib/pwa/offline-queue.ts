@@ -1,4 +1,4 @@
-const DB_NAME = 'careintake-offline'
+const DB_NAME = 'higsi-offline'
 const DB_VERSION = 1
 const STORE_NAME = 'mutations'
 

@@ -112,7 +112,7 @@ export function SuperAdminSidebar({ user }: { user: UserProfile }) {
           </svg>
         </div>
         <div>
-          <p className="text-[13px] font-bold leading-none tracking-tight text-white">CareIntake</p>
+          <p className="text-[13px] font-bold leading-none tracking-tight text-white">Higsi</p>
           <p className="mt-0.5 text-[9px] font-semibold tracking-[0.14em] text-blue-300/70 uppercase">Super Admin</p>
         </div>
       </div>

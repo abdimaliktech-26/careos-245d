@@ -2,7 +2,7 @@
 # https://supabase.com/docs/guides/local-development/cli/config
 # A string used to distinguish different Supabase projects on the same host. Defaults to the
 # working directory name when running `supabase init`.
-project_id = "careintake"
+project_id = "higsi"
 
 [api]
 enabled = true
@@ -224,12 +224,12 @@ host = "smtp.resend.com"
 port = 587
 user = "resend"
 pass = "env(RESEND_API_KEY)"
-admin_email = "noreply@careintake.app"
-sender_name = "CareIntake"
+admin_email = "noreply@higsi.app"
+sender_name = "Higsi"
 
 # Uncomment to customize email template
 [auth.email.template.recovery]
-subject = "Reset Your CareIntake Password"
+subject = "Reset Your Higsi Password"
 content_path = "./supabase/templates/reset-password.html"
 
 # Uncomment to customize notification email template

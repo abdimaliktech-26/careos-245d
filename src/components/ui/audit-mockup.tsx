@@ -6,7 +6,7 @@ export function AuditMockup() {
         <span className="h-2.5 w-2.5 rounded-full bg-red-400" />
         <span className="h-2.5 w-2.5 rounded-full bg-amber-400" />
         <span className="h-2.5 w-2.5 rounded-full bg-green-400" />
-        <span className="ml-3 text-[10px] text-gray-400">CareIntake — AI Audit Assistant</span>
+        <span className="ml-3 text-[10px] text-gray-400">Higsi — AI Audit Assistant</span>
       </div>
 
       {/* App shell */}
@@ -16,13 +16,13 @@ export function AuditMockup() {
           <div className="mb-3 flex items-center gap-2 px-2 py-1.5">
             <div
               className="flex h-7 w-7 items-center justify-center rounded-lg"
-              style={{ background: 'linear-gradient(135deg, #E8799E, #C8A8E8)' }}
+              style={{ background: 'linear-gradient(135deg, #10B99A, #0E9E86)' }}
             >
               <svg width="11" height="11" viewBox="0 0 20 20" fill="white">
                 <path fillRule="evenodd" d="M10 1.944A11.954 11.954 0 012.166 5C2.056 5.649 2 6.319 2 7c0 5.225 3.34 9.67 8 11.317C14.66 16.67 18 12.225 18 7c0-.682-.057-1.35-.166-2.001A11.954 11.954 0 0110 1.944z" clipRule="evenodd" />
               </svg>
             </div>
-            <span className="text-[11px] font-bold text-[#3A2A4A]">CareIntake</span>
+            <span className="text-[11px] font-bold text-[#3A2A4A]">Higsi</span>
           </div>
 
           {[
@@ -36,8 +36,8 @@ export function AuditMockup() {
               key={label}
               className={`flex items-center gap-2 rounded-lg px-2 py-1.5 ${active ? 'bg-[#EEF2FF]' : ''}`}
             >
-              <div className={`h-2.5 w-2.5 rounded-sm ${active ? 'bg-[#E8799E]' : 'bg-gray-200'}`} />
-              <span className={`text-[10px] ${active ? 'font-semibold text-[#E8799E]' : 'text-[#64748B]'}`}>{label}</span>
+              <div className={`h-2.5 w-2.5 rounded-sm ${active ? 'bg-[#10B99A]' : 'bg-gray-200'}`} />
+              <span className={`text-[10px] ${active ? 'font-semibold text-[#10B99A]' : 'text-[#64748B]'}`}>{label}</span>
             </div>
           ))}
         </div>
@@ -79,10 +79,10 @@ export function AuditMockup() {
             </div>
             <div className="divide-y divide-gray-50">
               {[
-                { title: 'Jordan M. — Annual overdue', tag: 'Packets', tagCls: 'bg-[#EEF2FF] text-[#E8799E]', sev: 'High', sevCls: 'bg-orange-50 text-orange-700' },
-                { title: 'Missing BSN on file', tag: 'Documents', tagCls: 'bg-[#EEF2FF] text-[#E8799E]', sev: 'Medium', sevCls: 'bg-amber-50 text-amber-700' },
-                { title: 'CPR cert expires in 7 days', tag: 'Training', tagCls: 'bg-[#EEF2FF] text-[#E8799E]', sev: 'Medium', sevCls: 'bg-amber-50 text-amber-700' },
-                { title: '2 EVV visits unverified', tag: 'EVV', tagCls: 'bg-[#EEF2FF] text-[#E8799E]', sev: 'Low', sevCls: 'bg-blue-50 text-blue-700' },
+                { title: 'Jordan M. — Annual overdue', tag: 'Packets', tagCls: 'bg-[#EEF2FF] text-[#10B99A]', sev: 'High', sevCls: 'bg-orange-50 text-orange-700' },
+                { title: 'Missing BSN on file', tag: 'Documents', tagCls: 'bg-[#EEF2FF] text-[#10B99A]', sev: 'Medium', sevCls: 'bg-amber-50 text-amber-700' },
+                { title: 'CPR cert expires in 7 days', tag: 'Training', tagCls: 'bg-[#EEF2FF] text-[#10B99A]', sev: 'Medium', sevCls: 'bg-amber-50 text-amber-700' },
+                { title: '2 EVV visits unverified', tag: 'EVV', tagCls: 'bg-[#EEF2FF] text-[#10B99A]', sev: 'Low', sevCls: 'bg-blue-50 text-blue-700' },
               ].map((f) => (
                 <div key={f.title} className="flex items-center gap-2 px-3 py-2">
                   <span className={`shrink-0 rounded-full px-1.5 py-0.5 text-[7px] font-bold ${f.sevCls}`}>{f.sev}</span>

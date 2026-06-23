@@ -11,7 +11,7 @@ import {
 } from '@/lib/onboarding/actions'
 
 const STEPS = [
-  { id: 'welcome', title: 'Welcome to CareIntake' },
+  { id: 'welcome', title: 'Welcome to Higsi' },
   { id: 'profile', title: 'Complete Your Profile' },
   { id: 'team', title: 'Invite Your Team' },
   { id: 'clients', title: 'Add Clients' },
@@ -74,7 +74,7 @@ export function OnboardingWizard() {
                   <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
                 </div>
               </div>
-              <h1 className="text-2xl font-bold text-foreground">Welcome to CareIntake</h1>
+              <h1 className="text-2xl font-bold text-foreground">Welcome to Higsi</h1>
               <p className="text-sm text-muted-foreground">Your 245D compliance management suite. Let&apos;s get you set up in a few steps.</p>
             </div>
           )}

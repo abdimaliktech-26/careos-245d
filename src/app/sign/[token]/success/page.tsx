@@ -46,7 +46,7 @@ export default async function SigningSuccessPage({ params }: Props) {
           ) : (
             <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#24343a] text-sm font-black text-white sm:h-12 sm:w-12 sm:text-base">CI</div>
           )}
-          <p className="text-base font-black text-[#24343a] sm:text-lg">{organization?.name ?? 'CareIntake'}</p>
+          <p className="text-base font-black text-[#24343a] sm:text-lg">{organization?.name ?? 'Higsi'}</p>
         </div>
 
         <div className="care-panel rounded-3xl p-8 sm:p-10">

@@ -482,7 +482,7 @@ export async function queueAuditNotifications(
     if (member.email) emailRecipients.add(member.email)
   }
 
-  const subject = `CareIntake audit alert: ${severeFindings.length} high-priority finding${severeFindings.length === 1 ? '' : 's'}`
+  const subject = `Higsi audit alert: ${severeFindings.length} high-priority finding${severeFindings.length === 1 ? '' : 's'}`
   const message = [
     `${organization?.name ?? 'Your organization'} has ${report.counts.critical} critical and ${report.counts.high} high audit finding${report.counts.critical + report.counts.high === 1 ? '' : 's'}.`,
     '',
@@ -506,7 +506,7 @@ export async function queueAuditNotifications(
       channel: 'sms',
       recipient: organization.phone,
       subject: null,
-      message: `CareIntake audit alert: ${report.counts.critical} critical, ${report.counts.high} high. Open AI Audit Assistant for details.`,
+      message: `Higsi audit alert: ${report.counts.critical} critical, ${report.counts.high} high. Open AI Audit Assistant for details.`,
       severity: report.counts.critical > 0 ? 'critical' : 'high',
       status: 'queued',
     }] : []),
@@ -575,7 +575,7 @@ export async function processOrgWebhooks(admin: ReturnType<typeof createAdminCli
 
   const message = [
     `${org.name ?? 'Your organization'}: ${counts.critical ?? 0} critical, ${counts.high ?? 0} high findings.`,
-    'Open CareIntake AI Audit Assistant for details.',
+    'Open Higsi AI Audit Assistant for details.',
   ].join('\n')
 
   const results = []
@@ -585,7 +585,7 @@ export async function processOrgWebhooks(admin: ReturnType<typeof createAdminCli
       webhook.type as WebhookType,
       webhook.url,
       'audit.alert',
-      'CareIntake Audit Alert',
+      'Higsi Audit Alert',
       message,
       { counts }
     )
@@ -609,7 +609,7 @@ export async function processQueuedAuditNotifications(limit = 50) {
   for (const notification of notifications ?? []) {
     const channel = notification.channel as 'email' | 'sms'
     const delivery = channel === 'email'
-      ? await sendEmailNotification(notification.recipient, notification.subject ?? 'CareIntake audit alert', notification.message)
+      ? await sendEmailNotification(notification.recipient, notification.subject ?? 'Higsi audit alert', notification.message)
       : await sendSmsNotification(notification.recipient, notification.message)
 
     await admin

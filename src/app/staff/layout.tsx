@@ -16,7 +16,7 @@ export default async function StaffLayout({
   return (
     <div className="min-h-screen bg-background">
       <nav className="bg-teal-700 text-white px-6 py-3 flex items-center justify-between">
-        <span className="font-bold text-lg">CareIntake</span>
+        <span className="font-bold text-lg">Higsi</span>
         <span className="text-sm text-teal-200">
           {user.fullName}
         </span>

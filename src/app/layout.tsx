@@ -20,15 +20,15 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 1,
-  themeColor: "#A21CAF",
+  themeColor: "#001F5B",
 };
 
 export const metadata: Metadata = {
-  title: "Stillwater 245D Suite",
+  title: "Higsi 245D Suite",
   description: "Minnesota 245D compliance management for home and community-based service providers.",
   appleWebApp: {
     capable: true,
-    title: "CareIntake",
+    title: "Higsi",
     statusBarStyle: "default",
   },
   icons: {

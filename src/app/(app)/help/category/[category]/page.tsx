@@ -13,14 +13,14 @@ function ChevronRight() {
 }
 
 const CATEGORY_DESCRIPTIONS: Record<string, string> = {
-  'getting-started': 'Learn the basics of navigating CareIntake, setting up your account, and getting started with daily tasks.',
+  'getting-started': 'Learn the basics of navigating Higsi, setting up your account, and getting started with daily tasks.',
   'forms-packets': 'Everything about form templates, packet creation, managing documents, and completing reviews.',
   'clients-staff': 'Managing client records, staff accounts, permissions, and team coordination.',
   billing: 'Understanding billing readiness, claims management, authorizations, and reimbursement.',
   incidents: 'How to report, track, and manage incidents in compliance with 245D requirements.',
   evv: 'Electronic Visit Verification — check-in/check-out procedures, GPS tracking, and visit logs.',
   schedule: 'Creating and managing staff schedules, shift assignments, and calendar views.',
-  faq: 'Frequently asked questions about CareIntake features, compliance, and troubleshooting.',
+  faq: 'Frequently asked questions about Higsi features, compliance, and troubleshooting.',
   general: 'General information and reference materials.',
 }
 

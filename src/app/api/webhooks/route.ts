@@ -59,8 +59,8 @@ export async function POST(req: NextRequest) {
     body.type as never,
     body.url,
     'audit.alert',
-    'CareIntake Webhook Test',
-    'This is a test notification from CareIntake. Your webhook is configured correctly.',
+    'Higsi Webhook Test',
+    'This is a test notification from Higsi. Your webhook is configured correctly.',
     { test: true, timestamp: new Date().toISOString() }
   )
 

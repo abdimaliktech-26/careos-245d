@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 
-const LS_KEY = 'careintake-install-dismissed'
+const LS_KEY = 'higsi-install-dismissed'
 
 function isDismissed(): boolean {
   if (typeof window === 'undefined') return true
@@ -68,7 +68,7 @@ export default function InstallPrompt() {
             </svg>
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-[13px] font-semibold text-foreground">Install CareIntake</p>
+            <p className="text-[13px] font-semibold text-foreground">Install Higsi</p>
             <p className="mt-0.5 text-[12px] text-muted-foreground">Install for the best experience</p>
           </div>
           <div className="flex items-center gap-2 shrink-0">

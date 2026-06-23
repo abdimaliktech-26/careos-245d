@@ -51,7 +51,7 @@ export default function LandingPage() {
             <ShieldIcon />
           </div>
           <div>
-            <p className="text-base font-bold leading-none text-foreground">CareIntake</p>
+            <p className="text-base font-bold leading-none text-foreground">Higsi</p>
             <p className="mt-1 bg-gradient-to-r from-brand-from to-brand-to bg-clip-text text-[11px] font-semibold uppercase tracking-widest text-transparent">245D Suite</p>
           </div>
         </Link>
@@ -99,7 +99,7 @@ export default function LandingPage() {
                 <span className="bg-gradient-to-r from-brand-from to-brand-to bg-clip-text text-transparent">one calm workspace</span>.
               </h1>
               <p className="mt-6 max-w-2xl text-lg leading-8 text-muted-foreground">
-                CareIntake helps small 245D providers run client intake, 45-day reviews, semi-annual reviews,
+                Higsi helps small 245D providers run client intake, 45-day reviews, semi-annual reviews,
                 annual reviews, staff accounts, branded documents, and signature compliance without chasing paper.
               </p>
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -359,7 +359,7 @@ export default function LandingPage() {
           <div className="relative mx-auto max-w-3xl px-5 text-center sm:px-8">
             <h2 className="text-3xl font-black text-white sm:text-4xl">Ready to simplify your compliance workflow?</h2>
             <p className="mt-4 text-lg text-white/80">
-              Join Minnesota 245D providers who trust CareIntake for intake packets, signatures, and review alerts.
+              Join Minnesota 245D providers who trust Higsi for intake packets, signatures, and review alerts.
             </p>
             <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
               <Link
@@ -388,7 +388,7 @@ export default function LandingPage() {
                 <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-brand-from to-brand-to text-white">
                   <ShieldIcon />
                 </div>
-                <span className="text-sm font-bold text-foreground">CareIntake</span>
+                <span className="text-sm font-bold text-foreground">Higsi</span>
               </div>
               <p className="mt-3 text-xs leading-5 text-muted-foreground">
                 The HIPAA-compliant 245D HCBS platform for intake, signatures, and compliance.
@@ -420,7 +420,7 @@ export default function LandingPage() {
             </div>
           </div>
           <div className="mt-8 border-t border-border pt-6 text-center text-xs text-muted-foreground">
-            &copy; {new Date().getFullYear()} CareIntake. All rights reserved. HIPAA compliant.
+            &copy; {new Date().getFullYear()} Higsi. All rights reserved. HIPAA compliant.
           </div>
         </div>
       </footer>

@@ -2,7 +2,7 @@
 
 **Date:** 2026-06-18
 **Status:** Approved (design); pending implementation plan
-**Project:** CareIntake / Stillwater 245D Suite
+**Project:** Higsi / Stillwater 245D Suite
 
 ## Summary
 

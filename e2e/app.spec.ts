@@ -3,7 +3,7 @@ import { test, expect } from '@playwright/test'
 test.describe('auth flow', () => {
   test('login page loads', async ({ page }) => {
     await page.goto('/auth/login')
-    await expect(page).toHaveTitle(/CareIntake|245D/)
+    await expect(page).toHaveTitle(/Higsi|245D/)
   })
 
   test('forgot password page renders', async ({ page }) => {
@@ -20,7 +20,7 @@ test.describe('auth flow', () => {
 test.describe('landing page', () => {
   test('loads with chatbot trigger', async ({ page }) => {
     await page.goto('/')
-    await expect(page).toHaveTitle(/CareIntake|245D/)
+    await expect(page).toHaveTitle(/Higsi|245D/)
     // Chatbot floating button is present
     const chatButton = page.locator('button[aria-label*="chat" i], button[aria-label*="CareAssist" i]')
     await expect(chatButton.first()).toBeVisible({ timeout: 5000 })

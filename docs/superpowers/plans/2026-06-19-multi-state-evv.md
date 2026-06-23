@@ -647,7 +647,7 @@ Seed: `DOTENV_CONFIG_PATH=.env.local node -r dotenv/config scripts/seed-demo.mjs
 ```typescript
 // e2e/multistate-evv.spec.ts
 import { test, expect, type Page } from '@playwright/test'
-const EMAIL = process.env.DEMO_EMAIL ?? 'demo@careintake.app'
+const EMAIL = process.env.DEMO_EMAIL ?? 'demo@higsi.app'
 const PASSWORD = process.env.DEMO_PASSWORD ?? 'Demo2026!'
 async function login(page: Page) {
   await page.goto('/auth/login'); await page.fill('#email', EMAIL); await page.fill('#password', PASSWORD)
@@ -676,7 +676,7 @@ Expected: PASS.
 DOTENV_CONFIG_PATH=.env.local node -r dotenv/config -e '
 import("@supabase/supabase-js").then(async ({createClient})=>{
   const a=createClient(process.env.NEXT_PUBLIC_SUPABASE_URL,process.env.SUPABASE_SERVICE_ROLE_KEY,{auth:{persistSession:false}});
-  const t=["demo@careintake.app","superadmin@careintake.app","staff@careintake.app"];
+  const t=["demo@higsi.app","superadmin@higsi.app","staff@higsi.app"];
   let p=1;while(true){const {data}=await a.auth.admin.listUsers({page:p,perPage:200});const us=data?.users??[];for(const u of us){if(u.email&&t.includes(u.email.toLowerCase()))await a.auth.admin.deleteUser(u.id);}if(us.length<200)break;p++;}
   const {data:o}=await a.from("organizations").select("id").eq("name","Demo Organization");for(const x of o??[])await a.from("organizations").delete().eq("id",x.id);
   console.log("cleaned");

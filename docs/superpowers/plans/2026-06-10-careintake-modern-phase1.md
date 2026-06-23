@@ -1,8 +1,8 @@
-# CareIntake Modern — Phase 1–3 Implementation Plan (Design System + shadcn + App Shell)
+# Higsi Modern — Phase 1–3 Implementation Plan (Design System + shadcn + App Shell)
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Replace CareIntake's pastel-lavender design system with the approved "CareIntake Modern" token system (light default / Void Violet dark, fuchsia→violet brand accent), adopt shadcn/ui as the component layer, and rebuild the app shell (grouped sidebar, header with breadcrumbs, Cmd+K command palette).
+**Goal:** Replace Higsi's pastel-lavender design system with the approved "Higsi Modern" token system (light default / Void Violet dark, fuchsia→violet brand accent), adopt shadcn/ui as the component layer, and rebuild the app shell (grouped sidebar, header with breadcrumbs, Cmd+K command palette).
 
 **Architecture:** Tokens live in `src/app/globals.css` as shadcn-convention CSS variables mapped through Tailwind v4 `@theme inline`. Legacy variable names (`--color-*`, `--care-*`, `--gradient-*`) stay defined as aliases so untouched pages keep rendering. shadcn components are added to `src/components/ui/`; the existing `Button`/`Input` keep their public prop APIs (`variant="primary|secondary|danger"`, `loading`) via custom cva variants. Nav structure is pure data in `nav-config.ts` (unit-tested), rendered by a rewritten sidebar; breadcrumbs are a pure util (unit-tested).
 
@@ -56,7 +56,7 @@ Do NOT commit yet if `git status` shows only generated files — proceed to Task
 
 ---
 
-### Task 2: globals.css — CareIntake Modern tokens
+### Task 2: globals.css — Higsi Modern tokens
 
 **Files:**
 - Modify: `src/app/globals.css` (full replacement)
@@ -74,7 +74,7 @@ html {
 }
 
 /* ================================================================
-   CareIntake Modern tokens
+   Higsi Modern tokens
    Light = default. Dark = "Void Violet".
    ================================================================ */
 
@@ -476,7 +476,7 @@ Expected: PASS (pre-existing suites green; form-field/field-types tests exercise
 
 ```bash
 git add -A
-git commit -m "feat(ui): adopt shadcn/ui with CareIntake Modern token system
+git commit -m "feat(ui): adopt shadcn/ui with Higsi Modern token system
 
 - shadcn init (new-york, radix, zinc) + 18 components
 - globals.css: new light/dark tokens, brand gradient vars, semantic
@@ -891,7 +891,7 @@ export default function Sidebar({ user, branding }: SidebarProps) {
             )}
             <div>
               <p className="text-[13px] font-bold leading-none tracking-tight text-foreground">
-                {branding?.name ?? 'CareIntake'}
+                {branding?.name ?? 'Higsi'}
               </p>
               <p className="mt-0.5 bg-gradient-to-r from-brand-from to-brand-to bg-clip-text text-[9px] font-semibold uppercase tracking-[0.14em] text-transparent">
                 245D Suite
@@ -972,7 +972,7 @@ Expected: PASS. If anything imported `ThemeToggle` expecting it inside Sidebar, 
 
 ```bash
 git add src/components/layout/sidebar.tsx
-git commit -m "feat(nav): grouped role-aware sidebar in CareIntake Modern style"
+git commit -m "feat(nav): grouped role-aware sidebar in Higsi Modern style"
 ```
 
 ---
@@ -1306,7 +1306,7 @@ Expected: PASS
 
 ```bash
 git add -A
-git commit -m "style(shell): retoken remaining shell chrome to CareIntake Modern"
+git commit -m "style(shell): retoken remaining shell chrome to Higsi Modern"
 ```
 
 ---

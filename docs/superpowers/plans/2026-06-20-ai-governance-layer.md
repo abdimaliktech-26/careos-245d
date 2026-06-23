@@ -490,7 +490,7 @@ Note: super-admin reads/writes any org via the RLS rule `organization_id = get_m
 ```typescript
 // src/lib/app-config.ts
 export function appName(): string {
-  return process.env.NEXT_PUBLIC_APP_NAME || 'CareIntake'
+  return process.env.NEXT_PUBLIC_APP_NAME || 'Higsi'
 }
 ```
 
@@ -628,7 +628,7 @@ describe.runIf(hasEnv)('ai governance tables (integration)', () => {
 ```typescript
 // e2e/ai-governance.spec.ts
 import { test, expect, type Page } from '@playwright/test'
-const EMAIL = process.env.DEMO_EMAIL ?? 'demo@careintake.app'
+const EMAIL = process.env.DEMO_EMAIL ?? 'demo@higsi.app'
 const PASSWORD = process.env.DEMO_PASSWORD ?? 'Demo2026!'
 async function login(page: Page) {
   await page.goto('/auth/login'); await page.fill('#email', EMAIL); await page.fill('#password', PASSWORD)

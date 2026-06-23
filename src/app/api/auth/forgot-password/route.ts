@@ -35,14 +35,14 @@ export async function POST(req: NextRequest) {
       }
 
       const resetLink = linkData.properties.action_link
-      const appName = 'CareIntake'
+      const appName = 'Higsi'
 
       // Send via Resend
       const emailRes = await fetch('https://api.resend.com/emails', {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${resendKey}`, 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          from: `${appName} <noreply@careintake.app>`,
+          from: `${appName} <noreply@higsi.app>`,
           to: [email],
           subject: `Reset Your ${appName} Password`,
           html: `<!DOCTYPE html>
@@ -50,10 +50,10 @@ export async function POST(req: NextRequest) {
 <head><meta charset="utf-8"></head>
 <body style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#F8FAFC;padding:40px 0">
 <div style="max-width:560px;margin:0 auto;background:#fff;border-radius:16px;padding:40px;box-shadow:0 1px 3px rgba(0,0,0,0.08)">
-  <div style="background:linear-gradient(135deg,#E8799E,#C8A8E8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-size:20px;font-weight:800">${appName}</div>
+  <div style="background:linear-gradient(135deg,#10B99A,#0E9E86);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-size:20px;font-weight:800">${appName}</div>
   <h1 style="color:#3A2A4A;font-size:22px;margin:24px 0 12px">Reset Your Password</h1>
   <p style="color:#64748B;font-size:14px;line-height:1.6">We received a request to reset your password. Click below to set a new one.</p>
-  <a href="${resetLink}" style="display:inline-block;background:linear-gradient(135deg,#E8799E,#C8A8E8);color:#fff;padding:12px 28px;border-radius:12px;text-decoration:none;font-weight:700;font-size:14px;margin-top:8px">Reset Password</a>
+  <a href="${resetLink}" style="display:inline-block;background:linear-gradient(135deg,#10B99A,#0E9E86);color:#fff;padding:12px 28px;border-radius:12px;text-decoration:none;font-weight:700;font-size:14px;margin-top:8px">Reset Password</a>
   <p style="font-size:12px;color:#94A3B8;margin-top:20px">This link expires in 1 hour. Ignore if you didn't request this.</p>
   <div style="margin-top:32px;padding-top:20px;border-top:1px solid #E5E7EB">
     <p style="color:#94A3B8;font-size:12px;margin:0">${appName} 245D Suite — Minnesota HCBS Compliance Platform</p>

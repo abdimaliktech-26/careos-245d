@@ -1,4 +1,4 @@
-# CareIntake Modern — Retoken Playbook (mechanical class migration)
+# Higsi Modern — Retoken Playbook (mechanical class migration)
 
 Styling-only migration. NEVER change logic, props, data fetching, handlers, copy, or structure. Only class strings and inline style attributes listed here.
 

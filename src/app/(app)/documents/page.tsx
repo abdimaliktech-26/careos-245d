@@ -186,7 +186,7 @@ export default async function DocumentsPage({
             </div>
             <h3 className="font-black text-foreground text-lg">Auto-saved on completion</h3>
             <p className="mt-2 text-sm text-muted-foreground leading-6">
-              Every time a packet form receives all required signatures (client/guardian + case manager), CareIntake automatically generates the branded document and stores it here.
+              Every time a packet form receives all required signatures (client/guardian + case manager), Higsi automatically generates the branded document and stores it here.
             </p>
             <div className="mt-4 space-y-2.5 text-sm">
               {[

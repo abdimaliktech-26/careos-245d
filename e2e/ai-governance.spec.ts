@@ -1,6 +1,6 @@
 import { test, expect, type Page } from '@playwright/test'
 
-const EMAIL = process.env.DEMO_EMAIL ?? 'demo@careintake.app'
+const EMAIL = process.env.DEMO_EMAIL ?? 'demo@higsi.app'
 const PASSWORD = process.env.DEMO_PASSWORD ?? 'Demo2026!'
 
 async function login(page: Page) {

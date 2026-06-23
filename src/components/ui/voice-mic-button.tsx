@@ -53,7 +53,7 @@ export function VoiceMicButton({
         className={`relative z-10 flex shrink-0 items-center justify-center rounded-full transition-all duration-200 disabled:opacity-40 ${sizeClasses[size]} ${
           isListening
             ? 'bg-red-500 text-white shadow-lg shadow-red-200 scale-110'
-            : 'border border-gray-200 bg-white text-gray-500 hover:border-[#E8799E] hover:text-[#E8799E] hover:shadow-sm'
+            : 'border border-gray-200 bg-white text-gray-500 hover:border-[#10B99A] hover:text-[#10B99A] hover:shadow-sm'
         }`}
       >
         {isListening ? (

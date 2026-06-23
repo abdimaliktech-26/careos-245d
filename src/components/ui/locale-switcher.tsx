@@ -16,9 +16,9 @@ export function LocaleSwitcher() {
       className="flex items-center gap-1.5 rounded-lg border border-gray-200 px-2.5 py-1.5 text-xs font-medium text-gray-600 hover:bg-gray-50 hover:border-gray-300 transition-colors"
       title={locale === 'en' ? 'Ku beddel Af Soomaali' : 'Switch to English'}
     >
-      <span className={`${locale === 'en' ? 'text-[#E8799E] font-bold' : 'text-gray-400'}`}>EN</span>
+      <span className={`${locale === 'en' ? 'text-[#10B99A] font-bold' : 'text-gray-400'}`}>EN</span>
       <span className="text-gray-300">/</span>
-      <span className={`${locale === 'so' ? 'text-[#E8799E] font-bold' : 'text-gray-400'}`}>SO</span>
+      <span className={`${locale === 'so' ? 'text-[#10B99A] font-bold' : 'text-gray-400'}`}>SO</span>
     </button>
   )
 }

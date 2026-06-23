@@ -1,6 +1,6 @@
 # EVV Government Readiness — Gap Analysis & Roadmap
 
-**Product:** CareOS / CareIntake — AI-Powered 245D Compliance & Operations Platform with Integrated EVV
+**Product:** CareOS / Higsi — AI-Powered 245D Compliance & Operations Platform with Integrated EVV
 **Scope:** Electronic Visit Verification (EVV) for Minnesota 245D / HCBS Medicaid services
 **Last updated:** 2026-06-12
 **Audience:** State Medicaid evaluators, aggregator partners (HHAeXchange/Sandata), prime-contractor procurement, internal roadmap

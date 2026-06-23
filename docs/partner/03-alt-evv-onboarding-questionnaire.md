@@ -2,12 +2,12 @@
 
 **Audience:** internal prep for HHAeXchange (MN) and Sandata (OH/AZ) Alt-EVV onboarding.
 **Purpose:** pre-drafted answers to the questions aggregators/states typically ask a
-third-party EVV vendor, based on CareIntake's current architecture. Review and confirm
+third-party EVV vendor, based on Higsi's current architecture. Review and confirm
 each before submitting; items marked **[CONFIRM]** need a business decision or a value
 you must supply.
 
 ## A. Vendor / company
-- **Vendor / product name:** CareIntake (Stillwater 245D Suite). **[CONFIRM legal entity]**
+- **Vendor / product name:** Higsi (Stillwater 245D Suite). **[CONFIRM legal entity]**
 - **Primary integration contact:** **[CONFIRM name / email / phone]**
 - **Technical contact:** **[CONFIRM]**
 - **States targeted (initial):** Minnesota (HHAeXchange). OH/AZ (Sandata) later.

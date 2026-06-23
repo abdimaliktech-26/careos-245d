@@ -1,4 +1,4 @@
-# CareIntake — 245D Suite
+# Higsi — 245D Suite
 
 HIPAA-compliant Minnesota 245D HCBS compliance platform for home and community-based service providers. Handles client intake packets, electronic signatures, 45-day/annual reviews, EVV, incidents, CMS-1500 billing, staff management, and AI-powered compliance tools.
 

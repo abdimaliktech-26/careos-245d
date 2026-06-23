@@ -1,14 +1,14 @@
 openapi: "3.0.3"
 info:
-  title: CareIntake 245D Suite API
+  title: Higsi 245D Suite API
   description: "REST API for 245D compliance management: forms, incidents, scheduling, EVV, billing, and analytics."
   version: "1.0.0"
   contact:
     name: Stillwater Supports
-    url: https://careintake.app
+    url: https://higsi.app
 
 servers:
-  - url: https://careintake.app
+  - url: https://higsi.app
     description: Production
   - url: http://localhost:3000
     description: Local dev

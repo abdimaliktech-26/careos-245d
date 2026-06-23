@@ -587,14 +587,14 @@ async function sendComplianceAlertNotifications(
 
   const message = [
     `${orgName} has ${criticalCount} critical and ${warningCount} warning compliance alert${criticalCount + warningCount === 1 ? '' : 's'}.`,
-    'Open Compliance Alerts in CareIntake to review.',
+    'Open Compliance Alerts in Higsi to review.',
   ].join('\n')
 
   const rows = Array.from(recipients).map((email) => ({
     organization_id: organizationId,
     channel: 'email',
     recipient: email,
-    subject: `CareIntake compliance alert: ${criticalCount} critical, ${warningCount} warning`,
+    subject: `Higsi compliance alert: ${criticalCount} critical, ${warningCount} warning`,
     message,
     severity: criticalCount > 0 ? 'critical' : 'warning',
     status: 'queued',

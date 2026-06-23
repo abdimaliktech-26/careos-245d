@@ -3,7 +3,7 @@
 import { createAdminClient } from '@/lib/supabase/admin'
 
 /**
- * Data retention policy for CareIntake.
+ * Data retention policy for Higsi.
  *
  * HIPAA requires retaining PHI for at least 6 years (MN state law may extend).
  * This module purges soft-deleted records older than the retention period,

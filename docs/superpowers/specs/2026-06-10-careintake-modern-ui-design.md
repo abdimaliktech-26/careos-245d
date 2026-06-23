@@ -1,16 +1,16 @@
-# CareIntake Modern — UI/UX Upgrade Design
+# Higsi Modern — UI/UX Upgrade Design
 
 **Date:** 2026-06-10
 **Status:** Approved direction (visual system validated via browser mockups)
 
 ## Goal
 
-Upgrade the entire CareIntake SaaS frontend: design system, component library,
+Upgrade the entire Higsi SaaS frontend: design system, component library,
 app shell UX, dashboard, marketing landing page, and first AI-powered UX wins.
 Brand DNA (pink/purple/blue) is preserved but modernized — pastel lavender wash
 replaced with neutral surfaces and a distilled fuchsia→violet accent.
 
-## Design System ("CareIntake Modern")
+## Design System ("Higsi Modern")
 
 ### Tokens
 

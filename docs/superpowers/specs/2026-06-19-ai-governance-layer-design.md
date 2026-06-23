@@ -2,7 +2,7 @@
 
 **Date:** 2026-06-19
 **Status:** Approved (design); pending implementation plan
-**Project:** CareIntake / Stillwater 245D Suite
+**Project:** Higsi / Stillwater 245D Suite
 
 ## Summary
 
@@ -165,8 +165,8 @@ a clear unavailable response.
 
 ## App Name
 
-Replace hardcoded "CareIntake" branding in shared UI (titles, headers, emails) with
-`process.env.NEXT_PUBLIC_APP_NAME ?? 'CareIntake'`, exposed via a small
+Replace hardcoded "Higsi" branding in shared UI (titles, headers, emails) with
+`process.env.NEXT_PUBLIC_APP_NAME ?? 'Higsi'`, exposed via a small
 `appName()` helper so the name is configurable per deployment (e.g. "Project Higsi").
 
 ## Testing

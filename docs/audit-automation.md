@@ -1,6 +1,6 @@
 # Audit Automation
 
-CareIntake includes an automated audit engine for packet deadlines, document completeness, required fields, signatures, stored documents, staff setup, billing status, and EVV visit records.
+Higsi includes an automated audit engine for packet deadlines, document completeness, required fields, signatures, stored documents, staff setup, billing status, and EVV visit records.
 
 ## Database Setup
 
@@ -49,7 +49,7 @@ Optional email delivery:
 
 ```text
 RESEND_API_KEY=
-AUDIT_EMAIL_FROM="CareIntake <audits@yourdomain.com>"
+AUDIT_EMAIL_FROM="Higsi <audits@yourdomain.com>"
 ```
 
 Optional SMS delivery:

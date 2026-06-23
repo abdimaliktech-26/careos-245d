@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 
-const STORAGE_KEY = 'careintake-theme'
+const STORAGE_KEY = 'higsi-theme'
 
 type Theme = 'light' | 'dark'
 

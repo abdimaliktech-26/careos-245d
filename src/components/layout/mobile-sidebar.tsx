@@ -28,7 +28,7 @@ export default function MobileSidebar({ children, branding }: { children: React.
               </svg>
             </div>
           )}
-          <span className="text-[13px] font-bold text-foreground">{branding?.name ?? 'CareIntake'}</span>
+          <span className="text-[13px] font-bold text-foreground">{branding?.name ?? 'Higsi'}</span>
         </div>
         <button
           onClick={() => setOpen((v) => !v)}

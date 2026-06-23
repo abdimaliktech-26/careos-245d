@@ -109,7 +109,7 @@ export async function createSigningLink(_previousState: ActionState, formData: F
           method: 'POST',
           headers: { 'Authorization': `Bearer ${resendKey}`, 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            from: 'CareIntake <notifications@careintake.app>',
+            from: 'Higsi <notifications@higsi.app>',
             to: [parsed.data.signerEmail],
             subject: `Sign: ${templateName} - ${org?.name ?? ''}`,
             html: emailHtml,
@@ -224,7 +224,7 @@ export async function resendSigningLink(linkId: string): Promise<ActionState> {
           method: 'POST',
           headers: { 'Authorization': `Bearer ${resendKey}`, 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            from: 'CareIntake <notifications@careintake.app>',
+            from: 'Higsi <notifications@higsi.app>',
             to: [signerEmail],
             subject: `Sign: ${templateName} - ${orgName}`,
             html: emailHtml,

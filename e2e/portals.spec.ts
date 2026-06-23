@@ -8,9 +8,9 @@ import { test, expect, type Page } from '@playwright/test'
 
 const PASSWORD = process.env.DEMO_PASSWORD ?? 'Demo2026!'
 const ACCOUNTS = {
-  superAdmin: process.env.DEMO_SUPER_EMAIL ?? 'superadmin@careintake.app',
-  orgAdmin: process.env.DEMO_EMAIL ?? 'demo@careintake.app',
-  staff: process.env.DEMO_STAFF_EMAIL ?? 'staff@careintake.app',
+  superAdmin: process.env.DEMO_SUPER_EMAIL ?? 'superadmin@higsi.app',
+  orgAdmin: process.env.DEMO_EMAIL ?? 'demo@higsi.app',
+  staff: process.env.DEMO_STAFF_EMAIL ?? 'staff@higsi.app',
 }
 
 async function login(page: Page, email: string) {

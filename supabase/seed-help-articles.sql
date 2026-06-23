@@ -8,9 +8,9 @@
 INSERT INTO help_articles (organization_id, title, slug, content, excerpt, category, tags, is_published, created_by, updated_by) VALUES
 
 -- Getting Started
-(NULL, 'Getting Started with CareIntake', 'getting-started-with-careintake',
-'<h2>Welcome to CareIntake</h2>
-<p>CareIntake is a comprehensive 245D compliance suite designed for Minnesota home and community-based service providers. This guide will help you get oriented with the platform.</p>
+(NULL, 'Getting Started with higsi', 'getting-started-with-higsi',
+'<h2>Welcome to higsi</h2>
+<p>higsi is a comprehensive 245D compliance suite designed for Minnesota home and community-based service providers. This guide will help you get oriented with the platform.</p>
 
 <h2>Your Dashboard</h2>
 <p>When you first log in, you''ll see your personalized dashboard with:</p>
@@ -37,13 +37,13 @@ INSERT INTO help_articles (organization_id, title, slug, content, excerpt, categ
 
 <h2>Your Profile</h2>
 <p>Click on your name in the bottom-left corner to access your profile settings. Here you can update your name, email, and preferences.</p>',
-'A comprehensive overview of CareIntake''s features, navigation, and getting started with the 245D compliance suite.',
+'A comprehensive overview of higsi''s features, navigation, and getting started with the 245D compliance suite.',
 'getting-started', ARRAY['welcome', 'orientation', 'dashboard', 'basics'], TRUE, '00000000-0000-0000-0000-000000000000', '00000000-0000-0000-0000-000000000000'),
 
 -- Clients
 (NULL, 'How to Create a Client', 'how-to-create-a-client',
 '<h2>Adding a New Client</h2>
-<p>Follow these steps to add a new client (service recipient) to CareIntake.</p>
+<p>Follow these steps to add a new client (service recipient) to higsi.</p>
 
 <h2>Step 1: Navigate to Clients</h2>
 <p>Click on <strong>Clients</strong> in the sidebar navigation to open the client directory.</p>
@@ -82,7 +82,7 @@ INSERT INTO help_articles (organization_id, title, slug, content, excerpt, categ
 -- Forms & Packets
 (NULL, 'Managing Packets & Forms', 'managing-packets-and-forms',
 '<h2>Understanding Packets</h2>
-<p>Packets are collections of forms organized by review type. CareIntake supports four packet types:</p>
+<p>Packets are collections of forms organized by review type. higsi supports four packet types:</p>
 <ul>
   <li><strong>Intake</strong> — Initial enrollment packet</li>
   <li><strong>45-Day Review</strong> — First review within 45 days of service start</li>
@@ -127,7 +127,7 @@ INSERT INTO help_articles (organization_id, title, slug, content, excerpt, categ
 -- Signatures
 (NULL, 'How to Send a Document for Signature', 'send-document-for-signature',
 '<h2>Sending for Signature</h2>
-<p>CareIntake allows you to send documents for electronic signature to clients, guardians, and other parties.</p>
+<p>higsi allows you to send documents for electronic signature to clients, guardians, and other parties.</p>
 
 <h2>Method 1: From a Packet</h2>
 <ol>
@@ -163,8 +163,8 @@ INSERT INTO help_articles (organization_id, title, slug, content, excerpt, categ
 
 -- Incidents
 (NULL, 'Reporting an Incident', 'reporting-an-incident',
-'<h2>Incident Reporting in CareIntake</h2>
-<p>CareIntake provides a comprehensive incident management system in compliance with Minnesota 245D incident reporting requirements.</p>
+'<h2>Incident Reporting in higsi</h2>
+<p>higsi provides a comprehensive incident management system in compliance with Minnesota 245D incident reporting requirements.</p>
 
 <h2>Types of Incidents</h2>
 <ul>
@@ -214,7 +214,7 @@ INSERT INTO help_articles (organization_id, title, slug, content, excerpt, categ
 -- Schedule
 (NULL, 'Using the Schedule', 'using-the-schedule',
 '<h2>Schedule Management</h2>
-<p>The CareIntake schedule module helps you manage staff assignments, shifts, and visit tracking.</p>
+<p>The higsi schedule module helps you manage staff assignments, shifts, and visit tracking.</p>
 
 <h2>Viewing the Schedule</h2>
 <p>Navigate to <strong>Schedule</strong> in the sidebar to see the weekly calendar view. You can:</p>
@@ -245,13 +245,13 @@ INSERT INTO help_articles (organization_id, title, slug, content, excerpt, categ
 
 <h2>Schedule and EVV Integration</h2>
 <p>Scheduled shifts automatically generate EVV visit records. Staff can check in and out using the EVV module, and the schedule will reflect the visit status in real time.</p>',
-'Guide to creating, managing, and viewing staff schedules and shifts in CareIntake.',
+'Guide to creating, managing, and viewing staff schedules and shifts in higsi.',
 'schedule', ARRAY['schedule', 'shifts', 'staff', 'calendar'], TRUE, '00000000-0000-0000-0000-000000000000', '00000000-0000-0000-0000-000000000000'),
 
 -- EVV
 (NULL, 'EVV Check-in/Check-out', 'evv-check-in-check-out',
 '<h2>Electronic Visit Verification (EVV)</h2>
-<p>EVV is a federal requirement for Medicaid-funded personal care services. CareIntake''s EVV system verifies that services were actually delivered by tracking:</p>
+<p>EVV is a federal requirement for Medicaid-funded personal care services. higsi''s EVV system verifies that services were actually delivered by tracking:</p>
 <ul>
   <li><strong>Who</strong> — Which staff member provided the service</li>
   <li><strong>What</strong> — What type of service was provided</li>
@@ -329,7 +329,7 @@ INSERT INTO help_articles (organization_id, title, slug, content, excerpt, categ
   <li><strong>Paid</strong> — Payment received</li>
   <li><strong>Denied</strong> — Claim was rejected (see reason for details)</li>
 </ul>',
-'Overview of billing readiness, claims management, and authorizations in CareIntake.',
+'Overview of billing readiness, claims management, and authorizations in higsi.',
 'billing', ARRAY['billing', 'claims', 'authorizations', 'reimbursement'], TRUE, '00000000-0000-0000-0000-000000000000', '00000000-0000-0000-0000-000000000000'),
 
 -- Compliance

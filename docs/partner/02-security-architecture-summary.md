@@ -1,7 +1,7 @@
-# Security & Architecture Summary — CareIntake
+# Security & Architecture Summary — Higsi
 
-**Audience:** Minnesota providers evaluating CareIntake, and future integration partners (HHAeXchange, Sandata).
-**Purpose:** A shareable overview of how CareIntake is built and how it protects PHI.
+**Audience:** Minnesota providers evaluating Higsi, and future integration partners (HHAeXchange, Sandata).
+**Purpose:** A shareable overview of how Higsi is built and how it protects PHI.
 
 > Status note: several controls below are **implemented**; a few (formal SOC 2 attestation, signed BAAs, penetration test) are **planned** and called out explicitly. We do not claim certifications we do not yet hold.
 

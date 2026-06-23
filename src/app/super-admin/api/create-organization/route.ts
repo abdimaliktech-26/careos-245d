@@ -83,20 +83,20 @@ export async function POST(request: Request) {
               method: 'POST',
               headers: { 'Authorization': `Bearer ${resendKey}`, 'Content-Type': 'application/json' },
               body: JSON.stringify({
-                from: 'CareIntake <welcome@careintake.app>',
+                from: 'Higsi <welcome@higsi.app>',
                 to: [adminEmail.trim()],
-                subject: `Welcome to CareIntake — ${name.trim()}`,
+                subject: `Welcome to Higsi — ${name.trim()}`,
                 html: `<div style="font-family:sans-serif;max-width:560px;margin:0 auto">
-                  <h2 style="color:#E8799E">Welcome to CareIntake, ${fullName}!</h2>
-                  <p>Your organization <strong>${name.trim()}</strong> has been created on the CareIntake 245D Suite platform.</p>
+                  <h2 style="color:#10B99A">Welcome to Higsi, ${fullName}!</h2>
+                  <p>Your organization <strong>${name.trim()}</strong> has been created on the Higsi 245D Suite platform.</p>
                   <p>You can log in with the following credentials:</p>
                   <div style="background:#EEF2FF;border-radius:12px;padding:16px;margin:16px 0">
                     <p><strong>Email:</strong> ${adminEmail.trim()}</p>
                     <p><strong>Temporary Password:</strong> <code style="background:#fff;padding:4px 8px;border-radius:4px;font-size:14px">${temporaryPassword}</code></p>
                   </div>
                   <p>You'll be prompted to change your password on first login.</p>
-                  <a href="${process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3000'}/auth/login" style="display:inline-block;background:linear-gradient(135deg,#E8799E,#C8A8E8);color:#fff;padding:12px 24px;border-radius:12px;text-decoration:none;font-weight:bold;margin-top:8px">Sign In</a>
-                  <p style="color:#64748B;font-size:12px;margin-top:24px">CareIntake 245D Suite — Minnesota HCBS compliance platform</p>
+                  <a href="${process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3000'}/auth/login" style="display:inline-block;background:linear-gradient(135deg,#10B99A,#0E9E86);color:#fff;padding:12px 24px;border-radius:12px;text-decoration:none;font-weight:bold;margin-top:8px">Sign In</a>
+                  <p style="color:#64748B;font-size:12px;margin-top:24px">Higsi 245D Suite — Minnesota HCBS compliance platform</p>
                 </div>`,
               }),
             })

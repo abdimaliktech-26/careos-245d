@@ -57,7 +57,7 @@ the current codebase.
 2. **Pilot hardening:** manual visit-edit + reason codes; evidence-pack export; mobile-first capture.
 3. **Cert track (parallel, business-gated):** register Alt-EVV → packets → fill adapter wire formats → telephony/IVR + FOB → sandbox certification; SOC 2 + pen test.
 
-None of A–E blocks **piloting with MN providers** (the agency can use CareIntake for
+None of A–E blocks **piloting with MN providers** (the agency can use Higsi for
 intake, documentation, scheduling, and internal EVV compliance before state
 transmission is certified). They are the path from "pilot-usable" to "production +
 state-certified."

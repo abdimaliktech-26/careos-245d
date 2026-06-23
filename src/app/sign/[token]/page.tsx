@@ -108,7 +108,7 @@ export default async function ExternalSignPage({ params }: Props) {
             <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#24343a] text-sm font-black text-white sm:h-12 sm:w-12 sm:text-base">CI</div>
           )}
           <div>
-            <p className="text-base font-black text-[#24343a] sm:text-lg">{organization?.name ?? 'CareIntake'}</p>
+            <p className="text-base font-black text-[#24343a] sm:text-lg">{organization?.name ?? 'Higsi'}</p>
             <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#8B4B2D] sm:text-xs">Secure Signature</p>
           </div>
         </div>
