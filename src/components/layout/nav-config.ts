@@ -5,6 +5,7 @@ import {
   Library, ShieldCheck, Sparkles, HelpCircle, Building2, UserCog,
   GraduationCap, FileText, Upload, Webhook, ScrollText, Settings2, BookOpen,
   Gauge, Gavel, FileWarning, ClipboardCheck, FileBarChart2, History,
+  Pill, ClipboardPlus, RefreshCw, PackageCheck, MessageSquare, FolderHeart, HeartPulse,
 } from 'lucide-react'
 import { isAdmin, isSuperAdmin } from '@/lib/auth/role-guards'
 import type { Role } from '@/types/app'
@@ -44,6 +45,19 @@ export const NAV_GROUPS: NavGroup[] = [
       { href: '/incidents',    translationKey: 'nav.incidents',         icon: AlertTriangle },
       { href: '/qa',           translationKey: 'nav.quality_assurance', icon: ShieldCheck },
       { href: '/form-library', translationKey: 'nav.form_library',      icon: Library },
+    ],
+  },
+  {
+    id: 'medications',
+    labelKey: 'nav.group_medications',
+    items: [
+      { href: '/medications',           translationKey: 'nav.medications',          icon: Pill },
+      { href: '/medication-pass',       translationKey: 'nav.medication_pass',      icon: ClipboardPlus },
+      { href: '/refills',               translationKey: 'nav.refills',              icon: RefreshCw },
+      { href: '/pharmacy-orders',       translationKey: 'nav.pharmacy_orders',      icon: PackageCheck },
+      { href: '/pharmacy-messages',     translationKey: 'nav.pharmacy_messages',    icon: MessageSquare },
+      { href: '/pharmacy-documents',    translationKey: 'nav.pharmacy_documents',   icon: FolderHeart },
+      { href: '/medication-compliance', translationKey: 'nav.medication_compliance', icon: HeartPulse },
     ],
   },
   {
