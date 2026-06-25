@@ -14,12 +14,20 @@ export const isSuperAdmin = (role: string): role is 'super_admin' =>
 export const isExternalSigner = (role: string): role is 'external_signer' =>
   role === ROLES.EXTERNAL_SIGNER
 
+export const isPharmacy = (role: string): role is 'pharmacy_admin' | 'pharmacy_staff' =>
+  role === ROLES.PHARMACY_ADMIN || role === ROLES.PHARMACY_STAFF
+
+export const isPharmacyAdmin = (role: string): role is 'pharmacy_admin' =>
+  role === ROLES.PHARMACY_ADMIN
+
 const ROLE_PATHS: Record<Role, string> = {
   super_admin: '/super-admin',
   org_admin: '/dashboard',
   program_manager: '/dashboard',
   staff: '/dashboard',
   external_signer: '/client',
+  pharmacy_admin: '/pharmacy',
+  pharmacy_staff: '/pharmacy',
 }
 
 export const getRoleRedirectPath = (role: Role): string =>

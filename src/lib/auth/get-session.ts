@@ -60,6 +60,30 @@ export const getSession = cache(async (): Promise<SessionResult> => {
     return { user: applyImpersonation(baseProfile, active), error: null }
   }
 
+  // Pharmacy users live in pharmacy_users (not organization_members). They have
+  // no provider org; access to provider data is gated by RLS via pharmacy links.
+  const { data: pharmUser } = await supabase
+    .from('pharmacy_users')
+    .select('pharmacy_id, role, full_name, email')
+    .eq('user_id', user.id)
+    .eq('is_active', true)
+    .maybeSingle()
+
+  if (pharmUser) {
+    return {
+      user: {
+        id: user.id,
+        organizationId: null,
+        pharmacyId: pharmUser.pharmacy_id,
+        role: pharmUser.role,
+        fullName: pharmUser.full_name ?? user.email ?? 'Pharmacy User',
+        email: pharmUser.email ?? user.email ?? '',
+        isActive: true,
+      },
+      error: null,
+    }
+  }
+
   // Fallback for external signers without an organization_members row.
   // Their role and org come from auth user_metadata (set during invite/creation).
   const metaRole = user.user_metadata?.role as string | undefined

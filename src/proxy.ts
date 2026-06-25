@@ -18,9 +18,19 @@ const PUBLIC_PATHS = [
  * Note: /admin/organizations and /admin/audit-log are also guarded at
  * page level (super_admin check) so we only need the coarse splits here.
  */
+const PROVIDER_ROLES: Role[] = ['staff', 'program_manager', 'org_admin', 'super_admin']
+
 const ROLE_REQUIRED_PREFIXES: Array<{ prefix: string; roles: Role[] }> = [
   { prefix: '/super-admin', roles: ['super_admin'] },
   { prefix: '/client',      roles: ['external_signer'] },
+  { prefix: '/pharmacy',    roles: ['pharmacy_admin', 'pharmacy_staff'] },
+  { prefix: '/medications',          roles: PROVIDER_ROLES },
+  { prefix: '/medication-pass',      roles: PROVIDER_ROLES },
+  { prefix: '/medication-compliance', roles: PROVIDER_ROLES },
+  { prefix: '/refills',              roles: PROVIDER_ROLES },
+  { prefix: '/pharmacy-orders',      roles: PROVIDER_ROLES },
+  { prefix: '/pharmacy-messages',    roles: PROVIDER_ROLES },
+  { prefix: '/pharmacy-documents',   roles: PROVIDER_ROLES },
   { prefix: '/dashboard',   roles: ['staff', 'program_manager', 'org_admin', 'super_admin'] },
   { prefix: '/notifications', roles: ['staff', 'program_manager', 'org_admin', 'super_admin'] },
   { prefix: '/clients',     roles: ['staff', 'program_manager', 'org_admin', 'super_admin'] },
@@ -55,6 +65,30 @@ function forbidden(pathname: string, redirectUrl: URL): NextResponse {
     return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
   }
   return NextResponse.redirect(redirectUrl)
+}
+
+/**
+ * Resolve the caller's role from either provider membership
+ * (organization_members) or pharmacy membership (pharmacy_users).
+ */
+async function resolveRole(
+  supabase: ReturnType<typeof createServerClient>,
+  userId: string
+): Promise<Role | null> {
+  const { data: member } = await supabase
+    .from('organization_members')
+    .select('role')
+    .eq('user_id', userId)
+    .maybeSingle()
+  if (member?.role) return member.role as Role
+
+  const { data: pharmUser } = await supabase
+    .from('pharmacy_users')
+    .select('role')
+    .eq('user_id', userId)
+    .eq('is_active', true)
+    .maybeSingle()
+  return (pharmUser?.role as Role) ?? null
 }
 
 export async function proxy(request: NextRequest) {
@@ -100,15 +134,10 @@ export async function proxy(request: NextRequest) {
       pathname.startsWith('/api/auth/reset-password/')
 
     if (user && !isResetPassword) {
-      const { data: profile } = await supabase
-        .from('organization_members')
-        .select('role')
-        .eq('user_id', user.id)
-        .maybeSingle()
-
-      if (profile?.role) {
+      const role = await resolveRole(supabase, user.id)
+      if (role) {
         return NextResponse.redirect(
-          new URL(getRoleRedirectPath(profile.role as Role), request.url)
+          new URL(getRoleRedirectPath(role), request.url)
         )
       }
     }
@@ -122,18 +151,12 @@ export async function proxy(request: NextRequest) {
     return unauthorized(pathname, loginUrl)
   }
 
-  // Fetch role once and enforce route access
-  const { data: profile } = await supabase
-    .from('organization_members')
-    .select('role')
-    .eq('user_id', user.id)
-    .maybeSingle()
+  // Fetch role once and enforce route access (provider OR pharmacy membership)
+  const userRole = await resolveRole(supabase, user.id)
 
-  if (!profile?.role) {
+  if (!userRole) {
     return unauthorized(pathname, loginUrl)
   }
-
-  const userRole = profile.role as Role
 
   for (const { prefix, roles } of ROLE_REQUIRED_PREFIXES) {
     if (pathname === prefix || pathname.startsWith(prefix + '/')) {
