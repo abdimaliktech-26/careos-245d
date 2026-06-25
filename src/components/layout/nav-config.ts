@@ -103,6 +103,7 @@ export const NAV_GROUPS: NavGroup[] = [
       { href: '/admin/staff',             translationKey: 'admin.staff',             icon: UserCog },
       { href: '/admin/organizations',     translationKey: 'admin.organizations',     icon: Building2 },
       { href: '/admin/team',              translationKey: 'admin.team',              icon: Users },
+      { href: '/admin/pharmacies',        translationKey: 'admin.pharmacies',        icon: Pill },
       { href: '/admin/trainings',         translationKey: 'admin.trainings',         icon: GraduationCap },
       { href: '/admin/audit-assistant',   translationKey: 'admin.audit_assistant',   icon: Sparkles },
       { href: '/admin/forms',             translationKey: 'admin.form_templates',    icon: FileText },
