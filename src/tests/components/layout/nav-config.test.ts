@@ -2,10 +2,11 @@ import { describe, expect, test } from 'vitest'
 import { NAV_GROUPS, visibleNavGroups } from '@/components/layout/nav-config'
 
 describe('nav-config', () => {
-  test('defines care, compliance, audit-readiness, business, workspace, admin groups in order', () => {
+  test('defines care, compliance, medications, audit-readiness, business, workspace, admin groups in order', () => {
     expect(NAV_GROUPS.map((group) => group.id)).toEqual([
       'care',
       'compliance',
+      'medications',
       'audit-readiness',
       'business',
       'workspace',

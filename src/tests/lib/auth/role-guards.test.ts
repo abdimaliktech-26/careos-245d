@@ -10,18 +10,20 @@ import {
 import type { Role } from '@/types/app'
 
 describe('ROLES constant', () => {
-  it('has all five roles', () => {
+  it('has all roles', () => {
     expect(ROLES.SUPER_ADMIN).toBe('super_admin')
     expect(ROLES.ORG_ADMIN).toBe('org_admin')
     expect(ROLES.PROGRAM_MANAGER).toBe('program_manager')
     expect(ROLES.STAFF).toBe('staff')
     expect(ROLES.EXTERNAL_SIGNER).toBe('external_signer')
+    expect(ROLES.PHARMACY_ADMIN).toBe('pharmacy_admin')
+    expect(ROLES.PHARMACY_STAFF).toBe('pharmacy_staff')
   })
-  it('has exactly five roles', () => {
-    expect(Object.keys(ROLES)).toHaveLength(5)
+  it('has exactly seven roles', () => {
+    expect(Object.keys(ROLES)).toHaveLength(7)
   })
   it('values match the Role union type', () => {
-    const roles: Role[] = ['super_admin', 'org_admin', 'program_manager', 'staff', 'external_signer']
+    const roles: Role[] = ['super_admin', 'org_admin', 'program_manager', 'staff', 'external_signer', 'pharmacy_admin', 'pharmacy_staff']
     expect(Object.values(ROLES)).toEqual(roles)
   })
 })
