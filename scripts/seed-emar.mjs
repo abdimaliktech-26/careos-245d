@@ -18,8 +18,11 @@ if (!URL || !KEY) { console.error('Missing Supabase env'); process.exit(1) }
 const db = createClient(URL, KEY, { auth: { persistSession: false } })
 
 async function main() {
-  // 1. Resolve the demo organization (first org).
-  const { data: org } = await db.from('organizations').select('id, name').order('created_at').limit(1).single()
+  // 1. Resolve the demo organization. Prefer DEMO_ORG_ID, else first org.
+  const orgQuery = process.env.DEMO_ORG_ID
+    ? db.from('organizations').select('id, name').eq('id', process.env.DEMO_ORG_ID).maybeSingle()
+    : db.from('organizations').select('id, name').order('created_at').limit(1).single()
+  const { data: org } = await orgQuery
   if (!org) { console.error('No organization found — seed the base app first.'); process.exit(1) }
   console.log('Org:', org.name, org.id)
 
@@ -92,6 +95,45 @@ async function main() {
     }
   }
   console.log(`Seeded ${medCount} medications across ${clients.length} clients.`)
+
+  // 8. Sample pharmacy order (pending provider review) + refill request.
+  const c0 = clients[0]
+  const { data: someMed } = await db.from('medications').select('id, name').eq('client_id', c0.id).limit(1).maybeSingle()
+
+  await db.from('medication_orders').insert({
+    organization_id: org.id,
+    pharmacy_id: pharmacy.id,
+    client_id: c0.id,
+    status: 'submitted',
+    submitted_at: new Date().toISOString(),
+    notes: 'New prescription from Dr. Reed — please review and activate.',
+    payload: {
+      name: 'Atorvastatin',
+      dosage: '20 mg',
+      route: 'Oral',
+      frequency: 'Once daily at bedtime',
+      administration_times: ['21:00'],
+      prescribing_physician: 'Reed',
+      is_controlled: false,
+    },
+  })
+  console.log('Seeded 1 pharmacy order (pending review).')
+
+  if (someMed) {
+    await db.from('refill_requests').insert({
+      organization_id: org.id,
+      client_id: c0.id,
+      medication_id: someMed.id,
+      pharmacy_id: pharmacy.id,
+      quantity_remaining: 4,
+      days_remaining: 5,
+      urgency: 'urgent',
+      notes: `Low supply of ${someMed.name} — please refill.`,
+      status: 'requested',
+    })
+    console.log('Seeded 1 refill request.')
+  }
+
   console.log('Done.')
 }
 

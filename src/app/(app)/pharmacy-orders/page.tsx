@@ -2,8 +2,11 @@ import { redirect } from 'next/navigation'
 import { getSession } from '@/lib/auth/get-session'
 import { createClient as createServerClient } from '@/lib/supabase/server'
 import { PackageCheck } from 'lucide-react'
+import { OrderReviewActions } from '@/components/pharmacy/order-review-actions'
 
 export const dynamic = 'force-dynamic'
+
+const REVIEWABLE = ['submitted', 'pending_review', 'needs_clarification']
 
 const STATUS_STYLES: Record<string, string> = {
   draft: 'bg-muted text-muted-foreground',
@@ -65,6 +68,7 @@ export default async function PharmacyOrdersPage() {
                   </div>
                   <span className={`shrink-0 rounded-full px-2 py-0.5 text-[11px] font-semibold capitalize ${STATUS_STYLES[r.status] ?? 'bg-muted text-muted-foreground'}`}>{r.status.replace('_', ' ')}</span>
                 </div>
+                {REVIEWABLE.includes(r.status) && <OrderReviewActions orderId={r.id} />}
               </div>
             )
           })}
