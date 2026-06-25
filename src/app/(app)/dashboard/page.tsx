@@ -11,6 +11,7 @@ import { getClientScorecards } from '@/lib/audit/scorecards'
 import { ScorecardBadge } from '@/components/audit/scorecard-badge'
 import { MorningBriefingCard } from '@/components/dashboard/morning-briefing-card'
 import { EvvComplianceWidget } from '@/components/evv/evv-compliance-widget'
+import { PharmacySummaryWidget } from '@/components/medications/pharmacy-summary-widget'
 import { ComplianceChart, type CompliancePoint } from '@/components/dashboard/compliance-chart'
 import { Activity } from 'lucide-react'
 
@@ -211,6 +212,12 @@ export default async function DashboardPage() {
       {organizationId && (
         <div className="mb-8">
           <EvvComplianceWidget organizationId={organizationId} />
+        </div>
+      )}
+
+      {organizationId && (
+        <div className="mb-8">
+          <PharmacySummaryWidget organizationId={organizationId} />
         </div>
       )}
 
